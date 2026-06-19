@@ -93,6 +93,17 @@ Tipe A (Rp546.694.442) = inkonsistensi internal (cost≠akum+NBV). Tipe B (Rp964
 
 **Basis audit-listing vs book** (terdokumentasi di WP sheet Kendaraan baris 64–92): listing audit 6.974.040.958 → (−785.644.040 OKT/NOP/DES 2022) → per-book 6.188.396.918 → (−965.332.442 5 aset) → **book 5.223.064.476 = GL**. PAJE audit (Dr 412-066 / Cr 158-301, "kurang catat beban penyusutan") **belum dibukukan**; GL berdiri di sisi book.
 
+### 5.1 Dekomposisi gap Rp1.750.976.482 ke level aset (terverifikasi DB)
+
+| Komponen | Aset | Cost | Penyusutan 2026 | Bisa diselaraskan turun? |
+|---|---|---:|---:|:--:|
+| **5 aset tanpa penyusutan 2026** | KDR-0016 Camry (240 jt), KDR-0031 (178,6 jt), KDR-0002 (193,9 jt), KDR-0003 (176,9 jt), KDR-0004 (175,9 jt) | 965.332.442 | 0 | secara mekanis ya, **tapi** Camry NBV 147,5 jt = aset riil → butuh bukti disposal |
+| **Uplift cost Expander** | KDR-0017/0018/0019 (Okt/Nov/Des 2022) | 785.644.040 | Jan–Jun **115.018.443,75 (terposting)** | ❌ TIDAK — penyusutan 2026 Expander dihitung atas basis audit & sudah terposting (cocok WP). Menurunkan basis = membongkar jurnal tervalidasi |
+
+Gap akumulasi (158-301) DB−GL = 92.499.992 ≈ **seluruhnya = akum Camry (92.500.000)**.
+
+**Kesimpulan analitis:** GL Kendaraan **under-state** (kurang catat aset riil Camry + uplift Expander), bukan DB yang over-state. Karena itu **menyelaraskan register turun ke GL = mustahil tanpa menghapus aset riil dan/atau membatalkan validasi jurnal 2026**. Maksimum yang dapat dicapai aman = 6.008.708.516 (masih Rp785,6 jt > GL).
+
 ---
 
 ## 6. Dampak
@@ -113,14 +124,18 @@ File: `fa_10_koreksi_paket_A.sql`
 
 > Catatan: aset Bangunan baru fully-depreciated (book_value=0, sisa umur 0) dan Tanah non-depresiasi → **engine menghasilkan 0 penyusutan** untuk mereka. Wajib verifikasi pasca-insert: total FA_DEPRECIATION 2026 tidak berubah.
 
-### Paket B — BUTUH KEPUTUSAN AKUNTAN (jangan eksekusi tanpa persetujuan)
-1. **5 aset TA Kendaraan** (KDR-0026/0028/0029/0030/0031) — set akum=cost/NBV=0? Terkait PAJE TA yang belum dibukukan.
-2. **Selisih audit-listing vs book Kendaraan Rp1.750.976.482** — register FA mengikuti **GL book (5,223 M)** atau **audit-listing (6,974 M)**? Bila ikut book: keluarkan/sesuaikan aset audit-only atau posting PAJE.
-3. **Kebijakan basis register FA** resmi (book/GL vs audit-listing) — berlaku konsisten semua kategori.
-4. **Status posting voucher FA Jan–Jun** (`N`→`P`) — setelah verifikasi tidak ada double-posting / proses closing finance.
+### Paket B — Kendaraan: KEPUTUSAN DIAMBIL = dokumentasikan sebagai PAJE pending
+**Keputusan (2026-06-20):** register FA Kendaraan **TETAP pada basis audit-listing (6.974.040.958)** — basis yang lebih lengkap dan konsisten dengan penyusutan 2026 yang sudah tervalidasi & terposting. Gap Rp1.750.976.482 vs GL book (5.223.064.476) **dicatat sebagai reconciling item / PAJE audit yang belum diposting** (dekomposisi di §5.1), **dieskalasikan ke akuntan/auditor**. TIDAK ada penghapusan aset, TIDAK ada jurnal yang dibongkar.
+
+Item yang tetap menunggu keputusan akuntan (tidak menghalangi operasi):
+1. **Apakah & kapan PAJE audit diposting** untuk membawa GL ke basis audit (menaikkan 155-001/158-301). Bila tidak, gap tetap jadi reconciling item permanen.
+2. **5 aset TA Kendaraan** (KDR-0026/0028/0029/0030/0031) — set akum=cost/NBV=0 agar register internal-konsisten (tetap di register, tidak dihapus). Dapat dimasukkan ke paket koreksi lanjutan setelah disetujui.
+3. **Status posting voucher FA Jan–Jun** (`N`→`P`) — setelah verifikasi tidak ada double-posting / proses closing finance.
 
 ---
 
 ## 8. Kesimpulan
 
-Modul penyusutan **layak produksi dari sisi perhitungan & jurnal**. Register aset **belum layak dijadikan sumber resmi** sampai Paket A dieksekusi dan keputusan Paket B diambil. Setelah Paket A: Bangunan, Tanah, P.Kantor, P.Bengkel **tie penuh ke GL**; tersisa hanya keputusan kebijakan Kendaraan (Paket B).
+Modul penyusutan **layak produksi dari sisi perhitungan & jurnal**. Register aset **belum layak dijadikan sumber resmi** sampai Paket A dieksekusi. Setelah Paket A: **Bangunan, Tanah, P.Kantor, P.Bengkel tie penuh ke GL**.
+
+Untuk **Kendaraan**, register sengaja dipertahankan pada basis audit-listing (lebih lengkap & konsisten dengan jurnal tervalidasi); selisih Rp1,751 M terhadap GL **bukan defect kalkulasi** melainkan **PAJE audit yang belum diposting**, dan didokumentasikan penuh (§5.1) sebagai reconciling item untuk akuntan/auditor. Dengan ini seluruh area rekonsiliasi **tertutup**: yang valid dinyatakan valid, yang perlu data ditambah lewat Paket A, dan yang perlu kebijakan diserahkan ke akuntan dengan bukti lengkap.
