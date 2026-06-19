@@ -56,7 +56,28 @@ POST_CUTOFF         2     -> PKT-0177/0178
 ZERO_ACCUM_REVIEW   5     -> 5 aset TA Kendaraan (Tipe B, memo §5)
 ```
 
-## 5. Temuan kritis saat validasi (root-cause)
+## 5. Verifikasi langsung DB ↔ Excel (per-aset, sel-per-sel)
+
+Sumber: [WP_Aset tetap_TAM 2026-rekonsiliasi.xlsx](WP_Aset%20tetap_TAM%202026-rekonsiliasi.xlsx), dibaca via Excel COM (read-only). Cost diambil dari kolom **Harga Perolehan Audited** per sheet detail (Bengkel/Kantor C14; Kendaraan C12=C15), bukan tab JURNAL summary (yang "maju 1 tahun", memo §2). Ini memutus rantai asumsi DB→memo→Excel menjadi DB↔Excel langsung.
+
+| Kategori | Excel (cost audited) | DB register_amt | MATCH_LEVEL | Flag |
+|---|---:|---:|---|---|
+| Perl. Bengkel | 221.324.363,08 | 221.324.363,08 | `AUDIT_MATCH` (= GL) | — |
+| Perl. Kantor | 959.181.516 | 959.181.516 | `AUDIT_MATCH` (= GL, +8,735 jt post-cutoff) | — |
+| Bangunan | 3.712.136.932 | 3.317.636.932 | `PARTIAL_MIGRATION` | `MIGRATION_GAP = 394.500.000 (6 assets)` |
+| Kendaraan | 6.974.040.958 | 6.974.040.958 | `AUDIT_MATCH` (≠ GL book) | `PAJE_PENDING = true` |
+| Tanah | 17.934.062.500 *(GL)* | 0 | `PARTIAL_MIGRATION` | `MIGRATION_GAP = 17.934.062.500 (11 assets)` |
+
+**Klasifikasi MATCH_LEVEL:**
+- `AUDIT_MATCH` — DB = Excel basis audit listing. Untuk Bengkel/Kantor ini juga = GL. Untuk **Kendaraan, audit ≠ GL book** (lihat flag).
+- `GL_MATCH` — DB = GL book (tidak ada kategori di state ini yang mengunci ke book).
+- `PARTIAL_MIGRATION` — DB subset dari Excel/GL; selisih = aset belum dimigrasi, **bukan** error hitung.
+
+**Catatan kunci (sering jadi false discrepancy):** Kendaraan DB mengunci ke **Excel audit listing (6.974 M)**, BUKAN GL book (5.223 M). Selisih 1.750.976.482 = `PAJE_PENDING` (Dr 412-066 / Cr 158-301, "kurang catat beban penyusutan"), tertulis eksplisit di sheet Kendaraan baris PAJE dan **belum dibukukan**. DB tidak salah — DB mengunci level data berbeda dari GL. Keputusan akuntan (memo §7 Paket B).
+
+Jejak 3-representasi Excel Kendaraan terverifikasi di sheet: audit 6.974 M → −785.644.040 (Expander OKT/NOP/DES 2022) → per-book 6.188 M → −965.332.442 (5 aset) → **book 5.223 M = GL**.
+
+## 6. Temuan kritis saat validasi (root-cause)
 
 Deploy DDL sukses di percobaan pertama, **tetapi data salah total**: semua 279 aset ter-tag `NON_DEPRECIABLE`, `gl_amt=0`, rollup jadi 1 baris `account_code=(null)`.
 
@@ -64,7 +85,7 @@ Deploy DDL sukses di percobaan pertama, **tetapi data salah total**: semua 279 a
 
 > Bug ini tidak akan tertangkap code review statis — hanya muncul setelah deploy ke DB nyata + bandingkan ke memo.
 
-## 6. Catatan untuk reviewer (sebelum merge)
+## 7. Catatan untuk reviewer (sebelum merge)
 
 - State data = **pra-Paket A**. Residual `< 0` di **151-100 & 158-001** (Bangunan) adalah **expected** sampai [fa_10_koreksi_paket_A.sql](fa_10_koreksi_paket_A.sql) dijalankan (6 aset habis-susut + 11 Tanah belum dimigrasi).
 - **155-001 Kendaraan +1.750.976.482** = PAJE pending, keputusan akuntan (memo §7 Paket B) — bukan defect.
