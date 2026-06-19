@@ -1,0 +1,634 @@
+================================================================================
+ DEPLOY & USER MANUAL — MODUL FIXED ASSET (FA)
+ DB: vspnew  |  DSN: vsp (ODBC 32-bit, Uid=dba Pwd=<isi_password>)  |  Site: 101
+ Engine: SAP Adaptive Server Anywhere (SQL Anywhere)
+ Dibuat: 2026-06-20
+ Referensi: FA_LAYER_GOVERNANCE.md, FA_RECON_VALIDATION_EVIDENCE.md,
+            MEMO_REKONSILIASI_FA_FINAL.md
+================================================================================
+
+CATATAN PENTING SEBELUM MULAI
+-----------------------------
+- Semua skrip idempotent (drop-if-exists lalu create) & dijalankan via
+  Interactive SQL (dbisql) terhadap DSN vsp, ATAU statement-by-statement via ODBC.
+- Katalog SQL Anywhere: view di SYS.SYSTABLE (table_type='VIEW'),
+  procedure di SYS.SYSPROCEDURE. JANGAN pakai sys.sysview/sys.sysprocedure.
+- Urutan skrip WAJIB berurutan (01 -> 11) karena ada foreign key & dependency.
+- BACKUP DB sebelum deploy pertama kali.
+
+
+================================================================================
+ BAGIAN 1 — SCRIPT TABLE BARU
+================================================================================
+Sumber: fa_01_schema.sql  (additive; tidak menyentuh tabel existing)
+
+Tabel inti (dibuat berurutan karena FK):
+
+  1. FA_CATEGORY        Master kategori + pemetaan akun GL.
+                        PK (site_id, category_code).
+                        Kolom kunci: asset_account, accum_dep_account,
+                        dep_expense_account, useful_life_month, depreciable_yn.
+                        >>> SUMBER AKUN GL UNTUK SELURUH MODUL <<<
+
+  2. FA_ASSET           Master aset (register).
+                        PK (site_id, asset_code). FK -> FA_CATEGORY.
+                        Kolom kunci: acquisition_cost, accum_dep_beginning,
+                        book_value_beginning, remaining_life_begin, status.
+                        CATATAN: kolom asset_account/accum_dep_account di tabel
+                        ini KOSONG (tidak dipakai) — akun selalu via FA_CATEGORY.
+
+  3. FA_DEPRECIATION    Hasil perhitungan penyusutan per aset per periode.
+                        PK (site_id, asset_code, period). FK -> FA_ASSET.
+                        posting_status: 'D'=draft, 'P'=posted.
+
+  4. FA_PERIOD          Status periode penyusutan.
+                        PK (site_id, period). status: 'O'=open,'P'=posted,'C'=closed.
+
+  5. FA_ASSET_AUDIT     Log perubahan field master aset (audit trail).
+
+Tabel pendukung (skrip lain):
+  - FA_XLS_MONTHLY      (fa_03) staging angka WP Excel utk validasi. Boleh di-drop
+                        setelah validasi.
+  - gl_journal_fa_stage (fa_05) staging jurnal FA sebelum masuk gl_journal.
+  - FA_GL_LINK          (fa_09) subledger link: tiap penyusutan -> baris jurnal GL.
+                        PK link_id. Index per asset & per voucher.
+
+Cara jalankan:
+  dbisql -c "DSN=vsp" READ fa_01_schema.sql;
+  dbisql -c "DSN=vsp" READ fa_09_gl_link.sql;     -- tabel FA_GL_LINK
+
+
+================================================================================
+ BAGIAN 2 — PROCEDURE BARU
+================================================================================
+
+A. ENGINE PENYUSUTAN  (sumber: fa_07_procs.sql)
+   ---------------------------------------------------------------------------
+   sp_fa_generate_sl(p_period TIMESTAMP, p_site VARCHAR(4))
+       Hitung penyusutan garis lurus 1 bulan -> FA_DEPRECIATION (draft 'D').
+       Basis: book_value_beginning / remaining_life_begin (mendukung re-lifing
+       audit). Menolak jika periode sudah Posted/Closed.
+
+   sp_fa_post_period(p_period TIMESTAMP, p_site VARCHAR(4))
+       Posting FA_DEPRECIATION 1 bulan -> gl_journal (modul_id='FA').
+       1 voucher/bulan = FA{site}{YYYY}{MM}, mis. FA101202601.
+       Dr 412-066 (total beban) + Cr per akun akumulasi kategori.
+       Idempotent (hapus voucher FA periode itu dulu). Update posting_status='P',
+       set FA_PERIOD='P'. Transaksional (COMMIT/ROLLBACK).
+
+   sp_fa_regenerate_period(p_period TIMESTAMP, p_site VARCHAR(4))
+       Buka periode -> hapus -> generate ulang -> posting ulang. Untuk koreksi
+       periode yang sudah diposting tapi BELUM closed.
+
+B. SUBLEDGER LINK  (sumber: fa_09_gl_link.sql)
+   ---------------------------------------------------------------------------
+   sp_fa_build_gl_link(p_period TIMESTAMP, p_site VARCHAR(4))
+       Bangun FA_GL_LINK: ikat tiap penyusutan -> baris jurnal GL (deterministik).
+       Idempotent per periode.
+
+C. RECON / KONTROL  (sumber: fa_11_recon_view.sql)
+   ---------------------------------------------------------------------------
+   sp_fa_recon(p_cutoff DATE DEFAULT '2026-01-01', p_site VARCHAR(10) DEFAULT '101')
+       Rollup register vs GL per akun pada periode cutoff. Output: register_amt,
+       gl_amt, residual_unexpl. Ganti p_cutoff saat pindah FY.
+   + VIEW v_fa_recon_asset  (detail per aset + recon_tag — audit)
+   + VIEW v_fa_recon_gl     (rollup per akun vs GL — finance)
+
+D. REBASE (sekali pakai, historis)  (sumber: fa_06_rebase.sql)
+   ---------------------------------------------------------------------------
+   sp_fa_rebase_jan_jun()
+       Hapus 4 GJ MEMO manual (Jan-Apr) + posting ulang FA101202601..06 sebagai
+       modul FA. Sudah dijalankan saat init; tidak perlu diulang.
+
+Cara jalankan (membuat procedure):
+  dbisql -c "DSN=vsp" READ fa_06_rebase.sql;
+  dbisql -c "DSN=vsp" READ fa_07_procs.sql;
+  dbisql -c "DSN=vsp" READ fa_11_recon_view.sql;
+
+
+================================================================================
+ BAGIAN 3 — PROSES FIXED ASSET (apa yang dijalankan)
+================================================================================
+
+--- 3.1 DEPLOY AWAL (urutan WAJIB, sekali saat instalasi) -----------------------
+  fa_01_schema.sql            -- tabel inti
+  fa_02_assets.sql            -- load master aset (279 aset)
+  fa_03_xls_monthly.sql       -- staging angka WP (validasi, opsional)
+  fa_04_depr.sql              -- load FA_DEPRECIATION Jan-Jun 2026 (historis)
+  fa_05_build_stage.sql       -- staging jurnal FA
+  fa_06_rebase.sql            -- buat + CALL sp_fa_rebase_jan_jun()
+  fa_07_procs.sql             -- engine (generate/post/regenerate)
+  fa_08_menu.sql              -- menu navigasi "Aktiva Tetap" (PowerBuilder)
+  fa_09_gl_link.sql           -- FA_GL_LINK + backfill Jan-Jun
+  fa_11_recon_view.sql        -- recon layer (view + sp_fa_recon)
+  -- fa_10_koreksi_paket_A.sql -> LIHAT 3.4 (jalankan terpisah, butuh review)
+
+
+--- 3.2 PROSES BULANAN RUTIN (tiap akhir bulan) --------------------------------
+  -- Ganti tanggal = akhir bulan periode berjalan, site '101'.
+
+  -- (a) Generate draft penyusutan:
+  CALL sp_fa_generate_sl('2026-07-31','101');
+
+  -- (b) Review draft:
+  SELECT * FROM FA_DEPRECIATION WHERE site_id='101' AND period='2026-07-31';
+
+  -- (c) Posting ke GL (membuat voucher FA101202607):
+  CALL sp_fa_post_period('2026-07-31','101');
+
+  -- (d) Bangun subledger link:
+  CALL sp_fa_build_gl_link('2026-07-31','101');
+
+  -- (e) Verifikasi rekonsiliasi:
+  CALL sp_fa_recon('2026-01-01','101');
+  SELECT * FROM v_fa_recon_gl ORDER BY account_type, account_code;
+
+  COMMIT;
+
+
+--- 3.3 KOREKSI PERIODE (sudah diposting, belum closed) ------------------------
+  CALL sp_fa_regenerate_period('2026-07-31','101');
+  COMMIT;
+
+
+--- 3.4 PAKET A — kelengkapan master aset (sekali, butuh approval akuntan) ------
+  -- Menambah 6 aset Bangunan habis-susut + 11 master Tanah + koreksi 3 KDR.
+  -- AMAN/value-neutral: TIDAK menyentuh penyusutan/jurnal 2026.
+  -- WAJIB: jalankan blok VERIFIKASI dulu (baseline) -> koreksi -> verifikasi lagi.
+  -- COMMIT hanya bila cocok GL.
+  dbisql -c "DSN=vsp" READ fa_10_koreksi_paket_A.sql;
+
+  -- Setelah Paket A, recon Bangunan & Tanah harus residual ~0:
+  SELECT * FROM v_fa_recon_gl WHERE account_code IN ('151-100','158-001','151-001');
+
+
+--- 3.5 PINDAH TAHUN BUKU (FY berikutnya) --------------------------------------
+  -- Cutoff recon dikunci '2026-01-01'. Saat opening FY2027 tersedia di gl_balance:
+  --   - Edit konstanta '2026-01-01' di fa_11_recon_view.sql -> '2027-01-01',
+  --     lalu re-deploy view; ATAU
+  --   - Panggil: CALL sp_fa_recon('2027-01-01','101');
+
+
+================================================================================
+ BAGIAN 4 — USER MANUAL (operator)
+================================================================================
+
+A. AKSES MENU (aplikasi PowerBuilder)
+   Menu kiri > "Aktiva Tetap" (antara General Ledger & Kas/Bank):
+     - Master Kategori Aktiva   (w_fa_category)
+     - Master Aktiva Tetap      (w_fa_master)
+     - Generate Penyusutan      (w_fa_generate)
+     - Daftar Aktiva Tetap      (w_rpt_fa_register)
+     - Kartu Aktiva             (w_rpt_fa_card)
+     - Rekap Penyusutan         (w_rpt_fa_rekap)
+
+   SQL INSERT MENU (sumber: fa_08_menu.sql). Idempotent (hapus dulu, lalu insert).
+   groupid '62' = "Aktiva Tetap", diletakkan antara General Ledger(60) & Kas/Bank(65).
+
+   -- (1) Item menu kiri --------------------------------------------------------
+   DELETE FROM sysleftmenu WHERE groupid = '62';
+   INSERT INTO sysleftmenu (groupid,groupdesc,itemid,itemdesc,itemparentid,windowobject,createby,createdate,imageobject) VALUES
+    ('62','Aktiva Tetap','10','Master Kategori Aktiva','62','w_fa_category','dba',today(),'CreateLibrary!');
+   INSERT INTO sysleftmenu (groupid,groupdesc,itemid,itemdesc,itemparentid,windowobject,createby,createdate,imageobject) VALUES
+    ('62','Aktiva Tetap','20','Master Aktiva Tetap','62','w_fa_master','dba',today(),'Custom076!');
+   INSERT INTO sysleftmenu (groupid,groupdesc,itemid,itemdesc,itemparentid,windowobject,createby,createdate,imageobject) VALUES
+    ('62','Aktiva Tetap','30','Generate Penyusutan','62','w_fa_generate','dba',today(),'formatdollar!');
+   INSERT INTO sysleftmenu (groupid,groupdesc,itemid,itemdesc,itemparentid,windowobject,createby,createdate,imageobject) VALUES
+    ('62','Aktiva Tetap','40','Daftar Aktiva Tetap','62','w_rpt_fa_register','dba',today(),'Report!');
+   INSERT INTO sysleftmenu (groupid,groupdesc,itemid,itemdesc,itemparentid,windowobject,createby,createdate,imageobject) VALUES
+    ('62','Aktiva Tetap','50','Kartu Aktiva','62','w_rpt_fa_card','dba',today(),'Report!');
+   INSERT INTO sysleftmenu (groupid,groupdesc,itemid,itemdesc,itemparentid,windowobject,createby,createdate,imageobject) VALUES
+    ('62','Aktiva Tetap','60','Rekap Penyusutan','62','w_rpt_fa_rekap','dba',today(),'Report!');
+
+   -- (2) Otorisasi: beri 6 item FA ke SEMUA usergroup yang sudah bisa melihat
+   --     General Ledger (group 60). WAJIB, kalau tidak menu tak muncul utk user.
+   DELETE FROM sysgroupleftmenu WHERE itemid LIKE '62%';
+   INSERT INTO sysgroupleftmenu
+    (usergroup,itemid,s_view,s_add,s_edit,s_delete,s_cetak,s_alldata,s_koreksi,s_harga,createby,createdate)
+   SELECT g.usergroup, '62'||m.itemid, 1,1,1,1,1,0,0,0,'dba',today()
+   FROM (SELECT DISTINCT usergroup FROM sysgroupleftmenu WHERE itemid LIKE '60%') g,
+        (SELECT '10' AS itemid UNION ALL SELECT '20' UNION ALL SELECT '30'
+         UNION ALL SELECT '40' UNION ALL SELECT '50' UNION ALL SELECT '60') m;
+   COMMIT;
+
+   -- (3) Verifikasi:
+   SELECT 'sysleftmenu(62)='||CAST((SELECT COUNT(*) FROM sysleftmenu WHERE groupid='62') AS varchar)||
+          '  sysgroupleftmenu(62%)='||CAST((SELECT COUNT(*) FROM sysgroupleftmenu WHERE itemid LIKE '62%') AS varchar) AS result;
+   -- Harapan: sysleftmenu(62)=6 ; sysgroupleftmenu(62%)=6 x jumlah usergroup.
+
+   -- ROLLBACK menu:
+   --   DELETE FROM sysleftmenu WHERE groupid='62';
+   --   DELETE FROM sysgroupleftmenu WHERE itemid LIKE '62%';
+
+B. ALUR KERJA BULANAN (operator)
+   1) Pastikan master aset baru sudah diinput di "Master Aktiva Tetap".
+   2) Buka "Generate Penyusutan", pilih periode (akhir bulan), klik Generate.
+      -> sistem menjalankan sp_fa_generate_sl (status draft).
+   3) Periksa hasil draft. Bila perlu koreksi master, ulangi Generate.
+   4) Klik Posting. -> sp_fa_post_period membuat voucher FA{site}{YYYY}{MM}
+      di GL (Dr 412-066 / Cr akumulasi per kategori).
+   5) Cetak "Rekap Penyusutan" & "Daftar Aktiva Tetap" untuk arsip.
+
+C. ATURAN PENTING (governance — lihat FA_LAYER_GOVERNANCE.md)
+   - GL adalah sumber kebenaran saldo; register TIDAK meng-override GL.
+   - Periode yang sudah Posted hanya boleh diubah lewat Regenerate (belum closed).
+   - Periode Closed tidak bisa diposting/regenerate.
+   - Selisih register vs GL = reconciling item:
+       residual < 0  -> aset belum dimigrasi (MIGRATION_GAP) -> Paket A.
+       residual > 0  -> beda kebijakan/PAJE (PAJE_PENDING) -> keputusan akuntan.
+       residual ~ 0  -> cocok / hanya timing (POST_CUTOFF).
+
+D. MEMBACA HASIL REKONSILIASI
+   v_fa_recon_gl (per akun):
+     register_amt   = total dari register (FA_ASSET)
+     gl_amt         = saldo GL (gl_balance) pada cutoff
+     delta          = register - GL
+     post_cutoff_amt= bagian perolehan setelah cutoff (bukan selisih riil)
+     residual_unexpl= delta - post_cutoff  (inti yang harus dijelaskan)
+
+   v_fa_recon_asset (per aset) -> kolom recon_tag:
+     NON_DEPRECIABLE   Tanah (tidak disusutkan)
+     INTERNAL_MISMATCH cost != akum+NBV -> WAJIB koreksi
+     POST_CUTOFF       perolehan setelah cutoff (wajar belum di GL)
+     FULLY_DEPRECIATED habis susut, NBV~0
+     ZERO_ACCUM_REVIEW akum=0 tapi berbiaya -> review
+     ACTIVE            normal
+
+E. TROUBLESHOOTING
+   - "Periode sudah diposting/closed - pakai regenerate"
+       -> gunakan sp_fa_regenerate_period (bukan generate).
+   - "Periode closed - tidak bisa posting"
+       -> periode terkunci; buka via akuntan bila benar perlu.
+   - Recon menampilkan account_code = (null) / semua NON_DEPRECIABLE
+       -> view membaca akun dari FA_ASSET (salah). Pastikan pakai versi
+          fa_11_recon_view.sql terbaru (JOIN FA_CATEGORY).
+   - View/procedure tidak ada setelah deploy
+       -> cek katalog: SELECT table_name FROM SYS.SYSTABLE
+          WHERE table_name LIKE 'v_fa_recon%';
+          Jangan pakai sys.sysview (tidak ada di SQL Anywhere).
+
+F. ROLLBACK (recon layer — aman, additive)
+   DROP VIEW v_fa_recon_asset;
+   DROP VIEW v_fa_recon_gl;
+   DROP PROCEDURE sp_fa_recon;
+
+================================================================================
+ LAMPIRAN A — SQL LENGKAP CREATE TABLE  (verbatim dari fa_01_schema.sql)
+================================================================================
+-- Idempotent: drop berurutan (anak dulu) lalu create. Additive.
+IF EXISTS(SELECT 1 FROM SYS.SYSTABLE WHERE table_name='FA_ASSET_AUDIT') THEN DROP TABLE FA_ASSET_AUDIT END IF;
+IF EXISTS(SELECT 1 FROM SYS.SYSTABLE WHERE table_name='FA_DEPRECIATION') THEN DROP TABLE FA_DEPRECIATION END IF;
+IF EXISTS(SELECT 1 FROM SYS.SYSTABLE WHERE table_name='FA_PERIOD') THEN DROP TABLE FA_PERIOD END IF;
+IF EXISTS(SELECT 1 FROM SYS.SYSTABLE WHERE table_name='FA_ASSET') THEN DROP TABLE FA_ASSET END IF;
+IF EXISTS(SELECT 1 FROM SYS.SYSTABLE WHERE table_name='FA_CATEGORY') THEN DROP TABLE FA_CATEGORY END IF;
+
+CREATE TABLE FA_CATEGORY (
+    site_id              varchar(4)    NOT NULL DEFAULT '101',
+    category_code        varchar(10)   NOT NULL,
+    category_name        varchar(50)   NOT NULL,
+    asset_account        varchar(15)   NOT NULL,
+    accum_dep_account    varchar(15)   NULL,
+    dep_expense_account  varchar(15)   NULL,
+    useful_life_month    integer       NOT NULL DEFAULT 0,
+    residual_percent     decimal(5,2)  NOT NULL DEFAULT 0,
+    depreciable_yn       char(1)       NOT NULL DEFAULT 'Y',
+    active_yn            char(1)       NOT NULL DEFAULT 'Y',
+    created_by           varchar(15)   NULL DEFAULT CURRENT USER,
+    created_date         timestamp     NULL DEFAULT CURRENT TIMESTAMP,
+    PRIMARY KEY (site_id, category_code)
+);
+
+CREATE TABLE FA_ASSET (
+    site_id              varchar(4)    NOT NULL DEFAULT '101',
+    asset_code           varchar(20)   NOT NULL,
+    asset_name           varchar(100)  NOT NULL,
+    category_code        varchar(10)   NOT NULL,
+    acquisition_date     timestamp     NULL,
+    acquisition_cost     decimal(18,2) NOT NULL DEFAULT 0,
+    residual_value       decimal(18,2) NOT NULL DEFAULT 0,
+    useful_life_month    integer       NOT NULL DEFAULT 0,
+    accum_dep_beginning  decimal(18,2) NOT NULL DEFAULT 0,
+    book_value_beginning decimal(18,2) NOT NULL DEFAULT 0,
+    remaining_life_begin integer       NOT NULL DEFAULT 0,
+    beginning_period     timestamp     NULL,
+    asset_account        varchar(15)   NULL,
+    accum_dep_account    varchar(15)   NULL,
+    dep_expense_account  varchar(15)   NULL,
+    department           varchar(10)   NULL,
+    project              varchar(10)   NULL,
+    location             varchar(50)   NULL,
+    status               char(1)       NOT NULL DEFAULT 'A',
+    disposal_date        timestamp     NULL,
+    remarks              varchar(250)  NULL,
+    created_by           varchar(15)   NULL DEFAULT CURRENT USER,
+    created_date         timestamp     NULL DEFAULT CURRENT TIMESTAMP,
+    updated_by           varchar(15)   NULL,
+    updated_date         timestamp     NULL,
+    PRIMARY KEY (site_id, asset_code),
+    FOREIGN KEY (site_id, category_code) REFERENCES FA_CATEGORY (site_id, category_code)
+);
+CREATE INDEX ix_fa_asset_cat ON FA_ASSET (site_id, category_code, status);
+
+CREATE TABLE FA_DEPRECIATION (
+    site_id             varchar(4)    NOT NULL DEFAULT '101',
+    asset_code          varchar(20)   NOT NULL,
+    period              timestamp     NOT NULL,
+    depreciation_amount decimal(18,2) NOT NULL DEFAULT 0,
+    accum_depreciation  decimal(18,2) NOT NULL DEFAULT 0,
+    book_value          decimal(18,2) NOT NULL DEFAULT 0,
+    journal_no          varchar(15)   NULL,
+    posting_status      char(1)       NOT NULL DEFAULT 'D',
+    created_by          varchar(15)   NULL DEFAULT CURRENT USER,
+    created_date        timestamp     NULL DEFAULT CURRENT TIMESTAMP,
+    PRIMARY KEY (site_id, asset_code, period),
+    FOREIGN KEY (site_id, asset_code) REFERENCES FA_ASSET (site_id, asset_code)
+);
+CREATE INDEX ix_fa_depr_period ON FA_DEPRECIATION (site_id, period, posting_status);
+
+CREATE TABLE FA_PERIOD (
+    site_id        varchar(4)    NOT NULL DEFAULT '101',
+    period         timestamp     NOT NULL,
+    status         char(1)       NOT NULL DEFAULT 'O',
+    journal_no     varchar(15)   NULL,
+    total_depr     decimal(18,2) NOT NULL DEFAULT 0,
+    generate_date  timestamp     NULL,
+    generate_by    varchar(15)   NULL,
+    post_date      timestamp     NULL,
+    post_by        varchar(15)   NULL,
+    PRIMARY KEY (site_id, period)
+);
+
+CREATE TABLE FA_ASSET_AUDIT (
+    audit_id     integer       NOT NULL DEFAULT AUTOINCREMENT,
+    site_id      varchar(4)    NOT NULL,
+    asset_code   varchar(20)   NOT NULL,
+    field_name   varchar(30)   NOT NULL,
+    old_value    varchar(100)  NULL,
+    new_value    varchar(100)  NULL,
+    action       varchar(10)   NOT NULL,
+    log_user     varchar(15)   NULL DEFAULT CURRENT USER,
+    log_date     timestamp     NULL DEFAULT CURRENT TIMESTAMP,
+    PRIMARY KEY (audit_id)
+);
+CREATE INDEX ix_fa_audit_asset ON FA_ASSET_AUDIT (site_id, asset_code, log_date);
+
+-- Subledger link (sumber: fa_09_gl_link.sql)
+IF EXISTS (SELECT 1 FROM SYS.SYSTABLE WHERE table_name='FA_GL_LINK') THEN DROP TABLE FA_GL_LINK END IF;
+CREATE TABLE FA_GL_LINK (
+    link_id         integer       NOT NULL DEFAULT AUTOINCREMENT,
+    site_id         varchar(4)    NOT NULL,
+    asset_code      varchar(20)   NOT NULL,
+    period          timestamp     NOT NULL,
+    voucher         varchar(15)   NOT NULL,
+    journal_urut    integer       NOT NULL,
+    account_code    varchar(15)   NOT NULL,
+    amount          decimal(18,2) NOT NULL DEFAULT 0,
+    dk              char(1)       NOT NULL,
+    allocation_type varchar(10)   NOT NULL DEFAULT 'PRO-RATA',
+    created_date    timestamp     NULL DEFAULT CURRENT TIMESTAMP,
+    PRIMARY KEY (link_id)
+);
+CREATE INDEX ix_fa_gl_link_asset ON FA_GL_LINK (site_id, asset_code, voucher);
+CREATE INDEX ix_fa_gl_link_vou   ON FA_GL_LINK (site_id, voucher, journal_urut);
+COMMIT;
+
+
+================================================================================
+ LAMPIRAN B — SEED FA_CATEGORY  (data master kategori + pemetaan akun GL)
+================================================================================
+-- WAJIB diisi sebelum load aset (FA_ASSET punya FK ke FA_CATEGORY).
+-- useful_life_month = DEFAULT; nilai final per aset mengikuti WP Excel.
+DELETE FROM FA_CATEGORY WHERE site_id='101';
+INSERT INTO FA_CATEGORY (site_id,category_code,category_name,asset_account,accum_dep_account,dep_expense_account,useful_life_month,residual_percent,depreciable_yn) VALUES
+('101','BGN','Bangunan',        '151-100','158-001','412-066',240,0,'Y'),
+('101','PKT','Peralatan Kantor','153-001','158-101','412-066', 48,0,'Y'),
+('101','PBK','Peralatan Bengkel','154-001','158-201','412-066', 96,0,'Y'),
+('101','KDR','Kendaraan',       '155-001','158-301','412-066', 96,0,'Y'),
+('101','TNH','Tanah',           '151-001', NULL,     NULL,       0,0,'N');
+COMMIT;
+
+
+================================================================================
+ LAMPIRAN C — SQL LENGKAP CREATE PROCEDURE  (verbatim dari fa_07_procs.sql)
+================================================================================
+-- (1) Generate straight-line 1 bulan -> FA_DEPRECIATION draft
+IF EXISTS(SELECT 1 FROM SYS.SYSPROCEDURE p JOIN SYS.SYSUSERPERM u ON p.creator=u.user_id WHERE u.user_name='DBA' AND p.proc_name='sp_fa_generate_sl')
+   THEN DROP PROCEDURE sp_fa_generate_sl END IF;
+CREATE PROCEDURE sp_fa_generate_sl(IN p_period timestamp, IN p_site varchar(4))
+BEGIN
+   IF EXISTS(SELECT 1 FROM FA_PERIOD WHERE site_id=p_site AND period=p_period AND status IN ('P','C')) THEN
+      RAISERROR 17001 'Periode sudah diposting/closed - pakai regenerate';
+   END IF;
+   DELETE FROM FA_DEPRECIATION WHERE site_id=p_site AND period=p_period AND posting_status='D';
+   INSERT INTO FA_DEPRECIATION (site_id,asset_code,period,depreciation_amount,accum_depreciation,book_value,posting_status)
+   SELECT a.site_id, a.asset_code, p_period,
+          dep.amt,
+          a.accum_dep_beginning + prior.acc + dep.amt,
+          a.acquisition_cost - (a.accum_dep_beginning + prior.acc + dep.amt),
+          'D'
+   FROM FA_ASSET a
+   JOIN FA_CATEGORY c ON c.site_id=a.site_id AND c.category_code=a.category_code
+   , LATERAL (SELECT COALESCE(SUM(d.depreciation_amount),0) AS acc
+                FROM FA_DEPRECIATION d
+               WHERE d.site_id=a.site_id AND d.asset_code=a.asset_code AND d.period<p_period) prior
+   , LATERAL (SELECT CASE WHEN ROUND(a.book_value_beginning/NULLIF(a.remaining_life_begin,0),2)
+                             < (a.book_value_beginning - prior.acc)
+                        THEN ROUND(a.book_value_beginning/NULLIF(a.remaining_life_begin,0),2)
+                        ELSE (a.book_value_beginning - prior.acc) END AS amt) dep
+   WHERE a.site_id=p_site AND a.status='A' AND c.depreciable_yn='Y'
+     AND a.remaining_life_begin>0
+     AND (a.book_value_beginning - prior.acc) > 0
+     AND dep.amt > 0;
+END;
+
+-- (2) Post/repost 1 bulan -> gl_journal (modul FA), idempotent
+IF EXISTS(SELECT 1 FROM SYS.SYSPROCEDURE p JOIN SYS.SYSUSERPERM u ON p.creator=u.user_id WHERE u.user_name='DBA' AND p.proc_name='sp_fa_post_period')
+   THEN DROP PROCEDURE sp_fa_post_period END IF;
+CREATE PROCEDURE sp_fa_post_period(IN p_period timestamp, IN p_site varchar(4))
+BEGIN
+   DECLARE v_vou varchar(15);
+   SET v_vou = 'FA'||p_site||CAST(YEAR(p_period) AS varchar)||RIGHT('0'||CAST(MONTH(p_period) AS varchar),2);
+   IF EXISTS(SELECT 1 FROM FA_PERIOD WHERE site_id=p_site AND period=p_period AND status='C') THEN
+      RAISERROR 17002 'Periode closed - tidak bisa posting';
+   END IF;
+   DELETE FROM gl_journal WHERE site_id=p_site AND voucher=v_vou AND modul_id='FA';
+   BEGIN
+     DECLARE LOCAL TEMPORARY TABLE cred (voucher varchar(15), tgl timestamp, acc varchar(15),
+                                         amt decimal(18,2), catname varchar(50)) NOT TRANSACTIONAL;
+     INSERT INTO cred
+     SELECT v_vou, p_period, c.accum_dep_account, ROUND(SUM(d.depreciation_amount),0), c.category_name
+     FROM FA_DEPRECIATION d
+     JOIN FA_ASSET a    ON a.site_id=d.site_id AND a.asset_code=d.asset_code
+     JOIN FA_CATEGORY c ON c.site_id=a.site_id AND c.category_code=a.category_code
+     WHERE d.site_id=p_site AND d.period=p_period AND c.accum_dep_account IS NOT NULL
+     GROUP BY c.accum_dep_account, c.category_name;
+     IF (SELECT COALESCE(SUM(amt),0) FROM cred) = 0 THEN RETURN; END IF;
+     INSERT INTO gl_journal (voucher,urut,site_id,tgl,modul_id,account_id,debet,kredit,debet_kurs,kredit_kurs,curr_id,rate_rp,posting,voucher_manual,dk,ket)
+     SELECT v_vou,1,p_site,p_period,'FA','412-066',SUM(amt),0,SUM(amt),0,'IDR',1,'N',v_vou,'D',
+            'Beban Penyusutan Aktiva Tetap '||CAST(MONTH(p_period) AS varchar)||'/'||CAST(YEAR(p_period) AS varchar)
+     FROM cred;
+     INSERT INTO gl_journal (voucher,urut,site_id,tgl,modul_id,account_id,debet,kredit,debet_kurs,kredit_kurs,curr_id,rate_rp,posting,voucher_manual,dk,ket)
+     SELECT v_vou,1+ROW_NUMBER() OVER (ORDER BY acc),p_site,p_period,'FA',acc,0,amt,0,amt,'IDR',1,'N',v_vou,'K','Akum. Peny. '||catname
+     FROM cred;
+     UPDATE FA_DEPRECIATION SET posting_status='P', journal_no=v_vou WHERE site_id=p_site AND period=p_period;
+     DELETE FROM FA_PERIOD WHERE site_id=p_site AND period=p_period;
+     INSERT INTO FA_PERIOD (site_id,period,status,journal_no,total_depr,generate_date,generate_by,post_date,post_by)
+     SELECT p_site,p_period,'P',v_vou,SUM(amt),CURRENT TIMESTAMP,CURRENT USER,CURRENT TIMESTAMP,CURRENT USER FROM cred;
+     INSERT INTO USER_LOG (USER_ID,ITEM_ID,ITEM_DESC,LOG_DATE,LOG_ACTION,LOG_DESC,LOG_REFF)
+     VALUES (CURRENT USER,'FA','Posting penyusutan',CURRENT TIMESTAMP,'FA-POST',v_vou,v_vou);
+   END;
+   COMMIT;
+EXCEPTION WHEN OTHERS THEN ROLLBACK; RESIGNAL;
+END;
+
+-- (3) Regenerate = recompute + repost (refuses if closed)
+IF EXISTS(SELECT 1 FROM SYS.SYSPROCEDURE p JOIN SYS.SYSUSERPERM u ON p.creator=u.user_id WHERE u.user_name='DBA' AND p.proc_name='sp_fa_regenerate_period')
+   THEN DROP PROCEDURE sp_fa_regenerate_period END IF;
+CREATE PROCEDURE sp_fa_regenerate_period(IN p_period timestamp, IN p_site varchar(4))
+BEGIN
+   UPDATE FA_PERIOD SET status='O' WHERE site_id=p_site AND period=p_period AND status='P';
+   DELETE FROM FA_DEPRECIATION WHERE site_id=p_site AND period=p_period;
+   CALL sp_fa_generate_sl(p_period,p_site);
+   CALL sp_fa_post_period(p_period,p_site);
+END;
+
+-- Subledger builder (sumber: fa_09_gl_link.sql)
+IF EXISTS (SELECT 1 FROM SYS.SYSPROCEDURE WHERE proc_name='sp_fa_build_gl_link') THEN DROP PROCEDURE sp_fa_build_gl_link END IF;
+CREATE PROCEDURE sp_fa_build_gl_link (IN p_period TIMESTAMP, IN p_site VARCHAR(4))
+BEGIN
+    DELETE FROM FA_GL_LINK WHERE site_id = p_site AND period = p_period;
+    INSERT INTO FA_GL_LINK (site_id,asset_code,period,voucher,journal_urut,account_code,amount,dk,allocation_type)
+    SELECT d.site_id, d.asset_code, d.period, d.journal_no, j.urut, c.accum_dep_account,
+           d.depreciation_amount, 'K', 'PRO-RATA'
+      FROM FA_DEPRECIATION d
+      JOIN FA_ASSET    a ON a.site_id = d.site_id  AND a.asset_code = d.asset_code
+      JOIN FA_CATEGORY c ON c.site_id = a.site_id  AND c.category_code = a.category_code
+      JOIN gl_journal  j ON j.site_id = d.site_id  AND j.voucher = d.journal_no
+                        AND j.account_id = c.accum_dep_account
+     WHERE d.site_id = p_site AND d.period = p_period
+       AND d.journal_no IS NOT NULL AND c.accum_dep_account IS NOT NULL;
+    INSERT INTO FA_GL_LINK (site_id,asset_code,period,voucher,journal_urut,account_code,amount,dk,allocation_type)
+    SELECT d.site_id, d.asset_code, d.period, d.journal_no, j.urut, c.dep_expense_account,
+           d.depreciation_amount, 'D', 'PRO-RATA'
+      FROM FA_DEPRECIATION d
+      JOIN FA_ASSET    a ON a.site_id = d.site_id  AND a.asset_code = d.asset_code
+      JOIN FA_CATEGORY c ON c.site_id = a.site_id  AND c.category_code = a.category_code
+      JOIN gl_journal  j ON j.site_id = d.site_id  AND j.voucher = d.journal_no
+                        AND j.account_id = c.dep_expense_account
+     WHERE d.site_id = p_site AND d.period = p_period
+       AND d.journal_no IS NOT NULL AND c.dep_expense_account IS NOT NULL;
+END;
+
+-- Recon proc + view: lihat fa_11_recon_view.sql (sudah ter-deploy).
+
+
+================================================================================
+ LAMPIRAN D — PROSES CUTOFF DES 2025 -> SALDO AWAL 2026
+================================================================================
+KONSEP
+  Cutoff saldo awal = 31/12/2025 = opening FY2026.
+  Source of truth saldo opening = gl_balance Period '2026-01-01' (memo arbitrase).
+  Saldo awal per aset disimpan di FA_ASSET:
+     accum_dep_beginning   = akumulasi penyusutan s/d 31/12/2025
+     book_value_beginning  = nilai buku 31/12/2025 (= cost - accum)
+     remaining_life_begin  = sisa umur (bulan) per 31/12/2025
+     beginning_period      = '2025-12-31'
+  Engine penyusutan 2026 (sp_fa_generate_sl) memakai book_value_beginning /
+  remaining_life_begin sebagai BASIS -> maka saldo awal WAJIB benar dulu.
+
+DUA CARA MENGISI SALDO AWAL
+  Cara 1 (yang dipakai saat init): load eksplisit per aset dari WP Excel detail
+          (tab per kategori, kolom Audited) via INSERT — lihat fa_02_assets.sql.
+          book_value_beginning & accum_dep_beginning diambil dari WP = GL.
+
+  Cara 2 (procedure kontrol, untuk validasi & FY berikutnya): turunkan/checkkan
+          agregat saldo awal terhadap gl_balance. Procedure di bawah BUKAN meng-
+          override GL — ia memvalidasi register vs GL pada cutoff, dan (opsional)
+          menormalkan book_value_beginning = cost - accum bila konsisten internal.
+
+  -- PROCEDURE BARU (template; belum ada di DB — review sebelum deploy) ----------
+  IF EXISTS(SELECT 1 FROM SYS.SYSPROCEDURE WHERE proc_name='sp_fa_validate_opening') THEN
+     DROP PROCEDURE sp_fa_validate_opening END IF;
+  CREATE PROCEDURE sp_fa_validate_opening(IN p_cutoff date DEFAULT '2026-01-01',
+                                          IN p_site varchar(4) DEFAULT '101')
+  BEGIN
+     -- (a) Normalkan book_value_beginning = cost - accum bila internal-konsisten.
+     --     Tidak menyentuh aset dengan inkonsistensi (cost<>accum+nbv) — itu wajib
+     --     ditangani manual (lihat recon_tag INTERNAL_MISMATCH).
+     UPDATE FA_ASSET
+        SET book_value_beginning = acquisition_cost - accum_dep_beginning
+      WHERE site_id = p_site
+        AND ABS(acquisition_cost - (accum_dep_beginning + book_value_beginning)) <= 1
+        AND book_value_beginning <> acquisition_cost - accum_dep_beginning;
+
+     -- (b) Tampilkan perbandingan register opening vs GL pada cutoff (read-only).
+     --     residual_unexpl mendekati 0 = saldo awal cocok GL.
+     SELECT account_code, account_type, register_amt, gl_amt, residual_unexpl
+       FROM v_fa_recon_gl
+      WHERE gl_period = p_cutoff
+      ORDER BY account_type, account_code;
+     COMMIT;
+  END;
+
+  -- Pemakaian:
+  CALL sp_fa_validate_opening('2026-01-01','101');
+  -- Bila ada residual_unexpl <> 0 => lihat klasifikasi (MIGRATION_GAP/PAJE_PENDING).
+
+VALIDASI MANUAL CUTOFF (tanpa procedure)
+  -- Bandingkan akumulasi awal register vs GL akun akumulasi (158-xxx) pd cutoff:
+  SELECT c.accum_dep_account AS akun,
+         CAST(SUM(a.accum_dep_beginning) AS numeric(20,2)) AS reg_akum_awal
+  FROM FA_ASSET a JOIN FA_CATEGORY c ON c.site_id=a.site_id AND c.category_code=a.category_code
+  WHERE a.site_id='101' AND c.accum_dep_account IS NOT NULL
+  GROUP BY c.accum_dep_account ORDER BY c.accum_dep_account;
+
+  SELECT AccountCode, CAST(AmountCredit-AmountDebet AS numeric(20,2)) AS gl_akum_awal
+  FROM gl_balance
+  WHERE site_id='101' AND Period='2026-01-01'
+    AND AccountCode IN ('158-001','158-101','158-201','158-301')
+  ORDER BY AccountCode;
+
+
+================================================================================
+ LAMPIRAN E — PROSES PEMBENTUKAN DATA AWAL (initial load, urutan eksekusi)
+================================================================================
+Tujuan: dari DB kosong (modul FA) -> register + saldo awal + penyusutan Jan-Jun
+2026 + jurnal GL, semua tie ke GL/Excel.
+
+  LANGKAH 1  Buat struktur tabel.................. Lampiran A  (atau fa_01_schema.sql)
+  LANGKAH 2  Seed FA_CATEGORY..................... Lampiran B
+  LANGKAH 3  Load master aset + SALDO AWAL........ fa_02_assets.sql
+             (279 aset; accum_dep_beginning, book_value_beginning,
+              beginning_period='2025-12-31' = cutoff 31/12/2025)
+  LANGKAH 4  (opsional) staging angka WP.......... fa_03_xls_monthly.sql
+  LANGKAH 5  Load FA_DEPRECIATION Jan-Jun 2026.... fa_04_depr.sql
+             (data historis hasil engine, draft)
+  LANGKAH 6  Validasi cutoff/saldo awal vs GL..... Lampiran D
+             CALL sp_fa_validate_opening('2026-01-01','101');
+  LANGKAH 7  Buat staging jurnal + cek balance.... fa_05_build_stage.sql
+  LANGKAH 8  Buat engine procedures............... Lampiran C  (atau fa_07_procs.sql)
+  LANGKAH 9  Rebase + posting Jan-Jun ke modul FA. fa_06_rebase.sql
+             CALL sp_fa_rebase_jan_jun();
+  LANGKAH 10 Subledger link FA_GL_LINK........... fa_09_gl_link.sql
+  LANGKAH 11 Menu navigasi..................... fa_08_menu.sql (lihat Bagian 4-A)
+  LANGKAH 12 Recon layer (view + sp_fa_recon)..... fa_11_recon_view.sql
+  LANGKAH 13 Verifikasi akhir.................... v_fa_recon_gl & FA_RECON_VALIDATION_EVIDENCE.md
+  LANGKAH 14 (butuh approval) Paket A............ fa_10_koreksi_paket_A.sql
+
+CATATAN URUTAN
+  - LANGKAH 2 HARUS sebelum 3 (FK FA_ASSET -> FA_CATEGORY).
+  - LANGKAH 3 menetapkan CUTOFF (saldo awal 31/12/2025) — sumber semua perhitungan.
+  - LANGKAH 8 (engine) bisa dibuat kapan saja sebelum 9.
+  - Untuk DB yang SUDAH terisi (kondisi sekarang), JANGAN ulang 1-9; cukup pakai
+    proses bulanan (Bagian 3.2) untuk periode baru.
+
+
+================================================================================
+ STATUS DATA SAAT INI (2026-06-20)
+================================================================================
+  Bengkel, Kantor : tie penuh ke GL & Excel (AUDIT_MATCH).
+  Bangunan, Tanah : pra-Paket A (MIGRATION_GAP) -> jalankan 3.4.
+  Kendaraan       : basis audit-listing; selisih ke GL = PAJE_PENDING
+                    (keputusan akuntan, bukan defect).
+  Voucher FA Jan-Jun: posting='N' (open) — set 'P' setelah dipastikan aman.
+================================================================================
