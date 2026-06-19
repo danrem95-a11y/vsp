@@ -1,0 +1,98 @@
+﻿
+===== SCHEMA: gl_journal =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table 'SYSTAB' not found"
+
+===== SCHEMA: gl_journal2 =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table 'SYSTAB' not found"
+
+===== SCHEMA: gl_journal_detail_copy =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table 'SYSTAB' not found"
+
+===== SCHEMA: gl_acc =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table 'SYSTAB' not found"
+
+===== SCHEMA: gl_setup =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table 'SYSTAB' not found"
+
+===== SCHEMA: gl_curr =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table 'SYSTAB' not found"
+
+===== SCHEMA: gl_rate =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table 'SYSTAB' not found"
+
+===== SCHEMA: gl_depart =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table 'SYSTAB' not found"
+
+===== SCHEMA: gl_project =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table 'SYSTAB' not found"
+
+===== SCHEMA: gl_cc =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table 'SYSTAB' not found"
+
+===== SCHEMA: gl_cf =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table 'SYSTAB' not found"
+
+===== SCHEMA: gl_cate =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table 'SYSTAB' not found"
+
+===== SCHEMA: gl_cate_detail =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table 'SYSTAB' not found"
+
+===== SCHEMA: gl_balance =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table 'SYSTAB' not found"
+
+===== SCHEMA: gl_site =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table 'SYSTAB' not found"
+
+===== SCHEMA: MKAS =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table 'SYSTAB' not found"
+
+===== SCHEMA: MCSTSUPP =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table 'SYSTAB' not found"
+
+===== SCHEMA: MCUST =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table 'SYSTAB' not found"
+
+===== gl_journal MODUL_ID distribution =====
+modul_id	n	tgl_min	tgl_max
+SO	173949	1/6/2011 12:00:00 AM	6/9/2026 12:00:00 AM
+CO	139343	1/3/2013 12:00:00 AM	6/9/2026 12:00:00 AM
+HP	90206	1/6/2011 12:00:00 AM	6/9/2026 12:00:00 AM
+AS	57802	3/27/2013 12:00:00 AM	1/6/2029 12:00:00 AM
+CI	48990	1/2/2015 12:00:00 AM	6/28/2026 12:00:00 AM
+PO	43791	6/28/2010 12:00:00 AM	12/30/2026 12:00:00 AM
+KS	15904	6/22/2015 12:00:00 AM	6/9/2026 12:00:00 AM
+GJ	10948	1/31/2011 12:00:00 AM	5/31/2026 12:00:00 AM
+TC	6346	1/8/2016 12:00:00 AM	6/9/2026 12:00:00 AM
+DP	5813	11/15/2011 12:00:00 AM	5/29/2026 12:00:00 AM
+EX	4308	12/12/2012 12:00:00 AM	4/25/2026 12:00:00 AM
+VR	1378	12/31/2018 12:00:00 AM	12/31/2025 12:00:00 AM
+VP	282	12/31/2018 12:00:00 AM	12/31/2025 12:00:00 AM
+(13 rows)
+
+===== gl_journal VOUCHER prefix sample by modul =====
+modul_id	voucher_min	voucher_max	nvouchers
+AS	101180100001	103BTB230200001	23228
+CI	110110118010001	210610126050002	16694
+CO	100110115100001	AP26040001P	47674
+DP	1011111DP001	2606DPR004	2839
+EX	10112120500001	1012604FR05003	1377
+GJ	1011205DP001	RL101202604	2989
+HP	10101150100003	10199160300002	23280
+KS	1011506KS001	1012606KS009	7952
+PO	1011312NK0001	NOITEM261200003	17460
+SO	10101150100003	101RK260200013	24743
+TC	1011601TC001	1012606TC008	3173
+VP	VP1202201010002	VP2202301010002	141
+VR	VR1202201010048	VR202101010161	689
+(13 rows)
+
+===== gl_setup CONTENT =====
+licensed	company_name	company_address	company_city	company_zip_code	company_country	company_telp	company_fax	company_email	company_business	periode	base_currency	re_last_year	re_this_year	re_ikhtisar	account_is1	account_is2	account_bs1	account_bs2	tipe_closing	closing_sales	closing_inkaso	acc_kas_inkaso	acc_giro_mundur	acc_ar	acc_pot_bayar	acc_lebih_bayar	acc_kurang_bayar	acc_beli	acc_beli_ppn	acc_beli_retur	acc_ap	acc_pot_bayar_ap	acc_lebih_bayar_ap	acc_kurang_bayar_ap	acc_nota_debet_ap	acc_nota_kredit_ap	acc_nota_debet_ar	acc_nota_kredit_ar	acc_jual_ppn	acc_jual_do	acc_persediaan	acc_hpp	acc_hpp2	acc_titipan	cf_bayar_ap	cf_pot_bayar_ap	cf_bayar_ar	cf_pot_bayar_ar	flag_control_document	flag_closing_harian	site_code	td_tangan_fak	kode_program_prinsipal	acc_biaya_ekpedisi	tgl_start	npwp	tgl_pkp	td_tangan_pajak	td_tangan_po	acc_cogs	acc_stngahjadi	acc_bahanbaku	acc_stok	auto_pogl	auto_sogl	auto_argl	auto_apgl	auto_expgl	auto_hppgl	acc_beli_pot	acc_jual_retur	acc_jual_pot	acc_ppn_ekspedisi	acc_pot_ekspedisi
+POWER1785309314	PT. THERMO ASRI MAKMUR	Jl. Sultan Agung Km. 28,5 Kota Baru 	BEKASI	17133	Indonesia	021-8840204	021-8847480	(null)	àìÞáíå	1/1/2026 12:00:00 AM	IDR	376-001	376-101	108-501	(null)	(null)	(null)	(null)	(null)	5/1/2026 12:00:00 AM	2/11/2008 12:00:00 AM	(null)	(null)	103-001	410-046	228-001	104-002	5101-12	104-111	(null)	226-001	110801	(null)	(null)	(null)	(null)	(null)	(null)	229-021	400-002	102-611	405-020	(null)	410-047	(null)	(null)	(null)	(null)	N	N		WIRA SETIAWAN	(null)	226-006	3/31/2026 12:00:00 AM	015607575032000	11/06/1998	WIRA SETIAWAN	WIRA	(null)	(null)	(null)	(null)	1	1	1	1	1	1	(null)	(null)	401-101	(null)	(null)
+(1 rows)
+
+===== gl_site CONTENT =====
+site_id	company_site	address_site	city_site	parent_site	no_faktur	kanvas_in	kanvas_out	po	lbm	konsinyasi_in	konsinyasi_out	koreksi_in	koreksi_out	lbk	sales	so	retur	ar_nd	ar_nk	ap_nd	ap_nk	bpb_in	bpb_out	SJ	DP_CUST_CA	DP_CUST_MK	PB	PROJSJ	PW	PP	site_id1
+101	PT.VARIA PERDANA KARYA	MENARA BATAVIA	JAKARTA	(null)	010000	101KI	101KO	101PO	101BTB	101CI	101CO	101KP	101KM	101PN	101	101SO	101RI	101RD	101RK	101PD	101PK	101BI	101BO	101SP	101DP	101DP	101PB	101SJ	PW	PP	101
+(1 rows)

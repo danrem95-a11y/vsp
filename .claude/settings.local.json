@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-Content \"c:\\\\BTV\\\\debug\\\\dw_rpt_jual_faktur1_rekap.srd\" -Encoding UTF8)",
+      "Bash(Select-String -Pattern 'group|sum|avg' -Context 2)",
+      "Bash(iconv -f UTF-16LE -t UTF-8 \"c:\\\\BTV\\\\debug\\\\dw_rpt_jual_faktur1_rekap.srd\")",
+      "Read(//tmp/**)",
+      "Bash(iconv -f UTF-16LE -t UTF-8 \"c:\\\\BTV\\\\debug\\\\w_rpt_jual.srw\" 2>/dev/null > /tmp/w_rpt.txt && cat /tmp/w_rpt.txt)",
+      "Bash(iconv -f UTF-16LE -t UTF-8 \"c:\\\\BTV\\\\debug\\\\d_jual_faktur.srd\")",
+      "Bash(findstr /i \"^group\\\\|group header\\\\|group footer\\\\|groupby\\\\|compute\\\\|sum\\(\" \"c:\\\\BTV\\\\debug\\\\dw_rpt_jual_faktur1_rekap.srd\")",
+      "Bash(powershell -Command \"Get-Content 'c:\\\\BTV\\\\debug\\\\dw_rpt_jual_faktur1_rekap.srd' | Select-String -Pattern 'group\\\\s+' | head -30\")",
+      "PowerShell($content = Get-Content 'c:\\\\BTV\\\\debug\\\\dw_rpt_jual_faktur1_rekap.srd' -Raw; $lines = $content -split '\\\\n'; $found = @\\(\\); for\\($i=0; $i -lt $lines.Length; $i++\\) { if \\($lines[$i] -match 'group\\\\s+\\(header|footer|=|by\\)'\\) { $found += \"Line $i`: $\\($lines[$i]\\)\" } }; $found | Select-Object -First 50)",
+      "Bash(grep -n \"^group\\\\|group\\\\s\" c:\\\\\\\\BTV\\\\\\\\debug\\\\\\\\dw_rpt_jual_faktur1_rekap.srd)",
+      "Bash(grep -n \"^group\\\\|group \" \"/mnt/c/BTV/debug/dw_rpt_jual_faktur1_rekap.srd\" | head -20)",
+      "Read(//mnt/c/BTV/debug/**)"
+    ],
+    "additionalDirectories": [
+      "\\tmp"
+    ]
+  }
+}

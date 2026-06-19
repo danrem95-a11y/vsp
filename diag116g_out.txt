@@ -1,0 +1,15 @@
+﻿=== tstok1 header: biaya_ekspedisi & freight vs alokasi & jurnal ===
+oc=10126040500001 hdr_biayaEx= hdr_freight= fcurr= fkurs=1.00 kurs=6407300.00 kurs1=1.00 kurs2=28193603.00
+oc=10126040500002 hdr_biayaEx= hdr_freight= fcurr= fkurs=1.00 kurs=13483175.00 kurs1=1.00 kurs2=59327578.00
+oc=10126040500003 hdr_biayaEx= hdr_freight= fcurr= fkurs=1.00 kurs=44427925.00 kurs1=1.00 kurs2=196579418.00
+
+=== Pembanding 2025 (yang jurnalnya cocok): 10125120500001 & 10125110500001 ===
+oc=10125120500001 hdr_biayaEx= hdr_freight= kurs=104670950.00 kurs2=463175987.00
+   alloc_sum=84030350.0400
+   ap: kotor=60177850.00 ppn=853844.00 netto=61031694.00
+oc=10125110500001 hdr_biayaEx= hdr_freight= kurs=10694200.00 kurs2=47056250.00
+   alloc_sum=49916521.7600
+   ap: kotor=29545522.00 ppn=1034349.00 netto=30579871.00
+oc=10125100500001 hdr_biayaEx= hdr_freight= kurs=8686325.00 kurs2=38221474.00
+   alloc_sum=38603654.6900
+   ap: kotor=21802655.00 ppn=2263845.00 netto=24066500.00

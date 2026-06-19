@@ -1,0 +1,17 @@
+﻿=== TBYR3 columns ===
+VOUCHER
+URUT
+ACCOUNT_ID
+CURR_ID
+CURR_RATE
+DEBET
+KREDIT
+DEBET_KURS
+KREDIT_KURS
+KETERANGAN
+ORDER_CLIENT
+
+=== TBYR3 rows for case vouchers ===
+
+=== TBYR3 row count total ===
+240

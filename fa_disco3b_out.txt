@@ -1,0 +1,278 @@
+﻿
+===== SCHEMA: gl_journal =====
+col	type	size	nullable	ordinal
+voucher	varchar	15	NO	1
+urut	integer	10	NO	2
+tgl	timestamp	26	YES	3
+debet	decimal	30	YES	4
+kredit	decimal	30	YES	5
+ket	varchar	250	YES	6
+kas_id	integer	10	YES	7
+giro_id	varchar	20	YES	8
+modul_id	varchar	2	YES	9
+site_id	varchar	4	NO	10
+inkaso_id	varchar	15	YES	11
+cf_flag	varchar	1	YES	12
+cc_flag	varchar	1	YES	13
+depart_id1	varchar	10	YES	14
+depart_id2	varchar	10	YES	15
+project_id1	varchar	10	YES	16
+project_id2	varchar	10	YES	17
+posting	varchar	1	YES	18
+account_id	varchar	15	YES	19
+voucher_manual	varchar	15	YES	20
+curr_id	varchar	5	YES	21
+rate_rp	decimal	14	YES	22
+rekon	varchar	1	YES	23
+cust_id	varchar	15	YES	24
+flag_dp	varchar	1	YES	25
+group_id	varchar	10	YES	26
+order_reff	varchar	15	YES	27
+debet_kurs	numeric	30	YES	28
+kredit_kurs	numeric	30	YES	29
+journal_urut	integer	10	YES	30
+doc_reff	varchar	25	YES	31
+dk	char	1	YES	32
+ket2	varchar	250	YES	33
+show_hide	char	1	YES	34
+(34 cols)
+
+===== SCHEMA: gl_journal2 =====
+col	type	size	nullable	ordinal
+voucher	varchar	15	NO	1
+urut	integer	10	NO	2
+tgl	timestamp	26	YES	3
+debet	decimal	30	YES	4
+kredit	decimal	30	YES	5
+ket	varchar	100	YES	6
+kas_id	integer	10	YES	7
+giro_id	varchar	20	YES	8
+modul_id	varchar	2	YES	9
+site_id	varchar	4	NO	10
+inkaso_id	varchar	15	YES	11
+cf_flag	varchar	1	YES	12
+cc_flag	varchar	1	YES	13
+depart_id1	varchar	10	YES	14
+depart_id2	varchar	10	YES	15
+project_id1	varchar	10	YES	16
+project_id2	varchar	10	YES	17
+posting	varchar	1	YES	18
+account_id	varchar	15	YES	19
+voucher_manual	varchar	15	YES	20
+curr_id	varchar	5	YES	21
+rate_rp	decimal	14	YES	22
+rekon	varchar	1	YES	23
+cust_id	varchar	15	YES	24
+flag_dp	varchar	1	YES	25
+group_id	varchar	10	YES	26
+order_reff	varchar	15	YES	27
+debet_kurs	numeric	30	YES	28
+kredit_kurs	numeric	30	YES	29
+journal_urut	integer	10	YES	30
+doc_reff	varchar	25	YES	31
+dk	char	1	YES	32
+ket2	varchar	100	YES	33
+(33 cols)
+
+===== SCHEMA: gl_journal_detail_copy =====
+col	type	size	nullable	ordinal
+voucher	varchar	15	NO	1
+urut	integer	10	NO	2
+account_id	varchar	15	YES	3
+keterangan	varchar	100	YES	4
+debet	numeric	14	YES	5
+kredit	numeric	14	YES	6
+debet_kurs	numeric	14	YES	7
+kredit_kurs	numeric	14	YES	8
+site_id	varchar	4	NO	9
+(9 cols)
+
+===== SCHEMA: gl_acc =====
+col	type	size	nullable	ordinal
+AccountCode	varchar	15	NO	1
+AccountDes	varchar	50	YES	2
+FinCatCode	varchar	12	YES	3
+CurrencyCode	varchar	12	YES	4
+AccType	varchar	8	YES	5
+ParentCode	varchar	15	YES	6
+LevelNo	integer	10	YES	7
+DetailYN	char	1	NO	8
+PreFix	varchar	15	YES	9
+DocRNo	varchar	15	YES	10
+DigitNo	varchar	15	YES	11
+ChqRpt	varchar	20	YES	12
+FAType	char	1	YES	13
+StkType	char	1	YES	14
+BSStkType	char	1	YES	15
+DebetCredit	char	1	YES	16
+site_id	varchar	4	NO	17
+LedgerCode	varchar	15	YES	18
+cc_flag	char	1	NO	19
+cf_flag	char	1	NO	20
+gl_acc	char	1	YES	21
+show_hide	char	1	YES	22
+(22 cols)
+
+===== SCHEMA: gl_curr =====
+col	type	size	nullable	ordinal
+curr_id	varchar	5	NO	1
+curr_desc	varchar	30	YES	2
+symbol	varchar	5	YES	3
+in_word	varchar	15	YES	4
+(4 cols)
+
+===== SCHEMA: gl_rate =====
+col	type	size	nullable	ordinal
+rate_id	varchar	15	NO	1
+curr_id	varchar	5	YES	2
+tgl	timestamp	26	YES	3
+rate_rp	decimal	14	YES	4
+rate_rp_tax	decimal	14	YES	5
+ket_pajak	varchar	50	YES	6
+(6 cols)
+
+===== SCHEMA: gl_depart =====
+col	type	size	nullable	ordinal
+depart_id	varchar	10	NO	1
+depart_desc	varchar	50	YES	2
+depart_parent	varchar	10	YES	3
+flag_detail	varchar	1	YES	4
+(4 cols)
+
+===== SCHEMA: gl_project =====
+col	type	size	nullable	ordinal
+site_id	varchar	4	NO	1
+project_id	varchar	10	NO	2
+project_desc	varchar	50	YES	3
+project_parent	varchar	10	YES	4
+(4 cols)
+
+===== SCHEMA: gl_cc =====
+col	type	size	nullable	ordinal
+cc_id	varchar	15	NO	1
+cc_desc	varchar	50	YES	2
+cc_header	varchar	1	YES	3
+site_id	varchar	4	NO	4
+(4 cols)
+
+===== SCHEMA: gl_cf =====
+col	type	size	nullable	ordinal
+cf_id	varchar	15	NO	1
+cf_desc	varchar	50	YES	2
+flag	varchar	1	YES	3
+(3 cols)
+
+===== SCHEMA: gl_cate =====
+col	type	size	nullable	ordinal
+FinCatCode	varchar	10	NO	1
+FinCatDes	varchar	50	YES	2
+(2 cols)
+
+===== SCHEMA: gl_cate_detail =====
+col	type	size	nullable	ordinal
+fincatcode	varchar	10	NO	1
+parentcode	varchar	25	NO	2
+parentname	varchar	100	YES	3
+(3 cols)
+
+===== SCHEMA: gl_balance =====
+col	type	size	nullable	ordinal
+Period	timestamp	26	NO	1
+AccountCode	varchar	15	NO	2
+AmountDebet	decimal	30	YES	3
+AmountCredit	decimal	30	YES	4
+site_id	varchar	4	NO	5
+curr_id	varchar	5	YES	6
+rate_rp	decimal	14	YES	7
+(7 cols)
+
+===== SCHEMA: gl_site =====
+col	type	size	nullable	ordinal
+site_id	varchar	4	NO	1
+company_site	varchar	50	YES	2
+address_site	varchar	100	YES	3
+city_site	varchar	25	YES	4
+parent_site	varchar	4	YES	5
+no_faktur	varchar	50	YES	6
+kanvas_in	varchar	5	YES	7
+kanvas_out	varchar	5	YES	8
+po	varchar	5	YES	9
+lbm	varchar	6	YES	10
+konsinyasi_in	varchar	5	YES	11
+konsinyasi_out	varchar	5	YES	12
+koreksi_in	varchar	5	YES	13
+koreksi_out	varchar	5	YES	14
+lbk	varchar	5	YES	15
+sales	varchar	5	YES	16
+so	varchar	5	YES	17
+retur	varchar	5	YES	18
+ar_nd	varchar	5	YES	19
+ar_nk	varchar	5	YES	20
+ap_nd	varchar	5	YES	21
+ap_nk	varchar	5	YES	22
+bpb_in	varchar	5	YES	23
+bpb_out	varchar	5	YES	24
+SJ	varchar	5	YES	25
+DP_CUST_CA	varchar	5	YES	26
+DP_CUST_MK	varchar	5	YES	27
+PB	varchar	5	YES	28
+PROJSJ	varchar	5	YES	29
+PW	varchar	5	YES	30
+PP	varchar	5	YES	31
+site_id1	varchar	4	YES	32
+(32 cols)
+
+===== SCHEMA: MKAS =====
+col	type	size	nullable	ordinal
+KAS_ID	integer	10	NO	1
+NAMA	varchar	50	YES	2
+FLAG_KAS	char	1	YES	3
+ACCOUNT_ID	varchar	15	YES	4
+SITE_ID	varchar	4	NO	5
+CURR_ID	varchar	5	YES	6
+SHOW_HIDE	char	1	YES	7
+(7 cols)
+
+===== SCHEMA: MCSTSUPP =====
+col	type	size	nullable	ordinal
+FLAG_VENDOR	integer	10	NO	1
+VENDOR_ID	varchar	10	NO	2
+NAMA	varchar	50	YES	3
+ALAMAT1	varchar	50	YES	4
+ALAMAT2	varchar	50	YES	5
+TELPON	varchar	25	YES	6
+FAX	varchar	25	YES	7
+FLAG_NPWP	integer	10	YES	8
+NPWP	varchar	20	YES	9
+PIMPINAN	varchar	50	YES	10
+KREDIT_LIMIT	numeric	14	YES	11
+POT	numeric	6	YES	12
+SLM_ID	varchar	10	YES	13
+ACCOUNTAP	varchar	15	YES	14
+ACCOUNTINV	varchar	15	YES	15
+ACCOUNTSALES	varchar	15	YES	16
+PAYMENT_TIPE	varchar	1	YES	17
+BANK1	varchar	50	YES	18
+AC1	varchar	25	YES	19
+AN1	varchar	50	YES	20
+BANK2	varchar	50	YES	21
+AC2	varchar	25	YES	22
+AN2	varchar	50	YES	23
+BANK3	varchar	50	YES	24
+AC3	varchar	25	YES	25
+AN3	varchar	50	YES	26
+TOP_DAY	integer	10	YES	27
+flag_ekspedisi	varchar	1	YES	28
+harga_ekspedisi_m3	decimal	12	YES	29
+harga_ekspedisi_kg	decimal	12	YES	30
+harga_ekspedisi_koli	decimal	12	YES	31
+tanggungan_ekspedisi	char	1	YES	32
+pct_risk	decimal	6	YES	33
+pct_dist	decimal	6	YES	34
+supplier_disc2	decimal	6	YES	35
+harga_volume1	decimal	12	YES	36
+harga_volume2	decimal	12	YES	37
+harga_countainer1	decimal	12	YES	38
+harga_countainer2	decimal	12	YES	39
+supplier_pkp	varchar	50	YES	40
+(40 cols)

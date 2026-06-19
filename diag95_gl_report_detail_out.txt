@@ -1,0 +1,939 @@
+﻿
+===== gl_report_detail - all rows =====
+site_id	report_id	report_line	account_id	description	trd123	t1	t2	t3	t4	report_row	report_space	description2	flag_omzet	flag_gp
+--------------------------------------------------------------------------------
+101		520	(null)	(null)	S	0	(null)	(null)	(null)	(null)	(null)	(null)	(null)	(null)
+101		680	(null)	TOTAL PEMBAYARAN DIMUKA	S	0	(null)	(null)	(null)	(null)	(null)	(null)	(null)	(null)
+101		690	(null)	(null)	S	0	(null)	(null)	(null)	(null)	(null)	(null)	(null)	(null)
+101		700	(null)	PIUTANG PEMEGANG SAHAM	S	0	(null)	(null)	(null)	(null)	(null)	(null)	(null)	(null)
+101		760	(null)	(null)	S	0	(null)	(null)	(null)	(null)	(null)	(null)	(null)	(null)
+101	01	10	(null)	PENJUALAN	H	 	 	 	(null)	0	0	(null)	N	N
+101	01	20	(null)	PENJUALAN UNIT PENDINGIN	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	30	400-001	     Unit Pendingin + Box - THERMO KING ( TR )	R	+	(null)	(null)	(null)	5	(null)	(null)	Y	Y
+101	01	40	400-002	     Unit Pendingin - THERMO KING ( TR )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	50	400-003	     Unit Pendingin + Box - FUJI ( FU )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	60	400-004	     Unit Pendingin - FUJI ( FU )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	70	(null)	TOTAL PENJUALAN UNIT PENDINGIN	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	80	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	90	(null)	PENJUALAN UNIT - BUS	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	100	400-006	     Unit AC Bus - THERMO KING ( TB )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	110	(null)	TOTAL PENJUALAN UNIT BUS	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	120	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	130	(null)	PENJUALAN BOX FIBERGLASS	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	140	400-301	     Box Fiberglass - MAS	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	150	(null)	TOTAL PENJUALAN BOX FIBERGLASS	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	160	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	170	(null)	PENJUALAN SPARE PART	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	180	400-101	     Spare Parts - THERMO KING ( TS )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	190	400-106	     Spare Parts - THERMO KING Lokal ( TL )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	200	400-111	     Spare Parts - FUJI ( FS )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	210	400-112	     Spare Parts - FUJI Lokal ( FL )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	220	400-113	     Spare Parts - FUJI Motor ( OS )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	230	400-114	     Spare Parts - FRIGICOOL ( FP )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	240	400-121	     Spare Parts - LOKAL ( L )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	250	(null)	TOTAL PENJUALAN SPARE PART	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	260	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	270	(null)	PENJUALAN SPARE PART SERVICE	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	280	400-201	     Spare Parts Service - THERMO KING ( TS )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	290	400-206	     Spare Parts Service - THERMO KING Lokal ( TL )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	300	400-211	     Spare Parts Service - FUJI ( FS )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	310	400-212	     Spare Parts Service - FUJI Lokal ( FL )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	320	400-213	     Spare Parts Service - FUJI Motor ( OS )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	330	400-214	     Spare Parts Service - FRIGICOOL ( FP )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	340	400-221	     Spare Parts Service - LOKAL ( L )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	350	(null)	TOTAL PENJUALAN SPARE PART SERVICE	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	360	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	370	(null)	WORKSHOP FEE	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	380	(null)	     Material Tambahan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	390	(null)	     Jasa Service	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	400	(null)	TOTAL WORKSHOP FEE	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	410	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	420	(null)	TOTAL PENJUALAN UNIT, SPARE PART & JASA	2	0	0	+	(null)	10	(null)	(null)	B	0
+101	01	430	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	440	(null)	HARGA POKOK PENJUALAN	H	(null)	(null)	(null)	(null)	0	(null)	(null)	B	0
+101	01	450	(null)	HPP PENJUALAN - UNIT PENDINGIN	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	460	402-001	     HPP. Unit Pendingin - THERMO KING ( TR )	R	+	(null)	(null)	(null)	0	(null)	(null)	N	0
+101	01	470	402-003	     HPP. Unit Pendingin - FUJI ( FU )	R	+	(null)	(null)	(null)	0	(null)	(null)	N	0
+101	01	480	(null)	TOTAL HARGA POKOK PENJUALAN UNIT PENDINGIN	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	490	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	500	(null)	HARGA POKOK PENJUALAN UNIT BUS	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	510	402-006	     HPP. Unit AC Bus - THERMO KING ( TB )	R	+	(null)	(null)	(null)	0	(null)	(null)	N	0
+101	01	520	(null)	TOTAL HARGA POKOK PENJUALAN UNIT BUS	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	530	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	540	(null)	HARGA POKOK PENJUALAN - SPARE PARTS	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	550	402-101	     HPP. Spare Parts - THERMO KING ( TS )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	560	402-106	     HPP. Spare Parts - THERMO KING Lokal ( TL )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	570	402-111	     HPP. Spare Parts - FUJI ( FS )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	580	402-112	     HPP. Spare Parts - FUJI Lokal ( FL )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	590	402-113	     HPP. Spare Parts - FUJI Motor ( OS )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	600	402-114	     HPP. Spare Parts - FRIGICOOL ( FP )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	610	402-121	     HPP. Spare Parts - LOKAL ( L )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	620	(null)	TOTAL HARGA POKOK PENJUALAN - SPARE PARTS	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	630	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	640	(null)	HARGA POKOK PENJUALAN - BOX FIBERGLASS	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	650	405-001	     HPP. Perlengkapan Unit Pendingin - BOX 	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	660	(null)	TOTAL HARGA POKOK PENJUALAN FIBERGLASS	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	670	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	680	(null)	HARGA POKOK PENJUALAN PERLENGKAPAN UNIT	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	690	405-002	     HPP. Perlengkapan Unit Pendingin - SPARE PARTS	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	700	405-003	     HPP. Perlengkapan Unit Pendingin - ISOLASI	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	710	405-004	     HPP. Perlengkapan Unit Pendingin - INSTALASI	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	720	405-005	     HPP. Perlengkapan Unit Pendingin - DESIGN LOGO	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	730	405-006	     HPP. Perlengkapan Unit AC Bus - DUCTING	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	740	405-007	     HPP. Perlengkapan Unit AC Bus - SPARE PARTS	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	750	405-008	     HPP. Perlengkapan Unit AC Bus - ROYALTI KAROSERI	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	760	405-009	     HPP. Perlengkapan Unit AC Bus - INSTALASI	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	770	405-010	     HPP. Perlengkapan Unit - EKSPEDISI	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	780	405-011	     HPP. Perlengkapan Unit - ASURANSI	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	790	405-012	     HPP. Perlengkapan Unit - SERVICE / BONGKAR PASANG	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	800	405-020	     HPP. Perlengkapan Unit - LAIN-LAIN	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	810	(null)	TOTAL HARGA POKOK PENJUALAN PERLENGKAPAN UNIT	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	820	(null)	     	S	(null)	(null)	(null)	(null)	0	(null)	(null)	N	0
+101	01	830	(null)	   TOTAL HARGA POKOK PENJUALAN	2	0	0	-	(null)	0	(null)	(null)	N	0
+101	01	840	(null)	     	S	(null)	(null)	(null)	(null)	0	(null)	(null)	N	0
+101	01	850	(null)	LABA KOTOR PENJUALAN	3	0	0	 	(null)	0	(null)	(null)	B	0
+101	01	860	(null)	(null)	S	(null)	(null)	(null)	(null)	0	(null)	(null)	(null)	(null)
+101	01	870	(null)	BIAYA OPERASIONAL	H	 	 	 	(null)	0	0	(null)	N	N
+101	01	880	(null)	BIAYA MARKETING	S	(null)	(null)	(null)	(null)	0	(null)	(null)	B	(null)
+101	01	890	(null)	GAJI, TUNJANGAN & LEMBUR	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	900	410-001	     Gaji Karyawan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	910	410-002	     Tunjangan Makan & Transport	R	+	(null)	(null)	(null)	5	(null)	(null)	N	(null)
+101	01	920	410-003	     THR, Bonus & Komisi	R	+	(null)	(null)	(null)	5	(null)	(null)	N	(null)
+101	01	930	410-004	     Insentive, Hadir & Lembur	R	+	(null)	(null)	(null)	5	(null)	(null)	N	(null)
+101	01	940	410-006	     Tunjangan Asuransi Kesehatan	R	+	(null)	(null)	(null)	5	(null)	(null)	N	0
+101	01	950	410-008	     Uang Jasa & Pesangon	R	+	(null)	(null)	(null)	5	(null)	(null)	N	0
+101	01	960	(null)	TOTAL GAJI, TUNJANGAN & LEMBUR	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	970	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	980	(null)	TELEPHONE, FAX & INTERNET	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	990	410-011	     Telephone	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1000	410-012	     Handphone	R	+	(null)	(null)	(null)	5	(null)	(null)	N	(null)
+101	01	1010	410-013	     Facsimile	R	+	(null)	(null)	(null)	5	(null)	(null)	N	(null)
+101	01	1020	410-014	     Internet	R	+	(null)	(null)	(null)	5	(null)	(null)	N	(null)
+101	01	1030	(null)	TOTAL TELEPHONE, FAX & INTERNET	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	1040	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1050	(null)	TRANSPORTASI & PERJALANAN DINAS	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1060	410-016	     Premium / Solar	R	+	(null)	(null)	(null)	5	(null)	(null)	N	(null)
+101	01	1070	410-017	     Tol & Parkir	R	+	(null)	(null)	(null)	5	(null)	(null)	N	0
+101	01	1080	410-018	     Akomodasi ( Hotel / Penginapan )	R	+	(null)	(null)	(null)	5	(null)	(null)	N	0
+101	01	1090	410-019	     Makan & Minum	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1100	410-021	     Tiket, Transportasi & Retribusi 	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1110	410-022	     Uang Saku	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1120	(null)	TOTAL TRANSPORTASI & PERJALANAN DINAS	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	1130	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1140	(null)	PAKET & KIRIM BARANG	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1150	410-026	     Paket	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1160	410-028	     Kirim Barang	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1170	(null)	TOTAL PAKET & KIRIM BARANG	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	1180	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1190	(null)	ENTERTAIN, VOUCHER & SUMBANGAN	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1200	410-031	     Entertain	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1210	410-032	     Voucher ( Tiket /Hadiah /Kado )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1220	410-033	     Sumbangan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1230		TOTAL ENTERTAIN, VOUCHER & SUMBANGAN	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	1240	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1250	(null)	IKLAN & PROMOSI	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1260	410-036	     Iklan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1270	410-037	     Promosi	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1280	(null)	TOTAL IKLAN & PROMOSI	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	1290	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1300	(null)	REPARASI & PEMELIHARAAN	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1310	410-041	     Reparasi & Pemeliharaan - Kendaraan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1320	410-044	     Reparasi & Pemeliharaan - Lainnya	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1330	(null)	TOTAL REPARASI & PEMELIHARAAN	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	1340	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1350	(null)	KOMISI & TITIPAN PENJUALAN	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1360	410-046	     Komisi Salesman	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1370	410-047	     Komisi / Titipan Customer	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1380	410-048	     Fee Relasi	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1390	410-049	     Komisi / Titipan Salesman TAM	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1400	(null)	TOTAL KOMISI & TITIPAN PENJUALAN	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	1410	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1420	(null)	ASURANSI	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1430	410-051	     Asuransi 	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1440	(null)	TOTAL ASURANSI	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	1450	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1460	(null)	BIAYA MARKETING LAINNYA	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1470	410-081	     Biaya Penjualan Lainnya	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1480	(null)	TOTAL BIAYA MARKETING LAINNYA	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	1490	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1500	(null)	TOTAL BIAYA MARKETING	2	0	0	-	(null)	0	0	(null)	N	N
+101	01	1510	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1520	(null)	BIAYA TEKNIK & PELAYANAN KONSUMEN	H	 	 	 	(null)	0	0	(null)	N	N
+101	01	1530	(null)	GAJI, TUNJANGAN & LEMBUR	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1540	411-001	     Gaji Karyawan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1550	411-002	     Tunjangan Makan & Transport	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1560	411-003	     THR & Bonus	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1570	411-004	     Insentive, Hadir & Lembur	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1580	411-006	     Tunjangan Asuransi Kesehatan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1590	411-008	     Uang Jasa & Pesangon	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1600	(null)	TOTAL GAJI, TUNJANGAN & LEMBUR	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	1610	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1620	(null)	TELEPHONE, FAX & INTERNET	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1630	411-011	     Telephone	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1640	411-012	     Handphone	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1650	411-013	     Facsimile	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1660	411-014	     Internet	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1670	(null)	TOTAL TELEPHONE, FAX & INTERNET	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	1680	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1690	(null)	TRANSPORTASI & PERJALANAN DINAS	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1700	411-016	     Premium / Solar	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1710	411-017	     Tol & Parkir	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1720	411-018	     Akomodasi ( Hotel / Penginapan )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1730	411-019	     Makan & Minum	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1740	411-021	     Tiket, Transportasi & Retribusi 	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1750	411-022	     Uang Saku	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1760	(null)	TOTAL TRANSPORTASI & PERJALANAN DINAS	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	1770	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1780	(null)	KLAIM GARANSI SPARE PARTS & SERVICE UNIT	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1790	411-026	     Klaim Garansi Spare Parts	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1800	411-027	     Klaim Garansi Service Unit	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1810	(null)	TOTAL KLAIM GARANSI SPARE PARTS & SERVICE UNIT	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	1820	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1830	(null)	ENTERTAIN, VOUCHER, TIP  & SUMBANGAN	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1840	411-031	     Entertain	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1850	411-032	     Voucher ( Tiket /Hadiah /Kado )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1860	411-033	     Sumbangan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1870	411-034	     Uang Tip / Jasa Pengantar	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1880	(null)	TOTAL ENTERTAIN, VOUCHER, TIP  & SUMBANGAN	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	1890	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1900	(null)	PELAYANAN TEHNIK & SERVICE KONSUMEN	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1910	411-036	     Pelayanan Tehnik	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1920	411-037	     Service Konsumen	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1930	(null)	TOTAL PELAYANAN TEHNIK & SERVICE KONSUMEN	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	1940	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1950	(null)	REPARASI & PEMELIHARAAN	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	1960	411-041	     Reparasi & Pemeliharaan - Kendaraan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1970	411-044	     Reparasi & Pemeliharaan - Lainnya	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	1980	(null)	TOTAL REPARASI & PEMELIHARAAN	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	1990	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2000	(null)	SEMINAR, PENDIDIKAN & PELATIHAN	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2010	411-046	     Seminar	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2020	411-047	     Pendidikan & Pelatihan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2030	(null)	TOTAL SEMINAR, PENDIDIKAN & PELATIHAN	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	2040	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2050	(null)	INSENTIF SERVICE DAN PEMASANGAN UNIT	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2060	411-051	     Insentif Pemasangan & Service	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2070	(null)	TOTAL INSENTIF & PEMASANGAN SERVICE	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	2080	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2090	(null)	BIAYA TEHNIK DAN PELAYANAN LAINNYA	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2100	411-081	     Biaya Tehnik & Pelayanan Lainnya	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2110	(null)	TOTAL BIAYA TEHNIK & PELAYANAN LAINNYA	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	2120	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2130	(null)	TOTAL BIAYA TEHNIK DAN PELAYANAN	2	0	0	-	(null)	0	0	(null)	N	N
+101	01	2140	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2150	(null)	BIAYA UMUM & ADMINISTRASI	H	 	 	 	(null)	0	0	(null)	N	N
+101	01	2160	(null)	GAJI, TUNJANGAN & LEMBUR	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2170	412-001	     Gaji Karyawan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2180	412-002	     Tunjangan Makan & Transport	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2190	412-003	     THR & Bonus	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2200	412-004	     Insentive, Hadir & Lembur	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2210	412-005	     Bonus Prestasi	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2220	412-006	     Tunjangan Asuransi Kesehatan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2230	412-007	     Fee Menejemen	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2240	412-008	     Uang Jasa & Pesangon	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2250	(null)	TOTAL GAJI, TUNJANGAN & LEMBUR	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	2260	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2270	(null)	POS, PERANGKO & METERAI	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2280	412-011	     Pos & Perangko	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2290	412-012	     Meterai	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2300	(null)	TOTAL POS, PERANGKO & METERAI	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	2310	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2320	(null)	REKENING LISTRIK & AIR	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2330	412-016	     Rekening Listrik	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2340	412-017	     Rekening Air	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2350	(null)	TOTAL REKENING LISTRIK & AIR	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	2360	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2370	(null)	ALAT TULIS, FOTOCOPY & CETAKAN	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2380	412-021	     Alat Tulis Kantor	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2390	412-022	     Fotocopy	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2400	412-023	     Cetakan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2410	(null)	TOTAL ALAT TULIS, FOTOCOPY & CETAKAN	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	2420	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2430	(null)	KEPERLUAN & PERLENGKAPAN KANTOR	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2440	412-026	     Keperluan Kantor	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2450	412-027	     Perlengkapan Kantor	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2460	(null)	TOTAL KEPERLUAN & PERLENGKAPAN KANTOR	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	2470	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2480	(null)	PENGURUSAN & PERPANJANGAN IZIN / PAJAK	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2490	412-031	     Pengurusan Izin	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2500	412-032	     Perpanjangan Izin	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2510	412-033	     Pengurusan Pajak	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2520	412-034	     Pajak Bumi & Bangunan ( PBB )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2530	(null)	TOTAL PENGURUSAN & PERPANJANGAN IZIN / PAJAK	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	2540	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2550	(null)	REPARASI & PEMELIHARAAN	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2560	412-036	     Reparasi & Pemeliharaan - Gedung	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2570	412-037	     Reparasi & Pemeliharaan - Kendaraan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2580	412-038	     Reparasi & Pemeliharaan - Inventaris Kantor	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2590	(null)	TOTAL REPARASI & PEMELIHARAAN	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	2600	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2610	(null)	ASURANSI	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2620	412-041	     Asuransi Kendaraan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2630	412-042	     Asuransi Gedung	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2640	(null)	TOTAL ASURANSI	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	2650	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2660	(null)	TELEPONE FACSIMILE & INTERNET	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2670	412-046	     Telephone	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2680	412-047	     Handphone	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2690	412-048	     Facsimile	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2700	412-049	     Pager & Internet	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2710	(null)	TOTAL TELEPONE, FACSIMILE & INTERNET	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	2720	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2730	(null)	TRANSPORTASI & PERJALANAN DINAS	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2740	412-051	     Premium / Solar	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2750	412-052	     Tol & Parkir	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2760	412-053	     Akomodasi ( Hotel / Penginapan )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2770	412-054	     Makan & Minum	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2780	412-056	     Tiket, Transportasi & Retrubusi	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2790	412-057	     Uang Saku	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2800	(null)	TOTAL TRANSPORTASI & PERJALANAN DINAS	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	2810	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2820	(null)	PAJAK PENGHASILAN	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2830	412-061	     Pajak Penghasilan - PPh 21 Karyawan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2840	412-062	     Pajak Penghasilan - Bunga	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2850	412-063	     Pajak Penghasilan - PPh 25 Badan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2860	(null)	TOTAL PAJAK PENGHASILAN	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	2870	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2880	(null)	PENYUSUTAN & AMORTISASI	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2890	412-066	     Penyusutan Aktiva Tetap	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2900	412-067	     Amortisasi	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2910	(null)	TOTAL PENYUSUTAN & AMORTISASI	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	2920	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2930	(null)	ENTERTAIN, IURAN & SUMBANGAN	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2940	412-071	     Entertain	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2950	412-072	     Voucher ( Tiket /Hadiah /Kado )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2960	412-073	     Sumbangan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	2970	(null)	TOTAL ENTERTAIN, IURAN & SUMBANGAN	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	2980	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	2990	(null)	SEWA GEDUNG	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3000	412-076	     Sewa Gedung - Batavia	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3010	(null)	TOTAL SEWA GEDUNG	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	3020	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3030	(null)	BIAYA UMUM & ADMINISTRASI LAINNYA	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3040	412-081	     Biaya Umum & Administrasi Lainnya	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3050	(null)	TOTAL BIAYA UMUM & ADMINISTRASI LAINNYA	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	3060	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3070	(null)	TOTAL BIAYA UMUM & ADMINISTRASI	2	0	0	-	(null)	0	0	(null)	N	N
+101	01	3080	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3090	(null)	BIAYA BENGKEL	H	 	 	 	(null)	0	0	(null)	N	N
+101	01	3100	(null)	GAJI, TUNJANGAN & LEMBUR	S	 	 	 	(null)	3	(null)	(null)	B	0
+101	01	3110	414-001	     Gaji Karyawan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3120	414-002	     Tunjangan Makan & Transport	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3130	414-003	     THR & Bonus	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3140	414-004	     Insentive, Hadir & Lembur	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3150	414-006	     Tunjangan Asuransi Kesehatan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3160	414-008	     Uang Jasa & Pesangon	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3170	(null)	TOTAL GAJI, TUNJANGAN & LEMBUR	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	3180	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3190	(null)	TELEPHONE, FAX & INTERNET	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3200	414-011	     Telephone	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3210	414-012	     Handphone	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3220	414-013	     Facsimile	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3230	414-014	     Internet	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3240	(null)	TOTAL TELEPHONE, FAX & INTERNET	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	3250	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3260	(null)	TRANSPORTASI & PERJALANAN DINAS	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3270	414-016	     Premium / Solar & Angkutan Umum	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3280	414-017	     Tol & Parkir	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3290	414-018	     Akomodasi ( Hotel / Penginapan )	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3300	414-019	     Makan & Minum	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3310	414-021	     Tiket, Transportasi & Retrubusi	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3320	414-022	     Uang Saku	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3330	(null)	TOTAL TRANSPORTASI & PERJALANAN DINAS	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	3340	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3350	(null)	JASA SOPIR & MEKANIK	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3360	414-026	     Jasa Sopir	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3370	414-027	     Jasa Mekanik	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3380	(null)	TOTAL JASA SOPIR & MEKANIK	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	3390	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3400	(null)	RETRIBUSI, IURAN & SUMBANGAN	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3410	414-031	     Retribusi	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3420	414-032	     Iuran	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3430	414-033	     Sumbangan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3440	(null)	TOTAL RETRIBUSI, IURAN & SUMBANGAN	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	3450	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3460	(null)	KEPERLUAN & PERLENGKAPAN BENGKEL	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3470	414-036	     Keperluan Bengkel	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3480	414-037	     Perlengkapan Bengkel	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3490	(null)	TOTAL KEPERLUAN & PERLENGKAPAN BENGKEL	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	3500	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3510	(null)	REPARASI & PEMELIHARAAN	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3520	414-041	     Reparasi & Pemeliharaan - Kendaraan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3530	414-042	     Reparasi & Pemeliharaan - Alat Kerja	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3540	414-043	     Reparasi & Pemeliharaan - Bangunan	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3550	(null)	TOTAL REPARASI & PEMELIHARAAN	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	3560	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3570	(null)	KLAIM SERVICE GARANSI	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3580	414-046	     Klaim Service Garansi	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3590	(null)	TOTAL KLAIM SERVICE GARANSI	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	3600	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3610	(null)	BIAYA BENGKEL LAINNYA	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3620	414-081	     Biaya Bengkel Lainnya	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3630	(null)	TOTAL BIAYA BENGKEL LAINNYA	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	3640	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3650	(null)	TOTAL BIAYA BENGKEL	2	0	0	-	(null)	0	0	(null)	N	N
+101	01	3660	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3670	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3680	(null)	LABA ( RUGI ) OPERASIONAL	3	0	0	 	(null)	0	0	(null)	N	N
+101	01	3690	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3700	(null)	PENDAPATAN (BIAYA) LAIN-LAIN	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3710	(null)	PENDAPATAN LAIN-LAIN	 	 	 	 	(null)	0	0	(null)	N	N
+101	01	3720	500-001	     Jasa Giro	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3730	500-002	     Pendapatan Bunga	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3740	500-003	     Selisih Pembayaran / Kurs (+)	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3750	500-004	     Laba Penjualan Aktiva	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3760	500-006	     Pendapatan Lainnya	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3770	(null)	TOTAL PENDAPATAN LAIN-LAIN	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	3780	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3790	(null)	BIAYA LAIN-LAIN	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3800	500-012	     Biaya Bunga	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3810	500-013	     Selisih Pembayaran / Kurs (-)	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3820	500-014	     Rugi Penjualan Aktiva	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3830	500-016	     Biaya Lainnya	R	+	 	 	(null)	0	0	(null)	N	N
+101	01	3840	(null)	TOTAL BIAYA LAIN-LAIN	1	0	+	 	(null)	0	0	(null)	N	N
+101	01	3850	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3860	(null)	TOTAL PENDAPATAN (BIAYA) LAINNYA	2	0	0	+	(null)	0	0	(null)	N	N
+101	01	3870	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3880	(null)	LABA (RUGI) SEBELUM PAJAK	3	0	0	 	(null)	0	(null)	(null)	B	0
+101	01	3890	(null)	(null)	S	(null)	(null)	(null)	(null)	0	(null)	(null)	(null)	0
+101	01	3900	412-062	PAJAK PENGHASILAN	T	0	0	-	(null)	0	(null)	(null)	N	0
+101	01	3910	(null)	     	S	 	 	 	(null)	0	0	(null)	N	N
+101	01	3920	(null)	LABA (RUGI) BERSIH	3	0	0	 	(null)	0	(null)	(null)	B	0
+101	01	3930	(null)	(null)	 	 	 	 	(null)	0	0	(null)	N	N
+101	01	3940	(null)	(null)	 	 	 	 	(null)	0	0	(null)	N	N
+101	01	3950	(null)	(null)	 	 	 	 	(null)	0	0	(null)	N	N
+101	01	3960	(null)	(null)	 	 	 	 	(null)	0	0	(null)	N	N
+101	01A	10	(null)	(null)	 	 	 	 	(null)	0	0	(null)	N	N
+101	01A	20	100-00%	 kas	R	+	 	 	(null)	0	0	(null)	N	N
+101	01A	30	100-10%	BANK	R	+	 	 	(null)	0	0	(null)	N	N
+101	01A	40	(null)	TOTAL	1	0	+	 	(null)	0	0	(null)	N	N
+101	02	10	(null)	                                     AKTIVA	S	0	0	0	1	(null)	(null)	(null)	(null)	(null)
+101	02	20	(null)		(null)	0	0	0	1	0	0	(null)	N	N
+101	02	30	(null)	AKTIVA LANCAR	S	0	0	0	1	(null)	(null)	(null)	(null)	(null)
+101	02	40	(null)	KAS	(null)	 	0	0	(null)	0	0	(null)	N	N
+101	02	50	100-001	     Kas Kecil - Jkt / A	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	60	100-002	     Kas Kecil - Jkt / B	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	70	100-101	     Kas United State Dollar ( US$ )	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	80	100-102	     Kas Hongkong Dollar ( HK$ )	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	90	100-103	     Kas Yen ( Y )	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	100	100-104	     Kas Taiwan Dollar ( NT$ )	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	110	(null)	TOTAL KAS	1	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	120	(null)	(null)	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	130	(null)	BANK & DEPOSITO	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	140	101-001	     BCA : 284-3003770  ( VSP )	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	150	101-002	     BCA : 002-3233034 ( Murniati S. )	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	160	101-003	     BCA : 002-3233042 ( Lasmiati )	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	170	101-101	     BCA $ : 002-3009215 ( VSP )	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	180	101-102	     BCA $ : 546-0700801 ( Hartati S. )	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	190	101-103	     NISP $ : 573810021119 ( JONATHAN TOBING HALIM )	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	200	(null)	TOTAL BANK & DEPOSITO	1	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	210	(null)	(null)	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	220	(null)	PERSEDIAAN BARANG	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	230	102-001	     Unit - Thermo King Truck Pendingin ( TR )	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	240	102-006	     Unit - Thermo King  AC Bus ( TB )	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	250	102-011	     Unit - Fuji Truck Pendingin ( FU )	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	260	102-101	     Spare Parts - Thermo King (TS)	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	270	102-102	     Spare Parts - Thermo King Lokal (TL)	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	280	102-106	     Spare Parts - Fuji (FS)	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	290	102-107	     Spare Parts - Fuji Lokal (FL)	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	300	102-108	     Spare Parts - Fuji Motor ( OS )	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	310	102-109	     Spare Parts - Frigicool ( FP )	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	320	102-110	     Spare Parts - Lokal ( L )	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	330	102-111	     Spare Parts - Louver ( VL )	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	340	102-112	     Spare Parts - Prestolite ( TSA )	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	350	102-113	     Spare Parts - Toyo ( TY )	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	360	102-201	     Compressor	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	370	102-202	     Accu	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	380	102-203	     Box Pendingin	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	390	102-204	     Isolasi	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	400	102-251	     Evaporator	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	410	102-252	     Condensor	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	420	102-253	     Ducting	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	430	102-254	     Louver	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	440	102-301	     Persediaan Barang Dlm. Proses - Brecket	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	450	102-302	     Persediaan Barang Dlm. Proses - Pully	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	460	102-303	     Persediaan Barang Dlm. Proses - Armature	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	470	102-304	     Persediaan Barang Dlm. Proses - Coupling	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	480	102-601	     Persediaan Dlm.Perjalanan - Invoice Principle	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	490	102-611	     Persediaan Dlm.Perjalanan - Expedisi Dll.	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	500	(null)	TOTAL PERSEDIAAN BARANG	1	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	510	(null)	(null)	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	520	(null)	PIUTANG USAHA	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	530	103-001	     Piutang Dagang - Unit	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	540	103-020	     Piutang Dagang - Spare Parts	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	550	103-101	     Piutang Dagang Ragu-Ragu	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	560	103-201	     Piutang Dagang Giro Mundur	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	570	(null)	TOTAL PIUTANG USAHA	1	0	 	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	580	(null)	     	S	0	+	+	(null)	0	0	(null)	N	N
+101	02	590	(null)	PEMBAYARAN DIMUKA	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	600	104-001	     Pembayaran Dimuka - Pembelian Spare Parts	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	610	104-002	     Pembayaran Dimuka - Pembelian Unit	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	620	104-101	     Pembayaran Dimuka - PPh 21 Karyawan	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	630	104-102	     Pembayaran Dimuka - PPh 22	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	640	104-103	     Pembayaran Dimuka - PPh 23 Jasa	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	650	104-105	     Pembayaran Dimuka - PPh 25 Badan	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	660	104-111	     Pembayaran Dimuka - PPN Masukan	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	670	104-201	     Pembayaran Dimuka - Asuransi Kendaraan	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	680	104-301	     Pembayaran Dimuka - Perjalanan Dinas Direksi	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	690	104-302	     Pembayaran Dimuka - Perjalanan Dinas Marketing	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	700	104-303	     Pembayaran Dimuka - Perjalanan Dinas Teknisi	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	710	104-401	     Pembayaran Dimuka - Sewa Gedung	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	720	104-501	     Pembayaran Dimuka - Instalasi Sudirman	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	730	104-502	     Pembayaran Dimuka - Instalasi Fahrizal	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	740	(null)	TOTAL PEMBAYARAN DIMUKA	1	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	750	(null)	     	S	 	+	+	(null)	0	0	(null)	N	N
+101	02	760	(null)	PIUTANG PEMEGANG SAHAM	S	0	+	+	(null)	0	0	(null)	N	N
+101	02	770	108-001	     Pemegang Saham - Mr. Sungkono	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	780	108-002	     Pemegang Saham - Mrs. Hartati Santoso	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	790	108-003	     Pemegang Saham - Mr. Sjaftari Santoso	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	800	108-004	     Pemegang Saham - Mr. Budiman Santoso	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	810	(null)	TOTAL PIUTANG PEMEGANG SAHAM	1	0	+	+	(null)	0	0	(null)	N	N
+101	02	820	(null)	     	S	 	+	+	(null)	0	0	(null)	N	N
+101	02	830	(null)	INTERCOMPANY ACCOUNTS	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	840	108-101	     Intercompany - Grand Ocean - Hongkong	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	850	108-102	     Intercompany - ST.Marketing - Singapore	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	860	108-105	     Intercompany - Mark IV	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	870	108-106	     Intercompany - TAM Bekasi	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	880	108-107	     Intercompany - TAM Solo	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	890	108-108	     Intercompany - TAM Semarang	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	900	108-109	     Intercompany - TAM Surabaya	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	910	108-110	     Intercompany - Bali Cooling System	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	920	108-111	     Intercompany - Cazasuki	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	930	108-112	     Intercompany - Wahana Indragriya	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	940	108-113	     Intercompany - Toyo	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	950	108-114	     Intercompany - Lain-Lain	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	960	(null)	TOTAL  INTERCOMPANY ACCOUNTS	1	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	970	(null)	(null)	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	980	(null)	PIUTANG KARYAWAN	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	990	108-301	     Jonggara Tambunan	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1000	108-302	     Subiakto Suryana	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1010	108-303	     Dennis Kristian	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1020	108-304	     Sudirman Abdullah	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1030	108-305	     Siswanto Wyrahardja	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1040	108-306	     FX. Suprapto	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1050	108-307	     Hery Purwanto	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	1060	108-308	     Elsye Mustika Gani	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	1070	108-309	     Wira Setiawan	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	1080	108-310	     Karnoto	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	1090	108-311	     Shianny	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1100	108-312	     Fiyana	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1110	108-313	     Arsyad	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1120	108-314	     Kuseno	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1130	108-315	     Anne Marie Chandra	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1140	108-316	     L. Reza Prabowo	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1150	108-317	     Junairi Gozali	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1160	108-318	     Heddy K.	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1170	108-319	     Mariya Sriwahyuni	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1180	108-320	     Erna Yulinati	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	1190	108-321	     Suryanto	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	1200	108-322	     Sutikno / Parmin	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	1210	108-323	     Jana Lukito	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	1220	108-348	     Sagino	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1230	108-349	     Lenawati	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1240	108-350	     Dana Pinjaman Karyawan	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1250	(null)	TOTAL PIUTANG KARYAWAN	1	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1260	(null)	(null)	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1270	(null)	PERKIRAAN SEMENTARA	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1280	108-501	     Perkiraan Sementara - Setoran /Transfer antar Bank	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1290	(null)	TOTAL PERKIRAAN SEMENTARA	1	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1300	(null)	(null)	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1310	(null)	TOTAL AKTIVA LANCAR	2	0	0	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1320	(null)	(null)	S	 	0	+	1	(null)	(null)	(null)	(null)	(null)
+101	02	1330	(null)	(null)	(null)	0	0	+	0	0	0	(null)	N	N
+101	02	1340	(null)	AKTIVA TETAP	S	0	0	+	1	(null)	(null)	(null)	(null)	(null)
+101	02	1350	(null)	TANAH	(null)	0	0	+	(null)	0	0	(null)	N	N
+101	02	1360	151-001	     Tanah	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1370	(null)	TOTAL TANAH	1	0	+	+	(null)	0	0	(null)	N	N
+101	02	1380	(null)	BANGUNAN	(null)	0	+	+	(null)	0	0	(null)	N	N
+101	02	1390	151-100	     Bangunan	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1400	(null)	TOTAL BANGUNAN	1	0	+	+	(null)	0	0	(null)	N	N
+101	02	1410	(null)	PERALATAN KANTOR	(null)	0	+	+	(null)	0	0	(null)	N	N
+101	02	1420	153-001	     Peralatan Kantor	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1430	(null)	TOTAL PERALATAN KANTOR	1	0	+	+	(null)	0	0	(null)	N	N
+101	02	1440	(null)	PERALATAN BENGKEL	(null)	0	+	+	(null)	0	0	(null)	N	N
+101	02	1450	154-001	     Peralatan Bengkel	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1460	(null)	TOTAL PERALATAN BENGKEL	1	0	+	+	(null)	0	0	(null)	N	N
+101	02	1470	(null)	KENDARAAN	(null)	0	+	+	(null)	0	0	(null)	N	N
+101	02	1480	155-001	     Kendaraan	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1490	(null)	TOTAL KENDARAAN	1	0	+	+	(null)	0	0	(null)	N	N
+101	02	1500	(null)	TOTAL AKTIVA TETAP	2	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1510	(null)	(null)	(null)	 	 	 	1	0	0	(null)	N	N
+101	02	1520	(null)	AKUMULASI PENY.AKTIVA TETAP	S	0	+	+	1	(null)	(null)	(null)	(null)	(null)
+101	02	1530	158-001	     Akumulasi Penyusutan - Bangunan	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1540	158-101	     Akumulasi Penyusutan - Peralatan Kantor	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1550	158-201	     Akumulasi Penyusutan - Peralatan Bengkel	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1560	158-301	     Akumulasi Penyusutan - Kendaraan	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1570	(null)	TOTAL AKUMULASI PENY.AKTIVA TETAP	1	0	+	+	1	(null)	(null)	(null)	(null)	(null)
+101	02	1580	(null)	(null)	(null)	 	 	 	1	0	0	(null)	N	N
+101	02	1590	(null)	TOTAL AKTIVA TETAP ( NETTO )	2	0	0	+	(null)	0	0	(null)	N	N
+101	02	1600	(null)		S	 	0	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1610	(null)	(null)	(null)	 	0	+	1	0	0	(null)	N	N
+101	02	1620	(null)	AKTIVA LAIN-LAIN	S	0	0	+	1	0	0	(null)	N	N
+101	02	1630	(null)	INVESTASI	(null)	0	0	+	(null)	0	0	(null)	N	N
+101	02	1640	202-001	     Investasi - TAM	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1650	202-002	     Investasi - TAM Pramuka	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1660	202-003	     Investasi - TAM Bandung	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1670	202-004	     Investasi - Bali Cooling System	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1680	202-005	     Investasi - TAM Semarang	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1690	202-007	     Investasi - Membership	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1700	202-008	     Investasi - Sekuritas	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1710	202-009	     Investasi - PT. Putra Damai Sejahtera	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	1720	202-020	     Investasi - Lain-Lain	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	1730	(null)	TOTAL INVESTASI	1	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1740	(null)	(null)	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1750	(null)	BIAYA DITANGGUHKAN	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1760	203-001	     Biaya Ditangguhkan - Selisih Stok	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1770	204-001	     Akum Amort.B.Ditangguhkan - Selisih Stok	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	1780	203-002	     Biaya Ditangguhkan - Penghapusan Piutang	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1790	204-002	     Akum.Amort.B. Ditangguhkan - Penghapusan Piutang	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	1800	203-003	     Biaya Ditangguhkan - Program Akuntansi	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	1810	204-003	     Akum Amort.B.Ditangguhkan - Program Akuntansi	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1820	(null)	TOTAL BIAYA DITANGGUHKAN	1	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1830	(null)	(null)	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1840	(null)	TOTAL AKTIVA LAIN-LAIN	2	0	+	+	1	0	0	(null)	N	N
+101	02	1850	(null)	     	S	 	0	+	1	0	0	(null)	N	N
+101	02	1860	(null)	(null)	(null)	0	0	+	(null)	0	0	(null)	N	N
+101	02	1870	(null)	TOTAL AKTIVA	3	0	0	0	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1880	(null)		S	 	0	0	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1890	(null)	(null)	S	 	 	0	1	0	0	(null)	N	N
+101	02	1900	(null)	                         KEWAJIBAN & MODAL	S	0	0	0	1	(null)	(null)	(null)	(null)	(null)
+101	02	1910	(null)		(null)	0	0	0	1	0	0	(null)	N	N
+101	02	1920	(null)	KEWAJIBAN LANCAR	(null)	0	0	0	1	0	0	(null)	N	N
+101	02	1930	(null)	HUTANG USAHA	(null)	 	0	0	(null)	0	0	(null)	N	N
+101	02	1940	226-001	     Hutang Dagang - Unit THERMO KING	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1950	226-002	     Hutang Dagang - Spare Parts THERMO KING	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1960	226-006	     Hutang Dagang - Biaya Ekspedisi	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1970	226-101	     Hutang Dagang - Lokal	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1980	(null)	TOTAL HUTANG USAHA	1	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	1990	(null)	(null)	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2000	(null)	BIAYA YANG MASIH HARUS DIBAYAR	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2010	227-001	     Biaya YMH. Dibayar - Pemasangan Unit	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2020	227-002	     Biaya YMH. Dibayar - Klaim Garansi Service Unit	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2030	227-003	     Biaya YMH. Dibayar - S.Parts  Perlengkapan Service	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2040	227-004	     Biaya YMH. Dibayar - Expedisi Lokal	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2050	227-005	     Biaya YMH. Dibayar - Asuransi	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2060	227-006	     Biaya YMH. Dibayar - Gaji & Tunjangan	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2070	227-007	     Biaya YMH. Dibayar - Cetakan	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2080	227-008	     Biaya YMH. Dibayar - Biaya Kendaraan & Perjalanan 	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	2090	227-009	     Biaya YMH. Dibayar - Service & S.Parts Komputer	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	2100	227-010	     Biaya YMH. Dibayar - Rek. Listrik, Telp. Dll.	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	2110	227-011	     Biaya YMH. Dibayar - Insentif Pasang & Service	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2120	227-012	     Biaya YMH. Dibayar - Pembelian Lainnya	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2130	227-013	     Biaya YMH. Dibayar - Sewa	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2140	227-014	     Biaya YMH. Dibayar - Fee / Titipan Customer	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2150	227-015	     Biaya YMH. Dibayar - Bunga Pinjaman	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	2160	(null)	TOTAL BIAYA YANG MASIH HARUS DIBAYAR	1	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2170	(null)	(null)	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2180	(null)	PENERIMAAN DIMUKA	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2190	228-001	     Penerimaan Dimuka - Uang Muka Penjualan	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	2200	(null)	TOTAL PENERIMAAN DIMUKA	1	0	+	+	(null)	0	0	(null)	N	N
+101	02	2210	(null)	     	S	 	+	+	(null)	0	0	(null)	N	N
+101	02	2220	(null)	HUTANG PAJAK	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2230	229-001	     Hutang Pajak - PPh 21 Karyawan	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2240	229-003	     Hutang Pajak - PPh 23 Jasa	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2250	229-005	     Hutang Pajak - PPh 25 Badan	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2260	229-011	     Hutang Pajak - PPh 21 ( SPT )	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2270	229-019	     Hutang Pajak - PPh 29 ( SPT )	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2280	229-021	     Hutang Pajak - PPN Keluaran	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2290	(null)	TOTAL HUTANG PAJAK	1	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2300	(null)	(null)	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2310	(null)	HUTANG KOMISI & TITIPAN	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2320	230-001	     Hutang Komisi - Jonggara Tambunan	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2330	230-002	     Hutang Komisi - Heri Purwanto	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2340	230-003	     Hutang Komisi - Heddy Krisnayadi	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2350	230-004	     Hutang Komisi - Dennis Kristian	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2360	230-006	     Hutang Komisi - Subiakto Suryana	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2370	230-007	     Hutang Komisi - FX. Suprapto	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2380	230-008	     Hutang Komisi - Dewi Trisusilowati	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2390	230-009	     Hutang Komisi - Toni Harjono	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2400	230-015	     Hutang Komisi - 10%	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	2410	(null)	TOTAL HUTANG KOMISI & TITIPAN	1	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2420	(null)	(null)	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2430	(null)	PINJAMAN SEMENTARA	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2440	231-001	     Pinjaman Sementara - TAM Bekasi	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	2450	231-002	     Pinjaman Sementara - TAM Bandung	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	2460	231-003	     Pinjaman Sementara - TAM Solo	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	2470	231-004	     Pinjaman Sementara - TAM Semarang	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	2480	231-005	     Pinjaman Sementara - TAM Surabaya	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	2490	231-006	     Pinjaman Sementara - BTM Service	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	2500	231-007	     Pinjaman Sementara - BCS	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	2510	231-010	     Pinjaman Sementara - Customer	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2520	330-001	     Pinjaman - Grand Prince ( US$ 500,000 )	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2530	330-002	     Pinjaman - Holding ( US$ 25,350 )	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2540	330-003	     Pinjaman - MarkIV ( US$ 30,000 ) 	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2550	(null)	TOTAL PINJAMAN SEMENTARA	1	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2560	(null)	(null)	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2570	(null)	TOTAL KEWAJIBAN LANCAR	2	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2580	(null)	(null)	S	0	0	+	1	(null)	(null)	(null)	(null)	(null)
+101	02	2590	(null)	KEWAJIBAN JANGKA PANJANG	S	0	0	+	1	(null)	(null)	(null)	(null)	(null)
+101	02	2600	(null)	HUTANG BANK	S	0	0	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2610	330-101	     Hutang Bank - BCA	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2620	330-104	     Hutang Bank - Permata	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2630	(null)	TOTAL HUTANG BANK	1	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2640	(null)	(null)	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2650	(null)	HUTANG PEMEGANG SAHAM	S	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2660	330-201	     Pinjaman dari Mrs. Hartati Santoso	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2670	330-202	     Pinjaman dari Mr. Budiman Santoso	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2680	330-301	     Pinjaman dari TAM Bekasi	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2690	330-302	     Pinjaman dari TAM Pramuka	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2700	330-304	     Pinjaman dari TAM Solo	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2710	330-306	     Pinjaman dari TAM Surabaya	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2720	(null)	TOTAL HUTANG PEMEGANG SAHAM	1	0	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2730	(null)	(null)	S	0	+	+	0	(null)	(null)	(null)	(null)	(null)
+101	02	2740	(null)	TOTAL KEWAJIBAN JANGKA PANJANG	2	0	0	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2750	(null)		S	 	0	+	1	(null)	(null)	(null)	(null)	(null)
+101	02	2760	(null)	MODAL 	(null)	0	0	+	1	0	0	(null)	N	N
+101	02	2770	(null)	MODAL DISETOR	(null)	0	0	+	0	0	0	(null)	N	N
+101	02	2780	375-001	     Modal Disetor	R	+	+	+	(null)	0	0	(null)	N	N
+101	02	2790	(null)	TOTAL MODAL DISETOR	1	0	+	+	(null)	0	0	(null)	N	N
+101	02	2800	(null)	LABA DITAHAN	(null)	 	+	+	(null)	0	0	(null)	N	N
+101	02	2810	376-001	     Laba ( Rugi )  Di tahan Tahun -Tahun Lalu	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2820	376-002	     Laba di cadangkan Untuk Bad Debt	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2830	376-003	     Laba Di cadangkan Untuk Karyawan	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2840	376-101	     Laba ( Rugi ) Tahun Berjalan	R	+	+	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2850	(null)	TOTAL LABA DITAHAN	1	0	+	+	(null)	0	0	(null)	N	N
+101	02	2860	(null)	TOTAL MODAL 	2	0	0	+	(null)	(null)	(null)	(null)	(null)	(null)
+101	02	2870	(null)	(null)	S	0	0	+	1	(null)	(null)	(null)	(null)	(null)
+101	02	2880	(null)	TOTAL KEWAJIBAN & MODAL	3	0	0	0	(null)	(null)	(null)	(null)	(null)	(null)
+101	10	5	BALANCE	I   A. SALDO AWAL KAS / BANK	(null)	+	(null)	(null)	0	0	(null)	(null)	(null)	(null)
+101	10	10	(null)	(null)	(null)	(null)	(null)	(null)	0	0	(null)	(null)	(null)	(null)
+101	10	15	(null)	   B. PENERIMAAN OPERASIONAL:	(null)	(null)	(null)	(null)	0	0	(null)	(null)	(null)	(null)
+101	10	25	B-01	               - Pembayaran dari Customer	D	(null)	+	(null)	0	15	(null)	(null)	(null)	(null)
+101	10	30	B-02	               - Piutang Lain-lain	D	(null)	+	(null)	0	15	(null)	(null)	(null)	(null)
+101	10	35	B-03	               - Pembayaran dari Affiliasi	D	(null)	+	(null)	0	15	(null)	(null)	(null)	(null)
+101	10	40	B-04	               - Penerimaan Pendapatan Bunga	D	(null)	+	(null)	0	15	(null)	(null)	(null)	(null)
+101	10	45	B-05	               - Penerimaan Pendapatan Lain-lain	D	(null)	+	(null)	0	15	(null)	(null)	(null)	(null)
+101	10	50	B-06	               - Penerimaan Lain-lain	D	(null)	+	(null)	0	15	(null)	(null)	(null)	(null)
+101	10	60	(null)	II B. TOTAL PENERIMAAN OPERASIONAL	2	+	0	(null)	0	0	(null)	(null)	(null)	(null)
+101	10	65	(null)	(null)	(null)	(null)	(null)	(null)	0	0	(null)	(null)	(null)	(null)
+101	10	70	(null)	   C. PENGELUARAN OPERASIONAL:	(null)	(null)	(null)	(null)	0	0	(null)	(null)	(null)	(null)
+101	10	75	C-01	          C.1 Pembayaran ke Prinsipal	D	(null)	+	(null)	0	10	(null)	(null)	(null)	(null)
+101	10	80	C-02	          C.2 Hutang Lain-lain / BYMHD / BDDM	D	(null)	+	(null)	0	10	(null)	(null)	(null)	(null)
+101	10	85	C-03	          C.3 Pembayaran ke Affiliasi	D	(null)	+	(null)	0	10	(null)	(null)	(null)	(null)
+101	10	90	C-04	          C.4 Biaya Operasional	D	(null)	+	(null)	0	10	(null)	(null)	(null)	(null)
+101	10	95	C-05	          C.5 Harga Pokok Penjualan	D	(null)	+	(null)	0	10	(null)	(null)	(null)	(null)
+101	10	100	C-06	          C.6 Pembayaran bunga / beban keuangan	D	(null)	+	(null)	0	10	(null)	(null)	(null)	(null)
+101	10	105	C-07	          C.7 Pembayaran Hutang / Piutang Pajak	D	(null)	+	(null)	0	10	(null)	(null)	(null)	(null)
+101	10	106	C-08	          C.8 Pembayaran Lain-lain	D	(null)	+	(null)	0	10	(null)	(null)	(null)	(null)
+101	10	110	(null)	III C. TOTAL PENGELUARAN OPERASIONAL	2	-	0	(null)	0	0	(null)	(null)	(null)	(null)
+101	10	115	(null)	(null)	(null)	(null)	(null)	(null)	0	0	(null)	(null)	(null)	(null)
+101	10	120	60-110	IV KAS BERSIH OPERASIONAL  (II-III)	T	(null)	(null)	(null)	0	0	(null)	(null)	(null)	(null)
+101	10	125	(null)	(null)	(null)	(null)	(null)	(null)	0	0	(null)	(null)	(null)	(null)
+101	10	130	(null)	   D. AKTIVITAS FINANCING :	(null)	(null)	(null)	(null)	0	0	(null)	(null)	(null)	(null)
+101	10	135	D-01	          D.1 Penjualan Aktiva tetap / lain-lain	D	(null)	+	(null)	0	10	(null)	(null)	(null)	(null)
+101	10	140	D-02	          D.2 Penerimaan pinjaman	D	(null)	+	(null)	0	10	(null)	(null)	(null)	(null)
+101	10	145	D-03	          D.3 Setoran modal saham	D	(null)	+	(null)	0	10	(null)	(null)	(null)	(null)
+101	10	150	D-04	          D.4 Penerimaan transfer antar kas/bank	D	(null)	+	(null)	0	10	(null)	(null)	(null)	(null)
+101	10	155	D-05	          D.5 Penerimaan lain-lain	D	(null)	+	(null)	0	10	(null)	(null)	(null)	(null)
+101	10	180	(null)	V D. TOTAL PENERIMAAN KAS NON OPERASIONAL	2	(null)	0	+	0	0	(null)	(null)	(null)	(null)
+101	10	185	(null)	(null)	(null)	(null)	(null)	(null)	0	0	(null)	(null)	(null)	(null)
+101	10	190	(null)	   E. AKTIVITAS INVESTASI :	(null)	(null)	(null)	(null)	0	0	(null)	(null)	(null)	(null)
+101	10	195	E-01	          E.1 Pembelian Aktiva tetap / lain-lain	D	(null)	+	(null)	0	10	(null)	(null)	(null)	(null)
+101	10	200	E-02	          E.2 Pelunasan Pinjaman	D	(null)	+	(null)	0	10	(null)	(null)	(null)	(null)
+101	10	205	E-03	          E.3 Penarikan modal saham	D	(null)	+	(null)	0	10	(null)	(null)	(null)	(null)
+101	10	210	E-04	          E.4 Pengambilan prive	D	(null)	+	(null)	0	10	(null)	(null)	(null)	(null)
+101	10	215	E-05	          E.5 Pembayaran Dividen	D	(null)	+	(null)	0	10	(null)	(null)	(null)	(null)
+101	10	220	E-06	          E.6 Pengeluaran Transfer antar kas/bank	D	(null)	+	(null)	0	10	(null)	(null)	(null)	(null)
+101	10	221	E-07	          E.7 Pengeluaran lain-lain	D	(null)	+	(null)	0	10	(null)	(null)	N	0
+101	10	225	(null)	VI E. TOTAL PENGELUARAN KAS NON OPERASIONL	2	(null)	0	-	0	0	(null)	(null)	(null)	(null)
+101	10	230	(null)	(null)	(null)	(null)	(null)	(null)	0	0	(null)	(null)	(null)	(null)
+101	10	235	180-225	VII     KAS BERSIH NON OPERASIONAL (V-VI)	T	0	(null)	0	0	0	(null)	(null)	(null)	(null)
+101	10	240	(null)	(null)	(null)	(null)	(null)	(null)	0	0	(null)	(null)	(null)	(null)
+101	10	265	120+235	VIII      MUTASI KAS BERSIH (IV+VII)	T	(null)	(null)	(null)	0	0	(null)	(null)	(null)	(null)
+101	10	270	(null)	(null)	(null)	(null)	(null)	(null)	0	0	(null)	(null)	(null)	(null)
+101	10	275	5+265	XI               SALDO AKHIR KAS (IX +X)	T	(null)	(null)	(null)	0	0	(null)	(null)	(null)	(null)
+101	20	5	(null)	BIAYA PENJUALAN	(null)	0	0	0	0	0	(null)	(null)	B	(null)
+101	20	10	611001	     Biaya Gaji	R	+	(null)	(null)	0	5	(null)	(null)	(null)	(null)
+101	20	15	611002	     Lembur	R	+	(null)	(null)	0	5	(null)	(null)	(null)	(null)
+101	20	20	611003	     Uang Makan	R	+	(null)	(null)	0	5	(null)	(null)	(null)	(null)
+101	20	25	611004	     Tunjangan Transport	R	+	(null)	(null)	0	5	(null)	(null)	(null)	(null)
+101	20	30	611005	     Tunjangan Lain-Lain	R	+	(null)	(null)	0	5	(null)	(null)	(null)	(null)
+101	20	35	611006	     THR	R	+	+	0	0	5	(null)	(null)	(null)	(null)
+101	20	40	611007	     Bonus	R	+	(null)	(null)	0	5	(null)	(null)	(null)	(null)
+101	20	45	611008	     Bonus Salesman	R	+	(null)	(null)	0	5	(null)	(null)	(null)	(null)
+101	20	50	612	     Biaya Penyusutan	R	+	(null)	(null)	0	5	(null)	(null)	(null)	(null)
+101	20	55	613	     Biaya Sewa	R	+	(null)	(null)	0	5	(null)	(null)	(null)	(null)
+101	20	60	614	     Biaya Pemeliharaan	R	+	(null)	(null)	0	5	(null)	(null)	(null)	(null)
+101	20	65	615	     Biaya Perlengkapan	R	+	(null)	(null)	0	5	(null)	(null)	(null)	(null)
+101	20	70	616	     Biaya Utilities	R	+	(null)	(null)	0	5	(null)	(null)	(null)	(null)
+101	20	75	617	     Biaya Izin,Pajak,Ent,Jasa	R	+	(null)	(null)	0	5	(null)	(null)	(null)	(null)
+101	20	80	618	     Biaya Pengahapusan Piutang	R	+	(null)	(null)	0	5	(null)	(null)	(null)	(null)
+101	20	85	619	     Biaya Lain-Lain	R	+	(null)	(null)	0	5	(null)	(null)	(null)	1
+101	20	90	(null)	Total Biaya Penjualan	1	0	+	0	0	0	(null)	(null)	B	1
+101	20	95	(null)	(null)	S	(null)	(null)	(null)	0	0	(null)	(null)	(null)	(null)
+101	20	100	(null)	BIAYA ADMINISTRASI & UMUM	S	(null)	(null)	(null)	0	0	(null)	(null)	B	(null)
+101	20	105	621001	     Gaji	R	+	(null)	(null)	0	5	(null)	(null)	N	(null)
+101	20	110	621002	     Lembur	R	+	(null)	(null)	0	5	(null)	(null)	N	(null)
+101	20	115	621003	     Uang Makan	R	+	(null)	(null)	0	5	(null)	(null)	N	(null)
+101	20	120	621004	     Tunjangan Transport	R	+	(null)	(null)	0	5	(null)	(null)	N	(null)
+101	20	125	621005	     Tunjangan Lain-Lain	R	+	(null)	(null)	0	5	(null)	(null)	N	(null)
+101	20	130	621006	     THR	R	+	(null)	(null)	0	5	(null)	(null)	N	(null)
+101	20	135	621007	     Bonus	R	+	(null)	(null)	0	5	(null)	(null)	N	(null)
+101	20	140	621008	     Bonus Salesman	R	+	(null)	(null)	0	5	(null)	(null)	N	(null)
+101	20	145	622	     Biaya Penyusutan	R	+	(null)	(null)	0	5	(null)	(null)	N	(null)
+101	20	150	623	     Biaya Sewa	R	+	(null)	(null)	0	5	(null)	(null)	N	(null)
+101	20	155	624	     Biaya Pemeliharaan	R	+	(null)	(null)	0	5	(null)	(null)	N	(null)
+101	20	160	625	     Biaya Perlengkapan	R	+	(null)	(null)	0	5	(null)	(null)	N	(null)
+101	20	165	626	     Biaya Utilities	R	+	(null)	(null)	0	5	(null)	(null)	N	(null)
+101	20	170	627	     Biaya Izin,Pajak,Ent,Jasa	R	+	(null)	(null)	0	5	(null)	(null)	N	(null)
+101	20	175	628	     Biaya Penghapusan Piutang	R	+	(null)	(null)	0	5	(null)	(null)	N	(null)
+101	20	180	629	     Biaya Lain-Lain	R	+	(null)	(null)	0	5	(null)	(null)	N	1
+101	20	185	(null)	Total Biaya Administrasi & Umum	1	0	+	(null)	0	0	(null)	(null)	B	1
+101	20	187	(null)	(null)	S	(null)	(null)	(null)	0	0	(null)	(null)	N	1
+101	20	190	(null)	TOTAL OPERATING EXPENSES	2	0	0	0	0	0	(null)	(null)	B	1
+(779 rows)
+
+===== gl_report_detail for Balance Sheet (report_id=02) BANK entries =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'seq_no' not found"
+
+===== Simulate OLD balance sheet BANK - check account pattern =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'seq_no' not found"
+
+===== v_neraca view definition (SA11 syntax) =====
+view_text
+--------------------------------------------------------------------------------
+create view DBA.v_neraca as
+  select '10' as group_id,'AKTIVA' as group_name,'1
+010' as subgroup_id,'AKTIVA LANCAR' as subgroup_name,
+    b.debetcredit as flag
+_dk,
+    a.fincatcode,a.fincatdes,
+    c.parentcode,c.parentname,
+    b.accou
+ntcode,b.accountdes,b.show_hide from
+    DBA.gl_cate as a,DBA.gl_acc as b,DBA.g
+l_cate_detail as c where
+    a.fincatcode = b.fincatcode and
+    b.parentcode 
+= c.parentcode and
+    a.fincatcode in( 'BS2010','BS2011','BS2015','BS2030','BS
+2031','BS2032') union all
+  select '10' as group_id,'AKTIVA' as group_name,'102
+0' as subgroup_id,'AKTIVA TETAP' as subgroup_name,
+    b.debetcredit as flag_dk
+,
+    a.fincatcode,a.fincatdes,
+    c.parentcode,c.parentname,
+    b.accountc
+ode,b.accountdes,b.show_hide from
+    DBA.gl_cate as a,DBA.gl_acc as b,DBA.gl_c
+ate_detail as c where
+    a.fincatcode = b.fincatcode and
+    b.parentcode = c
+.parentcode and
+    a.fincatcode in( 'BS2110','BS2111') union all
+  select '10
+' as group_id,'AKTIVA' as group_name,'1030' as subgroup_id,'INVESTASI' as subgro
+up_name,
+    b.debetcredit as flag_dk,
+    a.fincatcode,a.fincatdes,
+    c.pa
+rentcode,c.parentname,
+    b.accountcode,b.accountdes,b.show_hide from
+    DBA
+.gl_cate as a,DBA.gl_acc as b,DBA.gl_cate_detail as c where
+    a.fincatcode = 
+b.fincatcode and
+    b.parentcode = c.parentcode and
+    a.fincatcode in( 'BS2
+290') and
+    b.parentcode = '202-000' union all
+  select '10' as group_id,'AK
+TIVA' as group_name,'1040' as subgroup_id,'BIAYA DITANGGUHKAN' as subgroup_name,
+
+    b.debetcredit as flag_dk,
+    a.fincatcode,a.fincatdes,
+    c.parentcode
+,c.parentname,
+    b.accountcode,b.accountdes,b.show_hide from
+    DBA.gl_cate
+ as a,DBA.gl_acc as b,DBA.gl_cate_detail as c where
+    a.fincatcode = b.fincat
+code and
+    b.parentcode = c.parentcode and
+    a.fincatcode in( 'BS2290') an
+d
+    b.parentcode = '203-000' union all
+  select '10' as group_id,'AKTIVA' as
+ group_name,'1050' as subgroup_id,'AKUM.AMORT.B.DITANGGUHKAN' as subgroup_name,
+
+    b.debetcredit as flag_dk,
+    a.fincatcode,a.fincatdes,
+    c.parentcode,
+c.parentname,
+    b.accountcode,b.accountdes,b.show_hide from
+    DBA.gl_cate 
+as a,DBA.gl_acc as b,DBA.gl_cate_detail as c where
+    a.fincatcode = b.fincatc
+ode and
+    b.parentcode = c.parentcode and
+    a.fincatcode in( 'BS2290') and
+
+    b.parentcode = '204-000' union all
+  select '20' as group_id,'KEWAJIBAN &
+ MODAL' as group_name,'2010' as subgroup_id,'KEWAJIBAN LANCAR' as subgroup_name,
+
+    b.debetcredit as flag_dk,
+    a.fincatcode,a.fincatdes,
+    c.parentcode
+,c.parentname,
+    b.accountcode,b.accountdes,b.show_hide from
+    DBA.gl_cate
+ as a,DBA.gl_acc as b,DBA.gl_cate_detail as c where
+    a.fincatcode = b.fincat
+code and
+    b.parentcode = c.parentcode and
+    a.fincatcode in( 'BS3010','BS
+3012','BS3011','BS3013','BS3014','BS3015') union all
+  select '20' as group_id,
+'KEWAJIBAN & MODAL' as group_name,'2020' as subgroup_id,'KEWAJIBAN JANGKA PANJAN
+G' as subgroup_name,
+    b.debetcredit as flag_dk,
+    a.fincatcode,a.fincatde
+s,
+    c.parentcode,c.parentname,
+    b.accountcode,b.accountdes,b.show_hide f
+rom
+    DBA.gl_cate as a,DBA.gl_acc as b,DBA.gl_cate_detail as c where
+    a.f
+incatcode = b.fincatcode and
+    b.parentcode = c.parentcode and
+    a.fincatc
+ode in( 'BS3310','BS3311','BS3312','BS3313') union all
+  select '20' as group_i
+d,'KEWAJIBAN & MODAL' as group_name,'2030' as subgroup_id,'MODAL' as subgroup_na
+me,
+    b.debetcredit as flag_dk,
+    a.fincatcode,a.fincatdes,
+    c.parentc
+ode,c.parentname,
+    b.accountcode,b.accountdes,b.show_hide from
+    DBA.gl_c
+ate as a,DBA.gl_acc as b,DBA.gl_cate_detail as c where
+    a.fincatcode = b.fin
+catcode and
+    b.parentcode = c.parentcode and
+    a.fincatcode in( 'BS4030',
+'BS4040') 
+(48 rows)
+
+===== gl_report all with report_tipe =====
+site_id	report_id	report_desc	report_tipe
+--------------------------------------------------------------------------------
+101	01	Income Statement	R
+101	01A	Income Statement Detail	H
+101	02	BALANCE SHEET	N
+101	10	Cash Flow	C
+101	20	Operating Expenses	6
+(5 rows)
+
+===== Tables or views with form in name =====
+table_name	table_type
+--------------------------------------------------------------------------------
+FORMULA	BASE
+gl_report	BASE
+gl_report_detail	BASE
+(3 rows)
+
+===== Accounts matching gl_report_detail BANK pattern (102 check) =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'seq_no' not found"

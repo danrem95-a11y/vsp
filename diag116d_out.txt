@@ -1,0 +1,19 @@
+﻿=== Baris tstok2 2026 dgn rasio k V1 (0.1192601) di bukti lain ===
+
+=== Baris tstok2 2026 dgn rasio k V2 (0.0896156) di bukti lain ===
+
+=== voucher_manual EX duplikat ===
+vm=[EX25020001] jml_doc=8
+vm=[EX25100001] jml_doc=2
+vm=[EX26010001] jml_doc=6
+vm=[EX25120001] jml_doc=8
+vm=[EX25070001] jml_doc=8
+vm=[EX25010001] jml_doc=4
+vm=[EX25060001] jml_doc=4
+vm=[EX25110001] jml_doc=12
+vm=[EX25050001] jml_doc=2
+vm=[EX26040001] jml_doc=6
+vm=[EX25090001] jml_doc=8
+vm=[EX25030001] jml_doc=8
+vm=[EX26020001] jml_doc=8
+vm=[EX25080001] jml_doc=2

@@ -1,0 +1,7 @@
+JANGKAR-AP-now         rows=34     sec=0.05
+JANGKAR-SAF            rows=38     sec=0.04
+JANGKAR-AP-prior       rows=81     sec=0.01
+OPN_HIST               rows=38     sec=0.03
+MUT_ALL                rows=115    sec=0.01
+ADJ_ALL                rows=1      sec=0.00
+BYR_ALL                rows=115    sec=0.13

@@ -1,0 +1,7 @@
+C           
+-----------
+308         
+
+(1 rows)
+
+Execution time: 0.594 seconds

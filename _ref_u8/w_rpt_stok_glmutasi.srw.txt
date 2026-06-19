@@ -1,0 +1,223 @@
+$PBExportHeader$w_rpt_stok_glmutasi.srw
+forward
+global type w_rpt_stok_glmutasi from w_report
+end type
+end forward
+
+global type w_rpt_stok_glmutasi from w_report
+integer width = 3630
+integer height = 2416
+end type
+global w_rpt_stok_glmutasi w_rpt_stok_glmutasi
+
+event open;call super::open;//
+end event
+
+on w_rpt_stok_glmutasi.create
+call super::create
+end on
+
+on w_rpt_stok_glmutasi.destroy
+call super::destroy
+if IsValid(MenuID) then destroy(MenuID)
+end on
+
+type dw_con from w_report`dw_con within w_rpt_stok_glmutasi
+end type
+
+type dw_update from w_report`dw_update within w_rpt_stok_glmutasi
+end type
+
+type dw_search from w_report`dw_search within w_rpt_stok_glmutasi
+end type
+
+type st_split from w_report`st_split within w_rpt_stok_glmutasi
+end type
+
+type dw_anim from w_report`dw_anim within w_rpt_stok_glmutasi
+end type
+
+type dw_statusbar from w_report`dw_statusbar within w_rpt_stok_glmutasi
+end type
+
+type dw_leftmenu from w_report`dw_leftmenu within w_rpt_stok_glmutasi
+end type
+
+type dw_1 from w_report`dw_1 within w_rpt_stok_glmutasi
+integer height = 340
+string dataobject = "d_range_stok_mutasi_gl"
+end type
+
+event dw_1::constructor;call super::constructor;this.insertrow(0)
+datetime ldt1
+string ls_tgl
+ls_tgl = '2009-10-01'
+ldt1 = datetime(ls_tgl)
+//this.setitem(1,'tgl',f_bom(gdt_today))
+this.setitem(1,'tgl',f_bom(gdt_today))
+this.setitem(1,'tgl2',f_eom(gdt_today))
+this.setitem(1,'flag_report2','1')
+end event
+
+event dw_1::itemchanged;call super::itemchanged;string ls_vendor,ls_nama
+
+this.accepttext()
+if dwo.name = 'vendor' then
+	ls_vendor = this.object.vendor[1]
+	
+   SELECT NAMA
+    INTO :ls_nama 
+    FROM MCSTSUPP  
+    WHERE FLAG_VENDOR = 1 AND VENDOR_ID = :ls_vendor ;
+	 
+	this.setitem(1,'vendor_desc',ls_nama)
+	dw_2.reset()
+	dw_2.setfocus()
+end if
+
+if dwo.name = 'group_id' then
+	ls_vendor = this.object.group_id[1]
+	
+	SELECT NAMA_group
+	INTO  :ls_nama
+	FROM im_product_group
+	WHERE kode_group = :ls_vendor 	;
+	
+	this.setitem(1,'group_desc',ls_nama)
+	this.triggerevent('ue_retrieve')
+	
+End If
+
+if dwo.name = 'gudang_id' then
+	ls_vendor = this.object.gudang_id[1]
+	
+	 SELECT NAMA
+    INTO :ls_nama 
+    FROM MCSTSUPP  
+    WHERE FLAG_VENDOR = 3 AND VENDOR_ID = :ls_vendor ;
+	
+	this.setitem(1,'gudang_desc',ls_nama)
+	
+
+	dw_2.reset()
+	dw_2.setfocus()
+End If
+
+
+end event
+
+event dw_1::ue_retrieve;call super::ue_retrieve;string ls_vendor,ls_group,ls_group_desc,ls_kemasan,ls_zero,ls_gudang,ls_flag_report2
+datetime ldt_tgl,ldt_tgl2,ldt_start
+long ll_flag,ll_flag_qty,ll_zero,ll_minus
+str_tgl lstr_tgl
+this.AcceptText()
+
+select tgl_start
+into :ldt_start
+from gl_setup
+using sqlca;
+
+ldt_tgl		    			= this.object.Tgl[1]
+//ldt_tgl         			= datetime(date(ldt_tgl),time('00:00:00'))
+//ldt_tgl         			= f_eom(ldt_tgl)
+ldt_tgl2 = this.object.tgl2[1]
+
+
+//Cek jika tgl saldo awal tidak sama dgn tgl1
+
+//if ldt_start <> ldt_tgl then
+//	lstr_tgl.arg_tgl1 = ldt_tgl
+//	lstr_tgl.arg_tgl2 = ldt_tgl2
+//	openwithparm(w_refresh_stok,lstr_tgl)
+//end if
+
+ls_vendor    			= this.object.vendor[1]
+ll_flag         			= this.object.flag[1]
+ls_group     			= this.object.group_id[1]
+ls_group_desc     	= this.object.group_desc[1]
+ls_zero     			= this.object.zero[1]
+ls_gudang  			= this.object.gudang_id[1]
+ll_flag_qty   			= this.object.flag_qty[1]
+ls_flag_report2      = this.object.flag_report2[1]
+ll_minus = this.object.minus[1]
+
+if isnull(ls_zero) then ls_zero = 'N'
+if ls_zero = 'N' then ll_zero = 0 else ll_zero = 1
+if ls_flag_report2 = '1' then
+	dw_2.dataobject = 'dw_stok_gl_mutasi'
+else
+	dw_2.dataobject = 'dw_stok_gl_mutasi_old'
+end if
+dw_2.settransobject(sqlca)
+dw_2.retrieve(ldt_tgl,ldt_tgl2,ls_group,ll_flag,ll_zero,ll_minus)
+
+
+
+
+end event
+
+event dw_1::editchanged;call super::editchanged;string ls_nama
+if dwo.name = 'cari' then
+	this.accepttext()
+	ls_nama = upper(this.object.cari[1])
+	if isnull(ls_nama) then ls_nama = ''
+ls_nama = upper(ls_nama)
+	if ls_nama = '' then
+		dw_2.setfilter('')
+	else	
+		dw_2.setfilter('upper(is_find) like "%' + ls_nama + '%"')
+	end if
+	dw_2.filter()
+	dw_2.sort()
+	dw_2.groupcalc()
+	
+end if
+end event
+
+type dw_2 from w_report`dw_2 within w_rpt_stok_glmutasi
+string dataobject = "dw_stok_gl_mutasi"
+end type
+
+event dw_2::doubleclicked;call super::doubleclicked;dw_1.accepttext()
+string ls_stok
+datetime ldt1,ldt2
+str_parm lstr_param
+
+ldt1 = dw_1.object.tgl[1]
+ldt2 = dw_1.object.tgl2[1]
+ls_stok = this.getitemstring(getrow(),'produk_id')
+lstr_param.arg_kode = ls_stok
+lstr_param.ldt1 = ldt1
+lstr_param.ldt2 = ldt2
+
+if isvalid(w_historis_mutasi) then
+	w_historis_mutasi.dw_1.retrieve(ls_stok,ldt1,ldt2)
+else
+	openwithparm(w_historis_mutasi,lstr_param)
+end if
+end event
+
+event dw_2::buttonclicked;call super::buttonclicked;if dwo.name = 'b_delete' then
+	this.accepttext()
+	string ls_kode
+	ls_kode = this.object.produk_id[this.getrow()]
+	openwithparm(w_mst_produk_delete,ls_kode)
+	ls_kode = message.stringparm
+	if isnull(ls_kode) or ls_kode = '' then
+		return
+	else
+		dw_1.triggerevent('ue_retrieve')
+	end if
+end if
+
+end event
+
+event dw_2::retrievestart;call super::retrievestart;open(w_wait)
+end event
+
+event dw_2::retrieveend;call super::retrieveend;if isvalid(w_wait) then close(w_wait)
+end event
+
+type st_1 from w_report`st_1 within w_rpt_stok_glmutasi
+end type
+

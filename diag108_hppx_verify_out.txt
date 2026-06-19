@@ -1,0 +1,38 @@
+﻿=== DIAG108: Verify hppx Formula Mismatch = Root Cause of 533271 - 06/06/2026 22:24:19 ===
+
+=== A: OLD hppx vs NEW hppx for TR products (102-001) Jan 2026 ===
+(OLD = without ret_jual, NEW = with ret_jual - same as w_refresh_journal.srw)
+produk_id | sinv_qty | beli_qty | ret_beli | ret_jual | ret_jual_rp | hppx_OLD | hppx_NEW | diff_hpp
+
+=== B: JUAL qty per TR product (for computing selisih impact) ===
+stok_id | jual_qty | tsales2_hpp_current | coa
+TR.038 | 5.00 | 0 | 102-001
+TR.038A | 5.00 | 247123579.071111 | 102-001
+TR.039 | 5.00 | 0 | 102-001
+TR.039A | 5.00 | 211206845.076923 | 102-001
+TR.040 | 8.00 | 0 | 102-001
+TR.040A | 8.00 | 201915420.187778 | 102-001
+TR.1002 | 11.00 | 0 | 102-001
+TR.1002A | 11.00 | 34649470.030784 | 102-001
+TR.1003 | 4.00 | 0 | 102-001
+TR.1003A | 4.00 | 38464452.487045 | 102-001
+TR.1004 | 3.00 | 0 | 102-001
+TR.1004A | 3.00 | 35339050.594118 | 102-001
+TR.1006 | 5.00 | 0 | 102-001
+TR.1006A | 5.00 | 39585996.536111 | 102-001
+TR.910 | 5.00 | 0 | 102-001
+TR.910A | 5.00 | 27165189.6 | 102-001
+TR.911 | 1.00 | 0 | 102-001
+TR.911A | 1.00 | 26549047.73 | 102-001
+
+=== C: Total selisih impact OLD vs NEW hppx for account 102-001 ===
+nilai_jual_OLD | nilai_jual_NEW | selisih_jual | selisih_consout | selisih_consin
+4908299592.722107 | 4908299592.722107 | 0.000000 | 0.000000 | 0.000000
+
+=== D: Also check: ret_jual at GL (HPP cost) vs ret_jual_rp (selling price) impact ===
+ret_jual_qty | ret_jual_at_selling | ret_jual_at_cost | selling_minus_cost
+ |  |  | 
+
+=== E: Verify total selisih = GL saldo akhir - SINV Feb 2026 for 102-001 ===
+Expected: 9072870161.90 - 9072336890.75 = 533271.15
+GL saldo akhir = 9072870161.900000  SINV Feb = 9072336890.75  Selisih = 533271.150000

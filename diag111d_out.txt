@@ -1,0 +1,11 @@
+﻿Found 'cek apakah' at char: 50907
+Escaped view:
+_debet_kurs) then ldec_debet_kurs = 0[CRLF][TAB]if isnull(ldec_kredit_kurs) then ldec_kredit_kurs = 0[CRLF][TAB]if isnull(ls_faktur) then ls_faktur = ''[CRLF][TAB]if isnull(ls_faktur_silang) then ls_faktur_silang = ''[CRLF][CRLF][TAB]//cek apakah ada pembayaran silang, antara AP diadu ke AR[CRLF][TAB][CRLF][TAB]if ls_faktur = '' and ls_faktur_silang 
+Pattern 'dw_sync1.getrow(),'voucher_manual'+'P'': -1
+Pattern 'ls_voucher_manual+"P"': -1
+Pattern 'ls_voucher_manual+'P'': 52005
+Pattern 'ls_voucher_manual+': 41375
+Pattern ''P'': 8934
+
+voucher_manual+'P' at 52008
+voucher_manual+'P')[CRLF][TAB][TAB]dw_sync1.setitem(dw_sync1.getrow(),'flag_bayar',ll_flag_bayar)[CRLF][TAB][TAB]dw_sync1.setitem(dw_sync1.getrow(),'tgl',ldt_tgl)[CRLF][TAB][TAB]dw_sync1.setitem(dw_sync1.getrow(),'site_id',gs_site)[CRLF][TAB][TAB]dw_sync1.setitem(dw_sync1.getrow(),'kas_id',ll_kas)[CRLF][TAB][TAB]dw_sync1.setitem(dw_sync1.getrow(),'kolektor_id','')[CRLF][TAB][TAB]dw_sync1.setitem(dw_sync1.getrow(),'voucher_manual',ls_voucher_manual)[CRLF][TAB][TAB]dw_sync1.setitem

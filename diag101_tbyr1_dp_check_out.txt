@@ -1,0 +1,39 @@
+﻿=== tbyr1: DP-related records (2026) ===
+voucher=[2601DPR001] vm=[2601DPR001] kas_id=[2004] flag=[1] tgl=01/06/2026 00:00:00 ket=[Bayar dari DP 25112004R098]
+voucher=[2602DPR002] vm=[2602DPR002] kas_id=[2004] flag=[1] tgl=01/22/2026 00:00:00 ket=[Bayar dari DP 25122004R132]
+voucher=[2602DPR001] vm=[2602DPR001] kas_id=[2004] flag=[1] tgl=01/22/2026 00:00:00 ket=[Bayar dari DP 25112004R035]
+voucher=[2603DPR002] vm=[2603DPR002] kas_id=[2004] flag=[1] tgl=02/05/2026 00:00:00 ket=[Bayar dari DP 25102004R125]
+voucher=[2602DPR003] vm=[2602DPR003] kas_id=[2004] flag=[1] tgl=02/06/2026 00:00:00 ket=[Bayar dari DP 25122004R101]
+voucher=[2603DPR001] vm=[2603DPR001] kas_id=[2004] flag=[1] tgl=02/12/2026 00:00:00 ket=[Bayar dari DP 25122004R068]
+voucher=[2603DPR003] vm=[2603DPR003] kas_id=[2004] flag=[1] tgl=02/27/2026 00:00:00 ket=[Bayar dari DP 26012004R073]
+voucher=[2605DPR003] vm=[2605DPR003] kas_id=[2004] flag=[1] tgl=04/21/2026 00:00:00 ket=[Bayar dari DP 26042004R057]
+voucher=[2605DPR002] vm=[2605DPR002] kas_id=[2004] flag=[1] tgl=04/28/2026 00:00:00 ket=[Bayar dari DP 26032004R076]
+voucher=[2605DPR001] vm=[2605DPR001] kas_id=[2004] flag=[1] tgl=05/07/2026 00:00:00 ket=[Bayar dari DP 26032004R029]
+
+=== gl_journal: bank entries (101%) Jan 2026 with debet near 20M or 56.61M ===
+
+=== gl_journal: all DP voucher entries ===
+v=[2601DPR001] vm=[2601DPR001] acc=228-001 Dr=20000000.000000 Cr=0.000000 mod=DP urut=1 kas_id=[]
+v=[2601DPR001] vm=[2601DPR001] acc=103-001 Dr=0.000000 Cr=20000000.000000 mod=DP urut=2 kas_id=[]
+v=[2601DPR002] vm=[2601DPR002] acc=228-001 Dr=332500000.000000 Cr=0.000000 mod=DP urut=1 kas_id=[]
+v=[2601DPR002] vm=[2601DPR002] acc=103-001 Dr=0.000000 Cr=332500000.000000 mod=DP urut=2 kas_id=[]
+v=[2601DPR003] vm=[2601DPR003] acc=228-001 Dr=332500000.000000 Cr=0.000000 mod=DP urut=1 kas_id=[]
+v=[2601DPR003] vm=[2601DPR003] acc=103-001 Dr=0.000000 Cr=332500000.000000 mod=DP urut=2 kas_id=[]
+v=[2602DPR001] vm=[2602DPR001] acc=228-001 Dr=16983000.000000 Cr=0.000000 mod=DP urut=1 kas_id=[]
+v=[2602DPR001] vm=[2602DPR001] acc=103-001 Dr=0.000000 Cr=16983000.000000 mod=DP urut=2 kas_id=[]
+v=[2602DPR002] vm=[2602DPR002] acc=228-001 Dr=39627000.000000 Cr=0.000000 mod=DP urut=1 kas_id=[]
+v=[2602DPR002] vm=[2602DPR002] acc=103-001 Dr=0.000000 Cr=39627000.000000 mod=DP urut=2 kas_id=[]
+v=[2602DPR003] vm=[2602DPR003] acc=228-001 Dr=61632750.000000 Cr=0.000000 mod=DP urut=1 kas_id=[]
+v=[2602DPR003] vm=[2602DPR003] acc=103-001 Dr=0.000000 Cr=61632750.000000 mod=DP urut=2 kas_id=[]
+
+=== tbyr2: DP-related records ===
+v=[2601DPR001] bukti=[10103260100005] acc_bayar=103-001 nilai=20000000.00 idr=20000000.00 flag=1
+v=[2602DPR001] bukti=[10103260100025] acc_bayar=103-001 nilai=16983000.00 idr=16983000.00 flag=1
+v=[2602DPR002] bukti=[10103260100025] acc_bayar=103-001 nilai=39627000.00 idr=39627000.00 flag=1
+v=[2602DPR003] bukti=[10103260200003] acc_bayar=103-001 nilai=61632750.00 idr=61632750.00 flag=1
+v=[2603DPR001] bukti=[10103260200010] acc_bayar=103-001 nilai=15540000.00 idr=15540000.00 flag=1
+v=[2603DPR002] bukti=[10103260200014] acc_bayar=103-001 nilai=111000000.00 idr=111000000.00 flag=1
+v=[2603DPR003] bukti=[10103260200069] acc_bayar=103-001 nilai=32500000.00 idr=32500000.00 flag=1
+v=[2605DPR001] bukti=[10103260500005] acc_bayar=103-001 nilai=26362500.00 idr=26362500.00 flag=1
+v=[2605DPR002] bukti=[10103260400042] acc_bayar=103-001 nilai=122579200.00 idr=122579200.00 flag=1
+v=[2605DPR003] bukti=[10103260400029] acc_bayar=103-001 nilai=40000000.00 idr=40000000.00 flag=1

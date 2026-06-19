@@ -1,0 +1,39 @@
+﻿
+===== tbyr1 SAMPLE TOP 3 (AP, Jan2026) =====
+VOUCHER	FLAG_BAYAR	TGL	FLAG_VENDOR	VENDOR_ID	GIRO_ID	NILAI_GIRO	GIRO_JTH	GIRO_FLAG_STATUS	GIRO_TGL_STATUS	GIRO_VOUCHER	GIRO_BANK	SITE_ID	KAS_ID	KOLEKTOR_ID	INKASO_ID	USER_ID	FLAG_DP	VOUCHER_MANUAL	CURR_ID	KURS	KETERANGAN	GL_REFF
+26011003P027P	2	1/6/2026 12:00:00 AM	2	4SL.L016	(null)	(null)	(null)	(null)	(null)	(null)	(null)	101	0		(null)	(null)	(null)	26011003P027	IDR	1.00	LANCAR TEKNIK (PT. ANDALAN PUTRA / TAM24-510) - (2	(null)
+26011003P079P	2	1/14/2026 12:00:00 AM	2	4SL.D010	(null)	(null)	(null)	(null)	(null)	(null)	(null)	101	0		(null)	(null)	(null)	26011003P079	IDR	1.00	TOKO DEWI (0947) - (0947)  Hutang Dagang 	(null)
+26011003P134P	2	1/21/2026 12:00:00 AM	2	4SL.E009	(null)	(null)	(null)	(null)	(null)	(null)	(null)	101	0		(null)	(null)	(null)	26011003P134	IDR	1.00	ERKA JAYA 17786 - (17786)  Biaya YMH. Dibayar - S.	(null)
+(3 rows)
+
+===== tbyr2 SAMPLE TOP 3 =====
+VOUCHER	URUT	FLAG_ORDER	BUKTI_ID	NILAI_ASLI	NILAI_BAYAR	NILAI_POT	INKASO_ID	TEMP1	KET	NILAI_BAYAR_IDR	NILAI_ASLI_IDR	NILAI_POT_IDR	ACC_POT	ACC_POT_IDR	ACC_BAYAR
+1010120190002	1	2	101BTB191200027	(null)	2781229.00	(null)	(null)	(null)	(null)	2781229.00	(null)	(null)	(null)	(null)	226-001
+23022004P056P	10	2	NOITEM221200052	(null)	20293100.00	(null)	(null)	(null)	PEMASANGAN UNIT (TS22120085) - (TS22120085)  Biaya YMH. Dibayar - Pemasangan Unit	20293100.00	(null)	(null)	(null)	(null)	227-001
+23022004P058P	2	2	NOITEM220700088	(null)	206000.00	(null)	(null)	(null)	SUMBER MANDIRI (SM220702) - (SM220702)  Biaya YMH. Dibayar - S.Parts  Perlengkapan Service	206000.00	(null)	(null)	(null)	(null)	227-003
+(3 rows)
+
+===== tbyr2 COLUMNS (SYSCOLUMNS) =====
+cname	coltype
+VOUCHER	varchar
+URUT	integer
+FLAG_ORDER	integer
+BUKTI_ID	varchar
+NILAI_ASLI	decimal
+NILAI_BAYAR	decimal
+NILAI_POT	decimal
+INKASO_ID	varchar
+TEMP1	varchar
+KET	varchar
+NILAI_BAYAR_IDR	decimal
+NILAI_ASLI_IDR	decimal
+NILAI_POT_IDR	decimal
+ACC_POT	varchar
+ACC_POT_IDR	varchar
+ACC_BAYAR	varchar
+(16 rows)
+
+===== gl_setup bank accounts =====
+acc_ar	acc_ap
+103-001	226-001
+(1 rows)

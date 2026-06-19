@@ -1,0 +1,62 @@
+﻿
+===== TABLES WITH SALDO IN NAME =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'tname' not found"
+
+===== ALL USER TABLES =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'tname' not found"
+
+===== BANK GL DEC 2025 (kas_id>0) =====
+account_id	modul_id	kas_id	total_debet	total_kredit	cnt
+------------------------------------------------------------
+100-001	CO	1001	0.000000	239000.000000	2
+100-003	CO	1003	0.000000	94950404.000000	267
+101-011	CI	2004	14150428207.000000	0.000000	136
+101-011	CO	2004	0.000000	12482180667.000000	179
+101-110	CI	2105	24566.240000	0.000000	1
+101-110	CO	2105	0.000000	358912119.920000	3
+(6 rows)
+
+===== TOTAL BANK DEC 2025 (kas_id>0) =====
+total_debet	total_kredit	netto
+------------------------------------------------------------
+14150452773.240000	12936282190.920000	1214170582.320000
+(1 rows)
+
+===== TOTAL BANK NOV 2025 (kas_id>0) =====
+total_debet	total_kredit	netto
+------------------------------------------------------------
+7644920968.000000	10898286107.000000	-3253365139.000000
+(1 rows)
+
+===== YEARLY BANK BALANCE (per year, kas_id>0) =====
+tahun	total_debet	total_kredit	netto
+------------------------------------------------------------
+2013	17367500.000000	610205022.000000	-592837522.000000
+2014	8570000.000000	508181206.000000	-499611206.000000
+2015	141792291771.190000	163246229671.080000	-21453937899.890000
+2016	115600947043.830000	117498099940.520000	-1897152896.690000
+2017	151052793176.580000	155923162946.510000	-4870369769.930000
+2018	200300295214.070000	197914412428.840000	2385882785.230000
+2019	174948217796.500000	179012209882.690000	-4063992086.190000
+2020	90272266756.840000	85165080092.090000	5107186664.750000
+2021	96213884920.990000	99301085895.150000	-3087200974.160000
+2022	119020651212.500000	121647462799.670000	-2626811587.170000
+2023	123171514298.340000	120877134734.720000	2294379563.620000
+2024	114032848657.270000	114620828383.600000	-587979726.330000
+2025	104274416757.710000	104529123255.020000	-254706497.310000
+2026	61755075715.940000	64709801119.550000	-2954725403.610000
+(14 rows)
+
+===== GL_JOURNAL POSTING TYPES (bank) =====
+posting	modul_id	cnt
+------------------------------------------------------------
+ERROR: Exception calling "Read" with "0" argument(s): "The connection has been disabled."
+
+===== ALL MODUL_ID IN GL_JOURNAL JAN2026 (kas_id>0) =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ExecuteReader requires an open and available Connection. The connection's current state is closed."
+
+===== BANK CI DEC 2025 LARGE DEBET (>10M) =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ExecuteReader requires an open and available Connection. The connection's current state is closed."
+
+===== ANY GL BANK ENTRY NEAR 76,609,999 (ALL DATES) =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ExecuteReader requires an open and available Connection. The connection's current state is closed."

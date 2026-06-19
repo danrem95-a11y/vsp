@@ -1,0 +1,19 @@
+﻿=== STEP 1: Wrong Bank+AR GL entries for Jan 2026 DP vouchers (modul_id=CI) ===
+(none found - local DB is clean)
+Total wrong CI entries: 0
+
+=== STEP 2: tbyr1 kas_id for Jan 2026 DP records ===
+v=[2601DPR001] vm=[2601DPR001] kas_id=[2004] flag=1 tgl=01/06/2026 00:00:00 bank=[BCA - A/C 284-0066005 PT. TAM/acc:101-011]
+v=[2602DPR002] vm=[2602DPR002] kas_id=[2004] flag=1 tgl=01/22/2026 00:00:00 bank=[BCA - A/C 284-0066005 PT. TAM/acc:101-011]
+v=[2602DPR001] vm=[2602DPR001] kas_id=[2004] flag=1 tgl=01/22/2026 00:00:00 bank=[BCA - A/C 284-0066005 PT. TAM/acc:101-011]
+
+=== STEP 3: Bank (101%) balance Jan 2026 ===
+Bank Jan debet=10071628488.540000 kredit=16256796404.550000 net=-6185167916.010000
+
+=== STEP 4: Saldo bank (opening + Jan) ===
+Opening bank debet=10561210732.800000 kredit=0.000000
+Jan journal bank debet=10071628488.540000 kredit=16256796404.550000
+=== COMPUTED BANK SALDO (end Jan 2026): 4376042816.790000 ===
+Expected: 4376042816.79
+Production wrong: 4452652816.79
+Diff: 0.000000

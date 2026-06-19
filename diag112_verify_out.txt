@@ -1,0 +1,116 @@
+﻿=== f_transfer_ap.srf diag112 verification ===
+Total lines: 607
+
+=== Token checks ===
+  FOUND: ldec_actual_kas
+  FOUND: ldec_total_kas
+  FOUND: ldec_selisih_kurs
+  FOUND: ls_selisih_acc
+  FOUND: ls_selisih_ket
+  FOUND: ls_tmp_acc
+  FOUND: k_row
+  FOUND: isnull(sum(kredit),0)
+  FOUND: ls_tmp_acc = ls_acckas
+  FOUND: ldec_kas = lds_update.getitemdecimal
+  FOUND: Rugi kurs
+  FOUND: Laba kurs
+  FOUND: diag112
+  FOUND: doc_reff sengaja kosong
+
+=== Fix block location ===
+Fix block starts at line 487
+  L485: 	
+  L486: next
+  L487: //Fix diag112: Preserve selisih kurs dari GL yang ada (sebelum dihapus)
+  L488: //   Baca nilai bank aktual dari GL, koreksi kredit BCA, tambah baris selisih kurs
+  L489: ldec_actual_kas = 0
+  L490: select isnull(sum(kredit),0)
+  L491: into :ldec_actual_kas
+  L492: from gl_journal
+  L493: where voucher_manual = :ls_vouchermanual
+  L494:   and kas_id > 0
+  L495: using sqlca;
+  L496: if isnull(ldec_actual_kas) then ldec_actual_kas = 0
+  L497: 
+  L498: ldec_total_kas = 0
+  L499: for k_row = 1 to lds_update.rowcount()
+  L500: 	ls_tmp_acc = lds_update.getitemstring(k_row,'account_id')
+  L501: 	if isnull(ls_tmp_acc) then ls_tmp_acc = ''
+  L502: 	if ls_tmp_acc = ls_acckas then
+  L503: 		ldec_total_kas = ldec_total_kas + lds_update.getitemdecimal(k_row,'kredit')
+  L504: 	end if
+  L505: next
+  L506: 
+  L507: ldec_selisih_kurs = ldec_actual_kas - ldec_total_kas
+  L508: 
+  L509: if abs(ldec_selisih_kurs) > 0.01 then
+  L510: 	ls_selisih_acc = ''
+  L511: 	ls_selisih_ket = ''
+  L512: 	select top 1 account_id, isnull(ket,'')
+  L513: 	into :ls_selisih_acc, :ls_selisih_ket
+  L514: 	from gl_journal
+  L515: 	where voucher_manual = :ls_vouchermanual
+  L516: 	  and kas_id = 0
+  L517: 	  and isnull(doc_reff,'') = ''
+  L518: 	  and isnull(order_reff,'') = ''
+  L519: 	using sqlca;
+  L520: 	if isnull(ls_selisih_acc) then ls_selisih_acc = ''
+  L521: 	if isnull(ls_selisih_ket) then ls_selisih_ket = ''
+  L522: 	if ls_selisih_acc <> '' then
+  L523: 		//Koreksi kredit BCA pertama: sesuaikan dengan selisih kurs
+  L524: 		for k_row = 1 to lds_update.rowcount()
+  L525: 			ls_tmp_acc = lds_update.getitemstring(k_row,'account_id')
+  L526: 			if isnull(ls_tmp_acc) then ls_tmp_acc = ''
+  L527: 			if ls_tmp_acc = ls_acckas then
+  L528: 				ldec_kas = lds_update.getitemdecimal(k_row,'kredit') + ldec_selisih_kurs
+  L529: 				lds_update.setitem(k_row,'kredit',ldec_kas)
+  L530: 				if ldec_kurs > 0 then
+  L531: 					lds_update.setitem(k_row,'kredit_kurs',ldec_kas/ldec_kurs)
+  L532: 				end if
+  L533: 				exit
+  L534: 			end if
+  L535: 		next
+  L536: 		//Tambah baris selisih kurs (debet jika rugi kurs, kredit jika laba kurs)
+  L537: 		lds_update.setrow(lds_update.insertrow(0))
+  L538: 		lds_update.setitem(lds_update.getrow(),'voucher',ls_voucher)
+  L539: 		lds_update.setitem(lds_update.getrow(),'urut',lds_update.getrow())
+  L540: 		lds_update.setitem(lds_update.getrow(),'tgl',ldt_tgl)
+  L541: 		lds_update.setitem(lds_update.getrow(),'modul_id','CO')
+  L542: 		lds_update.setitem(lds_update.getrow(),'site_id',gs_site)
+  L543: 		lds_update.setitem(lds_update.getrow(),'posting','P')
+  L544: 		lds_update.setitem(lds_update.getrow(),'kas_id',0)
+  L545: 		lds_update.setitem(lds_update.getrow(),'account_id',ls_selisih_acc)
+  L546: 		lds_update.setitem(lds_update.getrow(),'ket',ls_selisih_ket)
+  L547: 		if ldec_selisih_kurs > 0 then //Rugi kurs: bank bayar lebih dari hutang
+  L548: 			lds_update.setitem(lds_update.getrow(),'debet',ldec_selisih_kurs)
+  L549: 			lds_update.setitem(lds_update.getrow(),'kredit',0.00)
+  L550: 			lds_update.setitem(lds_update.getrow(),'kredit_kurs',0.00)
+  L551: 			if ldec_kurs > 0 then
+  L552: 				lds_update.setitem(lds_update.getrow(),'debet_kurs',ldec_selisih_kurs/ldec_kurs)
+  L553: 			end if
+  L554: 		else //Laba kurs: bank bayar kurang dari hutang
+  L555: 			lds_update.setitem(lds_update.getrow(),'kredit',abs(ldec_selisih_kurs))
+  L556: 			lds_update.setitem(lds_update.getrow(),'debet',0.00)
+  L557: 			lds_update.setitem(lds_update.getrow(),'debet_kurs',0.00)
+  L558: 			if ldec_kurs > 0 then
+  L559: 				lds_update.setitem(lds_update.getrow(),'kredit_kurs',abs(ldec_selisih_kurs)/ldec_kurs)
+  L560: 			end if
+  L561: 		end if
+  L562: 		lds_update.setitem(lds_update.getrow(),'curr_id',ls_curr)
+  L563: 		lds_update.setitem(lds_update.getrow(),'rate_rp',ldec_kurs)
+  L564: 		lds_update.setitem(lds_update.getrow(),'voucher_manual',ls_vouchermanual)
+  L565: 		//doc_reff sengaja kosong: menandai baris selisih kurs (bukan AP invoice row)
+  L566: 	end if
+  L567: end if
+  L568: //Delete data GL before Update
+  L569: delete from gl_journal where voucher_manual = :ls_vouchermanual using sqlca; commit;
+  L570: lds_update.accepttext()
+  L571: lds_update.update()
+  L572: commit;
+
+=== Structural check ===
+  'next' at line: 486
+  'delete from gl_journal' at line: 569
+  Fix block between: 487 and 568
+  ORDER OK: next â†’ fix block â†’ delete
+

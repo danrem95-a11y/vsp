@@ -1,0 +1,2590 @@
+﻿$PBExportHeader$w_refresh_journal.srw
+forward
+global type w_refresh_journal from w_frame_main
+end type
+type dw_arg from uo_dw within w_refresh_journal
+end type
+type st_1 from statictext within w_refresh_journal
+end type
+type st_2 from statictext within w_refresh_journal
+end type
+type st_3 from statictext within w_refresh_journal
+end type
+type cb_1 from commandbutton within w_refresh_journal
+end type
+type st_4 from statictext within w_refresh_journal
+end type
+type cb_2 from commandbutton within w_refresh_journal
+end type
+type cb_3 from commandbutton within w_refresh_journal
+end type
+type cb_4 from commandbutton within w_refresh_journal
+end type
+type cb_5 from commandbutton within w_refresh_journal
+end type
+type cb_6 from commandbutton within w_refresh_journal
+end type
+type dw_trace from uo_dw within w_refresh_journal
+end type
+type cb_7 from commandbutton within w_refresh_journal
+end type
+type cb_8 from commandbutton within w_refresh_journal
+end type
+type cb_9 from commandbutton within w_refresh_journal
+end type
+type dw_sync2 from uo_dw within w_refresh_journal
+end type
+type dw_sync1 from uo_dw within w_refresh_journal
+end type
+type cb_10 from commandbutton within w_refresh_journal
+end type
+type cb_11 from commandbutton within w_refresh_journal
+end type
+type cb_12 from commandbutton within w_refresh_journal
+end type
+type cb_13 from commandbutton within w_refresh_journal
+end type
+type dw_delete from uo_dw within w_refresh_journal
+end type
+type cb_14 from commandbutton within w_refresh_journal
+end type
+type cb_15 from commandbutton within w_refresh_journal
+end type
+type dw_gl from uo_dw within w_refresh_journal
+end type
+type dw_bayar1 from uo_dw within w_refresh_journal
+end type
+type dw_bayar2 from uo_dw within w_refresh_journal
+end type
+type cb_16 from commandbutton within w_refresh_journal
+end type
+type cb_17 from commandbutton within w_refresh_journal
+end type
+end forward
+
+global type w_refresh_journal from w_frame_main
+integer width = 5230
+integer height = 2428
+string title = "Refresh Transaksi"
+dw_arg dw_arg
+st_1 st_1
+st_2 st_2
+st_3 st_3
+cb_1 cb_1
+st_4 st_4
+cb_2 cb_2
+cb_3 cb_3
+cb_4 cb_4
+cb_5 cb_5
+cb_6 cb_6
+dw_trace dw_trace
+cb_7 cb_7
+cb_8 cb_8
+cb_9 cb_9
+dw_sync2 dw_sync2
+dw_sync1 dw_sync1
+cb_10 cb_10
+cb_11 cb_11
+cb_12 cb_12
+cb_13 cb_13
+dw_delete dw_delete
+cb_14 cb_14
+cb_15 cb_15
+dw_gl dw_gl
+dw_bayar1 dw_bayar1
+dw_bayar2 dw_bayar2
+cb_16 cb_16
+cb_17 cb_17
+end type
+global w_refresh_journal w_refresh_journal
+
+forward prototypes
+public subroutine f_re_dp ()
+public subroutine f_re_dp_beli ()
+end prototypes
+
+public subroutine f_re_dp ();dw_trace.accepttext()
+if dw_trace.getrow() <=0 then return
+string ls_reff,ls_curr,ls_voucher,ls_ket,ls_link,ls_voucher_refresh,ls_coa_jaminan,ls_coa_voucher,ls_coa_debet
+decimal ldec_kurs,ldec_debet,ldec_debet_kurs,ldec_faktur
+string ls_coa_dp,ls_coa_piutang,ls_curr_faktur,ls_cust,ls_order_client
+datetime ldt_tgl
+long ll_kas,i,ll_rowcount
+ ll_rowcount = dw_trace.rowcount()
+
+for i = 1 to ll_rowcount
+	st_3.text = 'Checking row : '+string(i)+' of '+string(ll_rowcount)
+	ls_link = dw_trace.getitemstring(i,'voucher')
+	ls_reff = dw_trace.getitemstring(i,'account_id')
+	ls_curr = dw_trace.getitemstring(i,'curr_id')
+	ls_voucher = dw_trace.getitemstring(i,'voucher_manual')
+	ls_ket = dw_trace.getitemstring(i,'ket')
+	ldec_kurs = dw_trace.getitemdecimal(i,'curr_rate')
+	ldec_debet = dw_trace.getitemdecimal(i,'debet')
+	ldec_debet_kurs = dw_trace.getitemdecimal(i,'debet_kurs')
+	ldt_tgl = dw_trace.object.tgl[i]
+	
+	if isnull(ls_ket) then ls_ket = ''
+	
+	//Apakah DP ini untuk jaminan? jika jaminan maka COA nya bukan coa DP
+	//////Cek Coa DP dari Voucher
+	//edit lagi, dari pilihan
+	/*
+	select account_id
+	into :ls_coa_voucher
+	from gl_journal
+	where voucher_manual = :ls_voucher and urut = 2
+	using sqlca;
+	*/
+	ls_coa_voucher = dw_trace.getitemstring(i,'coa_kredit')
+	
+	select acc_lebih_bayar,acc_ar
+	into :ls_coa_dp,:ls_coa_piutang
+	from gl_setup
+	using sqlca;
+	
+	//228-001 - Penerimaan DImuka - Uang Muka Penjualan
+	
+	if ls_coa_voucher = '' or isnull(ls_coa_voucher) then
+		ls_coa_voucher = ls_coa_dp
+	end if
+	
+	//Coa update pake DP atau jaminan??
+	/* ambil berdasarkan inputan di form DP, DONAL 20220822
+	if ls_coa_voucher = '228-003' then
+		ls_coa_debet = ls_coa_voucher
+	else
+		ls_coa_debet = ls_coa_dp
+	end if
+	*/
+	ls_coa_debet = dw_trace.getitemstring(i,'coa_kredit')
+	
+	select curr_id,cust_id,order_client,ttl_netto
+	into :ls_curr_faktur,:ls_cust,:ls_order_client,:ldec_faktur
+	from tsales1
+	where bukti_id = :ls_link
+	using sqlca;
+	if isnull(ls_curr_faktur) then ls_curr_faktur = 'IDR'
+	
+	if isnull(ls_coa_dp) or ls_coa_dp = '' then
+		messagebox('Warning!','COA DP tidak valid...!, Harap setup terlebih dahulu COA DP..',stopsign!)
+		return
+	end if
+	
+	dw_bayar1.reset()
+	dw_bayar2.reset()
+	dw_gl.reset()
+	//debet
+	dw_gl.setrow(dw_gl.insertrow(0))
+	dw_gl.setitem(dw_gl.getrow(),'voucher',ls_reff)
+	dw_gl.setitem(dw_gl.getrow(),'voucher_manual',ls_reff)
+	dw_gl.setitem(dw_gl.getrow(),'giro_id',ls_voucher)
+	dw_gl.setitem(dw_gl.getrow(),'tgl',ldt_tgl)
+	dw_gl.setitem(dw_gl.getrow(),'modul_id','DP')
+	dw_gl.setitem(dw_gl.getrow(),'site_id',gs_site)
+	dw_gl.setitem(dw_gl.getrow(),'urut',dw_gl.getrow())
+	dw_gl.setitem(dw_gl.getrow(),'debet',ldec_debet)
+	dw_gl.setitem(dw_gl.getrow(),'kredit',0)
+	dw_gl.setitem(dw_gl.getrow(),'debet_kurs',ldec_debet_kurs)
+	dw_gl.setitem(dw_gl.getrow(),'kredit_kurs',0)
+	dw_gl.setitem(dw_gl.getrow(),'doc_reff',ls_order_client)
+	//dw_gl.setitem(dw_gl.getrow(),'account_id',ls_coa_dp)
+	dw_gl.setitem(dw_gl.getrow(),'account_id',ls_coa_debet)
+	dw_gl.setitem(dw_gl.getrow(),'ket','DP '+ls_voucher+' ('+ls_ket+')')
+	//kredit
+	dw_gl.setrow(dw_gl.insertrow(0))
+	dw_gl.setitem(dw_gl.getrow(),'voucher',ls_reff)
+	dw_gl.setitem(dw_gl.getrow(),'voucher_manual',ls_reff)
+	dw_gl.setitem(dw_gl.getrow(),'giro_id',ls_voucher)
+	dw_gl.setitem(dw_gl.getrow(),'tgl',ldt_tgl)
+	dw_gl.setitem(dw_gl.getrow(),'modul_id','DP')
+	dw_gl.setitem(dw_gl.getrow(),'site_id',gs_site)
+	dw_gl.setitem(dw_gl.getrow(),'urut',dw_gl.getrow())
+	dw_gl.setitem(dw_gl.getrow(),'debet',0)
+	dw_gl.setitem(dw_gl.getrow(),'kredit',ldec_debet)
+	dw_gl.setitem(dw_gl.getrow(),'debet_kurs',0)
+	dw_gl.setitem(dw_gl.getrow(),'kredit_kurs',ldec_debet_kurs)
+	dw_gl.setitem(dw_gl.getrow(),'doc_reff',ls_order_client)
+	dw_gl.setitem(dw_gl.getrow(),'account_id',ls_coa_piutang)
+	dw_gl.setitem(dw_gl.getrow(),'ket','DP '+ls_voucher+' ('+ls_ket+')')
+	
+	//////PEMBAYARAN
+	//DP application has NO bank - must not copy kas_id from original receipt
+	ll_kas = 0
+	
+	
+	dw_bayar1.reset()
+	dw_bayar2.reset()
+	
+	dw_bayar1.setrow(dw_bayar1.insertrow(0))
+	dw_bayar1.setitem(dw_bayar1.getrow(),'voucher',ls_reff)
+	dw_bayar1.setitem(dw_bayar1.getrow(),'voucher_manual',ls_reff)
+	dw_bayar1.setitem(dw_bayar1.getrow(),'flag_bayar',1)
+	dw_bayar1.setitem(dw_bayar1.getrow(),'tgl',ldt_tgl)
+	dw_bayar1.setitem(dw_bayar1.getrow(),'vendor_id',ls_cust)
+	dw_bayar1.setitem(dw_bayar1.getrow(),'site_id',gs_site)
+	dw_bayar1.setitem(dw_bayar1.getrow(),'kas_id',ll_kas)
+	dw_bayar1.setitem(dw_bayar1.getrow(),'kolektor_id','K001')
+	dw_bayar1.setitem(dw_bayar1.getrow(),'curr_id',ls_curr)
+	dw_bayar1.setitem(dw_bayar1.getrow(),'kurs',ldec_kurs)
+	dw_bayar1.setitem(dw_bayar1.getrow(),'gl_reff',ls_reff)
+	dw_bayar1.setitem(dw_bayar1.getrow(),'keterangan','Bayar dari DP '+ls_voucher)
+	dw_bayar1.setitem(dw_bayar1.getrow(),'user_id',gs_user)
+	
+	dw_bayar2.setrow(dw_bayar2.insertrow(0))
+	dw_bayar2.setitem(dw_bayar2.getrow(),'voucher',ls_reff)
+	dw_bayar2.setitem(dw_bayar2.getrow(),'urut',1)
+	dw_bayar2.setitem(dw_bayar2.getrow(),'flag_order',1)
+	dw_bayar2.setitem(dw_bayar2.getrow(),'bukti_id',ls_order_client)
+	dw_bayar2.setitem(dw_bayar2.getrow(),'nilai_asli',ldec_faktur)
+	if ls_curr <> 'IDR' then
+		dw_bayar2.setitem(dw_bayar2.getrow(),'nilai_bayar',ldec_debet_kurs)
+		dw_bayar2.setitem(dw_bayar2.getrow(),'nilai_bayar_idr',ldec_debet)
+	else
+		dw_bayar2.setitem(dw_bayar2.getrow(),'nilai_bayar',ldec_debet)
+		dw_bayar2.setitem(dw_bayar2.getrow(),'nilai_bayar_idr',ldec_debet_kurs)
+	end if
+	dw_bayar2.setitem(dw_bayar2.getrow(),'ket',ls_ket)
+	dw_bayar2.setitem(dw_bayar2.getrow(),'acc_bayar',ls_coa_piutang)
+	//Delete OLD n Update
+	dw_gl.accepttext()
+	dw_bayar1.accepttext()
+	dw_bayar2.accepttext()
+	ls_voucher_refresh = ls_reff+'R'
+	
+	delete from gl_journal
+	where voucher = :ls_reff
+	using sqlca;
+	commit;
+	
+	delete from tbyr2
+	where voucher = :ls_reff
+	using sqlca;
+	commit;
+	delete from tbyr2
+	where voucher = :ls_voucher_refresh
+	using sqlca;
+	commit;
+	
+	delete from tbyr1
+	where voucher = :ls_reff
+	using sqlca;
+	commit;
+	delete from tbyr1
+	where voucher = :ls_voucher_refresh
+	using sqlca;
+	commit;
+	
+	ls_voucher_refresh = ls_reff+'P'
+	delete from tbyr2
+	where voucher = :ls_voucher_refresh
+	using sqlca;
+	commit;
+	delete from tbyr1
+	where voucher = :ls_voucher_refresh
+	using sqlca;
+	commit;
+	
+	dw_gl.update()
+	commit;
+	dw_bayar1.update()
+	commit;
+	dw_bayar2.update()
+	commit;
+next
+
+
+
+end subroutine
+
+public subroutine f_re_dp_beli (); decimal ldec_kurs,ldec_kurs_dp
+string ls_curr,ls_curr_dp
+decimal ldec_dp,ldec_faktur,ldec_dp_kurs
+long ll_count,ll_max,ll_kas,i
+string ls_periode,ls_max,ls_voucher,ls_reff,ls_kode,ls_vendor,ls_voucher_refresh
+string ls_coa_dp,ls_coa_hutang,ls_voucher_dp,ls_bukti_reff,ls_order_client
+datetime ldt_tgl
+string ls_gl_link,ls_coa_debet
+
+dw_trace.accepttext()
+
+for i = 1 to dw_trace.rowcount()
+	
+	ldec_dp = dw_trace.getitemdecimal(i,'debet')
+	ldec_dp_kurs = dw_trace.getitemdecimal(i,'debet_kurs')
+	
+	ls_order_client = dw_trace.getitemstring(i,'voucher')
+	
+	select order_client
+	into :ls_reff
+	from tstok1
+	where bukti_id = :ls_order_client
+	using sqlca;
+	
+	ldt_tgl = dw_trace.object.tgl[i]
+	ls_voucher_dp = dw_trace.getitemstring(i,'voucher_manual')
+	ls_bukti_reff = dw_trace.getitemstring(i,'ket')
+	ls_curr = dw_trace.getitemstring(i,'curr_id')
+	ldec_kurs = dw_trace.getitemdecimal(i,'curr_rate')
+	ls_gl_link = dw_trace.getitemstring(i,'account_id')
+	ls_coa_debet = dw_trace.object.coa_kredit[i]
+	
+	if isnull(ldec_dp) then ldec_dp = 0
+	if isnull(ldec_kurs) then ldec_kurs = 1
+	ls_periode = gs_site+string(ldt_tgl,'yymm')
+	ls_kode = ls_periode+'DX' //kode DP pembelian
+	
+	if isnull(ls_coa_debet) then ls_coa_debet = ''
+	
+	dw_gl.reset()
+	
+		//Cek coa DP/HUTANG
+		select acc_ap,acc_kurang_bayar
+		into :ls_coa_hutang,:ls_coa_dp
+		from gl_setup
+		using sqlca;
+		if isnull(ls_coa_hutang) or ls_coa_hutang = '' then
+			messagebox('Warning!','Harap setup terlebih dahulu COA Hutang Dagang pada Setup Company..!',stopsign!)
+			return
+		end if
+		if isnull(ls_coa_dp) or ls_coa_dp = '' then
+			messagebox('Warning!','Harap setup terlebih dahulu COA DP Pembelian pada Setup Company..!',stopsign!)
+			return
+		end if
+	
+		select curr_id,rate_rp,kas_id
+		into :ls_curr_dp,:ldec_kurs_dp,:ll_kas
+		from gl_journal
+		where voucher_manual = :ls_voucher_dp and
+		urut = 1
+		using sqlca;
+		
+		//messagebox('',string(ldec_kurs_dp,'#,##0.00'))
+		
+		if ls_coa_debet = '' then
+			ls_coa_debet = ls_coa_dp
+		end if
+		//debet
+		//ls_coa_hutang = dw_trace.getitemstring(i,'coa_kredit')
+		dw_gl.setrow(dw_gl.insertrow(0))
+		dw_gl.setitem(dw_gl.getrow(),'voucher',ls_gl_link)
+		dw_gl.setitem(dw_gl.getrow(),'voucher_manual',ls_gl_link)
+		dw_gl.setitem(dw_gl.getrow(),'giro_id',ls_voucher_dp)
+		dw_gl.setitem(dw_gl.getrow(),'site_id',gs_site)
+		dw_gl.setitem(dw_gl.getrow(),'urut',dw_gl.getrow())
+		dw_gl.setitem(dw_gl.getrow(),'tgl',ldt_tgl)
+		dw_gl.setitem(dw_gl.getrow(),'modul_id','DP')
+		dw_gl.setitem(dw_gl.getrow(),'account_id',ls_coa_hutang)
+		//dw_gl.setitem(dw_gl.getrow(),'account_id',ls_coa_debet)
+		dw_gl.setitem(dw_gl.getrow(),'debet',ldec_dp)//*ldec_kurs)
+		dw_gl.setitem(dw_gl.getrow(),'kredit',0)
+		dw_gl.setitem(dw_gl.getrow(),'debet_kurs',ldec_dp_kurs)
+		dw_gl.setitem(dw_gl.getrow(),'kredit_kurs',0)
+		dw_gl.setitem(dw_gl.getrow(),'ket','Bayar Hutang dari DP '+left(ls_voucher_dp+' ('+ls_bukti_reff+')',100))
+		dw_gl.setitem(dw_gl.getrow(),'order_reff',ls_reff)
+		dw_gl.setitem(dw_gl.getrow(),'curr_id',ls_curr_dp)
+		dw_gl.setitem(dw_gl.getrow(),'rate_rp',ldec_kurs_dp)
+		//kredit
+		dw_gl.setrow(dw_gl.insertrow(0))
+		dw_gl.setitem(dw_gl.getrow(),'voucher',ls_gl_link)
+		dw_gl.setitem(dw_gl.getrow(),'voucher_manual',ls_gl_link)
+		dw_gl.setitem(dw_gl.getrow(),'giro_id',ls_voucher_dp)
+		dw_gl.setitem(dw_gl.getrow(),'site_id',gs_site)
+		dw_gl.setitem(dw_gl.getrow(),'urut',dw_gl.getrow())
+		dw_gl.setitem(dw_gl.getrow(),'tgl',ldt_tgl)
+		dw_gl.setitem(dw_gl.getrow(),'modul_id','DP')
+		//dw_gl.setitem(dw_gl.getrow(),'account_id',ls_coa_hutang)
+		dw_gl.setitem(dw_gl.getrow(),'account_id',ls_coa_debet)
+		dw_gl.setitem(dw_gl.getrow(),'debet',0)
+		dw_gl.setitem(dw_gl.getrow(),'kredit',ldec_dp)
+		dw_gl.setitem(dw_gl.getrow(),'debet_kurs',0)
+		dw_gl.setitem(dw_gl.getrow(),'kredit_kurs',ldec_dp_kurs)
+		dw_gl.setitem(dw_gl.getrow(),'ket','Bayar Hutang dari DP '+ls_voucher_dp+' ('+ls_bukti_reff+')')
+		dw_gl.setitem(dw_gl.getrow(),'order_reff',ls_reff)
+		dw_gl.setitem(dw_gl.getrow(),'curr_id',ls_curr_dp)
+		dw_gl.setitem(dw_gl.getrow(),'rate_rp',ldec_kurs_dp)
+		
+		//PEMBAYARAN
+		dw_bayar1.reset()
+		dw_bayar2.reset()
+		dw_bayar1.insertrow(0)
+		dw_bayar1.setitem(1,'tgl',ldt_tgl)
+		dw_bayar1.setitem(1,'voucher',ls_gl_link)
+		dw_bayar1.setitem(1,'voucher_manual',ls_gl_link)
+		dw_bayar1.setitem(1,'site_id',gs_site)
+		dw_bayar1.setitem(1,'flag_bayar',2)
+		dw_bayar1.setitem(1,'vendor_id',ls_vendor)
+		dw_bayar1.setitem(1,'site_id',gs_site)
+		dw_bayar1.setitem(1,'kas_id',ll_kas)
+		dw_bayar1.setitem(1,'curr_id',ls_curr_dp)
+		dw_bayar1.setitem(1,'kurs',ldec_kurs_dp)
+		dw_bayar1.setitem(1,'keterangan','Potong Hutang dari DP '+ls_voucher_dp)
+		dw_bayar1.setitem(1,'user_id',gs_user)
+		//Detail
+		dw_bayar2.insertrow(0)
+		dw_bayar2.setitem(1,'voucher',ls_gl_link)
+		dw_bayar2.setitem(1,'urut',1)
+		dw_bayar2.setitem(1,'bukti_id',ls_reff)
+		dw_bayar2.setitem(1,'flag_order',2)
+		dw_bayar2.setitem(1,'nilai_asli',ldec_faktur)
+		dw_bayar2.setitem(1,'nilai_bayar_idr',ldec_dp)
+		if ls_curr = 'IDR' then
+			dw_bayar2.setitem(1,'nilai_bayar',ldec_dp)
+		else
+			dw_bayar2.setitem(1,'nilai_bayar',ldec_dp_kurs)
+		end if
+		dw_bayar2.setitem(1,'acc_bayar',ls_coa_hutang)
+		dw_bayar2.setitem(1,'ket',ls_bukti_reff)
+		//update
+		dw_gl.accepttext()
+		dw_bayar1.accepttext()
+		dw_bayar2.accepttext()
+		
+		ls_voucher_refresh = ls_gl_link+'P'
+		
+		delete from gl_journal
+		where voucher = :ls_gl_link
+		using sqlca;
+		commit;
+		delete from tbyr2
+		where voucher = :ls_gl_link
+		using sqlca;
+		commit;
+		delete from tbyr2
+		where voucher = :ls_voucher_refresh
+		using sqlca;
+		commit;
+		
+		delete from tbyr1
+		where voucher = :ls_gl_link
+		using sqlca;
+		commit;
+		delete from tbyr1
+		where voucher = :ls_voucher_refresh
+		using sqlca;
+		commit;
+		
+		dw_gl.update()
+		commit;
+		dw_bayar1.update()
+		commit;
+		dw_bayar2.update()
+		commit;
+	next
+
+
+
+end subroutine
+
+on w_refresh_journal.create
+int iCurrent
+call super::create
+this.dw_arg=create dw_arg
+this.st_1=create st_1
+this.st_2=create st_2
+this.st_3=create st_3
+this.cb_1=create cb_1
+this.st_4=create st_4
+this.cb_2=create cb_2
+this.cb_3=create cb_3
+this.cb_4=create cb_4
+this.cb_5=create cb_5
+this.cb_6=create cb_6
+this.dw_trace=create dw_trace
+this.cb_7=create cb_7
+this.cb_8=create cb_8
+this.cb_9=create cb_9
+this.dw_sync2=create dw_sync2
+this.dw_sync1=create dw_sync1
+this.cb_10=create cb_10
+this.cb_11=create cb_11
+this.cb_12=create cb_12
+this.cb_13=create cb_13
+this.dw_delete=create dw_delete
+this.cb_14=create cb_14
+this.cb_15=create cb_15
+this.dw_gl=create dw_gl
+this.dw_bayar1=create dw_bayar1
+this.dw_bayar2=create dw_bayar2
+this.cb_16=create cb_16
+this.cb_17=create cb_17
+iCurrent=UpperBound(this.Control)
+this.Control[iCurrent+1]=this.dw_arg
+this.Control[iCurrent+2]=this.st_1
+this.Control[iCurrent+3]=this.st_2
+this.Control[iCurrent+4]=this.st_3
+this.Control[iCurrent+5]=this.cb_1
+this.Control[iCurrent+6]=this.st_4
+this.Control[iCurrent+7]=this.cb_2
+this.Control[iCurrent+8]=this.cb_3
+this.Control[iCurrent+9]=this.cb_4
+this.Control[iCurrent+10]=this.cb_5
+this.Control[iCurrent+11]=this.cb_6
+this.Control[iCurrent+12]=this.dw_trace
+this.Control[iCurrent+13]=this.cb_7
+this.Control[iCurrent+14]=this.cb_8
+this.Control[iCurrent+15]=this.cb_9
+this.Control[iCurrent+16]=this.dw_sync2
+this.Control[iCurrent+17]=this.dw_sync1
+this.Control[iCurrent+18]=this.cb_10
+this.Control[iCurrent+19]=this.cb_11
+this.Control[iCurrent+20]=this.cb_12
+this.Control[iCurrent+21]=this.cb_13
+this.Control[iCurrent+22]=this.dw_delete
+this.Control[iCurrent+23]=this.cb_14
+this.Control[iCurrent+24]=this.cb_15
+this.Control[iCurrent+25]=this.dw_gl
+this.Control[iCurrent+26]=this.dw_bayar1
+this.Control[iCurrent+27]=this.dw_bayar2
+this.Control[iCurrent+28]=this.cb_16
+this.Control[iCurrent+29]=this.cb_17
+end on
+
+on w_refresh_journal.destroy
+call super::destroy
+if IsValid(MenuID) then destroy(MenuID)
+destroy(this.dw_arg)
+destroy(this.st_1)
+destroy(this.st_2)
+destroy(this.st_3)
+destroy(this.cb_1)
+destroy(this.st_4)
+destroy(this.cb_2)
+destroy(this.cb_3)
+destroy(this.cb_4)
+destroy(this.cb_5)
+destroy(this.cb_6)
+destroy(this.dw_trace)
+destroy(this.cb_7)
+destroy(this.cb_8)
+destroy(this.cb_9)
+destroy(this.dw_sync2)
+destroy(this.dw_sync1)
+destroy(this.cb_10)
+destroy(this.cb_11)
+destroy(this.cb_12)
+destroy(this.cb_13)
+destroy(this.dw_delete)
+destroy(this.cb_14)
+destroy(this.cb_15)
+destroy(this.dw_gl)
+destroy(this.dw_bayar1)
+destroy(this.dw_bayar2)
+destroy(this.cb_16)
+destroy(this.cb_17)
+end on
+
+event resize;call super::resize;dw_trace.x = dw_leftmenu.x + dw_leftmenu.width
+dw_arg.x = dw_leftmenu.x + dw_leftmenu.width
+st_1.x = dw_leftmenu.x + dw_leftmenu.width
+st_2.x = dw_leftmenu.x + dw_leftmenu.width
+st_3.x = dw_leftmenu.x + dw_leftmenu.width
+st_4.x = dw_leftmenu.x + dw_leftmenu.width
+dw_trace.height = dw_leftmenu.height - dw_trace.y
+dw_trace.width = newwidth - dw_trace.x
+dw_arg.width = newwidth - dw_trace.x
+st_1.width = newwidth - dw_trace.x
+st_2.width = newwidth - dw_trace.x
+st_3.width = newwidth - dw_trace.x
+st_4.width = newwidth - dw_trace.x
+
+cb_1.x = dw_leftmenu.x + dw_leftmenu.width
+cb_1.width = newwidth - dw_trace.x
+end event
+
+event ue_slide;call super::ue_slide;dw_trace.x = dw_leftmenu.x + dw_leftmenu.width
+dw_arg.x = dw_leftmenu.x + dw_leftmenu.width
+st_1.x = dw_leftmenu.x + dw_leftmenu.width
+st_2.x = dw_leftmenu.x + dw_leftmenu.width
+st_3.x = dw_leftmenu.x + dw_leftmenu.width
+st_4.x = dw_leftmenu.x + dw_leftmenu.width
+dw_trace.height = dw_leftmenu.height - dw_trace.y
+dw_trace.width = workspacewidth() - dw_trace.x
+dw_arg.width = workspacewidth() - dw_trace.x
+st_1.width = workspacewidth() - dw_trace.x
+st_2.width = workspacewidth() - dw_trace.x
+st_3.width = workspacewidth() - dw_trace.x
+st_4.width = workspacewidth() - dw_trace.x
+
+cb_1.x = dw_leftmenu.x + dw_leftmenu.width
+cb_1.width = workspacewidth() - dw_trace.x
+end event
+
+event ue_retrieve;call super::ue_retrieve;//dw_arg.accepttext()
+//dw_trace.dataobject = 'dw_transfer_list'
+//dw_trace.settransobject(sqlca)
+//
+//datetime ldt1,ldt2
+//long ll_all
+//ldt1 = dw_arg.object.tgl1[1]
+//ldt2 = dw_arg.object.tgl2[1]
+//ll_all = dw_arg.object.all1[1]
+//
+//dw_trace.retrieve(ldt1,ldt2,ll_all)
+//f_skin_dwlist(dw_trace)
+end event
+
+type dw_log from w_frame_main`dw_log within w_refresh_journal
+boolean visible = false
+end type
+
+type dw_con from w_frame_main`dw_con within w_refresh_journal
+end type
+
+type dw_update from w_frame_main`dw_update within w_refresh_journal
+integer x = 1797
+integer y = 1252
+string dataobject = "d_gl_bayar"
+boolean resizable = true
+end type
+
+event dw_update::doubleclicked;call super::doubleclicked;gurningsoft_xls(this)
+end event
+
+type dw_search from w_frame_main`dw_search within w_refresh_journal
+integer x = 631
+integer y = 1460
+integer width = 2697
+boolean titlebar = true
+string dataobject = "d_transupdate_gl"
+boolean controlmenu = true
+boolean resizable = true
+end type
+
+event dw_search::doubleclicked;call super::doubleclicked;gurningsoft_xls(this)
+end event
+
+type st_split from w_frame_main`st_split within w_refresh_journal
+end type
+
+type dw_anim from w_frame_main`dw_anim within w_refresh_journal
+boolean visible = false
+end type
+
+type dw_statusbar from w_frame_main`dw_statusbar within w_refresh_journal
+end type
+
+type dw_leftmenu from w_frame_main`dw_leftmenu within w_refresh_journal
+end type
+
+type dw_arg from uo_dw within w_refresh_journal
+integer x = 1166
+integer y = 12
+integer height = 324
+integer taborder = 30
+boolean bringtotop = true
+string dataobject = "d_date_range"
+string is_type_dw = "ARG"
+end type
+
+event constructor;call super::constructor;this.reset()
+this.insertrow(0)
+datetime ldt1,ldt2
+
+ldt1 = f_bom(gdt_today)
+ldt2 = f_eom(gdt_today)
+
+this.setitem(1,'tgl1',ldt1)
+this.setitem(1,'tgl2',ldt2)
+end event
+
+event editchanged;call super::editchanged;this.accepttext()
+
+datetime ldt1,ldt2
+long ll_all
+ldt1 = this.object.tgl1[1]
+ldt2 = this.object.tgl2[1]
+ll_all = this.object.all1[1]
+
+if ll_all >0 then
+	st_4.text = 'All periode'
+else
+	st_4.text = 'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy')
+end if
+end event
+
+event doubleclicked;call super::doubleclicked;//long ll_all,ll_count,i
+//datetime ldt1,ldt2
+//string ls_order
+///* SUDAH LANGSUNG MASUK JOURNAL*/
+////4. Re-transfer AR
+//this.accepttext()
+//ldt1 = this.object.tgl1[1]
+//ldt2 = this.object.tgl2[1]
+//st_1.text = 'Proses 4 of 5'
+//st_2.text = 'Re-transfer PIUTANG(AR)'
+//dw_trace.dataobject = 'dw_trace_ar_all'
+//dw_trace.settransobject(sqlca)
+//ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+//if ll_count >0 then
+//	for i = 1 to ll_count
+//		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+//		yield()
+//		ls_order = dw_trace.getitemstring(i,'voucher')
+//		f_transfer_ar(ls_order)
+//	next
+//end if
+///*
+////4. Re-transfer AP
+//st_1.text = 'Proses 5 of 5'
+//st_2.text = 'Re-transfer HUTANG(AP)'
+//dw_trace.dataobject = 'dw_trace_ap_all'
+//dw_trace.settransobject(sqlca)
+//ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+//if ll_count >0 then
+//	for i = 1 to ll_count
+//		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+//		yield()
+//		ls_order = dw_trace.getitemstring(i,'voucher')
+//		f_transfer_ap(ls_order)
+//	next
+//end if
+//*/
+end event
+
+type st_1 from statictext within w_refresh_journal
+integer x = 1175
+integer y = 420
+integer width = 1952
+integer height = 64
+boolean bringtotop = true
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "System"
+boolean underline = true
+long textcolor = 16777215
+long backcolor = 134217730
+string text = "Refresh Transaksi Journal [Click Start To Refresh]"
+alignment alignment = center!
+boolean focusrectangle = false
+end type
+
+type st_2 from statictext within w_refresh_journal
+integer x = 1175
+integer y = 508
+integer width = 1952
+integer height = 84
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 16777215
+long backcolor = 134217730
+boolean focusrectangle = false
+end type
+
+type st_3 from statictext within w_refresh_journal
+integer x = 1175
+integer y = 588
+integer width = 1952
+integer height = 92
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 16777215
+long backcolor = 134217730
+boolean focusrectangle = false
+end type
+
+type cb_1 from commandbutton within w_refresh_journal
+boolean visible = false
+integer x = 1189
+integer y = 700
+integer width = 882
+integer height = 132
+integer taborder = 30
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "REFRESH TRANSAKSI"
+end type
+
+event clicked;//Re-transfer journal
+/*
+1.po
+2.ekspedisi
+3.so
+4.hpp
+5.AR
+6.AP
+*/
+long ll_count,i,ll_all
+string ls_order,ls_bukti
+datetime ldt1,ldt2,ldt_trans
+if messagebox('Konfirmasi!','Yakin untuk melanjutkan proses..?',question!,yesno!,2) = 2 then return
+
+dw_arg.accepttext()
+ldt1 = dw_arg.object.tgl1[1]
+ldt2 = dw_arg.object.tgl2[1]
+ll_all = dw_arg.object.all1[1]
+
+if ll_all >0 then
+	st_4.text = 'All periode'
+else
+	st_4.text = 'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy')
+end if
+
+//1. Re-transfer PO
+	//REGULER
+st_1.text = 'Proses 1 of 3'
+st_2.text = 'Re-transfer Purchase Order [Reguler]'
+dw_trace.dataobject = 'dw_trace_po_all_reguler'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+setpointer(hourglass!)
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		ls_order = dw_trace.getitemstring(i,'order_client')
+		f_transfer_po_new(ls_order,'REGULER')
+	next
+end if
+	//RETUR
+dw_trace.dataobject = 'dw_trace_po_all_retur'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+if ll_count >0 then
+	st_2.text = 'Re-transfer Sales Order [Retur]'
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		ls_order = dw_trace.getitemstring(i,'order_client')
+		f_transfer_po_new(ls_order,'RETUR')
+	next
+end if
+
+//2. Re-transfer SO DAN HPP
+	//REGULER
+st_1.text = 'Proses 2 of 3'
+st_2.text = 'Re-transfer Sales Order [Reguler] && HPP'
+dw_trace.dataobject = 'dw_trace_so_all_reguler'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		ls_order = dw_trace.getitemstring(i,'order_client')
+		ls_bukti = dw_trace.getitemstring(i,'bukti_id')
+		ldt_trans = dw_trace.object.tgl[i]
+		f_transfer_so(ls_order,'REGULER')
+	next
+end if
+	//RETUR
+st_2.text = 'Re-transfer Sales Order [Retur] && HPP'
+dw_trace.dataobject = 'dw_trace_so_all_retur'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		ls_order = dw_trace.getitemstring(i,'order_client')
+		ls_bukti = dw_trace.getitemstring(i,'bukti_id')
+		ldt_trans = dw_trace.object.tgl[i]
+		f_transfer_so(ls_order,'REGULER')
+	next
+end if
+
+//3. Re-transfer EKSPEDISI
+st_1.text = 'Proses 3 of 3'
+st_2.text = 'Re-transfer EKSPEDISI'
+dw_trace.dataobject = 'dw_trace_ekspedisi_all'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		ls_order = dw_trace.getitemstring(i,'order_client')
+		f_transfer_ekspedisi_new(ls_order,'EKSPEDISI')
+	next
+end if
+
+/*
+
+
+/* SUDAH LANGSUNG MASUK JOURNAL 
+--Buka lagi, tapi dicek order reff, jika sudah ada abaikan saja --> iwan 2014-02-04
+*/
+//4. Re-transfer AR
+
+st_1.text = 'Proses 4 of 5'
+st_2.text = 'Re-transfer PIUTANG(AR)'
+dw_trace.dataobject = 'dw_trace_ar_all'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		yield()
+		ls_order = dw_trace.getitemstring(i,'voucher')
+		f_transfer_ar(ls_order) //Cek difungsi ini apakah sudah ada di GL.????
+	next
+end if
+//4. Re-transfer AP
+st_1.text = 'Proses 5 of 5'
+st_2.text = 'Re-transfer HUTANG(AP)'
+dw_trace.dataobject = 'dw_trace_ap_all'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		yield()
+		ls_order = dw_trace.getitemstring(i,'voucher')
+		f_transfer_ap(ls_order) //Cek difungsi ini apakah sudah ada di GL.????
+	next
+end if
+*/
+
+///////////////LIST OF JOURNAL/////////////////
+dw_trace.dataobject = 'dw_transfer_list'
+dw_trace.settransobject(sqlca)
+dw_trace.retrieve(ldt1,ldt2,ll_all)
+f_skin_dwlist(dw_trace)
+setpointer(arrow!)
+messagebox('Finish!','Proses finish!')
+
+
+end event
+
+type st_4 from statictext within w_refresh_journal
+integer x = 1175
+integer y = 344
+integer width = 1952
+integer height = 64
+boolean bringtotop = true
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "System"
+boolean underline = true
+long textcolor = 16777215
+long backcolor = 134217730
+alignment alignment = center!
+boolean focusrectangle = false
+end type
+
+type cb_2 from commandbutton within w_refresh_journal
+boolean visible = false
+integer x = 741
+integer y = 1536
+integer width = 517
+integer height = 132
+integer taborder = 30
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "none"
+end type
+
+event clicked;//Re-transfer journal
+/*
+1.po
+2.ekspedisi
+3.so
+4.hpp
+5.AR
+6.AP
+*/
+long ll_count,i,ll_all
+string ls_order,ls_bukti
+datetime ldt1,ldt2,ldt_trans
+if messagebox('Konfirmasi!','Yakin untuk melanjutkan proses..?',question!,yesno!,2) = 2 then return
+
+dw_arg.accepttext()
+ldt1 = dw_arg.object.tgl1[1]
+ldt2 = dw_arg.object.tgl2[1]
+ll_all = dw_arg.object.all1[1]
+
+if ll_all >0 then
+	st_4.text = 'All periode'
+else
+	st_4.text = 'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy')
+end if
+
+
+
+//2. Re-transfer SO DAN HPP
+	//REGULER
+st_1.text = 'Proses 2 of 3'
+st_2.text = 'Re-transfer Sales Order [Reguler] && HPP'
+dw_trace.dataobject = 'dw_trace_so_all_reguler'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		ls_order = dw_trace.getitemstring(i,'order_client')
+		ls_bukti = dw_trace.getitemstring(i,'bukti_id')
+		ldt_trans = dw_trace.object.tgl[i]
+		f_transfer_so(ls_order,'REGULER')
+	next
+end if
+	//RETUR
+st_2.text = 'Re-transfer Sales Order [Retur] && HPP'
+dw_trace.dataobject = 'dw_trace_so_all_retur'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		ls_order = dw_trace.getitemstring(i,'order_client')
+		ls_bukti = dw_trace.getitemstring(i,'bukti_id')
+		ldt_trans = dw_trace.object.tgl[i]
+		f_transfer_so(ls_order,'REGULER')
+	next
+end if
+
+
+
+///////////////LIST OF JOURNAL/////////////////
+dw_trace.dataobject = 'dw_transfer_list'
+dw_trace.settransobject(sqlca)
+dw_trace.retrieve(ldt1,ldt2,ll_all)
+f_skin_dwlist(dw_trace)
+setpointer(arrow!)
+messagebox('Finish!','Proses finish!')
+
+
+end event
+
+type cb_3 from commandbutton within w_refresh_journal
+boolean visible = false
+integer x = 1193
+integer y = 840
+integer width = 859
+integer height = 132
+integer taborder = 40
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "AR/AP ONLY"
+end type
+
+event clicked;//Re-transfer journal
+/*
+1.po
+2.ekspedisi
+3.so
+4.hpp
+5.AR
+6.AP
+*/
+long ll_count,i,ll_all
+string ls_order,ls_bukti
+datetime ldt1,ldt2,ldt_trans
+if messagebox('Konfirmasi!','Yakin untuk melanjutkan proses..?',question!,yesno!,2) = 2 then return
+
+dw_arg.accepttext()
+ldt1 = dw_arg.object.tgl1[1]
+ldt2 = dw_arg.object.tgl2[1]
+ll_all = dw_arg.object.all1[1]
+
+if ll_all >0 then
+	st_4.text = 'All periode'
+else
+	st_4.text = 'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy')
+end if
+/*
+//1. Re-transfer PO
+	//REGULER
+st_1.text = 'Proses 1 of 3'
+st_2.text = 'Re-transfer Purchase Order [Reguler]'
+dw_trace.dataobject = 'dw_trace_po_all_reguler'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+setpointer(hourglass!)
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		ls_order = dw_trace.getitemstring(i,'order_client')
+		f_transfer_po_new(ls_order,'REGULER')
+	next
+end if
+	//RETUR
+dw_trace.dataobject = 'dw_trace_po_all_retur'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+if ll_count >0 then
+	st_2.text = 'Re-transfer Sales Order [Retur]'
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		ls_order = dw_trace.getitemstring(i,'order_client')
+		f_transfer_po_new(ls_order,'RETUR')
+	next
+end if
+
+//2. Re-transfer SO DAN HPP
+	//REGULER
+st_1.text = 'Proses 2 of 3'
+st_2.text = 'Re-transfer Sales Order [Reguler] && HPP'
+dw_trace.dataobject = 'dw_trace_so_all_reguler'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		ls_order = dw_trace.getitemstring(i,'order_client')
+		ls_bukti = dw_trace.getitemstring(i,'bukti_id')
+		ldt_trans = dw_trace.object.tgl[i]
+		f_transfer_so(ls_order,'REGULER')
+	next
+end if
+	//RETUR
+st_2.text = 'Re-transfer Sales Order [Retur] && HPP'
+dw_trace.dataobject = 'dw_trace_so_all_retur'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		ls_order = dw_trace.getitemstring(i,'order_client')
+		ls_bukti = dw_trace.getitemstring(i,'bukti_id')
+		ldt_trans = dw_trace.object.tgl[i]
+		f_transfer_so(ls_order,'REGULER')
+	next
+end if
+
+//3. Re-transfer EKSPEDISI
+st_1.text = 'Proses 3 of 3'
+st_2.text = 'Re-transfer EKSPEDISI'
+dw_trace.dataobject = 'dw_trace_ekspedisi_all'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		ls_order = dw_trace.getitemstring(i,'order_client')
+		f_transfer_ekspedisi_new(ls_order,'EKSPEDISI')
+	next
+end if
+
+*/
+
+
+/* SUDAH LANGSUNG MASUK JOURNAL 
+--Buka lagi, tapi dicek order reff, jika sudah ada abaikan saja --> iwan 2014-02-04
+*/
+//4. Re-transfer AR
+
+st_1.text = 'Proses 4 of 5'
+st_2.text = 'Re-transfer PIUTANG(AR)'
+dw_trace.dataobject = 'dw_trace_ar_all'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		yield()
+		ls_order = dw_trace.getitemstring(i,'voucher')
+		f_transfer_ar(ls_order) //Cek difungsi ini apakah sudah ada di GL.????
+	next
+end if
+//4. Re-transfer AP
+st_1.text = 'Proses 5 of 5'
+st_2.text = 'Re-transfer HUTANG(AP)'
+dw_trace.dataobject = 'dw_trace_ap_all'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		yield()
+		ls_order = dw_trace.getitemstring(i,'voucher')
+		f_transfer_ap(ls_order) //Cek difungsi ini apakah sudah ada di GL.????
+	next
+end if
+
+
+///////////////LIST OF JOURNAL/////////////////
+dw_trace.dataobject = 'dw_transfer_list'
+dw_trace.settransobject(sqlca)
+dw_trace.retrieve(ldt1,ldt2,ll_all)
+f_skin_dwlist(dw_trace)
+setpointer(arrow!)
+messagebox('Finish!','Proses finish!')
+
+
+end event
+
+type cb_4 from commandbutton within w_refresh_journal
+boolean visible = false
+integer x = 1294
+integer y = 848
+integer width = 517
+integer height = 132
+integer taborder = 50
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "AP"
+end type
+
+event clicked;long ll_count,ll_all,i
+string ls_order
+datetime ldt1,ldt2
+
+dw_arg.accepttext()
+ldt1 = dw_arg.object.tgl1[1]
+ldt2 = dw_arg.object.tgl2[1]
+ll_all = dw_arg.object.all1[1]
+
+st_1.text = 'Proses 5 of 5'
+st_2.text = 'Re-transfer HUTANG(AP)'
+dw_trace.dataobject = 'dw_trace_ap_all'
+dw_trace.settransobject(sqlca)
+dw_trace.retrieve(ldt1,ldt2,ll_all)
+dw_trace.accepttext()
+ll_count = dw_trace.rowcount()
+
+
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		yield()
+		ls_order = dw_trace.getitemstring(i,'voucher')
+		f_transfer_ap(ls_order) //Cek difungsi ini apakah sudah ada di GL.????
+	next
+end if
+end event
+
+type cb_5 from commandbutton within w_refresh_journal
+integer x = 2697
+integer y = 824
+integer width = 343
+integer height = 132
+integer taborder = 60
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "AR"
+end type
+
+event clicked;dw_arg.accepttext()
+
+if messagebox('Konfirmasi!','Yakin untuk melanjutkan proses..?',question!,yesno!,2) = 2 then return
+
+datetime ldt1,ldt2
+long i,j,ll_sync1,ll_sync2,ll_kas,ll_urut,ll_count,ll_master
+long ll_urut_bayar,ll_flag_bayar
+string ls_voucher,ls_voucher_manual,ls_ket,ls_coa,ls_coa_bayar,ls_curr,ls_voucher_manual_before
+decimal ldec_debet,ldec_kredit,ldec_debet_kurs,ldec_kredit_kurs,ldec_kurs,ldec_bayar,ldec_bayar_kurs
+decimal ldec_ttl_debet,ldec_ttl_kredit,ldec_ttl_debet_kurs,ldec_ttl_kredit_kurs,ldec_set_bayar
+string ls_voucher_unbalance='',ls_cust_name,ls_faktur,ls_cust,ls_curr_jual,ls_faktur_silang,ls_faktur_bayar
+datetime ldt_tgl
+
+dw_update.dataobject = 'd_gl_bayar'
+dw_sync1.dataobject = 'd_gl_bayar1'
+dw_sync2.dataobject = 'd_gl_bayar2'
+
+dw_update.settransobject(sqlca)
+dw_sync1.settransobject(sqlca)
+dw_sync2.settransobject(sqlca)
+
+ldt1 = dw_arg.object.tgl1[1]
+ldt2 = dw_arg.object.tgl2[1]
+f_log("6010","GL","REFRESH AR",'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy'),"AR")
+dw_update.retrieve(ldt1,ldt2)
+dw_update.accepttext()
+dw_update.sort()
+dw_delete.reset()
+dw_delete.settransobject(sqlca)
+
+ll_count = dw_update.rowcount()
+if ll_count <=0 then return
+
+open(w_wait)
+ll_master = 0
+for i = 1 to ll_count
+	st_2.text = string(i)+' to '+string(ll_count)
+	ls_voucher_manual = dw_update.getitemstring(i,'voucher_manual')
+	ll_urut = dw_update.object.urut[i]
+	ls_coa = dw_update.getitemstring(i,'account_id')
+	ll_kas = dw_update.object.kas_id[i]
+	ls_ket = dw_update.getitemstring(i,'ket')
+	ls_curr = dw_update.getitemstring(i,'curr_id')
+	ldec_kurs = dw_update.getitemdecimal(i,'rate_rp')
+	ls_faktur = dw_update.getitemstring(i,'doc_reff')
+	ls_faktur_silang = dw_update.getitemstring(i,'order_reff')
+	ldec_debet = dw_update.getitemdecimal(i,'debet')
+	ldec_kredit = dw_update.getitemdecimal(i,'kredit')
+	ldec_debet_kurs = dw_update.getitemdecimal(i,'debet_kurs')
+	ldec_kredit_kurs = dw_update.getitemdecimal(i,'kredit_kurs')
+	ldt_tgl = dw_update.object.tgl[i]
+	
+	if isnull(ls_coa) then ls_coa = ''
+	if isnull(ll_kas) then ll_kas = 0
+	if isnull(ldec_debet) then ldec_debet = 0
+	if isnull(ldec_kredit) then ldec_kredit = 0
+	if isnull(ldec_debet_kurs) then ldec_debet_kurs = 0
+	if isnull(ldec_kredit_kurs) then ldec_kredit_kurs = 0
+	if isnull(ls_faktur) then ls_faktur = ''
+	if isnull(ls_faktur_silang) then ls_faktur_silang = ''
+	
+	
+	if ls_faktur = '' and ls_faktur_silang = '' then continue; //Mungkin ini biaya adm, selisih kurs
+	if ls_faktur <> '' then //AR
+		ls_faktur_bayar = ls_faktur
+		ll_flag_bayar = 1
+		select cust_id
+		into :ls_cust
+		from ar_trans
+		where order_client = :ls_faktur
+		using sqlca;
+		
+		select curr_id
+		into :ls_curr_jual
+		from ar_trans
+		where order_client = :ls_faktur
+		using sqlca;
+	
+	else //AP
+		ls_faktur_bayar = ls_faktur_silang
+		ll_flag_bayar = 2
+		select vendor_id
+		into :ls_cust
+		from ap_trans
+		where order_client = :ls_faktur_silang
+		using sqlca;
+		
+		select curr_id
+		into :ls_curr_jual
+		from ap_trans
+		where order_client = :ls_faktur_silang
+		using sqlca;
+		
+	end if
+	
+	//Add voucher to dw_delete for delete reference
+	dw_delete.setrow(dw_delete.insertrow(0))
+	dw_delete.setitem(dw_delete.getrow(),'bukti_id',ls_voucher_manual)
+	
+	
+	//Cek tbyr1 //Master bayar
+	if i = 1 then
+		ll_urut_bayar = 0
+		dw_sync1.setrow(dw_sync1.insertrow(0))
+		dw_sync1.setitem(dw_sync1.getrow(),'voucher',ls_voucher_manual+'R')
+		dw_sync1.setitem(dw_sync1.getrow(),'flag_bayar',ll_flag_bayar)
+		dw_sync1.setitem(dw_sync1.getrow(),'tgl',ldt_tgl)
+		dw_sync1.setitem(dw_sync1.getrow(),'site_id',gs_site)
+		dw_sync1.setitem(dw_sync1.getrow(),'kas_id',ll_kas)
+		dw_sync1.setitem(dw_sync1.getrow(),'kolektor_id','K001')
+		dw_sync1.setitem(dw_sync1.getrow(),'voucher_manual',ls_voucher_manual)
+		dw_sync1.setitem(dw_sync1.getrow(),'curr_id',ls_curr)
+		dw_sync1.setitem(dw_sync1.getrow(),'kurs',ldec_kurs)
+		dw_sync1.setitem(dw_sync1.getrow(),'keterangan',left(ls_ket,50))
+		dw_sync1.setitem(dw_sync1.getrow(),'flag_vendor',ll_flag_bayar)
+		dw_sync1.setitem(dw_sync1.getrow(),'vendor_id',ls_cust)
+		
+	else //Bandingkan apakah masih voucher yg sama..??
+		ls_voucher_manual_before = dw_update.getitemstring(i - 1,'voucher_manual')
+	
+		if ls_voucher_manual <> ls_voucher_manual_before then //Voucher Baru
+			ll_urut_bayar = 0
+			dw_sync1.setrow(dw_sync1.insertrow(0))
+			dw_sync1.setitem(dw_sync1.getrow(),'voucher',ls_voucher_manual+'R')
+			dw_sync1.setitem(dw_sync1.getrow(),'flag_bayar',ll_flag_bayar)
+			dw_sync1.setitem(dw_sync1.getrow(),'tgl',ldt_tgl)
+			dw_sync1.setitem(dw_sync1.getrow(),'site_id',gs_site)
+			dw_sync1.setitem(dw_sync1.getrow(),'kas_id',ll_kas)
+			dw_sync1.setitem(dw_sync1.getrow(),'kolektor_id','K001')
+			dw_sync1.setitem(dw_sync1.getrow(),'voucher_manual',ls_voucher_manual)
+			dw_sync1.setitem(dw_sync1.getrow(),'curr_id',ls_curr)
+			dw_sync1.setitem(dw_sync1.getrow(),'kurs',ldec_kurs)
+			dw_sync1.setitem(dw_sync1.getrow(),'keterangan',left(ls_ket,50))
+			dw_sync1.setitem(dw_sync1.getrow(),'flag_vendor',ll_flag_bayar)
+			dw_sync1.setitem(dw_sync1.getrow(),'vendor_id',ls_cust)
+		end if
+	end if
+	 //End of Master
+	///Detail ( Tbyr2
+
+	//Begin set detail
+	ll_urut_bayar ++
+	if isnull(ls_curr_jual) then ls_curr_jual = 'IDR'
+	dw_sync2.setrow(dw_sync2.insertrow(0))
+	dw_sync2.setitem(dw_sync2.getrow(),'voucher',ls_voucher_manual+'R')
+	dw_sync2.setitem(dw_sync2.getrow(),'urut',ll_urut_bayar)
+	dw_sync2.setitem(dw_sync2.getrow(),'flag_order',ll_flag_bayar)
+	dw_sync2.setitem(dw_sync2.getrow(),'bukti_id',ls_faktur_bayar)
+	
+	if ll_flag_bayar = 1 then
+		ldec_bayar = ldec_kredit
+		ldec_bayar_kurs = ldec_kredit_kurs
+	else
+		ldec_bayar = ldec_debet
+		ldec_bayar_kurs = ldec_debet_kurs
+	end if
+	
+	if ls_curr_jual = 'IDR' then
+		ldec_set_bayar = ldec_bayar
+	else
+		ldec_set_bayar = ldec_bayar_kurs
+	end if
+
+	dw_sync2.setitem(dw_sync2.getrow(),'nilai_bayar',ldec_set_bayar)
+	dw_sync2.setitem(dw_sync2.getrow(),'ket',ls_ket)
+	dw_sync2.setitem(dw_sync2.getrow(),'nilai_bayar_idr',ldec_bayar)
+	dw_sync2.setitem(dw_sync2.getrow(),'acc_bayar',ls_coa)
+next
+
+dw_sync1.accepttext()
+dw_sync2.accepttext()
+
+st_3.text = 'Delete temporary data...'
+//delete temp data
+delete from tbyr1_copy
+using sqlca;
+commit;
+delete from tbyr2_copy
+using sqlca;
+commit;
+//Backup Data
+st_3.text = 'Backup data...'
+insert into tbyr1_copy
+select * from tbyr1
+where tgl between :ldt1 and :ldt2 and flag_bayar in(1,11)
+using sqlca;
+commit;
+
+insert into tbyr2_copy
+select * from tbyr2 where voucher in(
+select voucher from tbyr1_copy)
+using sqlca;
+commit;
+
+//update delete reference
+delete from t_bukti_delete
+using sqlca;
+commit;
+
+dw_delete.accepttext()
+if dw_delete.update() = 1 then
+	commit using sqlca;
+else
+	rollback;
+	messagebox('Error!','Error update delete reference..!',stopsign!)
+	return
+end if
+
+//Delete old data
+st_3.text = 'Delete old data...'
+delete from tbyr2
+where voucher in(
+select voucher from tbyr1 where voucher_manual in(
+    select bukti_id from t_bukti_delete)
+)
+using sqlca;
+commit;
+
+delete from tbyr1
+where voucher_manual in(
+select bukti_id from t_bukti_delete
+)
+delete from tbyr1
+where voucher_manual in(select bukti_id from t_bukti_delete)
+using sqlca;
+commit;
+
+
+st_3.text = 'Refresh data...'
+if dw_sync1.update() = 1 then
+	commit using sqlca;
+	if dw_sync2.update() = 1 then
+		commit using sqlca;
+	else
+		rollback;
+		messagebox('Error..!',sqlca.sqlerrtext)
+		st_3.text = 'Error tabel detail..'
+		close(w_wait)
+		return
+	end if
+else
+	rollback;
+	close(w_wait)
+	messagebox('Error..!',sqlca.sqlerrtext)
+	st_3.text = 'Error master transaksi..!'
+	return
+end if
+
+close(w_wait)
+st_3.text = 'Refresh AR sukses...'
+messagebox('Sukses..!','Refresh AR sukses..!')
+
+end event
+
+type cb_6 from commandbutton within w_refresh_journal
+integer x = 2336
+integer y = 824
+integer width = 343
+integer height = 132
+integer taborder = 60
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "EXP"
+end type
+
+event clicked;long ll_count,ll_all,i
+string ls_order
+datetime ldt1,ldt2
+
+dw_arg.accepttext()
+ldt1 = dw_arg.object.tgl1[1]
+ldt2 = dw_arg.object.tgl2[1]
+ll_all = dw_arg.object.all1[1]
+if isnull(ll_all) then ll_all = 0
+//3. Re-transfer EKSPEDISI
+st_1.text = 'Proses 3 of 3'
+st_2.text = 'Re-transfer EKSPEDISI'
+f_log("6010","GL","REFRESH EKSPEDISI",'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy'),"EKSPEDISI")
+dw_trace.dataobject = 'dw_trace_expedisi_all'
+dw_trace.settransobject(sqlca)
+dw_trace.retrieve(ldt1,ldt2,ll_all)
+ll_count = dw_trace.rowcount()
+dw_trace.accepttext()
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		ls_order = dw_trace.getitemstring(i,'order_client')
+		f_transfer_ekspedisi_new(ls_order,'EKSPEDISI')
+	next
+end if
+end event
+
+type dw_trace from uo_dw within w_refresh_journal
+integer x = 1234
+integer y = 1100
+integer taborder = 30
+string dataobject = "dw_transfer_list"
+string is_type_dw = "LIST"
+boolean ib_readonly = true
+long list_footer_height = 150
+end type
+
+event doubleclicked;call super::doubleclicked;gurningsoft_xls(dw_sync1)
+end event
+
+type cb_7 from commandbutton within w_refresh_journal
+integer x = 3058
+integer y = 824
+integer width = 343
+integer height = 132
+integer taborder = 60
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "AP"
+end type
+
+event clicked;dw_arg.accepttext()
+
+if messagebox('Konfirmasi!','Yakin untuk melanjutkan proses..?',question!,yesno!,2) = 2 then return
+
+datetime ldt1,ldt2
+long i,j,ll_sync1,ll_sync2,ll_kas,ll_urut,ll_count
+long ll_urut_bayar,ll_flag_bayar
+string ls_voucher,ls_voucher_manual,ls_ket,ls_coa,ls_coa_bayar,ls_curr,ls_voucher_manual_before
+decimal ldec_debet,ldec_kredit,ldec_debet_kurs,ldec_kredit_kurs,ldec_kurs,ldec_bayar,ldec_bayar_kurs
+decimal ldec_ttl_debet,ldec_ttl_kredit,ldec_ttl_debet_kurs,ldec_ttl_kredit_kurs,ldec_set_bayar
+string ls_voucher_unbalance='',ls_cust_name,ls_faktur,ls_cust,ls_curr_jual,ls_faktur_silang,ls_faktur_bayar
+datetime ldt_tgl
+string ls_order
+long ll_gl_count, i_gl, ll_all
+string ls_bank_curr
+decimal ldec_bank_kurs
+long ll_bank_kas
+
+dw_update.dataobject = 'd_gl_bayar_ap'
+dw_sync1.dataobject = 'd_gl_bayar1'
+dw_sync2.dataobject = 'd_gl_bayar2'
+
+dw_update.settransobject(sqlca)
+dw_sync1.settransobject(sqlca)
+dw_sync2.settransobject(sqlca)
+
+ldt1 = dw_arg.object.tgl1[1]
+ldt2 = dw_arg.object.tgl2[1]
+ll_all = dw_arg.object.all1[1]
+f_log("6010","GL","REFRESH AP",'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy'),"AP")
+
+//Re-transfer AP GL Journal (CN/DN/Adj) - pastikan semua entry AP dibangun ulang
+st_1.text = 'Re-transfer AP GL Journal...'
+st_2.text = 'Re-transfer AP GL Journal (CN/DN/Adj)...'
+dw_trace.dataobject = 'dw_trace_ap_all'
+dw_trace.settransobject(sqlca)
+ll_gl_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+if ll_gl_count > 0 then
+  for i_gl = 1 to ll_gl_count
+    st_3.text = 'AP GL: '+string(i_gl)+' of '+string(ll_gl_count)
+    yield()
+    ls_order = dw_trace.getitemstring(i_gl,'voucher')
+    f_transfer_ap(ls_order)
+  next
+end if
+
+dw_update.retrieve(ldt1,ldt2)
+dw_update.accepttext()
+dw_update.sort()
+
+ll_count = dw_update.rowcount()
+if ll_count <=0 then return
+open(w_wait)
+dw_delete.reset()
+
+for i = 1 to ll_count
+	st_2.text = string(i)+' to '+string(ll_count)
+	ls_voucher_manual = dw_update.getitemstring(i,'voucher_manual')
+	ll_urut = dw_update.object.urut[i]
+	ls_coa = dw_update.getitemstring(i,'account_id')
+	ll_kas = dw_update.object.kas_id[i]
+	ls_ket = dw_update.getitemstring(i,'ket')
+	ls_curr = dw_update.getitemstring(i,'curr_id')
+	ldec_kurs = dw_update.getitemdecimal(i,'rate_rp')
+	ls_faktur = dw_update.getitemstring(i,'order_reff')
+	ls_faktur_silang = dw_update.getitemstring(i,'doc_reff')
+	ldec_debet = dw_update.getitemdecimal(i,'debet')
+	ldec_kredit = dw_update.getitemdecimal(i,'kredit')
+	ldec_debet_kurs = dw_update.getitemdecimal(i,'debet_kurs')
+	ldec_kredit_kurs = dw_update.getitemdecimal(i,'kredit_kurs')
+	ldt_tgl = dw_update.object.tgl[i]
+	
+	if isnull(ls_coa) then ls_coa = ''
+	if isnull(ll_kas) then ll_kas = 0
+	if isnull(ldec_debet) then ldec_debet = 0
+	if isnull(ldec_kredit) then ldec_kredit = 0
+	if isnull(ldec_debet_kurs) then ldec_debet_kurs = 0
+	if isnull(ldec_kredit_kurs) then ldec_kredit_kurs = 0
+	if isnull(ls_faktur) then ls_faktur = ''
+	if isnull(ls_faktur_silang) then ls_faktur_silang = ''
+
+	//Ambil curr_id, kurs, kas_id dari baris kas/bank (row yg punya kas_id>0, mis. BCA)
+	//(baris bank punya doc_reff/order_reff kosong sehingga tidak masuk d_gl_bayar_ap)
+	ls_bank_curr = 'IDR'
+	ldec_bank_kurs = 1
+	ll_bank_kas = 0
+	select top 1 curr_id, rate_rp, kas_id
+	into :ls_bank_curr, :ldec_bank_kurs, :ll_bank_kas
+	from gl_journal
+	where voucher_manual = :ls_voucher_manual
+	  and kas_id > 0
+	using sqlca;
+	if isnull(ls_bank_curr) or ls_bank_curr = '' then ls_bank_curr = 'IDR'
+	if isnull(ldec_bank_kurs) or ldec_bank_kurs = 0 then ldec_bank_kurs = 1
+	if isnull(ll_bank_kas) then ll_bank_kas = 0
+
+	//cek apakah ada pembayaran silang, antara AP diadu ke AR
+	
+	if ls_faktur = '' and ls_faktur_silang = '' then continue; //Mungkin ini biaya adm, selisih kurs
+	if ls_faktur <> '' then //AP
+		ls_faktur_bayar = ls_faktur
+		ll_flag_bayar = 2
+		select vendor_id
+		into :ls_cust
+		from ap_trans
+		where order_client = :ls_faktur
+		using sqlca;
+		
+		select curr_id
+		into :ls_curr_jual
+		from ap_trans
+		where order_client = :ls_faktur
+		using sqlca;
+	
+	else //AR
+		ls_faktur_bayar = ls_faktur_silang
+		ll_flag_bayar = 1
+		select cust_id
+		into :ls_cust
+		from ar_trans
+		where order_client = :ls_faktur_silang
+		using sqlca;
+		
+		select curr_id
+		into :ls_curr_jual
+		from ar_trans
+		where order_client = :ls_faktur_silang
+		using sqlca;
+		
+	end if
+	
+	//Add voucher to dw_delete for delete reference
+	dw_delete.setrow(dw_delete.insertrow(0))
+	dw_delete.setitem(dw_delete.getrow(),'bukti_id',ls_voucher_manual)
+	
+	//Cek tbyr1 //Master bayar
+	if i = 1 then
+		ll_urut_bayar = 0
+		dw_sync1.setrow(dw_sync1.insertrow(0))
+		dw_sync1.setitem(dw_sync1.getrow(),'voucher',ls_voucher_manual+'P')
+		dw_sync1.setitem(dw_sync1.getrow(),'flag_bayar',ll_flag_bayar)
+		dw_sync1.setitem(dw_sync1.getrow(),'tgl',ldt_tgl)
+		dw_sync1.setitem(dw_sync1.getrow(),'site_id',gs_site)
+		dw_sync1.setitem(dw_sync1.getrow(),'kas_id',ll_bank_kas)
+		dw_sync1.setitem(dw_sync1.getrow(),'kolektor_id','')
+		dw_sync1.setitem(dw_sync1.getrow(),'voucher_manual',ls_voucher_manual)
+		dw_sync1.setitem(dw_sync1.getrow(),'curr_id',ls_bank_curr)
+		dw_sync1.setitem(dw_sync1.getrow(),'kurs',ldec_bank_kurs)
+		dw_sync1.setitem(dw_sync1.getrow(),'keterangan',left(ls_ket,50))
+		dw_sync1.setitem(dw_sync1.getrow(),'flag_vendor',ll_flag_bayar)
+		dw_sync1.setitem(dw_sync1.getrow(),'vendor_id',ls_cust)
+	else //Bandingkan apakah masih voucher yg sama..??
+		ls_voucher_manual_before = dw_update.getitemstring(i - 1,'voucher_manual')
+		if ls_voucher_manual <> ls_voucher_manual_before then //Voucher Baru
+			ll_urut_bayar = 0
+			dw_sync1.setrow(dw_sync1.insertrow(0))
+			dw_sync1.setitem(dw_sync1.getrow(),'voucher',ls_voucher_manual+'P')
+			dw_sync1.setitem(dw_sync1.getrow(),'flag_bayar',2)
+			dw_sync1.setitem(dw_sync1.getrow(),'tgl',ldt_tgl)
+			dw_sync1.setitem(dw_sync1.getrow(),'site_id',gs_site)
+			dw_sync1.setitem(dw_sync1.getrow(),'kas_id',ll_bank_kas)
+			dw_sync1.setitem(dw_sync1.getrow(),'kolektor_id','')
+			dw_sync1.setitem(dw_sync1.getrow(),'voucher_manual',ls_voucher_manual)
+			dw_sync1.setitem(dw_sync1.getrow(),'curr_id',ls_bank_curr)
+			dw_sync1.setitem(dw_sync1.getrow(),'kurs',ldec_bank_kurs)
+			dw_sync1.setitem(dw_sync1.getrow(),'keterangan',left(ls_ket,50))
+			dw_sync1.setitem(dw_sync1.getrow(),'flag_vendor',ll_flag_bayar)
+			dw_sync1.setitem(dw_sync1.getrow(),'vendor_id',ls_cust)
+		end if
+	end if //End of Master
+	///Detail ( Tbyr2
+	//Cari vendor dari faktur pertama aja
+	
+	
+	//Begin set detail
+	ll_urut_bayar ++
+	
+	if isnull(ls_curr_jual) then ls_curr_jual = 'IDR'
+	dw_sync2.setrow(dw_sync2.insertrow(0))
+	dw_sync2.setitem(dw_sync2.getrow(),'voucher',ls_voucher_manual+'P')
+	dw_sync2.setitem(dw_sync2.getrow(),'urut',ll_urut_bayar)
+	dw_sync2.setitem(dw_sync2.getrow(),'flag_order',ll_flag_bayar)
+	dw_sync2.setitem(dw_sync2.getrow(),'bukti_id',ls_faktur_bayar)
+	
+	//Jika AP, nilai bayar dari debit, jika AR nilai bayar dari kredit
+	if ll_flag_bayar = 2 then
+		ldec_bayar = ldec_debet
+		ldec_bayar_kurs = ldec_debet_kurs
+	else
+		ldec_bayar = ldec_kredit
+		ldec_bayar_kurs = ldec_kredit_kurs
+	end if
+	
+	if ls_curr_jual = 'IDR' then
+		ldec_set_bayar = ldec_bayar
+	else
+		//Nilai bayar harus dalam valuta asing (mis. USD untuk invoice USD)
+		//Jika debet_kurs < debet maka debet_kurs sudah berisi nilai foreign (mis. 26720 USD)
+		//Jika debet_kurs = debet (IDR) atau 0, hitung dari IDR / kurs sebagai fallback
+		if ldec_bayar_kurs > 0 and ldec_bayar_kurs < ldec_bayar then
+			ldec_set_bayar = ldec_bayar_kurs
+		elseif ldec_kurs > 1 then
+			ldec_set_bayar = ldec_bayar / ldec_kurs
+		else
+			ldec_set_bayar = ldec_bayar
+		end if
+	end if
+
+	dw_sync2.setitem(dw_sync2.getrow(),'nilai_bayar',ldec_set_bayar)
+	dw_sync2.setitem(dw_sync2.getrow(),'ket',ls_ket)
+	dw_sync2.setitem(dw_sync2.getrow(),'nilai_bayar_idr',ldec_bayar)
+	dw_sync2.setitem(dw_sync2.getrow(),'acc_bayar',ls_coa)
+next
+
+
+dw_sync1.accepttext()
+dw_sync2.accepttext()
+st_3.text = 'Delete temporary data...'
+//delete temp data
+delete from tbyr1_copy
+using sqlca;
+commit;
+delete from tbyr2_copy
+using sqlca;
+commit;
+//Backup Data
+st_3.text = 'Backup data...'
+insert into tbyr1_copy
+select * from tbyr1
+where tgl between :ldt1 and :ldt2 and flag_bayar in(2,22)
+using sqlca;
+commit;
+insert into tbyr2_copy
+select * from tbyr2 where voucher in(
+select voucher from tbyr1_copy)
+using sqlca;
+commit;
+
+//update delete reference
+delete from t_bukti_delete
+using sqlca;
+commit;
+dw_delete.accepttext()
+if dw_delete.update() = 1 then
+	commit using sqlca;
+else
+	rollback;
+	messagebox('Error!','Error update delete reference..!',stopsign!)
+	return
+end if
+
+//Delete old data
+st_3.text = 'Delete old data...'
+delete from tbyr2
+where voucher in(select voucher from tbyr1 where voucher_manual in (
+	select bukti_id from t_bukti_delete)
+	)
+using sqlca;
+commit;
+
+delete from tbyr1
+where voucher_manual in(select bukti_id from t_bukti_delete)
+using sqlca;
+commit;
+
+
+st_3.text = 'Refresh data...'
+if dw_sync1.update() = 1 then
+	commit using sqlca;
+	if dw_sync2.update() = 1 then
+		commit using sqlca;
+	else
+		rollback;
+		messagebox('Error..!',sqlca.sqlerrtext)
+		st_3.text = 'Error tabel detail..'
+		close(w_wait)
+		return
+	end if
+else
+	rollback;
+	close(w_wait)
+	messagebox('Error..!',sqlca.sqlerrtext)
+	st_3.text = 'Error master transaksi..!'
+	return
+end if
+
+close(w_wait)
+st_3.text = 'Refresh AP sukses...'
+messagebox('Sukses..!','Refresh AP sukses..!')
+
+end event
+
+type cb_8 from commandbutton within w_refresh_journal
+integer x = 1614
+integer y = 824
+integer width = 343
+integer height = 132
+integer taborder = 70
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "PO"
+end type
+
+event clicked;long ll_count,i,ll_all
+string ls_order,ls_bukti
+datetime ldt1,ldt2,ldt_trans
+if messagebox('Konfirmasi!','Yakin untuk melanjutkan proses..?',question!,yesno!,2) = 2 then return
+
+dw_arg.accepttext()
+ldt1 = dw_arg.object.tgl1[1]
+ldt2 = dw_arg.object.tgl2[1]
+ll_all = dw_arg.object.all1[1]
+
+if ll_all >0 then
+	st_4.text = 'All periode'
+else
+	st_4.text = 'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy')
+end if
+f_log("6010","GL","REFRESH PO",'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy'),"PO")
+//1. Re-transfer PO
+	//REGULER
+st_1.text = 'Proses 1 of 3'
+st_2.text = 'Re-transfer Purchase Order [Reguler]'
+dw_trace.dataobject = 'dw_trace_po_all_reguler'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+setpointer(hourglass!)
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		ls_order = dw_trace.getitemstring(i,'order_client')
+		f_transfer_po_new(ls_order,'REGULER')
+	next
+end if
+	//RETUR
+dw_trace.dataobject = 'dw_trace_po_all_retur'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+if ll_count >0 then
+	st_2.text = 'Re-transfer Purchase Order [Retur]'
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		ls_order = dw_trace.getitemstring(i,'order_client')
+		f_transfer_po_new(ls_order,'RETUR')
+	next
+end if
+
+st_1.text = ''
+st_2.text = 'Re-transfer DP Pembelian...'
+dw_trace.dataobject = 'd_re_dp_beli'
+dw_trace.settransobject(sqlca)
+dw_trace.retrieve(ldt1,ldt2)
+ll_count = dw_trace.rowcount()
+setpointer(hourglass!)
+
+if ll_count >0 then
+	f_re_dp_beli()
+	st_3.text = 'Transfer DP finish..!'
+end if
+end event
+
+type cb_9 from commandbutton within w_refresh_journal
+integer x = 1253
+integer y = 824
+integer width = 343
+integer height = 132
+integer taborder = 70
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "SO"
+end type
+
+event clicked;long ll_count,i,ll_all
+string ls_order,ls_bukti
+datetime ldt1,ldt2,ldt_trans
+if messagebox('Konfirmasi!','Yakin untuk melanjutkan proses..?',question!,yesno!,2) = 2 then return
+
+dw_arg.accepttext()
+ldt1 = dw_arg.object.tgl1[1]
+ldt2 = dw_arg.object.tgl2[1]
+ll_all = dw_arg.object.all1[1]
+
+if ll_all >0 then
+	st_4.text = 'All periode'
+else
+	st_4.text = 'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy')
+end if
+
+f_log("6010","GL","REFRESH SO",'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy'),"SO")
+//2. Update HPP Average ke tsales2 berdasarkan formula weighted average (SINV + transaksi periode)
+//   Formula: HPP_avg = (AWAL_RP + BELI_RP + MUTASI_IN_RP + RET_JUAL_RP - RET_BELI_RP) /
+//                      (AWAL    + BELI    + MUTASI_IN    + RET_JUAL    - RET_BELI)
+st_1.text = 'Update HPP Average...'
+st_2.text = 'Menghitung & update HPP rata-rata ke tsales2...'
+UPDATE tsales2
+SET hpp = (
+   SELECT
+      CASE
+         WHEN ((ISNULL(aw.awal,0) + ISNULL(beli.beli,0) + ISNULL(beli.mutasi_in,0) + ISNULL(rj.ret_jual,0)) - ISNULL(beli.ret_beli,0)) <> 0
+         THEN ((ISNULL(aw.awal_rp,0) + ISNULL(beli_rp.beli,0) + ISNULL(beli_rp.mutasi_in,0) + ISNULL(beli_rp.ekspedisi,0) + ISNULL(rj.ret_jual_rp,0)) - ISNULL(beli_rp.ret_beli,0)) /
+              ((ISNULL(aw.awal,0)    + ISNULL(beli.beli,0)    + ISNULL(beli.mutasi_in,0)    + ISNULL(rj.ret_jual,0))    - ISNULL(beli.ret_beli,0))
+         ELSE 0
+      END
+   FROM im_produk p
+   LEFT OUTER JOIN (
+      SELECT stok_id, SUM(qty) AS awal, SUM(nilai) AS awal_rp
+      FROM sinv
+      WHERE MONTH(periode) = MONTH(:ldt1) AND YEAR(periode) = YEAR(:ldt1)
+        AND stok_id = tsales2.stok_id
+      GROUP BY stok_id
+   ) aw ON p.produk_id = aw.stok_id
+   LEFT OUTER JOIN (
+      SELECT t2.stok_id,
+         SUM(CASE WHEN t1.tipe_trans = '02' THEN t2.qty ELSE 0 END) AS beli,
+         SUM(CASE WHEN t1.tipe_trans = '12' THEN t2.qty ELSE 0 END) AS ret_beli,
+         SUM(CASE WHEN t1.tipe_trans = '09' THEN t2.qty ELSE 0 END) AS mutasi_in
+      FROM tstok1 t1, tstok2 t2
+      WHERE t1.bukti_id = t2.bukti_id
+        AND t1.tgl BETWEEN :ldt1 AND :ldt2
+        AND ISNULL(t1.order_oke,'N') = 'Y'
+        AND ISNULL(t2.qty,0) <> 0
+        AND t2.stok_id = tsales2.stok_id
+      GROUP BY t2.stok_id
+   ) beli ON p.produk_id = beli.stok_id
+   LEFT OUTER JOIN (
+      SELECT t2.stok_id,
+         SUM(CASE WHEN t1.tipe_trans = '02' THEN (t2.netto * ISNULL(t1.kurs,1)) ELSE 0 END) AS beli,
+         SUM(CASE WHEN t1.tipe_trans = '12' THEN ABS(t2.netto_hpp)               ELSE 0 END) AS ret_beli,
+         SUM(CASE WHEN t1.tipe_trans = '09' THEN t2.netto                         ELSE 0 END) AS mutasi_in,
+         SUM(CASE WHEN t1.tipe_trans = '05' THEN ABS(t2.biaya_ekspedisi) * ABS(ISNULL(t2.qty,0)) ELSE 0 END) AS ekspedisi
+      FROM tstok1 t1, tstok2 t2
+      WHERE t1.bukti_id = t2.bukti_id
+        AND t1.tgl BETWEEN :ldt1 AND :ldt2
+        AND ISNULL(t1.order_oke,'N') = 'Y'
+        AND ISNULL(t2.qty,0) <> 0
+        AND t2.stok_id = tsales2.stok_id
+      GROUP BY t2.stok_id
+   ) beli_rp ON p.produk_id = beli_rp.stok_id
+   LEFT OUTER JOIN (
+      SELECT t2.stok_id,
+         SUM(CASE WHEN t1.tipe_trans IN ('32','26','36') THEN t2.qty ELSE 0 END) AS ret_jual,
+         SUM(CASE WHEN t1.tipe_trans IN ('32','26','36') THEN ABS(t2.netto * ISNULL(t1.kurs,1)) ELSE 0 END) AS ret_jual_rp
+      FROM tsales1 t1, tsales2 t2
+      WHERE t1.bukti_id = t2.bukti_id
+        AND t1.tgl BETWEEN :ldt1 AND :ldt2
+        AND t1.order_oke = 'Y'
+        AND t1.tipe_trans IN ('32','26','36')
+        AND ISNULL(t2.qty,0) <> 0
+        AND t2.stok_id = tsales2.stok_id
+      GROUP BY t2.stok_id
+   ) rj ON p.produk_id = rj.stok_id
+   WHERE p.stok_item = 'Y' AND p.produk_id = tsales2.stok_id
+)
+WHERE tsales2.bukti_id IN (
+   SELECT bukti_id FROM tsales1
+   WHERE tgl BETWEEN :ldt1 AND :ldt2
+     AND order_oke = 'Y'
+     AND tipe_trans IN ('22','32','26','36','88')
+)
+USING sqlca;
+IF sqlca.sqlcode <> 0 THEN
+   messagebox('Warning!','Gagal update HPP average: '+sqlca.sqlerrtext,stopsign!)
+   RETURN
+END IF
+COMMIT USING sqlca;
+
+//3. Re-transfer SO DAN HPP
+  //REGULER
+st_1.text = 'Proses 2 of 3'
+st_2.text = 'Re-transfer Sales Order [Reguler] && HPP'
+dw_trace.dataobject = 'dw_trace_so_all_reguler'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+if ll_count >0 then
+  for i = 1 to ll_count
+          st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+          ls_order = dw_trace.getitemstring(i,'order_client')
+          ls_bukti = dw_trace.getitemstring(i,'bukti_id')
+          ldt_trans = dw_trace.object.tgl[i]
+          st_2.text = 'Re-transfer Sales Order [Reguler] && HPP'
+          f_transfer_so(ls_order,'REGULER')
+          st_2.text = 'Transfer KOMISI & TITIPAN'
+          f_transfer_dpkomisi(ls_bukti)
+          f_insert_cons_in(ls_bukti)
+  next
+end if
+  //RETUR
+st_2.text = 'Re-transfer Sales Order [Retur] && HPP'
+dw_trace.dataobject = 'dw_trace_so_all_retur'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+if ll_count >0 then
+  for i = 1 to ll_count
+          st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+          ls_order = dw_trace.getitemstring(i,'order_client')
+          ls_bukti = dw_trace.getitemstring(i,'bukti_id')
+          ldt_trans = dw_trace.object.tgl[i]
+          st_2.text = 'Re-transfer Sales Order [Retur] && HPP'
+          f_transfer_so(ls_order,'RETUR')
+		st_2.text = 'Transfer KOMISI & TITIPAN'
+		f_transfer_dpkomisi(ls_bukti)
+	next
+end if
+
+st_1.text = ''
+st_2.text = 'Re-transfer DP Penjualan...'
+dw_trace.dataobject = 'd_re_dp'
+dw_trace.settransobject(sqlca)
+dw_trace.retrieve(ldt1,ldt2)
+ll_count = dw_trace.rowcount()
+setpointer(hourglass!)
+
+if ll_count >0 then
+	f_re_dp()
+	st_3.text = 'Transfer DP finish..!'
+end if
+
+
+end event
+
+type dw_sync2 from uo_dw within w_refresh_journal
+boolean visible = false
+integer x = 302
+integer y = 1228
+integer taborder = 40
+boolean bringtotop = true
+string dataobject = "d_sync_argl2"
+boolean resizable = true
+end type
+
+type dw_sync1 from uo_dw within w_refresh_journal
+boolean visible = false
+integer x = 183
+integer y = 536
+integer taborder = 30
+boolean bringtotop = true
+string dataobject = "d_sync_argl1"
+boolean resizable = true
+end type
+
+type cb_10 from commandbutton within w_refresh_journal
+integer x = 1975
+integer y = 824
+integer width = 343
+integer height = 132
+integer taborder = 80
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "Non Item"
+end type
+
+event clicked;long ll_count,i,ll_all
+string ls_order,ls_bukti
+datetime ldt1,ldt2,ldt_trans
+if messagebox('Konfirmasi!','Yakin untuk melanjutkan proses..?',question!,yesno!,2) = 2 then return
+
+dw_arg.accepttext()
+ldt1 = dw_arg.object.tgl1[1]
+ldt2 = dw_arg.object.tgl2[1]
+ll_all = dw_arg.object.all1[1]
+
+if ll_all >0 then
+	st_4.text = 'All periode'
+else
+	st_4.text = 'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy')
+end if
+
+f_log("6010","GL","REFRESH NONITEM",'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy'),"NONITEM")
+st_2.text = 'Re-transfer Pembelian Non-Item...'
+dw_trace.dataobject = 'dw_trace_po_nonitem'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2,ll_all)
+setpointer(hourglass!)
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		ls_order = dw_trace.getitemstring(i,'order_client')
+		f_transfer_nonitempo(ls_order)
+	next
+end if
+st_2.text = 'Re-transfer Finish..'
+end event
+
+type cb_11 from commandbutton within w_refresh_journal
+integer x = 1248
+integer y = 968
+integer width = 343
+integer height = 132
+integer taborder = 70
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "Adj."
+end type
+
+event clicked;long ll_count,i,ll_all
+string ls_order,ls_bukti,ls_koreksi
+datetime ldt1,ldt2,ldt_trans
+if messagebox('Konfirmasi!','Yakin untuk melanjutkan proses..?',question!,yesno!,2) = 2 then return
+
+dw_arg.accepttext()
+ldt1 = dw_arg.object.tgl1[1]
+ldt2 = dw_arg.object.tgl2[1]
+ll_all = dw_arg.object.all1[1]
+
+if ll_all >0 then
+	st_4.text = 'All periode'
+else
+	st_4.text = 'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy')
+end if
+
+f_log("6010","GL","REFRESH ADJ",'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy'),"ADJ")
+//1. Re-transfer Adjustment
+//REGULER
+st_1.text = ''
+st_2.text = 'Re-transfer Adjustment STOK'
+dw_trace.dataobject = 'd_trace_adj_stok_all'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2)
+setpointer(hourglass!)
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		ls_order = dw_trace.getitemstring(i,'order_client')
+		ls_koreksi = dw_trace.getitemstring(i,'tipe_trans')
+		f_transfer_adjustment(ls_order,ls_koreksi)
+	next
+end if
+
+end event
+
+type cb_12 from commandbutton within w_refresh_journal
+integer x = 1253
+integer y = 672
+integer width = 2514
+integer height = 132
+integer taborder = 40
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "Hapus Data GL"
+end type
+
+event clicked;open(w_delete_datagl)
+end event
+
+type cb_13 from commandbutton within w_refresh_journal
+integer x = 1614
+integer y = 968
+integer width = 416
+integer height = 132
+integer taborder = 70
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "Cons OUT"
+end type
+
+event clicked;long ll_count,i,ll_all
+string ls_order,ls_bukti,ls_koreksi
+datetime ldt1,ldt2,ldt_trans
+if messagebox('Konfirmasi!','Yakin untuk melanjutkan proses..?',question!,yesno!,2) = 2 then return
+
+dw_arg.accepttext()
+ldt1 = dw_arg.object.tgl1[1]
+ldt2 = dw_arg.object.tgl2[1]
+ll_all = dw_arg.object.all1[1]
+
+if ll_all >0 then
+	st_4.text = 'All periode'
+else
+	st_4.text = 'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy')
+end if
+
+//1. Re-transfer Konsinyasi OUT
+f_log("6010","GL","REFRESH WIPOUT",'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy'),"WIPOUT")
+
+st_1.text = ''
+st_2.text = 'Re-transfer Konsinyasi OUT...'
+dw_trace.dataobject = 'd_trace_consout_all'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2)
+setpointer(hourglass!)
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		ls_order = dw_trace.getitemstring(i,'order_client')
+
+		f_transfer_cons(ls_order,'OUT')
+	next
+end if
+
+
+
+end event
+
+type dw_delete from uo_dw within w_refresh_journal
+boolean visible = false
+integer x = 224
+integer y = 1548
+integer taborder = 40
+boolean bringtotop = true
+string dataobject = "dw_bukti_delete"
+end type
+
+type cb_14 from commandbutton within w_refresh_journal
+integer x = 2053
+integer y = 968
+integer width = 357
+integer height = 132
+integer taborder = 80
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "Cons IN"
+end type
+
+event clicked;long ll_count,i,ll_all
+string ls_order,ls_bukti,ls_koreksi
+datetime ldt1,ldt2,ldt_trans
+if messagebox('Konfirmasi!','Yakin untuk melanjutkan proses..?',question!,yesno!,2) = 2 then return
+
+dw_arg.accepttext()
+ldt1 = dw_arg.object.tgl1[1]
+ldt2 = dw_arg.object.tgl2[1]
+ll_all = dw_arg.object.all1[1]
+
+if ll_all >0 then
+	st_4.text = 'All periode'
+else
+	st_4.text = 'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy')
+end if
+
+//1. Re-transfer Konsinyasi IN
+f_log("6010","GL","REFRESH WIPIN",'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy'),"WIPIN")
+st_1.text = ''
+st_2.text = 'Re-transfer Konsinyasi IN...'
+dw_trace.dataobject = 'd_trace_consin_all'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2)
+setpointer(hourglass!)
+
+if ll_count >0 then
+	for i = 1 to ll_count
+		st_3.text = 'Checking row : '+string(i)+' of '+string(ll_count)
+		ls_order = dw_trace.getitemstring(i,'order_client')
+
+		f_transfer_cons(ls_order,'IN')
+	next
+end if
+end event
+
+type cb_15 from commandbutton within w_refresh_journal
+boolean visible = false
+integer x = 2437
+integer y = 968
+integer width = 402
+integer height = 132
+integer taborder = 60
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Tahoma"
+string text = "DP"
+end type
+
+event clicked;long ll_count,i,ll_all
+string ls_order,ls_bukti,ls_koreksi
+datetime ldt1,ldt2,ldt_trans
+if messagebox('Konfirmasi!','Yakin untuk melanjutkan proses..?',question!,yesno!,2) = 2 then return
+
+dw_arg.accepttext()
+ldt1 = dw_arg.object.tgl1[1]
+ldt2 = dw_arg.object.tgl2[1]
+ll_all = dw_arg.object.all1[1]
+
+if ll_all >0 then
+	st_4.text = 'All periode'
+else
+	st_4.text = 'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy')
+end if
+
+
+st_1.text = ''
+st_2.text = 'Re-transfer DP Penjualan...'
+dw_trace.dataobject = 'd_re_dp'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2)
+setpointer(hourglass!)
+
+if ll_count >0 then
+	f_re_dp()
+	st_3.text = 'Transfer DP finis..!'
+end if
+
+st_1.text = ''
+st_2.text = 'Re-transfer DP Pembelian...'
+dw_trace.dataobject = 'd_re_dp_beli'
+dw_trace.settransobject(sqlca)
+ll_count = dw_trace.retrieve(ldt1,ldt2)
+setpointer(hourglass!)
+
+if ll_count >0 then
+	f_re_dp_beli()
+	st_3.text = 'Transfer DP finis..!'
+end if
+end event
+
+type dw_gl from uo_dw within w_refresh_journal
+boolean visible = false
+integer x = 2825
+integer y = 980
+integer taborder = 50
+boolean bringtotop = true
+string dataobject = "d_gl_dp"
+boolean resizable = true
+end type
+
+type dw_bayar1 from uo_dw within w_refresh_journal
+boolean visible = false
+integer x = 3648
+integer y = 1208
+integer taborder = 40
+boolean bringtotop = true
+string dataobject = "d_gl_bayar1"
+end type
+
+type dw_bayar2 from uo_dw within w_refresh_journal
+boolean visible = false
+integer x = 4389
+integer y = 1324
+integer taborder = 40
+boolean bringtotop = true
+string dataobject = "d_gl_bayar2"
+end type
+
+type cb_16 from commandbutton within w_refresh_journal
+integer x = 2496
+integer y = 968
+integer width = 759
+integer height = 132
+integer taborder = 90
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Tahoma"
+string text = "Clear Pembayaran"
+end type
+
+event clicked;long ll_count,i,ll_all
+string ls_order,ls_bukti,ls_koreksi
+datetime ldt1,ldt2,ldt_trans
+if messagebox('Konfirmasi!','Yakin untuk melanjutkan proses..?',question!,yesno!,2) = 2 then return
+
+dw_arg.accepttext()
+ldt1 = dw_arg.object.tgl1[1]
+ldt2 = dw_arg.object.tgl2[1]
+ll_all = dw_arg.object.all1[1]
+
+f_log("6010","GL","CLEAR DATA",'Periode : '+string(ldt1,'dd-mm-yyyy')+' s/d '+string(ldt2,'dd-mm-yyyy'),"CLEAR")
+st_4.text = 'Clearing AR....'
+this.enabled = false
+delete from tbyr2
+where bukti_id not in(select isnull(doc_reff,'') from gl_journal where modul_id = 'CI')
+and bukti_id in(select order_client from ar_trans where tipe_trans in('22','32'))
+and flag_order = 1
+and voucher not like '%DP%'
+using sqlca;
+commit;
+
+//Clear DP
+st_4.text = 'Clearing AP....'
+delete from tbyr2
+where voucher like '%DPR%'
+and bukti_id not in(select a.order_client from tsales1 a,tdp b where a.bukti_id = b.voucher)
+using sqlca;
+commit;
+
+delete from tbyr2
+where voucher like '%DPB%'
+and bukti_id not in(select a.order_client from tstok1 a,tdp b where a.bukti_id = b.voucher)
+using sqlca;
+commit;
+//End clear DP
+st_4.text = 'Clearing AP....'
+
+delete from tbyr2
+where bukti_id not in(select isnull(order_reff,'') from gl_journal where modul_id = 'CO')
+and bukti_id in(select order_client from ap_trans )
+and flag_order = 2
+and voucher not like '%DP%'
+and bukti_id not like '%NOITEM%'
+using sqlca;
+commit;
+
+
+delete from tbyr1
+where voucher not in(select voucher from tbyr2)
+using sqlca;
+commit;
+st_4.text = 'Process finish....'
+this.enabled = true
+end event
+
+type cb_17 from commandbutton within w_refresh_journal
+integer x = 3305
+integer y = 968
+integer width = 722
+integer height = 132
+integer taborder = 60
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "Clear Jurnal Memo"
+end type
+
+event clicked;if messagebox('Konfirmasi!','Yakin untuk clear jurnal manual (memo) ?',question!,yesno!,2) = 2 then return
+
+setpointer(hourglass!)
+
+delete FROM gl_journal
+WHERE voucher NOT IN (
+    SELECT DISTINCT voucher
+    FROM gl_journal
+    WHERE urut = 1
+)
+using sqlca;
+commit;
+setpointer(arrow!)
+messagebox('Info!','Proses berhasil..!')
+
+end event
+

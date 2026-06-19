@@ -1,0 +1,149 @@
+﻿
+===== gl_report table structure =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'COLUMN_NAME' not found"
+
+===== gl_report rows for Balance Sheet (report_id=02) =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'seq_id' not found"
+
+===== gl_report all rows =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'seq_id' not found"
+
+===== Accounts matching 101% with saldo Jan 2026 =====
+AccountCode	AccountDes	FinCatCode	opening	movement	saldo
+--------------------------------------------------------------------------------
+101-001	BCA : 284-0032003  TAM OD	BS2011	0.000000	0.000000	0.000000
+101-010	PERMATA : 504-000060 ( PT. TAM )	BS2011	0.000000	0.000000	0.000000
+101-011	BCA : 284-0066005  ( PT. TAM )	BS2011	5049572829.190000	-3766845537.860000	1282727291.330000
+101-110	BCA US$ : 284-0020099 ( PT. TAM )	BS2011	511637903.610000	581677621.850000	1093315525.460000
+101-111	BCA CNY : 284-9929989 ( PT. TAM )	BS2011	0.000000	0.000000	0.000000
+101-201	Deposito - BCA ( Rp )	BS2011	5000000000.000000	-3000000000.000000	2000000000.000000
+101-202	Deposito - Cadangan Gaji	BS2011	0.000000	0.000000	0.000000
+(7 rows)
+
+===== Accounts matching 10% with saldo Jan 2026 =====
+AccountCode	AccountDes	FinCatCode	saldo
+--------------------------------------------------------------------------------
+100-001	Kas Kecil - A	BS2010	4928000.000000
+100-002	Kas Kecil - B	BS2010	0.000000
+100-003	Kas Kecil - Diana	BS2010	4949350.000000
+100-101	Kas United State Dollar ( US$ )	BS2010	0.000000
+101-001	BCA : 284-0032003  TAM OD	BS2011	0.000000
+101-010	PERMATA : 504-000060 ( PT. TAM )	BS2011	0.000000
+101-011	BCA : 284-0066005  ( PT. TAM )	BS2011	1282727291.330000
+101-110	BCA US$ : 284-0020099 ( PT. TAM )	BS2011	1093315525.460000
+101-111	BCA CNY : 284-9929989 ( PT. TAM )	BS2011	0.000000
+101-201	Deposito - BCA ( Rp )	BS2011	2000000000.000000
+101-202	Deposito - Cadangan Gaji	BS2011	0.000000
+102-001	Unit - Thermo King Truck Pendingin ( TR )	BS2015	9073122669.990000
+102-003	Unit - NORDIC Truck Pendingin ( NR )	BS2015	55094965.150000
+102-006	Unit - Thermo King  AC Bus ( TB )	BS2015	1877122940.100000
+102-010	Unit - TOYO ( TYU )	BS2015	250842000.120000
+102-011	Unit - Fuji Truck Pendingin ( FU )	BS2015	0.000000
+102-015	Unit - Fuji Sawa ( OB )	BS2015	0.000000
+102-016	Unit - Fuji + TK Bus ( FUS )	BS2015	0.000000
+102-017	Unit -  Fuji + TK  ( TA )	BS2015	0.000000
+102-018	Unit - BINGSHAN Cold Storage ( BCS )	BS2015	886500519.740000
+102-020	Unit - WORK IN PROCESS	BS2015	776377600.520000
+102-101	Spare Parts - Thermo King (TS)	BS2015	7088013687.460000
+102-102	Spare Parts - Thermo King Lokal (TL)	BS2015	174194783.150000
+102-103	Spare Parts - NORDIC ( NDS )	BS2015	138764938.300000
+102-105	Spare Parts - TOYO ( TY=TYC )	BS2015	0.000000
+102-106	Spare Parts - Fuji (FS)	BS2015	0.000000
+102-107	Spare Parts - Fuji Lokal (FL)	BS2015	0.000000
+102-108	Spare Parts - Fuji Motor ( OS )	BS2015	0.000000
+102-109	Spare Parts - Frigicool ( FP )	BS2015	0.000000
+102-110	Spare Parts - Lokal ( L )	BS2015	3080317362.170000
+102-111	Spare Parts - Louver ( VL )	BS2015	0.000000
+102-112	Spare Parts - Prestolite ( TSA )	BS2015	0.000000
+102-113	Spare Parts - Toyo ( TY )	BS2015	96065711.540000
+102-120	Spare Parts - Service Supplies ( S )	BS2015	0.000000
+102-121	Spare Parts - KONSINYASI	BS2015	0.000000
+102-201	Spare Parts - Material Tambahan ( MT )	BS2015	121151313.610000
+102-203	Box / Isolasi Pendingin	BS2015	0.010000
+102-254	Louver	BS2015	1.410000
+102-301	Persediaan Barang Dlm. Proses - Brecket	BS2015	0.000000
+102-601	Persediaan Dlm.Perjalanan 	BS2015	21522900.000000
+102-611	Persediaan Lain-lain	BS2015	0.000000
+103-001	Piutang Dagang 	BS2030	31691199996.160000
+103-020	Piutang Dagang - TAM	BS2030	0.000000
+103-101	Piutang Dagang - Ragu-Ragu	BS2030	0.000000
+104-001	Pembayaran Dimuka - Pembelian 	BS2031	0.000000
+104-002	Pembayaran Dimuka - Pembelian Unit	BS2031	1149704358.000000
+104-101	Pembayaran Dimuka - PPh 21 Karyawan	BS2031	0.000000
+104-102	Pembayaran Dimuka - PPh 22	BS2031	30174900.000000
+104-103	Pembayaran Dimuka - PPh 23 Jasa	BS2031	1335349.000000
+104-105	Pembayaran Dimuka - PPh 25 Badan	BS2031	0.000000
+104-109	Pembayaran Dimuka - PPh Pasal 4 Ayat 2	BS2031	0.000000
+104-111	Pembayaran Dimuka - PPN Masukan	BS2031	157492275.468000
+104-112	Pembayaran Dimuka - Selisih PPN In Out	BS2031	0.000000
+104-201	Pembayaran Dimuka - Asuransi Kendaraan	BS2031	0.000000
+104-301	Pembayaran Dimuka - Perjalanan Dinas Direksi	BS2031	0.000000
+104-302	Pembayaran Dimuka - Perjalanan Dinas Marketing	BS2031	0.000000
+104-303	Pembayaran Dimuka - Perjalanan Dinas Teknisi	BS2031	0.000000
+104-401	Pembayaran Dimuka - Sewa 	BS2031	0.000000
+104-402	Pembayaran Dimuka - Gaji	BS2031	0.000000
+104-501	Pembayaran Dimuka - Instalasi / Renovasi	BS2031	0.000000
+104-502	Pembayaran Dimuka - Instalasi Fahrizal	BS2031	0.000000
+108-002	Pemegang Saham - Mrs. Hartati Santoso	BS2032	0.000000
+108-003	Pemegang Saham - Mr. Sjaftari Santoso	BS2032	0.000000
+108-004	Pemegang Saham - Mr. Budiman Santoso	BS2032	0.000000
+108-005	Pemegang Saham - Mr. Mursidik Santoso	BS2032	0.000000
+108-006	Pemegang Saham - Jonathan Tobing Halim	BS2032	0.000000
+108-106	Intercompany - TAM Bekasi	BS2032	0.000000
+108-107	Intercompany - TAM Solo	BS2032	0.000000
+108-108	Intercompany - TAM Semarang	BS2032	0.000000
+108-109	Intercompany - TAM Surabaya	BS2032	0.000000
+108-110	Intercompany - TAM Mandiri	BS2032	0.000000
+108-111	Intercompany - TAM Bandung	BS2032	265000000.000000
+108-112	Intercompany - TAM Bali	BS2032	0.000000
+108-113	Intercompany - BMI	BS2032	36908800.000000
+108-114	Intercompany - Lain-Lain	BS2032	333000000.000000
+108-115	Pinjaman Sementara - Supplier	BS2032	375000.000000
+108-116	Pinjaman Sementara - Lainnya	BS2032	0.000000
+108-301	Piutang Karyawan	BS2032	269750000.000000
+108-302	Piutang Karyawan BPJS Kes + JHT	BS2032	0.000000
+108-303	Alfa Reza Fahlevi	BS2032	0.000000
+108-304	Jonggara Tambunan	BS2032	0.000000
+108-307	Hery Purwanto	BS2032	0.000000
+108-308	W. Setiawan	BS2032	0.000000
+108-310	Donal Iwan Gurning	BS2032	0.000000
+108-311	Shianny	BS2032	0.000000
+108-312	Fiyana	BS2032	0.000000
+108-314	Kuseno	BS2032	0.000000
+108-315	T.Teguh	BS2032	87000000.000000
+108-316	Estrik Saweho	BS2032	4000000.000000
+108-317	Junairi Gozali	BS2032	0.000000
+108-318	Heddy K.	BS2032	5000000.000000
+108-324	Dewi Trisusilowati	BS2032	0.000000
+108-350	Dana Cadangan Karyawan	BS2032	685441800.000000
+108-501	Perkiraan Sementara - Setoran /Transfer antar Bank	BS2032	0.000000
+108-502	Perkiraan Sementara - Terima / Keluar Ragu2	BS2032	0.000000
+(95 rows)
+
+===== SYS tables - any coa_saldo =====
+table_name	table_type
+--------------------------------------------------------------------------------
+neraca2014	BASE
+saldo faktur duplikat	BASE
+saldo_adj_2015	BASE
+SALDO_AWAL_FAKTUR	BASE
+saldo_faktur_duplikat	BASE
+v_neraca	VIEW
+v_saldo_awal	VIEW
+(7 rows)
+
+===== Account with saldo exactly between 75M-78M (all accounts) =====
+AccountCode	AccountDes	FinCatCode	saldo
+--------------------------------------------------------------------------------
+230-004	Hutang Komisi Customer - DN 01	BS3014	-85850000.000000
+400-003	Unit Pendingin - TOYO ( TYU )	IS1001	-69672500.000000
+500-002	Pendapatan Bunga	IS2230	-66143797.540000
+227-008	Biaya YMH. Dibayar - Biaya Kendaraan & Perjalanan 	BS3011	-66074210.000000
+230-001	Hutang Komisi Customer - TB 01	BS3014	-52300000.000000
+102-003	Unit - NORDIC Truck Pendingin ( NR )	BS2015	55094965.150000
+500-013	Selisih Pembayaran / Kurs (-)	IS2230	57082163.530000
+412-066	Penyusutan Aktiva Tetap	IS2120	57203299.000000
+108-315	T.Teguh	BS2032	87000000.000000
+402-008	HPP. Unit Pendingin NORDIC ( NR )	IS1110	96000000.000000
+102-113	Spare Parts - Toyo ( TY )	BS2015	96065711.540000
+(11 rows)

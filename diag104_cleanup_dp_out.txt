@@ -1,0 +1,16 @@
+﻿=== CLEANUP DP Bank Wrong Entries - 06/05/2026 17:19:12 ===
+
+=== STEP 1: Wrong modul_id=CI GL entries for DP vouchers (ALL periods) ===
+Total wrong CI entries: 0
+
+=== STEP 2: No wrong CI GL entries found - nothing to delete ===
+
+=== STEP 3: Fix tbyr1.kas_id = 0 for all DP application records ===
+tbyr1 DP records with wrong kas_id: 0
+No tbyr1 DP records with wrong kas_id found.
+
+=== STEP 4: Verify bank saldo end Jan 2026 ===
+Opening bank: Dr=10561210732.800000 Cr=0.000000
+Jan journal:  Dr=10071628488.540000 Cr=16256796404.550000
+Computed bank saldo end Jan 2026: 4376042816.790000
+CORRECT: matches expected 4,376,042,816.79

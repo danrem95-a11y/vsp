@@ -1,0 +1,6 @@
+BUKTI_ID        VENDOR_ID       CURR_ID OPENING_IDR          ROWS        
+------------------------------------------------------------------------
+
+(0 rows)
+
+Execution time: 0.716 seconds

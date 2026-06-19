@@ -1,0 +1,238 @@
+$PBExportHeader$w_rpt_jual.srw
+forward
+global type w_rpt_jual from w_report
+end type
+end forward
+
+global type w_rpt_jual from w_report
+end type
+global w_rpt_jual w_rpt_jual
+
+event open;call super::open;//
+end event
+
+on w_rpt_jual.create
+call super::create
+end on
+
+on w_rpt_jual.destroy
+call super::destroy
+if IsValid(MenuID) then destroy(MenuID)
+end on
+
+event ue_xls;f_log("5570","LAPORAN PENJUALAN","EXCEL","Transfer to excel","")
+gurningsoft_xls(dw_2)
+end event
+
+event ue_print;dw_2.accepttext()
+if dw_2.rowcount( ) <=0 then
+	messagebox('','No data..!')
+	return
+end if
+Openwithparm(w_prompt_print,dw_2)
+If Message.doubleparm = -1 then return
+dw_2.print()
+
+f_log("5570","LAPORAN PENJUALAN","PRINT","Print laporan penjualan","")
+end event
+
+type dw_log from w_report`dw_log within w_rpt_jual
+end type
+
+type dw_con from w_report`dw_con within w_rpt_jual
+end type
+
+type dw_update from w_report`dw_update within w_rpt_jual
+end type
+
+type dw_search from w_report`dw_search within w_rpt_jual
+end type
+
+type st_split from w_report`st_split within w_rpt_jual
+end type
+
+type dw_anim from w_report`dw_anim within w_rpt_jual
+end type
+
+type dw_statusbar from w_report`dw_statusbar within w_rpt_jual
+end type
+
+type dw_leftmenu from w_report`dw_leftmenu within w_rpt_jual
+end type
+
+type dw_1 from w_report`dw_1 within w_rpt_jual
+integer height = 464
+string dataobject = "d_rpt_jual"
+boolean controlmenu = true
+end type
+
+event dw_1::constructor;call super::constructor;this.insertrow(0)
+datetime ldt1,ldt2
+
+ldt1 = f_bom(gdt_today)
+ldt2 = f_eom(gdt_today)
+
+this.setitem(1,'tgl1',ldt1)
+this.setitem(1,'tgl2',ldt2)
+this.setitem(1,'all1',1)
+end event
+
+event dw_1::itemchanged;call super::itemchanged;string ls_vendor,ls_nama
+long ll_flag,ll_rekap
+/*
+1.group barang
+2.salesman
+3.kode faktur
+4.customer
+
+*/
+this.accepttext()
+if dwo.name = 'vendor' then
+	ls_vendor = this.object.vendor[1]
+	ll_flag = this.object.flag_by[1]
+	if isnull(ll_flag) then ll_flag = 0
+	choose case ll_flag
+		case 1
+			select nama_group
+			into :ls_nama
+			from im_product_group
+			where kode_group = :ls_vendor
+			using sqlca;
+			if isnull(ls_nama) then ls_nama = ''
+		case 2
+			select sales_desc
+			into :ls_nama
+			from mslm
+			where salesman_id = :ls_vendor
+			using sqlca;
+			if isnull(ls_nama) then ls_nama = ''
+		case 3
+			select faktur_desc
+			into :ls_nama
+			from mfaktur
+			where faktur_id = :ls_vendor
+			using sqlca;
+			if isnull(ls_nama) then ls_nama = ''
+		case 4
+			select cust_name
+			into :ls_nama
+			from mcust
+			where cust_id = :ls_vendor
+			using sqlca;
+			if isnull(ls_nama) then ls_nama = ''
+	end choose
+	this.setitem(1,'vendor_desc',ls_nama)
+end if	
+if dwo.name = 'flag_by' or dwo.name = 'rekap' then
+	this.accepttext()
+	ll_flag = this.object.flag_by[1]
+	ll_rekap = this.object.rekap[1]
+	
+	if isnull(ll_flag) then ll_flag = 0
+	if isnull(ll_rekap) then ll_rekap = 0
+	choose case ll_flag
+		case 1
+			this.modify("vendor.tag='w_ddo_produk_group'")
+			this.modify("t_desc.text='Group Barang : '")
+			if ll_rekap = 1 then
+				dw_2.dataobject = "dw_rpt_jual_group_rekap"
+			else
+				dw_2.dataobject = "dw_rpt_jual_group"
+			end if
+		case 2
+			this.modify("vendor.tag='w_ddo_salesman'")
+			this.modify("t_desc.text='Salesman : '")
+			if ll_rekap = 1 then
+				dw_2.dataobject = "dw_rpt_jual_salesman_rekap"
+			else
+				dw_2.dataobject = "dw_rpt_jual_salesman"
+			end if
+		case 3
+			this.modify("vendor.tag='w_ddo_faktur'")
+			this.modify("t_desc.text='Kode Faktur : '")
+			if ll_rekap = 1 then
+				dw_2.dataobject = "dw_rpt_jual_faktur_rekap"
+			else
+				dw_2.dataobject = "dw_rpt_jual_faktur"
+			end if
+		case 4
+			this.modify("vendor.tag='w_ddo_cust'")
+			this.modify("t_desc.text='Customer : '")
+			if ll_rekap = 1 then
+				dw_2.dataobject = "dw_rpt_jual_customer_rekap_all"
+			else
+				dw_2.dataobject = "dw_rpt_jual_customer"
+			end if
+		case 5
+			//this.modify("vendor.tag='w_ddo_cust'")
+			//this.modify("t_desc.text='Customer : '")
+			if ll_rekap = 1 then
+				dw_2.dataobject = "dw_rpt_jual_faktur1_rekap"
+			else
+				dw_2.dataobject = "dw_rpt_jual_faktur1"
+			end if
+	end choose
+	this.setitem(1,'all1',1)
+	this.accepttext()
+	dw_2.settransobject(sqlca)
+end if
+end event
+
+event dw_1::ue_retrieve;call super::ue_retrieve;dw_2.triggerevent('ue_retrieve')
+end event
+
+event dw_1::editchanged;call super::editchanged;string ls_nama
+if dwo.name = 'namacurr' then
+	this.accepttext()
+	ls_nama = upper(this.object.namacurr[1])
+	if isnull(ls_nama) then ls_nama = ''
+
+	if ls_nama = '' then
+		dw_2.setfilter('')
+	else	
+		dw_2.setfilter('upper(is_find) like "'+ls_nama + '%"')
+	end if
+	dw_2.filter()
+	dw_2.sort()
+	dw_2.groupcalc()
+	
+end if
+end event
+
+type dw_2 from w_report`dw_2 within w_rpt_jual
+string dataobject = "dw_rpt_jual_faktur1_rekap"
+end type
+
+event dw_2::ue_retrieve;call super::ue_retrieve;datetime ldt1,ldt2
+long ll_tipe,ll_all1,ll_all2,ll_flag,ll_rekap,ll_show
+string ls_vendor,ls_tipe
+
+dw_1.accepttext()
+ldt1 = dw_1.object.tgl1[1]
+ldt2 = dw_1.object.tgl2[1]
+
+ls_vendor = dw_1.object.vendor[1]
+ll_flag = dw_1.object.flag_by[1]
+ll_tipe = dw_1.object.flag_zero[1]
+ll_all1 = dw_1.object.all1[1]
+
+if f_data_security() then
+	ll_show = 0
+else
+	ll_show = 1
+end if
+
+if isnull(ll_tipe) then ll_tipe = 0
+
+if ll_tipe = 0 or ll_tipe = 1 then
+	ll_all2 = 1
+else
+	ll_all2 = 0
+end if
+ls_tipe = string(ll_tipe)
+this.retrieve(gs_site,ls_vendor,ll_all1,ls_tipe,ll_all2,ldt1,ldt2,ll_show)
+end event
+
+type st_1 from w_report`st_1 within w_rpt_jual
+end type
+

@@ -1,0 +1,12 @@
+﻿snull(ldec_debet) then ldec_debet = 0
+	if isnull(ldec_kredit) then ldec_kredit = 0
+	if isnull(ldec_debet_kurs) then ldec_debet_kurs = 0
+	if isnull(ldec_kredit_kurs) then ldec_kredit_kurs = 0
+	if isnull(ls_faktur) then ls_faktur = ''
+	if isnull(ls_faktur_silang) then ls_faktur_silang = ''
+
+	//cek apakah ada pembayaran silang, antara AP diadu ke AR
+	
+	if ls_faktur = '' and ls_faktur_silang = '' then continue; //Mungkin ini biaya adm, selisih kurs
+	if ls_faktur <> '' then //AP
+		ls_faktu

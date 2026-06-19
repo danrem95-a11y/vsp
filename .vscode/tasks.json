@@ -1,0 +1,296 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "diag74-anchor-compare",
+			"type": "shell",
+			"command": "C:\\Program Files (x86)\\SQL Anywhere 11\\bin32\\dbisql.com",
+			"args": [
+				"-nogui",
+				"-onerror",
+				"exit",
+				"-c",
+				"DSN=vsp;UID=dba;PWD=jakarta",
+				"c:\\BTV\\debug\\diag74_anchor_compare.sql"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "diag74-missing-anchor",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag74_missing_anchor.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag75-compare-piutang",
+			"type": "shell",
+			"command": "powershell -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag75_compare.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag75-compare-piutang-32bit",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag75_compare.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag76-piutang-summary-32bit",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag76_piutang_summary.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag78-filetype",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag78_filetype.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag79-python-check",
+			"type": "shell",
+			"command": "python --version 2>&1",
+			"group": "build"
+		},
+		{
+			"label": "diag80-python-locate",
+			"type": "shell",
+			"command": "where python 2>&1",
+			"group": "build"
+		},
+		{
+			"label": "diag88-validate-jan",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag88_validate_jan.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag88-validate-jan-32bit",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag88_validate_jan_32.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag89-bank-audit",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag89_bank_audit.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag89b-bank-audit-ps",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag89b_bank_audit.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag89c-schema-check",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag89c_schema.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag89d-saldo-awal",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag89d_saldo_awal.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag89e-tables",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag89e_tables.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag89f-probe",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag89f_probe.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag89g-investigation",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag89g_investigation.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag89h-bank-final",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag89h_bank_final.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag89i-final-verify",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag89i_final_verify.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag90-neraca-bank",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag90_neraca_bank.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag91-gl-report-bank",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag91_gl_report_bank.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag92-exact-srd-query",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag92_exact_srd_query.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag93-bank-excess",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag93_bank_excess.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag94-old-report-path",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag94_old_report_path.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag95-gl-report-detail",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag95_gl_report_detail.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag96-show-hide-impact",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag96_show_hide_impact.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag97-exact-srd-test",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag97_exact_srd_test.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag98-find-76610000",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag98_find_76610000.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag99-dp-journal",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag99_dp_journal.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag100-dp-root-cause",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag100_dp_root_cause.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag101-tbyr1-dp-check",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag101_tbyr1_dp_check.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag102-mkas-bank",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag102_mkas_bank.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag103-cleanup-check",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag103_cleanup_check.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag104-cleanup-dp",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag104_cleanup_dp.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "read-srd",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\read_srd.ps1\" > c:\\BTV\\debug\\read_srd_out.txt 2>&1",
+			"group": "build"
+		},
+		{
+			"label": "diag105-persediaan-forensic",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag105_persediaan_forensic.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag111-fix-refresh-journal",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag111_fix_refresh_journal.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag111b-probe",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag111b_probe.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag111c-probe",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag111c_probe.ps1\" > c:\\BTV\\debug\\diag111c_out.txt 2>&1",
+			"group": "build"
+		},
+		{
+			"label": "diag111d-probe",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag111d_probe.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag111e-probe",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag111e_probe.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag111f-fix",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag111f_fix.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag111g-verify",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag111g_verify.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag111h-verify",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag111h_verify.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag111i-verify",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag111i_verify.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag112-fix-selisih-kurs",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag112_fix_selisih_kurs.ps1\"",
+			"group": "build"
+		},
+		{
+			"label": "diag112-verify",
+			"type": "shell",
+			"command": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File \"c:\\BTV\\debug\\diag112_verify.ps1\"",
+			"group": "build"
+		}
+	]
+}

@@ -1,0 +1,97 @@
+﻿########## 10126040500001 ##########
+--- gl_journal (EX) ---
+  urut=1 acc=102-101 Dr=13244609.030000 Cr=0.000000 ket=[(Ekspedisi : SPARE PARTS THERMO KING) ] vm=[EX26040001] rate=6407300.00
+  urut=2 acc=104-111 Dr=642934.000000 Cr=0.000000 ket=[(PPN Ekspedisi : SPARE PARTS THERMO KING) ] vm=[EX26040001] rate=6407300.00
+  urut=3 acc=226-006 Dr=0.000000 Cr=642934.000000 ket=[(PPN Ekspedisi : SPARE PARTS THERMO KING) ] vm=[EX26040001] rate=6407300.00
+  urut=4 acc=226-006 Dr=0.000000 Cr=13244609.000000 ket=[(SPARE PARTS THERMO KING) ] vm=[EX26040001] rate=6407300.00
+--- ap_trans header ---
+  oc=10126040500001 tgl=04/09/2026 00:00:00 curr=IDR kurs=6407300.00 kotor=14712724.00 pot=0.00 ppn=642934.00 netto=15355658.00 ket=[TK.002-130226, TK.001-070126 INV.1305352953]
+--- tstok1 header ---
+  oc=10126040500001 tipe=05 tgl=04/09/2026 00:00:00 curr=IDR kurs=6407300.00 kurs1=1.00 kurs2=28193603.00 fkurs=1.00 ket=[]
+--- tstok2 lines (bukti_id) ---
+  n=25 sum_kotor= sum_netto=222811902.81 sum_biayaXqty=26572609.030000 sum_biaya=4526618.88
+    line urut=1 stok=TS.011-6182 qty=24.00 hrg=145375.65 kotor= netto=3489015.60 biayaEx=17337.54 coa=
+    line urut=2 stok=TS.011-9341 qty=24.00 hrg=147586.04 kotor= netto=3542064.96 biayaEx=17601.15 coa=
+    line urut=3 stok=TS.013-0983 qty=2.00 hrg=3838597.28 kotor= netto=7677194.56 biayaEx=457792.18 coa=
+    line urut=4 stok=TS.013-0990 qty=10.00 hrg=495297.39 kotor= netto=4952973.90 biayaEx=59069.30 coa=
+    line urut=5 stok=TS.022-0297 qty=5.00 hrg=796930.61 kotor= netto=3984653.05 biayaEx=95042.17 coa=
+    line urut=6 stok=TS.022-0778 qty=5.00 hrg=940775.99 kotor= netto=4703879.95 biayaEx=112197.21 coa=
+    line urut=7 stok=TS.022-1101 qty=5.00 hrg=5463744.02 kotor= netto=27318720.10 biayaEx=651607.63 coa=
+    line urut=8 stok=TS.022-1160 qty=1.00 hrg=3417092.91 kotor= netto=3417092.91 biayaEx=407523.45 coa=
+    line urut=9 stok=TS.033-2552 qty=10.00 hrg=154047.18 kotor= netto=1540471.80 biayaEx=18371.71 coa=
+    line urut=10 stok=TS.040-0974 qty=10.00 hrg=1248190.23 kotor= netto=12481902.30 biayaEx=148859.51 coa=
+    line urut=11 stok=TS.040-0975 qty=10.00 hrg=1120837.76 kotor= netto=11208377.60 biayaEx=133671.42 coa=
+    line urut=12 stok=TS.040-1900 qty=10.00 hrg=1930350.59 kotor= netto=19303505.90 biayaEx=230214.15 coa=
+    line urut=13 stok=TS.041-4157 qty=20.00 hrg=646284.03 kotor= netto=12925680.60 biayaEx=77076.01 coa=
+    line urut=14 stok=TS.041-8737 qty=5.00 hrg=941626.14 kotor= netto=4708130.70 biayaEx=112298.60 coa=
+    line urut=15 stok=TS.042-6434 qty=3.00 hrg=698313.21 kotor= netto=2094939.63 biayaEx=83281.03 coa=
+    line urut=16 stok=TS.044-8064 qty=9.00 hrg=1311951.48 kotor= netto=11807563.32 biayaEx=156463.70 coa=
+    line urut=17 stok=TS.051-2481 qty=8.00 hrg=330878.38 kotor= netto=2647027.04 biayaEx=39460.65 coa=
+    line urut=18 stok=TS.055-9412 qty=50.00 hrg=53559.45 kotor= netto=2677972.50 biayaEx=6387.51 coa=
+    line urut=19 stok=TS.066-5492 qty=1.00 hrg=3180921.24 kotor= netto=3180921.24 biayaEx=379357.55 coa=
+    line urut=20 stok=TS.067-2424 qty=1.00 hrg=6208645.45 kotor= netto=6208645.45 biayaEx=740444.78 coa=
+    line urut=21 stok=TS.077-3037 qty=20.00 hrg=1532140.33 kotor= netto=30642806.60 biayaEx=182723.48 coa=
+    line urut=22 stok=TS.077-3305 qty=1.00 hrg=493087.00 kotor= netto=493087.00 biayaEx=58805.69 coa=
+    line urut=23 stok=TS.078-1306 qty=20.00 hrg=1146682.32 kotor= netto=22933646.40 biayaEx=136753.65 coa=
+    line urut=24 stok=TS.078-1852 qty=10.00 hrg=1364320.72 kotor= netto=13643207.20 biayaEx=162709.27 coa=
+    line urut=25 stok=TS.093-0577 qty=15.00 hrg=348561.50 kotor= netto=5228422.50 biayaEx=41569.54 coa=
+
+########## 10126040500002 ##########
+--- gl_journal (EX) ---
+  urut=1 acc=102-101 Dr=17590656.040000 Cr=0.000000 ket=[(Ekspedisi : SPARE PARTS THERMO KING) ] vm=[EX26040001] rate=13483175.00
+  urut=2 acc=104-111 Dr=1919017.000000 Cr=0.000000 ket=[(PPN Ekspedisi : SPARE PARTS THERMO KING) ] vm=[EX26040001] rate=13483175.00
+  urut=3 acc=226-006 Dr=0.000000 Cr=1919017.000000 ket=[(PPN Ekspedisi : SPARE PARTS THERMO KING) ] vm=[EX26040001] rate=13483175.00
+  urut=4 acc=226-006 Dr=0.000000 Cr=17590656.000000 ket=[(SPARE PARTS THERMO KING) ] vm=[EX26040001] rate=13483175.00
+--- ap_trans header ---
+  oc=10126040500002 tgl=04/22/2026 00:00:00 curr=IDR kurs=13483175.00 kotor=19209210.00 pot=0.00 ppn=1919017.00 netto=21128227.00 ket=[TK.003-130226, TK.004-270226 INV.1307048559]
+--- tstok1 header ---
+  oc=10126040500002 tipe=05 tgl=04/22/2026 00:00:00 curr=IDR kurs=13483175.00 kurs1=1.00 kurs2=59327578.00 fkurs=1.00 ket=[]
+--- tstok2 lines (bukti_id) ---
+  n=27 sum_kotor= sum_netto=489855218.90 sum_biayaXqty=43898656.040000 sum_biaya=6532329.10
+    line urut=1 stok=TS.033-4521 qty=1.00 hrg=767454.96 kotor= netto=767454.96 biayaEx=68775.92 coa=
+    line urut=2 stok=TS.041-3156 qty=10.00 hrg=459855.72 kotor= netto=4598557.20 biayaEx=41210.23 coa=
+    line urut=3 stok=TS.041-7567 qty=5.00 hrg=1127863.88 kotor= netto=5639319.40 biayaEx=101074.17 coa=
+    line urut=4 stok=TS.041-9297 qty=10.00 hrg=1554799.28 kotor= netto=15547992.80 biayaEx=139334.23 coa=
+    line urut=5 stok=TS.042-6733 qty=10.00 hrg=380984.12 kotor= netto=3809841.20 biayaEx=34142.11 coa=
+    line urut=6 stok=TS.044-9392 qty=30.00 hrg=199407.98 kotor= netto=5982239.40 biayaEx=17870.06 coa=
+    line urut=7 stok=TS.045-3096 qty=1.00 hrg=7561386.00 kotor= netto=7561386.00 biayaEx=677617.93 coa=
+    line urut=8 stok=TS.061-7365 qty=4.00 hrg=2667574.68 kotor= netto=10670298.72 biayaEx=239056.23 coa=
+    line urut=9 stok=TS.061-9524 qty=1.00 hrg=2792226.10 kotor= netto=2792226.10 biayaEx=250226.94 coa=
+    line urut=10 stok=TS.062-0973 qty=5.00 hrg=500320.28 kotor= netto=2501601.40 biayaEx=44836.49 coa=
+    line urut=11 stok=TS.066-5763 qty=2.00 hrg=2571900.00 kotor= netto=5143800.00 biayaEx=230482.29 coa=
+    line urut=12 stok=TS.066-8344 qty=20.00 hrg=462770.54 kotor= netto=9255410.80 biayaEx=41471.45 coa=
+    line urut=13 stok=TS.067-2818 qty=6.00 hrg=3597573.72 kotor= netto=21585442.32 biayaEx=322398.63 coa=
+    line urut=14 stok=TS.067-2902 qty=1.00 hrg=7400213.60 kotor= netto=7400213.60 biayaEx=663174.38 coa=
+    line urut=15 stok=TS.067-2912 qty=1.00 hrg=5038523.56 kotor= netto=5038523.56 biayaEx=451530.17 coa=
+    line urut=16 stok=TS.078-1938 qty=20.00 hrg=2435246.38 kotor= netto=48704927.60 biayaEx=218236.00 coa=
+    line urut=17 stok=TS.090-4842 qty=1.00 hrg=1405972.00 kotor= netto=1405972.00 biayaEx=125996.99 coa=
+    line urut=18 stok=TS.092-7552 qty=2.00 hrg=383213.10 kotor= netto=766426.20 biayaEx=34341.86 coa=
+    line urut=19 stok=TS.098-8471 qty=1.00 hrg=3114227.98 kotor= netto=3114227.98 biayaEx=279083.32 coa=
+    line urut=20 stok=TS.102-1079 qty=5.00 hrg=5062527.96 kotor= netto=25312639.80 biayaEx=453681.34 coa=
+    line urut=21 stok=TS.102-1081 qty=20.00 hrg=5062527.96 kotor= netto=101250559.20 biayaEx=453681.34 coa=
+    line urut=22 stok=TS.102-1082IRM qty=15.00 hrg=3426285.18 kotor= netto=51394277.70 biayaEx=307048.51 coa=
+    line urut=23 stok=TS.102-1181 qty=16.00 hrg=5062527.96 kotor= netto=81000447.36 biayaEx=453681.34 coa=
+    line urut=24 stok=TS.1E46674G04 qty=5.00 hrg=4738297.10 kotor= netto=23691485.50 biayaEx=424625.21 coa=
+    line urut=25 stok=TS.2E95596G07 qty=5.00 hrg=3496240.86 kotor= netto=17481204.30 biayaEx=313317.63 coa=
+    line urut=26 stok=TS.3E72077G01 qty=20.00 hrg=1121005.48 kotor= netto=22420109.60 biayaEx=100459.55 coa=
+    line urut=27 stok=TS.4E31790G01 qty=10.00 hrg=501863.42 kotor= netto=5018634.20 biayaEx=44974.78 coa=
+
+########## 10126040500003 ##########
+--- gl_journal (EX) ---
+  urut=1 acc=102-001 Dr=67475908.000000 Cr=0.000000 ket=[(Ekspedisi : UNIT TRUCK THERMO KING) ] vm=[EX26040001] rate=44427925.00
+  urut=2 acc=104-111 Dr=1366064.000000 Cr=0.000000 ket=[(PPN Ekspedisi : UNIT TRUCK THERMO KING) ] vm=[EX26040001] rate=44427925.00
+  urut=3 acc=226-006 Dr=0.000000 Cr=1366064.000000 ket=[(PPN Ekspedisi : UNIT TRUCK THERMO KING) ] vm=[EX26040001] rate=44427925.00
+  urut=4 acc=226-006 Dr=0.000000 Cr=67475908.000000 ket=[(UNIT TRUCK THERMO KING) ] vm=[EX26040001] rate=44427925.00
+--- ap_trans header ---
+  oc=10126040500003 tgl=04/25/2026 00:00:00 curr=IDR kurs=44427925.00 kotor=67475908.00 pot=0.00 ppn=1366064.00 netto=68841972.00 ket=[SUM 601A-020326 INV.5001993]
+--- tstok1 header ---
+  oc=10126040500003 tipe=05 tgl=04/25/2026 00:00:00 curr=IDR kurs=44427925.00 kurs1=1.00 kurs2=196579418.00 fkurs=1.00 ket=[]
+--- tstok2 lines (bukti_id) ---
+  n=6 sum_kotor= sum_netto=1748000408.00 sum_biayaXqty=77443108.000000 sum_biaya=6482711.62
+    line urut=1 stok=TR.1006 qty=36.00 hrg=0.00 kotor= netto=0.00 biayaEx=0.00 coa=
+    line urut=2 stok=TR.1006A qty=36.00 hrg=39898742.00 kotor= netto=1436354712.00 biayaEx=1767666.97 coa=
+    line urut=3 stok=TR.1007 qty=4.00 hrg=0.00 kotor= netto=0.00 biayaEx=0.00 coa=
+    line urut=4 stok=TR.1007A qty=4.00 hrg=49397626.00 kotor= netto=197590504.00 biayaEx=2188503.89 coa=
+    line urut=5 stok=TR.1010 qty=2.00 hrg=0.00 kotor= netto=0.00 biayaEx=0.00 coa=
+    line urut=6 stok=TR.1010A qty=2.00 hrg=57027596.00 kotor= netto=114055192.00 biayaEx=2526540.76 coa=
+

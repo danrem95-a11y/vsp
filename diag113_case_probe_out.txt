@@ -1,0 +1,35 @@
+﻿=== Payment voucher_manual containing faktur 101BTB250300036 (modul CO) ===
+25102004P179, 26042004P050
+
+=== Full GL voucher_manual=[25102004P179] ===
+urut=1 acc=101-011 Dr= Cr=444103020.000000 DrK= CrK=444103020.000000 curr=IDR rate=1.00 kas=2004 doc=[] ord=[] ket=[BINGSHAN ENGINEERING]
+urut=2 acc=226-001 Dr=438384726.000000 Cr=0.000000 DrK=26721.000000 CrK=0.000000 curr=USD rate=16406.00 kas= doc=[] ord=[101BTB250300036] ket=[SC-24E912130 INV.2025H0143 - (2025H0143)  Hutang Dagang ]
+urut=3 acc=500-013 Dr=5718294.000000 Cr=0.000000 DrK=5718294.000000 CrK=0.000000 curr=IDR rate=0.00 kas= doc=[] ord=[] ket=[BAYAR BINGSHAN $.26,721]
+--- tbyr1 ---
+v=[25102004P179P] vm=[25102004P179] kas=0 curr=USD kurs=16406.00 flag=2 tgl=10/30/2025 00:00:00
+--- tbyr2 ---
+v=[25102004P179P] urut=1 bukti=[101BTB250300036] nilai_bayar=26721.00 nilai_idr=438384726.00 acc=226-001
+
+=== Full GL voucher_manual=[26042004P050] ===
+urut=1 acc=101-011 Dr= Cr=454657815.000000 DrK= CrK=454657815.000000 curr=IDR rate=1.00 kas=2004 doc=[] ord=[] ket=[BINGAN ENGINEERING]
+urut=2 acc=226-001 Dr=448431822.000000 Cr=0.000000 DrK=26721.000000 CrK=0.000000 curr=USD rate=16782.00 kas= doc=[] ord=[101BTB250300036] ket=[SC-24E912130 INV.2025H0143 - (2025H0143) ]
+urut=3 acc=500-013 Dr=6225993.000000 Cr=0.000000 DrK=6225993.000000 CrK=0.000000 curr=IDR rate=0.00 kas= doc=[] ord=[] ket=[Selisih Pembayaran / Kurs (-) SH001]
+--- tbyr1 ---
+v=[1010420260004] vm=[26042004P050] kas=2004 curr=USD kurs=16782.00 flag=2 tgl=04/08/2026 00:00:00
+--- tbyr2 ---
+v=[1010420260004] urut=1 bukti=[101BTB250300036] nilai_bayar=26721.00 nilai_idr=448431822.00 acc=226-001
+
+=== Account 500-013 master ===
+macc query failed: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table 'macc' not found"
+
+=== Vouchers (CO) that still have a 500-013 row ===
+vm=[26052106P001] Dr=60742757.520000 Cr=0.000000
+vm=[26052105P001] Dr=24717110.800000 Cr=0.000000
+vm=[26052004P109] Dr=0.500000 Cr=0.000000
+vm=[26052004P065] Dr=0.100000 Cr=0.000000
+vm=[26051003P058] Dr=400.000000 Cr=0.000000
+vm=[26042105P001] Dr=2663010.070000 Cr=0.000000
+vm=[26042004P157] Dr=5.000000 Cr=0.000000
+vm=[26042004P146] Dr=60601283.930000 Cr=0.000000
+vm=[26042004P106] Dr=71.040000 Cr=0.000000
+vm=[26042004P103] Dr=0.000000 Cr=0.480000

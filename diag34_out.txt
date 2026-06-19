@@ -1,0 +1,4 @@
+﻿--- SELECT site_id, SUM(ISNULL(kredit,0))-SUM(ISNULL(debet,0)) AS V, COUNT(*) AS C FROM gl_journal WHERE account_id='226-001' AND tgl<'2026-01-01' GROUP BY site_id ORDER BY ABS(SUM(ISNULL(kredit,0))-SUM(ISNULL(debet,0))) DESC
+site_id=101|V=113540178035.194500|C=16109|
+--- SELECT site_id, SUM(ISNULL(kredit,0)) AS K, SUM(ISNULL(debet,0)) AS D FROM gl_journal WHERE account_id='226-001' AND tgl>='2026-01-01' AND tgl<'2026-02-01' GROUP BY site_id
+site_id=101|K=1444491791.758000|D=4546641902.420000|

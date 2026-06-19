@@ -1,0 +1,308 @@
+=====================================================================
+ RUNBOOK EKSEKUSI PERBAIKAN DATA - EKSPEDISI PEMBELIAN APRIL 2026
+ Server  : PRODUCTION (SQL Anywhere 9, database vsp)
+ Tool    : Interactive SQL (dbisql), login dba
+ Disusun : 11-06-2026
+=====================================================================
+
+RINGKASAN MASALAH
+-----------------
+Jurnal EX dibentuk dari alokasi biaya per baris barang
+(tstok2.biaya_ekspedisi), BUKAN dari header input (ap_trans).
+Dua dokumen diedit nilainya SETELAH alokasi & jurnal terbentuk,
+sehingga jurnal tetap membawa nilai lama:
+
+  1. 10126040500001 (09-04-2026)
+     - Input benar : 14.712.724 + PPN 642.934 = 15.355.658
+       (SUDAH DIBAYAR LUNAS 15.355.658, voucher 26052004P047, 07-05-2026)
+     - Jurnal kini : 13.244.609 (KURANG 1.468.115)
+     - Vendor tambahan FR 1012604FR05001: ap_trans ternol,
+       jurnal FR masih 13.328.000, belum dibayar.
+  2. 10126040500002 (22-04-2026)
+     - Input benar : 19.209.210 + PPN 1.919.017 = 21.128.227 (belum dibayar)
+     - Jurnal kini : 17.590.656 (KURANG 1.618.554)
+     - Vendor tambahan FR 1012604FR05002: ap_trans ternol,
+       jurnal FR masih 26.308.000, belum dibayar.
+
+PRINSIP: tidak menghapus dokumen (link pembayaran utuh), tidak edit
+gl_journal manual. Yang dikoreksi hanya DATA SUMBER (tstok2 + ap_trans
+FR), lalu jurnal dibentuk ulang oleh aplikasi via Refresh Journal->EXP.
+
+=====================================================================
+ PRASYARAT
+=====================================================================
+[P1] KEPUTUSAN AKUNTANSI: tagihan vendor tambahan (4SL.S045)
+     13.328.000 (dok 1) dan 26.308.000 (dok 2) masih berlaku?
+       - MASIH BERLAKU -> pakai LANGKAH 3 SKENARIO A (default)
+       - DIBATALKAN    -> pakai LANGKAH 3 SKENARIO B
+     Jalankan TEPAT SATU skenario, jangan dua-duanya.
+
+[P2] Jam sepi. Tidak ada user yang mengedit transaksi ekspedisi /
+     menjalankan Refresh Journal / closing.
+
+[P3] BACKUP DATABASE PENUH dulu (rutin backup biasa, atau:
+     dbbackup -c "DSN=vsp;UID=dba;PWD=jakarta" C:\backup_sebelum_diag117 )
+
+[P4] SANGAT DISARANKAN: gladi resik dulu - restore backup terakhir ke
+     mesin/db uji, jalankan runbook ini lengkap di sana (Langkah 1-6),
+     pastikan semua angka HARAPAN terpenuhi, baru eksekusi di production.
+     Seluruh statement memakai sintaks standar ASA9 (SELECT INTO,
+     UPDATE dgn subquery), namun belum diuji-jalan di server ini.
+
+=====================================================================
+ LANGKAH 1 - VERIFIKASI KONDISI AWAL (read-only)
+=====================================================================
+-- 1a. Alokasi & input saat ini
+SELECT '10126040500001' AS dok,
+       (SELECT SUM(biaya_ekspedisi*qty) FROM tstok2 WHERE bukti_id='10126040500001') AS alloc_tstok2,
+       (SELECT ttl_kotor FROM ap_trans WHERE order_client='10126040500001') AS ap_kotor,
+       (SELECT ttl_netto FROM ap_trans WHERE order_client='1012604FR05001') AS ap_fr
+UNION ALL
+SELECT '10126040500002',
+       (SELECT SUM(biaya_ekspedisi*qty) FROM tstok2 WHERE bukti_id='10126040500002'),
+       (SELECT ttl_kotor FROM ap_trans WHERE order_client='10126040500002'),
+       (SELECT ttl_netto FROM ap_trans WHERE order_client='1012604FR05002');
+
+-- HARAPAN (kondisi rusak saat ini):
+--   dok1: alloc=26572609.03  ap_kotor=14712724  ap_fr=0
+--   dok2: alloc=43898656.04  ap_kotor=19209210  ap_fr=0
+
+-- 1b. Jurnal saat ini
+SELECT doc_reff, SUM(debet) AS dr, SUM(kredit) AS cr
+FROM gl_journal
+WHERE modul_id='EX'
+  AND doc_reff IN ('10126040500001','1012604FR05001',
+                   '10126040500002','1012604FR05002')
+GROUP BY doc_reff ORDER BY doc_reff;
+
+-- HARAPAN: 10126040500001 = 13887543.03 | FR05001 = 13328000
+--          10126040500002 = 19509673.04 | FR05002 = 26308000
+
+-- 1c. Link pembayaran (harus tetap utuh sampai akhir proses)
+SELECT t2.bukti_id, t2.voucher, t1.voucher_manual, t1.tgl, t2.nilai_bayar_idr
+FROM tbyr2 t2 JOIN tbyr1 t1 ON t1.voucher=t2.voucher
+WHERE t2.bukti_id IN ('10126040500001','10126040500002');
+
+-- HARAPAN: hanya 10126040500001, vm=26052004P047, idr=15355658
+
+=====================================================================
+ LANGKAH 2 - BACKUP BARIS YANG AKAN DISENTUH (jalankan SEKALI saja)
+=====================================================================
+-- Jika tabel sudah ada (pernah dijalankan), statement akan error
+-- "table already exists" -> JANGAN diulang, lanjut ke langkah 3.
+
+SELECT * INTO diag117_backup_tstok2
+FROM tstok2
+WHERE bukti_id IN ('10126040500001','10126040500002');
+
+SELECT * INTO diag117_backup_aptrans
+FROM ap_trans
+WHERE order_client IN ('10126040500001','1012604FR05001',
+                       '10126040500002','1012604FR05002');
+
+SELECT * INTO diag117_backup_gl
+FROM gl_journal
+WHERE modul_id='EX'
+  AND doc_reff IN ('10126040500001','1012604FR05001',
+                   '10126040500002','1012604FR05002');
+
+COMMIT;
+
+-- Cek isi backup:
+SELECT (SELECT COUNT(*) FROM diag117_backup_tstok2)  AS bak_tstok2,   -- harus 52 (25+27)
+       (SELECT COUNT(*) FROM diag117_backup_aptrans) AS bak_aptrans,  -- harus 4
+       (SELECT COUNT(*) FROM diag117_backup_gl)      AS bak_gl;       -- harus 12 (4+2+4+2)
+
+=====================================================================
+ LANGKAH 3 - UPDATE DATA  (PILIH SATU SKENARIO SESUAI [P1])
+=====================================================================
+
+---------------------------------------------------------------------
+ SKENARIO A (DEFAULT): tagihan vendor tambahan MASIH BERLAKU
+ Target alokasi: dok1 = 14.712.724 + 13.328.000 = 28.040.724
+                 dok2 = 19.209.210 + 26.308.000 = 45.517.210
+---------------------------------------------------------------------
+-- A1. Skala ulang alokasi dok 1 (k baru = 28040724 / total netto)
+UPDATE tstok2
+SET biaya_ekspedisi = ROUND(hrg * 28040724.0 /
+      (SELECT SUM(t.netto) FROM tstok2 t WHERE t.bukti_id='10126040500001'), 2)
+WHERE bukti_id='10126040500001';
+
+-- A2. Tampung sisa pembulatan ke baris urut=8 (qty=1) -> total PERSIS
+UPDATE tstok2
+SET biaya_ekspedisi = biaya_ekspedisi -
+      (SELECT SUM(t.biaya_ekspedisi*t.qty) - 28040724 FROM tstok2 t WHERE t.bukti_id='10126040500001')
+WHERE bukti_id='10126040500001' AND urut=8;
+
+-- A3. Skala ulang alokasi dok 2
+UPDATE tstok2
+SET biaya_ekspedisi = ROUND(hrg * 45517210.0 /
+      (SELECT SUM(t.netto) FROM tstok2 t WHERE t.bukti_id='10126040500002'), 2)
+WHERE bukti_id='10126040500002';
+
+-- A4. Tampung sisa pembulatan ke baris urut=1 (qty=1)
+UPDATE tstok2
+SET biaya_ekspedisi = biaya_ekspedisi -
+      (SELECT SUM(t.biaya_ekspedisi*t.qty) - 45517210 FROM tstok2 t WHERE t.bukti_id='10126040500002')
+WHERE bukti_id='10126040500002' AND urut=1;
+
+-- A5. Pulihkan nilai vendor tambahan (FR) di ap_trans
+UPDATE ap_trans SET ttl_kotor=13328000, ttl_netto=13328000
+WHERE order_client='1012604FR05001';
+
+UPDATE ap_trans SET ttl_kotor=26308000, ttl_netto=26308000
+WHERE order_client='1012604FR05002';
+
+COMMIT;
+
+---------------------------------------------------------------------
+ SKENARIO B: tagihan vendor tambahan DIBATALKAN (ap FR tetap 0)
+ Target alokasi: dok1 = 14.712.724 ; dok2 = 19.209.210
+ (JANGAN dijalankan jika sudah menjalankan SKENARIO A)
+---------------------------------------------------------------------
+-- B1. Skala ulang alokasi dok 1
+UPDATE tstok2
+SET biaya_ekspedisi = ROUND(hrg * 14712724.0 /
+      (SELECT SUM(t.netto) FROM tstok2 t WHERE t.bukti_id='10126040500001'), 2)
+WHERE bukti_id='10126040500001';
+
+UPDATE tstok2
+SET biaya_ekspedisi = biaya_ekspedisi -
+      (SELECT SUM(t.biaya_ekspedisi*t.qty) - 14712724 FROM tstok2 t WHERE t.bukti_id='10126040500001')
+WHERE bukti_id='10126040500001' AND urut=8;
+
+-- B2. Skala ulang alokasi dok 2
+UPDATE tstok2
+SET biaya_ekspedisi = ROUND(hrg * 19209210.0 /
+      (SELECT SUM(t.netto) FROM tstok2 t WHERE t.bukti_id='10126040500002'), 2)
+WHERE bukti_id='10126040500002';
+
+UPDATE tstok2
+SET biaya_ekspedisi = biaya_ekspedisi -
+      (SELECT SUM(t.biaya_ekspedisi*t.qty) - 19209210 FROM tstok2 t WHERE t.bukti_id='10126040500002')
+WHERE bukti_id='10126040500002' AND urut=1;
+
+-- B3. ap_trans FR dibiarkan 0 (tidak ada update).
+COMMIT;
+
+=====================================================================
+ LANGKAH 4 - VERIFIKASI SETELAH UPDATE (sebelum refresh)
+=====================================================================
+SELECT '10126040500001' AS dok,
+       (SELECT SUM(biaya_ekspedisi*qty) FROM tstok2 WHERE bukti_id='10126040500001') AS alloc_baru,
+       (SELECT ttl_netto FROM ap_trans WHERE order_client='1012604FR05001') AS ap_fr
+UNION ALL
+SELECT '10126040500002',
+       (SELECT SUM(biaya_ekspedisi*qty) FROM tstok2 WHERE bukti_id='10126040500002'),
+       (SELECT ttl_netto FROM ap_trans WHERE order_client='1012604FR05002');
+
+-- HARAPAN SKENARIO A: dok1 alloc=28040724.00 ap_fr=13328000
+--                     dok2 alloc=45517210.00 ap_fr=26308000
+-- HARAPAN SKENARIO B: dok1 alloc=14712724.00 ap_fr=0
+--                     dok2 alloc=19209210.00 ap_fr=0
+-- Jika TIDAK persis -> STOP, jalankan ROLLBACK, hubungi analis.
+
+=====================================================================
+ LANGKAH 5 - BENTUK ULANG JURNAL LEWAT APLIKASI
+=====================================================================
+Login aplikasi (user yang biasa refresh, mis. super):
+  Menu Refresh Journal -> tombol [EXP]
+  Periode: 01-04-2026 s/d 30-04-2026 -> proses sampai selesai.
+(TIDAK perlu "Hapus Data GL" - fungsi transfer menghapus & menulis
+ ulang jurnal per dokumen secara otomatis.)
+
+=====================================================================
+ LANGKAH 6 - VERIFIKASI AKHIR (setelah refresh)
+=====================================================================
+SELECT doc_reff, account_id, debet, kredit, ket
+FROM gl_journal
+WHERE modul_id='EX'
+  AND doc_reff IN ('10126040500001','1012604FR05001',
+                   '10126040500002','1012604FR05002')
+ORDER BY doc_reff, urut;
+
+-- HARAPAN SKENARIO A:
+--   10126040500001: Dr 102-101 = 14712724.00 ; Dr 104-111 = 642934 ;
+--                   Cr 226-006 = 642934 ; Cr 226-006 = 14712724
+--                   (total Dr = total Cr = 15355658 - balance penuh)
+--   1012604FR05001: Dr 102-101 = 13328000 ; Cr 102-601 = 13328000
+--   10126040500002: Dr 102-101 = 19209210.00 ; Dr 104-111 = 1919017 ;
+--                   Cr 226-006 = 1919017 ; Cr 226-006 = 19209210
+--   1012604FR05002: Dr 102-101 = 26308000 ; Cr 102-601 = 26308000
+-- HARAPAN SKENARIO B: dok utama sama spt di atas;
+--   jurnal FR seharusnya hilang/0 - jika masih ada sisa baris FR
+--   bernilai lama, hapus manual:
+--     DELETE FROM gl_journal WHERE modul_id='EX'
+--       AND doc_reff IN ('1012604FR05001','1012604FR05002');
+--     COMMIT;
+
+-- Cek keseimbangan & hutang vs subledger:
+SELECT doc_reff, SUM(debet) AS dr, SUM(kredit) AS cr, SUM(debet)-SUM(kredit) AS selisih
+FROM gl_journal
+WHERE modul_id='EX'
+  AND doc_reff IN ('10126040500001','10126040500002')
+GROUP BY doc_reff;
+-- HARAPAN: selisih = 0 untuk keduanya;
+--          dr dok1 = 15355658 ; dr dok2 = 21128227
+
+-- Cek link pembayaran masih utuh (hasil harus sama dgn Langkah 1c):
+SELECT t2.bukti_id, t2.voucher, t1.voucher_manual, t2.nilai_bayar_idr
+FROM tbyr2 t2 JOIN tbyr1 t1 ON t1.voucher=t2.voucher
+WHERE t2.bukti_id IN ('10126040500001','10126040500002');
+
+=====================================================================
+ LANGKAH 7 - REFRESH HPP / STOK RUTIN
+=====================================================================
+Jalankan proses refresh stok/HPP yang biasa dipakai agar HPP rata-rata
+menyerap nilai alokasi baru. (Tanpa ini, GL sudah benar tetapi HPP
+rata-rata per item baru terkoreksi pada refresh rutin berikutnya.)
+
+=====================================================================
+ ROLLBACK (hanya jika hasil tidak sesuai)
+=====================================================================
+-- R1. Kembalikan alokasi tstok2 dari backup (key: bukti_id + urut)
+UPDATE tstok2
+SET biaya_ekspedisi = (SELECT b.biaya_ekspedisi
+                       FROM diag117_backup_tstok2 b
+                       WHERE b.bukti_id = tstok2.bukti_id
+                         AND b.urut     = tstok2.urut)
+WHERE bukti_id IN ('10126040500001','10126040500002');
+
+-- R2. Kembalikan ap_trans (4 dokumen) dari backup
+UPDATE ap_trans
+SET ttl_kotor = (SELECT b.ttl_kotor FROM diag117_backup_aptrans b
+                 WHERE b.order_client = ap_trans.order_client),
+    ttl_netto = (SELECT b.ttl_netto FROM diag117_backup_aptrans b
+                 WHERE b.order_client = ap_trans.order_client)
+WHERE order_client IN ('10126040500001','1012604FR05001',
+                       '10126040500002','1012604FR05002');
+
+-- R3. Kembalikan jurnal EX persis seperti semula (full-row)
+DELETE FROM gl_journal
+WHERE modul_id='EX'
+  AND doc_reff IN ('10126040500001','1012604FR05001',
+                   '10126040500002','1012604FR05002');
+
+INSERT INTO gl_journal SELECT * FROM diag117_backup_gl;
+
+COMMIT;
+
+-- R4. Verifikasi rollback: ulangi query LANGKAH 1 - hasil harus sama
+--     persis dengan kondisi awal.
+-- Jaring pengaman terakhir: restore backup database penuh dari [P3].
+
+=====================================================================
+ CATATAN PASCA-PERBAIKAN
+=====================================================================
+1. JANGAN mengedit nilai invoice ekspedisi (utama/vendor tambahan)
+   setelah dokumen tersimpan, sampai window inputnya diperbaiki agar
+   edit memicu re-alokasi. Jika terpaksa koreksi: hapus-buat-ulang
+   dokumen SELAMA belum ada pembayaran terkait.
+2. Bug terpisah (belum diperbaiki, tidak mengganggu runbook ini):
+   penomoran voucher_manual jurnal EX duplikat per bulan
+   (f_transfer_ekspedisi_new L226: scan kolom voucher, seharusnya
+   voucher_manual).
+3. Runbook ini hanya menyentuh 4 dokumen yang disebut di atas.
+4. Tabel diag117_backup_* JANGAN di-drop minimal sampai tutup buku
+   periode berjalan dinyatakan beres.
+=====================================================================

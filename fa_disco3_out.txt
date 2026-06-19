@@ -1,0 +1,48 @@
+﻿
+===== SCHEMA: gl_journal =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'default' not found"
+
+===== SCHEMA: gl_journal2 =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'default' not found"
+
+===== SCHEMA: gl_journal_detail_copy =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'default' not found"
+
+===== SCHEMA: gl_acc =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'default' not found"
+
+===== SCHEMA: gl_curr =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'default' not found"
+
+===== SCHEMA: gl_rate =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'default' not found"
+
+===== SCHEMA: gl_depart =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'default' not found"
+
+===== SCHEMA: gl_project =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'default' not found"
+
+===== SCHEMA: gl_cc =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'default' not found"
+
+===== SCHEMA: gl_cf =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'default' not found"
+
+===== SCHEMA: gl_cate =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'default' not found"
+
+===== SCHEMA: gl_cate_detail =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'default' not found"
+
+===== SCHEMA: gl_balance =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'default' not found"
+
+===== SCHEMA: gl_site =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'default' not found"
+
+===== SCHEMA: MKAS =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'default' not found"
+
+===== SCHEMA: MCSTSUPP =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'default' not found"

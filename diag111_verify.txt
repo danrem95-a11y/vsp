@@ -1,0 +1,41 @@
+﻿=== Bank row lookup inserted (R2) ===
+Ambil curr_id, kurs, kas_id dari baris kas/bank (row yg punya kas_id>0, mis. BCA)
+	//(baris bank punya doc_reff/order_reff kosong sehingga tidak masuk d_gl_bayar_ap)
+	ls_bank_curr = 'IDR'
+	ldec_bank_kurs = 1
+	ll_bank_kas = 0
+	select top 1 curr_id, rate_rp, kas_id
+	into :ls_bank_curr, :ldec_bank_kurs, :ll_bank_kas
+	from gl_journal
+	where voucher_manual = :ls_voucher_manual
+	  and kas_id > 0
+	using sqlca;
+	if isnull(ls_bank_curr) or ls_bank_curr = '' then ls_bank_curr = 'IDR'
+	if isnull(ldec_bank_kurs) or ldec_bank_kurs = 0 then ldec_bank_kurs = 1
+	if isnull(ll_bank_kas) then ll_ban
+
+=== R3 fix (ll_bank_kas) context ===
+_curr = 'IDR'
+	if isnull(ldec_bank_kurs) or ldec_bank_kurs = 0 then ldec_bank_kurs = 1
+	if isnull(ll_bank_kas) then ll_bank_kas = 0
+
+	//cek apakah ada pembayaran silang, antara AP diadu ke AR
+	
+	if ls_faktur = '' and ls_faktur_silang = '' then continue; //Mungkin ini biaya adm, selisih kurs
+	
+
+=== R5 fix (nilai_bayar) context ===
+SD untuk invoice USD)
+		//Jika debet_kurs < debet maka debet_kurs sudah berisi nilai foreign (mis. 26720 USD)
+		//Jika debet_kurs = debet (IDR) atau 0, hitung dari IDR / kurs sebagai fallback
+		if ldec_bayar_kurs > 0 and ldec_bayar_kurs < ldec_bayar then
+			ldec_set_bayar = ldec_bayar_kurs
+		elseif ldec_kurs > 1 then
+			ldec_set_bayar = ldec_bayar / ldec_kurs
+		else
+			ldec_set_bayar = ldec_bayar
+		end if
+	end if
+
+	dw_sync2.setitem(dw_sync2.getrow(),'nilai_bayar',ldec_set_bayar)
+	dw

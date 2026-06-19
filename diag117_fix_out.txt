@@ -1,0 +1,19 @@
+﻿================ diag117 koreksi ekspedisi - mode: DRY-RUN (tidak ada perubahan) ================
+waktu: 2026-06-11 16:01:32
+
+########## 10126040500001 (target: main=14712724  fr=13328000  alloc=28040724) ##########
+  SEKARANG: alloc_tstok2=26572609.0300  ap_main=14712724.00  ap_fr=0.00  glEX(persediaan)=13244609.030000  glFR=13328000.000000  base_netto=222811902.81
+  k baru = 0.1258493089748053931625592942 (k lama = 0.1192602760215169135020951442)
+  SESUDAH (hitung): alloc=28040724.190000, sisa pembulatan 0.190000 akan ditampung ke baris urut=8 (qty=1) -> total PERSIS 28040724
+  Jurnal EX yg akan dibentuk refresh: Dr Persediaan = 14712724.00 ; Cr Hutang Ekspedisi = 14712724 ; FR = 13328000  (jurnal balance penuh, tanpa selisih sen)
+
+########## 10126040500002 (target: main=19209210  fr=26308000  alloc=45517210) ##########
+  SEKARANG: alloc_tstok2=43898656.0400  ap_main=19209210.00  ap_fr=0.00  glEX(persediaan)=17590656.040000  glFR=26308000.000000  base_netto=489855218.90
+  k baru = 0.0929197204476287758909492757 (k lama = 0.0896155728187955822960815657)
+  SESUDAH (hitung): alloc=45517209.680000, sisa pembulatan -0.320000 akan ditampung ke baris urut=1 (qty=1) -> total PERSIS 45517210
+  Jurnal EX yg akan dibentuk refresh: Dr Persediaan = 19209210.00 ; Cr Hutang Ekspedisi = 19209210 ; FR = 26308000  (jurnal balance penuh, tanpa selisih sen)
+
+LANGKAH SELANJUTNYA setelah -DoUpdate sukses:
+  1. Buka menu Refresh Journal -> tombol EXP, periode 01-04-2026 s/d 30-04-2026.
+  2. Cek ulang jurnal kedua dokumen (query pembanding: diag116b.ps1).
+  3. Jalankan proses refresh stok/HPP rutin agar HPP rata-rata ikut menyerap nilai baru.

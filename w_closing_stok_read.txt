@@ -1,0 +1,1140 @@
+﻿$PBExportHeader$w_closing_stok.srw
+forward
+global type w_closing_stok from window
+end type
+type dw_update_minus from uo_dw within w_closing_stok
+end type
+type dw_minus from uo_dw within w_closing_stok
+end type
+type dw_view from uo_dw within w_closing_stok
+end type
+type dw_sinv from uo_dw within w_closing_stok
+end type
+type dw_sinv_update from uo_dw within w_closing_stok
+end type
+type dw_hpp from uo_dw within w_closing_stok
+end type
+type dw_sinv_gudang_update from uo_dw within w_closing_stok
+end type
+type dw_sinv_gudang from uo_dw within w_closing_stok
+end type
+type dw_sinv2_update from uo_dw within w_closing_stok
+end type
+type dw_sinv2 from uo_dw within w_closing_stok
+end type
+type d_kas from uo_dw within w_closing_stok
+end type
+type cb_1 from commandbutton within w_closing_stok
+end type
+type dw_arg from uo_dw within w_closing_stok
+end type
+type dw_1 from uo_dw within w_closing_stok
+end type
+type hpb_2 from hprogressbar within w_closing_stok
+end type
+type st_1 from statictext within w_closing_stok
+end type
+end forward
+
+global type w_closing_stok from window
+integer width = 3767
+integer height = 1584
+boolean titlebar = true
+string title = "Closing Harian"
+windowtype windowtype = response!
+long backcolor = 134217730
+string icon = "AppIcon!"
+boolean center = true
+dw_update_minus dw_update_minus
+dw_minus dw_minus
+dw_view dw_view
+dw_sinv dw_sinv
+dw_sinv_update dw_sinv_update
+dw_hpp dw_hpp
+dw_sinv_gudang_update dw_sinv_gudang_update
+dw_sinv_gudang dw_sinv_gudang
+dw_sinv2_update dw_sinv2_update
+dw_sinv2 dw_sinv2
+d_kas d_kas
+cb_1 cb_1
+dw_arg dw_arg
+dw_1 dw_1
+hpb_2 hpb_2
+st_1 st_1
+end type
+global w_closing_stok w_closing_stok
+
+type variables
+string is_computer
+datetime idt_tgl1,idt_tgl2
+
+end variables
+
+on w_closing_stok.create
+this.dw_update_minus=create dw_update_minus
+this.dw_minus=create dw_minus
+this.dw_view=create dw_view
+this.dw_sinv=create dw_sinv
+this.dw_sinv_update=create dw_sinv_update
+this.dw_hpp=create dw_hpp
+this.dw_sinv_gudang_update=create dw_sinv_gudang_update
+this.dw_sinv_gudang=create dw_sinv_gudang
+this.dw_sinv2_update=create dw_sinv2_update
+this.dw_sinv2=create dw_sinv2
+this.d_kas=create d_kas
+this.cb_1=create cb_1
+this.dw_arg=create dw_arg
+this.dw_1=create dw_1
+this.hpb_2=create hpb_2
+this.st_1=create st_1
+this.Control[]={this.dw_update_minus,&
+this.dw_minus,&
+this.dw_view,&
+this.dw_sinv,&
+this.dw_sinv_update,&
+this.dw_hpp,&
+this.dw_sinv_gudang_update,&
+this.dw_sinv_gudang,&
+this.dw_sinv2_update,&
+this.dw_sinv2,&
+this.d_kas,&
+this.cb_1,&
+this.dw_arg,&
+this.dw_1,&
+this.hpb_2,&
+this.st_1}
+end on
+
+on w_closing_stok.destroy
+destroy(this.dw_update_minus)
+destroy(this.dw_minus)
+destroy(this.dw_view)
+destroy(this.dw_sinv)
+destroy(this.dw_sinv_update)
+destroy(this.dw_hpp)
+destroy(this.dw_sinv_gudang_update)
+destroy(this.dw_sinv_gudang)
+destroy(this.dw_sinv2_update)
+destroy(this.dw_sinv2)
+destroy(this.d_kas)
+destroy(this.cb_1)
+destroy(this.dw_arg)
+destroy(this.dw_1)
+destroy(this.hpb_2)
+destroy(this.st_1)
+end on
+
+event open;long ll_ada
+datetime ldt_tgl,ldt_tgl2
+string ls_licensed
+
+select closing_sales into :ldt_tgl from gl_setup ;
+if isnull(ldt_tgl) then
+	ldt_tgl = datetime(date(2009,10,1))
+end if
+ldt_tgl   = datetime(date(ldt_tgl))
+ldt_tgl2 = datetime(relativedate(date(ldt_tgl),1))
+
+
+dw_arg.reset()
+dw_arg.insertrow(0)
+dw_arg.setitem(1,'periode',ldt_tgl)
+dw_arg.setitem(1,'periode2',ldt_tgl2)
+
+dw_1.Reset()
+
+update gl_setup
+    set flag_closing_harian = 'Y' ;
+Commit;
+
+	 
+
+
+
+
+end event
+
+event closequery;update gl_setup
+     set flag_closing_harian = 'N' ;
+Commit;
+return 0
+end event
+
+type dw_update_minus from uo_dw within w_closing_stok
+boolean visible = false
+integer x = 1806
+integer y = 632
+integer taborder = 30
+string dataobject = "d_sinv_minus"
+end type
+
+type dw_minus from uo_dw within w_closing_stok
+boolean visible = false
+integer x = 791
+integer y = 868
+integer taborder = 30
+string dataobject = "d_sinv"
+end type
+
+type dw_view from uo_dw within w_closing_stok
+integer y = 372
+integer width = 3739
+integer height = 1020
+integer taborder = 20
+string dataobject = "dw_refresh_stok"
+end type
+
+event doubleclicked;call super::doubleclicked;gurningsoft_xls(this)
+end event
+
+type dw_sinv from uo_dw within w_closing_stok
+integer x = 375
+integer y = 1508
+integer width = 320
+integer taborder = 70
+string dataobject = "d_sinv"
+end type
+
+type dw_sinv_update from uo_dw within w_closing_stok
+integer x = 2446
+integer y = 1508
+integer taborder = 60
+string dataobject = "d_sinv"
+end type
+
+type dw_hpp from uo_dw within w_closing_stok
+integer x = 2126
+integer y = 1528
+integer width = 256
+integer taborder = 50
+string dataobject = "d_hpp_sinv"
+end type
+
+type dw_sinv_gudang_update from uo_dw within w_closing_stok
+integer x = 1760
+integer y = 1520
+integer width = 343
+integer taborder = 50
+string dataobject = "d_sinv_gudang"
+end type
+
+type dw_sinv_gudang from uo_dw within w_closing_stok
+integer x = 1285
+integer y = 1524
+integer width = 457
+integer taborder = 50
+string dataobject = "d_sinv_gudang"
+end type
+
+type dw_sinv2_update from uo_dw within w_closing_stok
+integer x = 763
+integer y = 1528
+integer width = 503
+integer taborder = 40
+string dataobject = "d_sinv2"
+end type
+
+event retrieveend;call super::retrieveend;//long i,j, ll_found,ll_flag_closing,ll_sukses
+//string ls_stok,ls_konsinyasi,ls_gudang,ls_key1
+//double ld_qty,ld_nilai,ld_hpp,ld_qty_akhir
+//datetime ldt_tgl,ldt_lalu
+//string ls_periode_next
+//
+//if month(date(idt_tgl1)) <> month(date(idt_tgl2)) then
+//	ll_flag_closing = 1
+//else
+//	ll_flag_closing = 0
+//end if
+//ldt_lalu = f_bom(idt_tgl1)
+//ldt_tgl   = f_bom(idt_tgl2)
+//ls_periode_next = string(ldt_tgl,'yyyymm')
+//
+//setpointer(Hourglass!)
+//open(w_wait)
+//dw_sinv.settransobject(sqlca)
+//dw_sinv.reset()
+//
+//// UPDATE KE SINV2 = RUNNING BALANCE
+//j = dw_1.rowcount()
+//for i = 1 to j
+//	ls_stok 		= dw_1.object.produk_id[i]
+//	ls_gudang 	= dw_1.object.gudang_id[i]
+//	ls_key1		= dw_1.object.key1[i]
+//	ld_qty  		= dw_1.object.akhir[i]
+//	ld_nilai 		= dw_1.object.nilai[i]
+//	if isnull(ld_qty) or ld_qty <= 0 then ld_qty = 0
+//    if isnull(ld_nilai)  then ld_nilai = 0
+//	
+//	ll_found = 0
+//	ll_found = dw_sinv2_update.Find("key1 = '" + ls_key1 + "'",1, dw_sinv2_update.RowCount())
+//	if isnull(ll_found) then ll_found = 0
+//	if ll_found <= 0 then
+//	   dw_sinv2_update.Scrolltorow(dw_sinv2_update.Insertrow(0))
+//	    dw_sinv2_update.Setitem(ll_found,'stok_id',ls_stok)
+//		dw_sinv2_update.Setitem(ll_found,'flag_vendor',3)
+//		dw_sinv2_update.Setitem(ll_found,'gudang_id',ls_gudang)
+//		 dw_sinv2_update.Setitem(ll_found,'site_id',gs_site)
+//	end if
+//	 
+//	dw_sinv2_update.Setitem(ll_found,'qty_akhir',ld_qty)
+//next
+//
+//// check apakah awal bulan berikutnya KE SINV = SALDO AWAL BULAN GLOBAL
+//if ll_flag_closing = 1 then
+//	j = dw_hpp.rowcount()
+//	if ls_periode_next <> '201401' then
+//		for i = 1 to j
+//			ls_stok 		= dw_hpp.object.produk_id[i]
+//			ld_qty  		= dw_hpp.object.akhir[i]
+//			ld_nilai 		= dw_hpp.object.akhir_rp_next[i]
+//			ld_hpp  		= dw_hpp.object.hpp_unit[i]
+//			if isnull(ld_qty) or ld_qty <= 0 then ld_qty = 0
+//			if isnull(ld_nilai)  then ld_nilai = 0
+//			if ld_qty <> 0 then
+//				ld_hpp = round(ld_nilai / ld_qty,0)
+//			else
+//				ld_hpp = 0 
+//				ld_nilai = 0
+//			end if
+//			if isnull(ld_hpp) then ld_hpp = 0
+//			
+//			dw_sinv.Scrolltorow(dw_sinv.Insertrow(0))
+//			dw_sinv.Setitem(dw_sinv.getrow(),'periode',ldt_tgl)
+//			dw_sinv.Setitem(dw_sinv.getrow(),'site_id',gs_site)
+//			dw_sinv.Setitem(dw_sinv.getrow(),'stok_id',ls_stok)
+//			dw_sinv.Setitem(dw_sinv.getrow(),'qty',ld_qty)
+//			dw_sinv.Setitem(dw_sinv.getrow(),'nilai',ld_nilai)
+//			dw_sinv.Setitem(dw_sinv.getrow(),'hpp_avg',ld_hpp)
+//		next
+//		
+//		// hapus dulu data yang lama, kemungkinan adanya proses closing backdate
+//		delete sinv where (periode = :ldt_tgl) ;
+//		if sqlca.sqlcode = 0 then
+//			Commit;
+//		else
+//			Rollback;
+//		end if
+//	end if
+//end if
+//
+//// check apakah awal bulan berikutnya KE SINV = SALDO AWAL BULAN PER GUDANG
+//dw_sinv_gudang_update.settransobject(sqlca)
+//dw_sinv_gudang_update.reset()
+//if ll_flag_closing = 1 then
+//	if ls_periode_next <> '201401' then
+//		j = dw_1.rowcount()
+//		for i = 1 to j
+//			ls_stok 		= dw_1.object.produk_id[i]
+//			ls_gudang 	= dw_1.object.gudang_id[i]
+//			ls_key1		= dw_1.object.key1[i]
+//			ld_qty  		= dw_1.object.akhir[i]
+//			ld_nilai 		= dw_1.object.nilai[i]
+//			if isnull(ld_qty) or ld_qty <= 0 then ld_qty = 0
+//			ld_hpp=0
+//			if isnull(ld_qty) then 
+//				ld_qty = 0
+//				ld_nilai = 0			
+//			else
+//				ll_found = 0
+//				ls_key1 =  dw_1.object.produk_id[i]
+//				ll_found = dw_sinv.Find("stok_id = '" + ls_key1 + "'",1, dw_sinv.RowCount())
+//				if isnull(ll_found) then ll_found = 0
+//				if ll_found <= 0 then
+//					ld_nilai = 0
+//					ld_hpp = 0
+//				else	
+//					ld_nilai = round(dec(dw_sinv.object.hpp_avg[ll_found]) * ld_qty,0)
+//					ld_hpp = dec(dw_sinv.object.hpp_avg[ll_found])
+//				end if	
+//			end if
+//			if isnull(ld_nilai)  then ld_nilai = 0
+//	
+//			dw_sinv_gudang_update.Scrolltorow(dw_sinv_gudang_update.Insertrow(0))
+//			dw_sinv_gudang_update.Setitem(dw_sinv_gudang_update.getrow(),'periode',ldt_tgl)
+//			dw_sinv_gudang_update.Setitem(dw_sinv_gudang_update.getrow(),'flag_vendor',3)
+//			dw_sinv_gudang_update.Setitem(dw_sinv_gudang_update.getrow(),'gudang_id',ls_gudang)
+//			dw_sinv_gudang_update.Setitem(dw_sinv_gudang_update.getrow(),'site_id',gs_site)
+//			dw_sinv_gudang_update.Setitem(dw_sinv_gudang_update.getrow(),'stok_id',ls_stok)
+//			dw_sinv_gudang_update.Setitem(dw_sinv_gudang_update.getrow(),'qty',ld_qty)
+//			dw_sinv_gudang_update.Setitem(dw_sinv_gudang_update.getrow(),'nilai',ld_nilai)
+//			//dw_sinv_gudang_update.Setitem(dw_sinv_gudang_update.getrow(),'hpp_avg',0)
+//			dw_sinv_gudang_update.Setitem(dw_sinv_gudang_update.getrow(),'hpp_avg',ld_hpp) //ld_hpp mul : hpp_avg ambil dari sinv saja, jng disinv_gudang
+//		next
+//		
+//		// hapus dulu data yang lama, kemungkinan adanya proses closing backdate
+//		delete sinv_gudang where (periode = :ldt_tgl) ;
+//		if sqlca.sqlcode = 0 then
+//			Commit;
+//		else
+//			Rollback;
+//		end if 
+//	end if
+//end if
+//
+//// update hpp
+//j = dw_hpp.rowcount()
+//if ls_periode_next <> '201401' then 
+//	for i = 1 to j
+//		ls_stok 	= dw_hpp.object.produk_id[i]
+//		ld_hpp  	= dw_hpp.object.hpp_unit[i]
+//		if isnull(ld_hpp) then ld_hpp = 0
+//		 
+//		ll_found = 0
+//		ll_found = dw_sinv_update.Find("stok_id = '" + ls_stok + "'",1, dw_sinv_update.RowCount())
+//		if isnull(ll_found) then ll_found = 0
+//		if ll_found <= 0 then
+//			dw_sinv_update.Scrolltorow(dw_sinv_update.Insertrow(0))
+//			ll_found = dw_sinv_update.getrow()
+//			dw_sinv_update.Setitem(ll_found,'periode',ldt_lalu)
+//			dw_sinv_update.Setitem(ll_found,'site_id',gs_site)
+//			dw_sinv_update.Setitem(ll_found,'stok_id',ls_stok)
+//			dw_sinv_update.Setitem(ll_found,'qty',0.00)
+//			dw_sinv_update.Setitem(ll_found,'nilai',0.00)
+//		end if
+//		dw_sinv_update.Setitem(ll_found,'hpp_avg',ld_hpp)
+//	next
+//end if
+//
+//
+//setpointer(Hourglass!)
+//
+//ll_sukses = 0
+//if ll_flag_closing = 1 then	
+//	dw_sinv2_update.Accepttext()   // SINV2 = Running Balance
+//	dw_sinv.Accepttext()   // SINV   = Global Beginning Balance for Next Month
+//	dw_sinv_update.Accepttext()   // SINV   = Update HPP for This Month
+//	dw_sinv_gudang_update.Accepttext()   // SINV_GUDANG   = Warehouse Beginning Balance for Next Month
+//	if dw_sinv2_update.Update() = 1 and dw_sinv.Update() = 1 and dw_sinv_gudang_update.Update() = 1 then //and dw_sinv_update.Update() = 1 and dw_7.Update() = 1 and dw_sinv_gudang_update.Update() = 1 then
+//		commit;
+//		ll_sukses = 1
+//		Messagebox('Monthly Closing','Proses Akhir Bulan berhasil ...!',Exclamation!)
+//	else
+//		Rollback;
+//	end if
+//else
+//	dw_sinv2_update.Accepttext()  // SINV2 = Running Balance
+//	dw_sinv_update.Accepttext()  // SINV   = Update HPP for This Month
+//	if dw_sinv2_update.Update() = 1 and dw_sinv_update.Update() = 1 then
+//		commit;
+//		ll_sukses = 1
+//		Messagebox('Daily Closing','Proses Akhir hari berhasil ...!',Exclamation!)
+//	else
+//		Rollback;
+//	end if
+//end if
+//
+//setpointer(Hourglass!)
+//
+//// untuk stok id barang jadi
+//UPDATE TSALES2
+//      SET HPP = ISNULL(HPP.HRG,0.00)
+//   FROM TSALES2,TSALES1,
+//	        (
+//			      SELECT STOK_ID AS STOK_ID,
+//					         SUM(HPP_AVG) AS HRG
+//					FROM SINV
+//					WHERE (PERIODE = :LDT_TGL)
+//					GROUP BY STOK_ID
+//			) HPP
+//WHERE (TSALES2.STOK_ID = HPP.STOK_ID) AND
+//		   (TSALES2.BUKTI_ID = TSALES1.BUKTI_ID) AND
+//		   (MONTH(TSALES1.TGL) = MONTH(:LDT_TGL)) AND
+//		   (YEAR(TSALES1.TGL) = YEAR(:LDT_TGL)) ;
+//if sqlca.sqlcode = 0 then
+//	commit;
+//else
+//	rollback;
+//end if
+//
+//setpointer(Hourglass!)
+//
+//UPDATE TSTOK2
+//      SET HPP = ISNULL(HPP.HRG,0.00),
+//		   NETTO_HPP = ROUND(ISNULL(HPP.HRG,0.00) * QTY,2)
+//   FROM TSTOK2,TSTOK1,
+//	        (
+//			      SELECT STOK_ID AS STOK_ID,
+//					         SUM(HPP_AVG) AS HRG
+//					FROM SINV
+//					WHERE (PERIODE = :LDT_TGL)
+//					GROUP BY STOK_ID
+//			) HPP
+//WHERE  (TSTOK2.STOK_ID = HPP.STOK_ID) AND
+//		   (TSTOK2.BUKTI_ID = TSTOK1.BUKTI_ID) AND
+//		   (TSTOK1.TIPE_TRANS not in( '02','05')) AND
+//		   (MONTH(TSTOK1.TGL) = MONTH(:LDT_TGL)) AND
+//		   (YEAR(TSTOK1.TGL) = YEAR(:LDT_TGL)) ;
+//if sqlca.sqlcode = 0 then
+//	commit;
+//else
+//	rollback;
+//end if
+//
+//
+//setpointer(Hourglass!)
+//
+//if ll_sukses = 1 then
+//	update gl_setup 
+//		  set closing_sales = :idt_tgl2 ;
+//	if sqlca.sqlcode = 0 then
+//		commit;
+//	else
+//		rollback;
+//	end if
+//end if
+//close(w_wait)
+//setpointer(Arrow!)
+//
+//dw_view.retrieve(idt_tgl2)
+//Return
+//
+end event
+
+type dw_sinv2 from uo_dw within w_closing_stok
+integer x = 91
+integer y = 1524
+integer width = 251
+integer taborder = 30
+string dataobject = "d_sinv2"
+end type
+
+type d_kas from uo_dw within w_closing_stok
+boolean visible = false
+integer x = 302
+integer y = 1016
+integer taborder = 20
+string dataobject = "d_closing_kas"
+end type
+
+type cb_1 from commandbutton within w_closing_stok
+integer x = 3328
+integer y = 1392
+integer width = 402
+integer height = 112
+integer taborder = 20
+integer textsize = -10
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Tahoma"
+string text = "CLOSE"
+end type
+
+event clicked;close(parent)
+end event
+
+type dw_arg from uo_dw within w_closing_stok
+integer width = 3739
+integer height = 284
+integer taborder = 10
+string dataobject = "d_closing_stok"
+string is_type_dw = "ARG"
+end type
+
+event buttonclicked;call super::buttonclicked;datetime ldt_periode,ldt_tgl1,ldt_tgl2,ldt_next
+long ll_row,i,ll_found,ll_minus,ll_replace,ll_konfirm,ll_count
+decimal ld_qty,ld_awal_rp,ld_nilai,ld_hpp,ld_qty_current,ld_qty_awal,ld_qty_update,ld_nilai_awal,ld_nilai_update,ld_nilai_set
+decimal ldec_beli,ldec_beli_rp,ldec_mutasi,ldec_mutasi_rp
+string ls_stok,ls_group
+decimal ldec_debug,ldec_final,ldec_total_qty,ldec_total_nilai
+boolean lb_replace = false
+if dwo.name = 'b_proses' then
+	this.accepttext( )
+     ldt_tgl1 = this.object.periode[1]
+	ldt_tgl1 = f_bom(ldt_tgl1)
+     ldt_tgl2 = f_eom(ldt_tgl1)
+	ll_minus = this.object.oto_minus[1]
+	ll_replace = this.object.replace_stok[1]
+	
+	idt_tgl1 = ldt_tgl1
+	idt_tgl2 = ldt_tgl2
+	// View data first
+	dw_view.settransobject(sqlca)
+	dw_view.reset()
+	ll_row = dw_view.retrieve(ldt_tgl1,ldt_tgl2) //Pindah saldo
+	dw_view.accepttext()
+	dw_sinv_update.retrieve(ldt_tgl1) //Untuk update current HPP
+	
+	select dateadd(day,1,:ldt_tgl2)
+	into :ldt_next
+	from gl_setup
+	using sqlca;
+	ldt_next = datetime(date(ldt_next))
+	
+	if Messagebox('Konfirmasi!','Yakin untuk melakukan closing stock ?',Question!,Yesno!,2)=2 then return
+	
+	//Konfirm jika ini akhir tahun, cek apakah saldo awal tahun berikutnya di replace??
+	if string(ldt_next,'mm') = '01'  then
+		if ll_replace = 0 then
+			ll_konfirm = messagebox("Konfirmasi!","Ini merupakan Closing Akhir Tahun..!~rYakin untuk menimpa saldo awal tahun berikutnya?",question!,yesnocancel!)
+			choose case ll_konfirm
+				case 3
+					return
+				case 1
+					if messagebox("Konfirmasi!","Anda memilih untuk menimpa saldo awal tahun berikutnya,yakin untuk melanjutkan proses?",question!,yesno!)=2 then return
+					lb_replace = true
+				case 2
+					if messagebox("Konfirmasi!","Anda memilih untuk tidak menimpa saldo awal tahun berikutnya,yakin untuk melanjutkan proses?",question!,yesno!)=2 then return
+					lb_replace = false
+			end choose
+		else
+			ll_konfirm = messagebox("Konfirmasi!","Ini merupakan Closing Akhir Tahun..!~rYakin untuk tidak menimpa saldo awal tahun berikutnya?",question!,yesnocancel!)
+			choose case ll_konfirm
+				case 3
+					return
+				case 1
+					if messagebox("Konfirmasi!","Anda memilih untuk tidak menimpa saldo awal tahun berikutnya,yakin untuk melanjutkan proses?",question!,yesno!)=2 then return
+					lb_replace = false
+				case 2
+					if messagebox("Konfirmasi!","Anda memilih untuk  menimpa saldo awal tahun berikutnya,yakin untuk melanjutkan proses?",question!,yesno!)=2 then return
+					lb_replace = true
+			end choose
+		end if
+	end if
+	
+	
+	
+	
+	hpb_2.maxposition = ll_row
+	setpointer(Hourglass!)
+	dw_sinv.reset()
+	dw_update_minus.reset()
+	
+	for i = 1 to ll_row
+			hpb_2.position = i
+			st_1.text = string(i)+'/'+string(ll_row)
+			ls_stok 		= dw_view.object.produk_id[i]
+			ld_qty  		= dw_view.object.akhir[i]
+			ld_qty_awal = dw_view.object.awal[i]
+			ld_nilai_awal = dw_view.object.awal_rp[i]
+			ld_awal_rp = dw_view.object.awal_rp[i]
+			ldec_final 		= dw_view.object.akhir_rpxx[i]
+			ld_nilai 		= dw_view.object.akhir_rpxx[i]
+			ld_hpp = dw_view.object.hppx[i]
+			ls_group = dw_view.getitemstring(i,'group_product')
+			
+			if isnull(ld_qty) then ld_qty = 0
+			if isnull(ld_qty_awal) then ld_qty_awal = 0
+			if isnull(ld_nilai_awal) then ld_nilai_awal = 0
+			if isnull(ld_nilai)  then ld_nilai = 0
+			if isnull(ld_awal_rp) then ld_awal_rp = 0
+			if isnull(ld_hpp) then ld_hpp = 0
+			if isnull(ls_stok) or ls_stok = '' then continue
+
+			
+//			//debug============== hapusssss nanti
+//			if ls_stok = 'TB.5010' then
+//				messagebox('nilai akhir',string(ld_nilai,'#,##0.0')+'   :  '+string(ldec_final,'#,##0.0'))
+//			end if
+
+			///UPDATE JIKA SALDONYA MINUS, Di NOL KAN DENGAN CARA UPDATE SALDO AWAL TAHUN NYA
+			if isnull(ll_minus) then ll_minus = 0
+			if ll_minus >0 then
+				if ld_qty <0 then
+					//Ambil saldo awal tahun
+					ld_qty_update = abs(ld_qty)
+					if ld_qty_awal <> 0 then
+						ld_nilai_update = ld_nilai_awal / ld_qty_awal
+						ld_nilai_set = ld_qty_update * ld_nilai_update
+					else
+						ld_nilai_update = 0
+						ld_nilai_set = 0
+					end if
+					
+					
+					//Save history
+					dw_update_minus.Setrow(dw_update_minus.Insertrow(0))
+					dw_update_minus.Setitem(dw_update_minus.getrow(),'periode',ldt_tgl1)
+					dw_update_minus.Setitem(dw_update_minus.getrow(),'site_id',gs_site)
+					dw_update_minus.Setitem(dw_update_minus.getrow(),'stok_id',ls_stok)
+					dw_update_minus.Setitem(dw_update_minus.getrow(),'qty',ld_qty)
+					dw_update_minus.Setitem(dw_update_minus.getrow(),'nilai',ld_nilai)
+					dw_update_minus.Setitem(dw_update_minus.getrow(),'hpp_avg',ld_hpp)
+				end if
+			end if
+			
+			if string(ldt_next,'mm') = '01'  then //peralihan tahun, cek apakah saldo awal tahun di timpa?? / 2018-01-03
+				if lb_replace = true then
+					dw_sinv.Setrow(dw_sinv.Insertrow(0))
+					dw_sinv.Setitem(dw_sinv.getrow(),'periode',ldt_next)
+					dw_sinv.Setitem(dw_sinv.getrow(),'site_id',gs_site)
+					dw_sinv.Setitem(dw_sinv.getrow(),'stok_id',ls_stok)
+					//Update Minus??
+					if ll_minus >0 then
+						if ld_qty <0 then
+							dw_sinv.Setitem(dw_sinv.getrow(),'qty',0)
+							dw_sinv.Setitem(dw_sinv.getrow(),'nilai',0)
+							dw_sinv.Setitem(dw_sinv.getrow(),'hpp_avg',0)
+						else
+							dw_sinv.Setitem(dw_sinv.getrow(),'qty',ld_qty)
+							dw_sinv.Setitem(dw_sinv.getrow(),'nilai',ld_nilai)
+							dw_sinv.Setitem(dw_sinv.getrow(),'hpp_avg',ld_hpp)
+						end if
+					else
+						dw_sinv.Setitem(dw_sinv.getrow(),'qty',ld_qty)
+						dw_sinv.Setitem(dw_sinv.getrow(),'nilai',ld_nilai)
+						dw_sinv.Setitem(dw_sinv.getrow(),'hpp_avg',ld_hpp)
+					end if	//End cek minus
+				end if 
+			else //Bukan Akhir Tahun
+				dw_sinv.Setrow(dw_sinv.Insertrow(0))
+				dw_sinv.Setitem(dw_sinv.getrow(),'periode',ldt_next)
+				dw_sinv.Setitem(dw_sinv.getrow(),'site_id',gs_site)
+				dw_sinv.Setitem(dw_sinv.getrow(),'stok_id',ls_stok)
+				//Update Minus??
+				if ll_minus >0 then
+					if ld_qty <0 then
+						dw_sinv.Setitem(dw_sinv.getrow(),'qty',0)
+						dw_sinv.Setitem(dw_sinv.getrow(),'nilai',0)
+						dw_sinv.Setitem(dw_sinv.getrow(),'hpp_avg',0)
+					else
+						dw_sinv.Setitem(dw_sinv.getrow(),'qty',ld_qty)
+						dw_sinv.Setitem(dw_sinv.getrow(),'nilai',ld_nilai)
+						dw_sinv.Setitem(dw_sinv.getrow(),'hpp_avg',ld_hpp)
+					end if
+				else
+					dw_sinv.Setitem(dw_sinv.getrow(),'qty',ld_qty)
+					dw_sinv.Setitem(dw_sinv.getrow(),'nilai',ld_nilai)
+					dw_sinv.Setitem(dw_sinv.getrow(),'hpp_avg',ld_hpp)
+				end if	//End cek minus
+			end if
+		next
+		
+		// hapus dulu data yang lama, kemungkinan adanya proses closing backdate, tapi cek jika akhir tahun cek untuk replace saldo
+		if string(ldt_next,'mm') = '01'  then
+			if lb_replace = true then //Jika di replace, hapus data
+				delete from sinv where (periode = :ldt_next) ;
+				if sqlca.sqlcode = 0 then
+					Commit;
+				else
+					Rollback;
+				end if
+				delete from sinv_minus where (periode = :ldt_tgl1) ;
+				if sqlca.sqlcode = 0 then
+					Commit;
+				else
+					Rollback;
+				end if
+			end if
+		else
+			delete from sinv where (periode = :ldt_next) ;
+			if sqlca.sqlcode = 0 then
+				Commit;
+			else
+				Rollback;
+			end if
+			delete from sinv_minus where (periode = :ldt_tgl1) ;
+			if sqlca.sqlcode = 0 then
+				Commit;
+			else
+				Rollback;
+			end if
+		end if
+		
+		dw_sinv.accepttext()
+		dw_sinv_update.accepttext()
+		dw_update_minus.accepttext()
+		if dw_sinv.update() = 1 and dw_update_minus.update() = 1 then
+			commit;
+			//Transfer ke sinv_gudang
+			if string(ldt_next,'mm') = '01'  then
+				if lb_replace = true then //Jika di replace, hapus data
+					st_1.text = 'Deleting sinv_gudang..'
+					delete from sinv_gudang where periode = :ldt_next;
+					if sqlca.sqlcode = 0 then
+						Commit;
+					else
+						Rollback;
+					end if
+					st_1.text = 'Transfer to sinv_gudang..'
+					insert into sinv_gudang
+					select periode,stok_id,qty,nilai,hpp_avg,site_id,3 as flag_vendor,'G001' from sinv where periode = :ldt_next;
+					if sqlca.sqlcode = 0 then
+					Commit;
+					else
+						Rollback;
+					end if
+				end if
+			else
+				st_1.text = 'Deleting sinv_gudang..'
+				delete from sinv_gudang where periode = :ldt_next;
+				if sqlca.sqlcode = 0 then
+					Commit;
+				else
+					Rollback;
+				end if
+				st_1.text = 'Transfer to sinv_gudang..'
+				insert into sinv_gudang
+				select periode,stok_id,qty,nilai,hpp_avg,site_id,3 as flag_vendor,'G001' from sinv where periode = :ldt_next;
+				if sqlca.sqlcode = 0 then
+				Commit;
+				else
+					Rollback;
+				end if
+			end if
+			
+			//update saldo awal
+			//Di tambahkan ke saldo awal tahun
+			if ll_minus >0 then //Apakah flag minus AKtif?
+				if dw_update_minus.rowcount() >0 then //apakah ada yg minus??
+					update sinv,sinv_minus
+					set sinv.qty = sinv.qty + abs(sinv_minus.qty),
+					sinv.nilai = sinv.hpp_avg * (sinv.qty + abs(sinv_minus.qty))
+					where sinv.stok_id = sinv_minus.stok_id and
+					sinv_minus.periode = :ldt_tgl1 and
+					year(sinv.periode) = year(:ldt_tgl1) and
+					month(sinv.periode) = 1
+					using sqlca;
+					commit;
+					//Update sinv_gudang
+					update sinv,sinv_gudang
+					set sinv_gudang.qty = sinv.qty,
+					sinv_gudang.hpp_avg = sinv.hpp_avg,
+					sinv_gudang.nilai = sinv.nilai
+					where sinv.stok_id = sinv_gudang.stok_id and
+					sinv.periode = sinv_gudang.periode and
+					year(sinv.periode) = year(:ldt_tgl1) and
+					month(sinv.periode) = 1
+					using sqlca;
+					commit;
+				end if
+			end if
+			
+			update gl_setup
+			set closing_sales = :ldt_next
+			using sqlca;
+			commit;
+			
+			dw_arg.setitem(1,'periode',ldt_next)
+		else
+			rollback;
+			messagebox('','Error..!')
+			return
+		end if
+	
+//Update HPP
+setpointer(Hourglass!)
+st_1.text = 'Updating HPP Penjualan..'
+// untuk stok id barang jadi / penjualan reguler dan retur yang tidak beda tahun dengan konsinyasi out
+///UPDATE PUKUL RATA, NANTI UPDATE SESUAI DENGAN HARGA KELUAR EVAP (CONS IN)
+UPDATE TSALES2
+      SET HPP = ABS(ROUND(ISNULL(HPP.HRG,0.00),2))
+   FROM TSALES2,TSALES1,
+	        (
+			      SELECT STOK_ID AS STOK_ID,
+					         SUM(HPP_AVG) AS HRG
+					FROM SINV
+					WHERE year(PERIODE) = year(:ldt_next) and //Hpp closing jadi hpp penjualan bulan sebelumnya
+							month(periode) = month(:ldt_next)
+					GROUP BY STOK_ID
+			) HPP
+WHERE (TSALES2.STOK_ID = HPP.STOK_ID) AND
+		   (TSALES2.BUKTI_ID = TSALES1.BUKTI_ID) AND
+			//tsales1.tipe_trans not in('88') and
+		   (MONTH(TSALES1.TGL) = MONTH(:ldt_tgl1)) AND
+		   (YEAR(TSALES1.TGL) = YEAR(:ldt_tgl1)) ;
+			
+if sqlca.sqlcode = 0 then
+	commit;
+else
+	rollback;
+end if
+
+
+
+///UPDATE HPP PENJUALAN BY EVAP
+UPDATE TSALES2
+      SET HPP = ABS(ROUND(ISNULL(HPP.HPP,0.00),2))
+   FROM TSALES2,TSALES1,
+	        (
+			      select b.stok_id,
+					isnull(b.evap,'') as evap,
+					avg(isnull(b.hpp,0)) as hpp
+					from tsales1 a, tsales2 b
+					where a.bukti_id = b.bukti_id and
+					a.tipe_trans = '88' 
+					group by b.stok_id,isnull(b.evap,'')
+			) HPP
+WHERE (TSALES2.STOK_ID = HPP.STOK_ID AND
+			isnull(tsales2.evap,'') = HPP.evap) AND
+			isnull(hpp.hpp,0) >=1 and
+		   (TSALES2.BUKTI_ID = TSALES1.BUKTI_ID) AND
+		   (MONTH(TSALES1.TGL) = MONTH(:ldt_tgl1)) AND
+		   (YEAR(TSALES1.TGL) = YEAR(:ldt_tgl1)) ;
+			
+if sqlca.sqlcode = 0 then
+	commit;
+else
+	rollback;
+end if
+
+
+
+st_1.text = 'Updating HPP Adjustment Stok...'
+UPDATE TSTOK2
+      SET hrg = ISNULL(HPP.HRG,0.00),
+		   NETTO = ROUND(ISNULL(HPP.HRG,0.00) * QTY,2),
+			NETTO_HPP = ROUND(ISNULL(HPP.HRG,0.00) * QTY,2),
+			HPP = ISNULL(HPP.HRG,0.00)
+   FROM TSTOK2,TSTOK1,
+	        (
+			      SELECT STOK_ID AS STOK_ID,
+					         SUM(HPP_AVG) AS HRG
+					FROM SINV
+					WHERE year(PERIODE) = year(:ldt_next) and //Hpp closing jadi hpp STOK bulan sebelumnya
+							month(periode) = month(:ldt_next)
+					GROUP BY STOK_ID
+			) HPP
+WHERE  (TSTOK2.STOK_ID = HPP.STOK_ID) AND
+		   (TSTOK2.BUKTI_ID = TSTOK1.BUKTI_ID) AND
+		   (TSTOK1.TIPE_TRANS not in( '02','05','99','09')) AND
+		   (MONTH(TSTOK1.TGL) = MONTH(:ldt_tgl1)) AND
+		   (YEAR(TSTOK1.TGL) = YEAR(:ldt_tgl1)) ;
+if sqlca.sqlcode = 0 then
+	commit;
+else
+	rollback;
+end if
+
+
+st_1.text = 'Updating HPP Konsinyasi (IN)..' //BY EVAP
+UPDATE TSTOK2
+      SET HPP = ROUND(ISNULL(HPP.HRG,0.00),0),
+		   NETTO = ROUND(ISNULL(HPP.HRG,0.00) * QTY,2),
+			 KOTOR = ROUND(ISNULL(HPP.HRG,0.00) * QTY,2),
+			 HRG = ISNULL(HPP.HRG,0.00),
+			  NETTO_HPP = ROUND(ISNULL(HPP.HRG,0.00) * QTY,2)
+   FROM TSTOK2,TSTOK1,
+	        (
+			      SELECT b.STOK_ID ,
+					isnull(b.EVAP,'') AS EVAP,
+					         AVG(isnull(b.HPP,0)) AS HRG
+					FROM TSALES1 a, TSALES2 b
+					WHERE a.bukti_id = b.bukti_id AND
+					a.tipe_trans = '88' 
+					GROUP BY b.STOK_ID,isnull(b.EVAP,'')
+			) HPP
+WHERE  (TSTOK2.STOK_ID = HPP.STOK_ID) AND
+ ISNULL(TSTOK2.COA_ID,'') = HPP.EVAP AND
+ isnull(hpp.hrg,0) >=1 AND
+		   (TSTOK2.BUKTI_ID = TSTOK1.BUKTI_ID) AND
+		   (TSTOK1.TIPE_TRANS in( '88')) AND
+		   (MONTH(TSTOK1.TGL) = MONTH(:ldt_tgl1)) AND
+		   (YEAR(TSTOK1.TGL) = YEAR(:ldt_tgl1)) ;
+if sqlca.sqlcode = 0 then
+	commit;
+else
+	rollback;
+end if
+
+
+
+st_1.text = 'Finish..'
+messagebox('Sukses','Proses berhasil..!')
+//messagebox('',string(ldec_debug,'#,##0.00'))
+//messagebox('',string(ldec_tot_hpp,'#,###0.00'))
+setpointer(Arrow!)
+end if
+
+
+if dwo.name = 'b_cek' then
+	
+	this.accepttext( )
+     ldt_tgl1 = this.object.periode[1]
+	ldt_tgl1 = f_bom(ldt_tgl1)
+     ldt_tgl2 = f_eom(ldt_tgl1)
+	ll_minus = this.object.oto_minus[1]
+	ll_replace = this.object.replace_stok[1]
+	
+	idt_tgl1 = ldt_tgl1
+	idt_tgl2 = ldt_tgl2
+	// View data first
+	dw_view.settransobject(sqlca)
+	dw_view.reset()
+	ll_row = dw_view.retrieve(ldt_tgl1,ldt_tgl2) //Pindah saldo
+	
+	
+	dw_view.accepttext()
+	ll_count = dw_view.rowcount()
+	hpb_2.maxposition = ll_count
+	for i = 1 to ll_count
+		setpointer(hourglass!)
+		ls_stok 		= dw_view.object.produk_id[i]
+		ld_qty  		= dw_view.object.akhir[i]
+		ld_qty_awal = dw_view.object.awal[i]
+		ld_nilai_awal = dw_view.object.awal_rp[i]
+		ld_awal_rp = dw_view.object.awal_rp[i]
+		ldec_final 		= dw_view.object.cfinal[i]
+		ld_nilai 		= dw_view.object.akhirnya[i]
+		ld_hpp = dw_view.object.hppx[i]
+		ldec_beli = dw_view.object.beli[i]
+		ldec_mutasi = dw_view.object.mutasi_in[i]
+		ldec_beli_rp = dw_view.object.beli_rp[i]
+		ldec_mutasi_rp = dw_view.object.mutasi_in_rp[i]
+		if isnull(ldec_beli) then ldec_beli = 0
+		if isnull(ldec_beli_rp) then ldec_beli_rp = 0
+		if isnull(ldec_mutasi) then ldec_mutasi = 0
+		if isnull(ldec_mutasi_rp) then ldec_mutasi_rp = 0
+		if isnull(ld_qty_awal) then ld_qty_awal = 0
+		ldec_total_qty = ld_qty_awal + ldec_beli + ldec_mutasi
+		ldec_total_nilai = ld_awal_rp + ldec_beli_rp + ldec_mutasi_rp
+		
+		hpb_2.position = i
+		st_1.text = string(i)+'/'+string(ll_row)
+			
+		if ldec_total_qty = 0 then
+			if ldec_total_nilai <>0 then
+				messagebox('Warning!','Ada transaksi tidak normal..!')
+				st_1.text = 'Ada transaksi tidak normal pada baris : '+string(1,'#,##0')
+				dw_view.scrolltorow(i)
+				setpointer(arrow!)
+				exit;
+			end if
+		end if
+		ls_group = dw_view.getitemstring(i,'group_product')
+			
+	next
+	setpointer(arrow!)
+	st_1.text = 'Process check finish!'
+end if
+
+end event
+
+event ue_save;call super::ue_save;long i,j,ll_kas
+double ld_saldo,ld_in,ld_out
+datetime ldt_periode
+
+this.accepttext( )
+ldt_periode = this.object.periode[1]
+ldt_periode = f_eom(ldt_periode)
+ldt_periode = datetime(relativedate(date(ldt_periode),1))
+
+if messagebox('Perhatian','Yakin Proses dilanjutkan?',Question!,Yesno!,2)=2 then return 
+
+d_kas.reset()
+d_kas.settransobject(sqlca)
+j = dw_1.rowcount()
+
+for i = 1 to j
+	ll_kas   = dw_1.object.kas_id[i]
+	ld_saldo = dw_1.object.saldo[i]
+	if isnull(ld_saldo) then ld_saldo = 0.00
+	if ld_saldo = 0.00 then continue
+	
+	d_kas.scrolltorow(d_kas.insertrow(0))
+	d_kas.setitem(d_kas.getrow(),'site_id',gs_site)
+	d_kas.setitem(d_kas.getrow(),'periode',ldt_periode)
+	d_kas.setitem(d_kas.getrow(),'kas_id',ll_kas)
+	d_kas.setitem(d_kas.getrow(),'saldo',ld_saldo)
+next
+
+delete from skas 
+where (periode = :ldt_periode) and 
+		 (site_id = :gs_site) ;
+commit;
+	
+d_kas.accepttext()
+if d_kas.update() = 1 then
+	commit;
+	messagebox('','Proses berhasil..!')
+	dw_1.retrieve(ldt_periode)
+else
+	rollback;
+end if
+
+
+end event
+
+event itemchanged;call super::itemchanged;datetime ldt_tgl1,ldt_tgl2
+
+this.accepttext()
+ldt_tgl1 	= this.object.periode[1]
+ldt_tgl1	= datetime(date(ldt_tgl1))
+
+ldt_tgl2	= datetime(relativedate(date(ldt_tgl1),1))
+this.setitem(1,'periode2',ldt_tgl2)
+
+
+end event
+
+event editchanged;call super::editchanged;string ls_nama
+if dwo.name = 'find1' then
+	this.accepttext()
+	ls_nama = upper(this.object.find1[1])
+	if isnull(ls_nama) then ls_nama = ''
+ls_nama = upper(ls_nama)
+	if ls_nama = '' then
+		dw_view.setfilter('')
+	else	
+		dw_view.setfilter('upper(is_find) like "%' + ls_nama + '%"')
+	end if
+	dw_view.filter()
+	dw_view.sort()
+	dw_view.groupcalc()
+	
+end if
+end event
+
+type dw_1 from uo_dw within w_closing_stok
+boolean visible = false
+integer y = 240
+integer width = 3131
+integer height = 1024
+integer taborder = 10
+string dataobject = "d_hpp"
+string is_type_dw = "ENTRY"
+boolean ib_readonly = true
+long entry_header_height = 200
+long list_footer_height = 100
+end type
+
+event retrieveend;call super::retrieveend;datetime ldt_tgl1
+
+dw_arg.accepttext( )
+ldt_tgl1 = dw_arg.object.periode[1]
+ldt_tgl1 = f_bom(ldt_tgl1)
+
+setpointer(Hourglass!)
+
+// Retrieve SINV
+dw_sinv_update.settransobject(sqlca)
+dw_sinv_update.Reset()
+dw_sinv_update.Retrieve(ldt_tgl1)
+
+setpointer(Hourglass!)
+
+// Retrieve SINV_GUDANG, setelah itu ada proses update di retrieveend event
+dw_sinv2_update.reset()
+dw_sinv2_update.Retrieve()
+
+
+end event
+
+type hpb_2 from hprogressbar within w_closing_stok
+integer x = 5
+integer y = 324
+integer width = 3118
+integer height = 64
+unsignedinteger maxposition = 100
+integer setstep = 10
+boolean smoothscroll = true
+end type
+
+type st_1 from statictext within w_closing_stok
+integer y = 272
+integer width = 2496
+integer height = 64
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Tahoma"
+long textcolor = 16777215
+long backcolor = 134217730
+boolean focusrectangle = false
+end type
+
+

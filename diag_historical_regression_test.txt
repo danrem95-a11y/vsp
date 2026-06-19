@@ -1,0 +1,5 @@
+﻿period	revenue
+Current Month	2242033574.00
+Last 12M	98466597785.64
+Last 6M	50016032257.64
+Last 3M	14638806201.73

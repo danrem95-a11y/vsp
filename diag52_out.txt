@@ -1,0 +1,18 @@
+powershell.exe : Invoke-History : A positional parameter cannot be found that 
+accepts argument 
+At line:1 char:1
++ & "$env:SystemRoot\SysWOW64\WindowsPowerShell\v1.0\powershell.exe" -E ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Invoke-History ...cepts argument  
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+'SAF rows'.
+At C:\BTV\debug\diag52_voucher.ps1:20 char:1
++ R "SELECT BUKTI_ID, TIPE_TRANS, PERIODE, SALDO_KURS, RATE, SALDO FROM ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Invoke-History], ParentCon 
+   tainsErrorRecordException
+    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell 
+   .Commands.InvokeHistoryCommand
+ 

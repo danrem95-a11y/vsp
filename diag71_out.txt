@@ -1,0 +1,5 @@
+INV-only                                 rows=1     sec=0.43
+INV+OPN                                  rows=1     sec=9.34
+INV+MUT                                  rows=1     sec=1.15
+INV+BYR                                  rows=1     sec=24.55
+INV+SUPP+CUST                            rows=1     sec=0.05

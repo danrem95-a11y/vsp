@@ -1,0 +1,33 @@
+﻿
+===== v_neraca BANK accounts with show_hide =====
+AccountCode	AccountDes	show_hide
+--------------------------------------------------------------------------------
+101-001	BCA : 284-0032003  TAM OD	1
+101-010	PERMATA : 504-000060 ( PT. TAM )	1
+101-011	BCA : 284-0066005  ( PT. TAM )	1
+101-110	BCA US$ : 284-0020099 ( PT. TAM )	1
+101-111	BCA CNY : 284-9929989 ( PT. TAM )	(null)
+101-201	Deposito - BCA ( Rp )	1
+101-202	Deposito - Cadangan Gaji	1
+(7 rows)
+
+===== BANK total with show_hide filter (arg_show NULL - only show_hide=1) =====
+clalu11	mutasi	cakhir11_total
+--------------------------------------------------------------------------------
+10737342169.280000	-6185167916.010000	4552174253.270000
+(1 rows)
+
+===== BANK total without show_hide filter (arg_show=1 - all) =====
+clalu11	mutasi	cakhir11_total
+--------------------------------------------------------------------------------
+10737342169.280000	-6185167916.010000	4552174253.270000
+(1 rows)
+
+===== BANK accounts with show_hide=0 that have non-zero balances =====
+AccountCode	AccountDes	show_hide	opening	jan_movement	saldo_jan31
+--------------------------------------------------------------------------------
+101-111	BCA CNY : 284-9929989 ( PT. TAM )	(null)	0.000000	0.000000	0.000000
+(1 rows)
+
+===== v_neraca view columns =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'table_id' not found"

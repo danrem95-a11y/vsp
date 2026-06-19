@@ -1,0 +1,87 @@
+﻿
+===== Tables with DP in name =====
+table_name	table_type
+--------------------------------------------------------------------------------
+tdp	BASE
+tdp_copy	BASE
+(2 rows)
+
+===== tbyr1 columns =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S13] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table name 'SYSCOLUMNS' is ambiguous"
+
+===== tbyr1 rows matching DP 2602DPR001 or 2602DP =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'ket' not found"
+
+===== tbyr1 all Jan 2026 =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'acc_ar' not found"
+
+===== Bank GL entries Jan 2026 matching DP amounts =====
+tgl	voucher	voucher_manual	account_id	debet	kredit	ket	modul_id
+--------------------------------------------------------------------------------
+1/6/2026 12:00:00 AM	200410126010010	26012004P010	101-011	(null)	20850000.000000	TOYOTA ASTRA FINANCE	CO
+1/8/2026 12:00:00 AM	200410126010042	26012004P042	101-011	(null)	19900000.000000	BENGKEL BAROKAH	CO
+1/8/2026 12:00:00 AM	200410126010063	26012004P051	101-011	(null)	19143531.000000	BPJS	CO
+1/22/2026 12:00:00 AM	200410126010130	26012004P097	101-011	(null)	19548750.000000	HERY PURWANTO	CO
+1/22/2026 12:00:00 AM	200410126010241	26012004R078	101-011	57000000.000000	(null)	DELIMA MANDIRI	CI
+1/23/2026 12:00:00 AM	200410126010237	26012004R084	101-011	20396306.000000	(null)	AUTO KOOL PRIMA	CI
+(6 rows)
+
+===== GL journal with voucher_manual containing 2602DPR =====
+tgl	voucher	voucher_manual	account_id	debet	kredit	ket	modul_id
+--------------------------------------------------------------------------------
+1/22/2026 12:00:00 AM	2602DPR002	2602DPR002	103-001	0.000000	39627000.000000	DP 25122004R132 (EAT MORE 03.2601026)	DP
+1/22/2026 12:00:00 AM	2602DPR001	2602DPR001	103-001	0.000000	16983000.000000	DP 25112004R035 (EAT MORE 03.2601026)	DP
+1/22/2026 12:00:00 AM	2602DPR001	2602DPR001	228-001	16983000.000000	0.000000	DP 25112004R035 (EAT MORE 03.2601026)	DP
+1/22/2026 12:00:00 AM	2602DPR002	2602DPR002	228-001	39627000.000000	0.000000	DP 25122004R132 (EAT MORE 03.2601026)	DP
+2/6/2026 12:00:00 AM	2602DPR003	2602DPR003	103-001	0.000000	61632750.000000	DP 25122004R101 (BENTORO 03.2602009)	DP
+2/6/2026 12:00:00 AM	2602DPR003	2602DPR003	228-001	61632750.000000	0.000000	DP 25122004R101 (BENTORO 03.2602009)	DP
+(6 rows)
+
+===== Tables with tbyr in name =====
+table_name	table_type
+--------------------------------------------------------------------------------
+Tbyr_lama	BASE
+TBYR1	BASE
+TBYR1_COPY	BASE
+tbyr1xx	BASE
+TBYR2	BASE
+TBYR2_COPY	BASE
+TBYR2_PUTIH	BASE
+TBYR2_PUTIH_copy	BASE
+TBYR3	BASE
+v_bayar	VIEW
+(10 rows)
+
+===== tbyr2 columns =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S13] [Sybase][ODBC Driver][Adaptive Server Anywhere]Table name 'SYSCOLUMNS' is ambiguous"
+
+===== tbyr1 Jan 2026 with acc_bayar=228 (DP records) =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'acc_ar' not found"
+
+===== GL journal 228-xxx in Jan 2026 =====
+tgl	voucher	voucher_manual	account_id	debet	kredit	ket	modul_id
+--------------------------------------------------------------------------------
+1/6/2026 12:00:00 AM	2601DPR001	2601DPR001	228-001	20000000.000000	0.000000	DP 25112004R098 (ANUGERAH MITRA 03.2601004)	DP
+1/22/2026 12:00:00 AM	200410126010249	26012004R073	228-001	0.000000	32500000.000000	SEMBILAN MAHKOTA DP 002/01/26- Uang Muka Penjualan	CI
+1/22/2026 12:00:00 AM	2602DPR001	2602DPR001	228-001	16983000.000000	0.000000	DP 25112004R035 (EAT MORE 03.2601026)	DP
+1/22/2026 12:00:00 AM	2602DPR002	2602DPR002	228-001	39627000.000000	0.000000	DP 25122004R132 (EAT MORE 03.2601026)	DP
+(4 rows)
+
+===== Bank GL entries matching 228-xxx vouchers in Jan 2026 =====
+tgl	voucher	voucher_manual	account_id	debet	kredit	ket	modul_id
+--------------------------------------------------------------------------------
+1/22/2026 12:00:00 AM	200410126010249	26012004R073	101-011	32500000.000000	(null)	SEMBILAN MAHKOTA INDO	CI
+(1 rows)
+
+===== All GL entries for voucher_manuals with 228-xxx account in Jan 2026 =====
+tgl	voucher	voucher_manual	account_id	debet	kredit	ket	modul_id
+--------------------------------------------------------------------------------
+1/22/2026 12:00:00 AM	200410126010249	26012004R073	101-011	32500000.000000	(null)	SEMBILAN MAHKOTA INDO	CI
+1/22/2026 12:00:00 AM	200410126010249	26012004R073	228-001	0.000000	32500000.000000	SEMBILAN MAHKOTA DP 002/01/26- Uang Muka Penjualan	CI
+1/6/2026 12:00:00 AM	2601DPR001	2601DPR001	103-001	0.000000	20000000.000000	DP 25112004R098 (ANUGERAH MITRA 03.2601004)	DP
+1/6/2026 12:00:00 AM	2601DPR001	2601DPR001	228-001	20000000.000000	0.000000	DP 25112004R098 (ANUGERAH MITRA 03.2601004)	DP
+1/22/2026 12:00:00 AM	2602DPR001	2602DPR001	103-001	0.000000	16983000.000000	DP 25112004R035 (EAT MORE 03.2601026)	DP
+1/22/2026 12:00:00 AM	2602DPR001	2602DPR001	228-001	16983000.000000	0.000000	DP 25112004R035 (EAT MORE 03.2601026)	DP
+1/22/2026 12:00:00 AM	2602DPR002	2602DPR002	103-001	0.000000	39627000.000000	DP 25122004R132 (EAT MORE 03.2601026)	DP
+1/22/2026 12:00:00 AM	2602DPR002	2602DPR002	228-001	39627000.000000	0.000000	DP 25122004R132 (EAT MORE 03.2601026)	DP
+(8 rows)

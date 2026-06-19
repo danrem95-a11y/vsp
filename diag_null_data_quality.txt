@@ -1,0 +1,2 @@
+﻿total_rows	null_group_product	null_penjualan
+75691	0	0

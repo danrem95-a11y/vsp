@@ -1,0 +1,3 @@
+﻿source	kotor_total
+Existing	971089582495.91
+New	971089582495.91

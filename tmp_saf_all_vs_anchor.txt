@@ -1,0 +1,8 @@
+SRC         OPENING_IDR          ROWS        
+--------------------------------------------
+ALL_SAF     29718846058.79       308         
+GL_ANCHORED 29718846058.79       308         
+
+(2 rows)
+
+Execution time: 0.714 seconds

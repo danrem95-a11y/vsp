@@ -1,0 +1,521 @@
+﻿$PBExportHeader$f_transfer_ap.srf
+global type f_transfer_ap from function_object
+end type
+
+forward prototypes
+global subroutine f_transfer_ar (string arg_order_client, string arg_tipe)
+global subroutine f_transfer_ap (string arg_voucher)
+end prototypes
+
+global subroutine f_transfer_ar (string arg_order_client, string arg_tipe);/* Donal 2012-06-14 subuh
+	Transfer data to GL using datastore
+	Jika GL sudah posting data tidak boleh di edit lagi, nanti akan ada proses re-calculate di rfresh transaksi jika diperlukan
+*/
+datastore lds_po,lds_gl,lds_update
+string ls_tipetrans,ls_posting,ls_curr,ls_keterangan,ls_voucher,ls_order_reff,ls_max,ls_coding
+long ll_po,ll_gl,ll_max
+string ls_accbeli,ls_accbelipot,ls_accbelippn,ls_accbeliretur,ls_accap
+decimal ldec_netto,ldec_pot,ldec_ppn,ldec_kotor,ldec_kurs,ldec_beli,ldec_beliidr
+decimal ldec_nettoidr,ldec_potidr,ldec_ppnidr,ldec_kotoridr,ldec_ap,ldec_po,ldec_poidr
+datetime ldt_tgl
+
+lds_po = create datastore
+lds_gl = create datastore
+lds_update = create datastore
+
+lds_po.dataobject = 'd_trace_po'
+lds_gl.dataobject = 'd_trace_gl'
+lds_update.dataobject = 'd_transupdate_gl'
+
+lds_po.settransobject(sqlca)
+lds_gl.settransobject(sqlca)
+lds_update.settransobject(sqlca)
+
+ls_tipetrans = upper(arg_tipe)
+ll_po = lds_po.retrieve(arg_order_client)
+ll_gl = lds_gl.retrieve(arg_order_client)
+if ll_gl > 0 then
+	ls_posting = lds_gl.object.posting[1]
+end if
+if isnull(ls_posting) then ls_posting = 'N'
+//Jika jurnal sudah posting tidak di transfer lagi..!
+//if ls_posting = 'P' then goto keluar;
+
+if ll_po <=0 then goto keluar;
+ls_accbeli = lds_po.object.acc_beli[1]
+ls_accbelipot = lds_po.object.acc_beli_pot[1]
+ls_accbelippn = lds_po.object.acc_beli_ppn[1]
+ls_accbeliretur = lds_po.object.acc_beli_retur[1]
+ls_accap = lds_po.object.acc_ap[1]
+ldec_kotor = lds_po.object.ttl_kotor[1]
+ldec_ppn = lds_po.object.ttl_ppn[1]
+ldec_netto = lds_po.object.ttl_netto[1]
+ldt_tgl = lds_po.object.tgl[1]
+ls_curr = lds_po.object.curr_id[1]
+ldec_kurs = lds_po.object.kurs[1]
+ls_keterangan = lds_po.object.keterangan[1]
+ls_order_reff = lds_po.object.order_reff[1]
+
+
+if isnull(ls_accbeli) then ls_accbeli=''
+if isnull(ls_accbelipot) then ls_accbelipot=''
+if isnull(ls_accbelippn) then ls_accbelippn = ''
+if isnull(ls_accbeliretur) then ls_accbeliretur=''
+if isnull(ls_accap) then ls_accap=''
+if isnull(ldec_kotor) then ldec_kotor=0
+if isnull(ldec_ppn) then ldec_ppn=0
+if isnull(ldec_netto) then ldec_netto=0
+if isnull(ldec_kurs) then ldec_kurs = 0
+if isnull(ls_curr) then ls_curr = 'IDR'
+if isnull(ls_keterangan) then ls_keterangan = ''
+if isnull(ls_order_reff) then ls_order_reff = ''
+ldec_pot = ldec_kotor - (ldec_netto - ldec_ppn)
+ldec_po = ldec_netto - ldec_pot - ldec_ppn
+//if ldec_kotor = 0 and ldec_ppn = 0 and ldec_pot = 0 and ldec_netto = 0 then goto keluar;
+ldec_kotoridr = ldec_kotor * ldec_kurs
+ldec_potidr = ldec_pot * ldec_kurs
+ldec_ppnidr = ldec_ppn * ldec_kurs
+ldec_nettoidr = ldec_netto * ldec_kurs
+ldec_poidr = ldec_po * ldec_kurs
+ldec_beli = ldec_netto - ldec_pot - ldec_ppn
+ldec_beliidr = ldec_beli * ldec_kurs
+
+if ls_tipetrans = 'RETUR' then
+	ldec_kotoridr = ldec_kotoridr * -1
+	ldec_potidr = ldec_potidr * -1
+	ldec_ppnidr = ldec_ppnidr * -1
+	ldec_nettoidr = ldec_nettoidr * -1
+	ldec_poidr = ldec_poidr * -1
+	ldec_beliidr = ldec_beliidr * -1
+end if
+
+if ls_tipetrans ='EKSPEDISI' then
+	ls_coding = 'EX'
+else
+	ls_coding = 'SO'
+end if
+
+if ls_tipetrans = 'REGULER' then
+	ls_accbeli = ls_accbeli
+else
+	ls_accbeli = ls_accbeliretur
+end if
+
+//Check required data
+if ls_tipetrans = 'REGULER' then
+	if ls_accbeli='' then
+		messagebox('Info!','Data ini tidak di transfer ke GL karena account pembelian di setup company kosong..!',information!)
+		goto keluar;
+	end if
+else
+	if ls_accbeliretur='' then
+		messagebox('Info!','Data ini tidak di transfer ke GL karena account retur pembelian di setup company kosong..!',information!)
+		goto keluar;
+	end if
+end if
+	
+if ls_accbelipot='' then
+	messagebox('Info!','Data ini tidak di transfer ke GL karena account potongan pembelian di setup company kosong..!',information!)
+	goto keluar;
+end if
+if ls_accbelippn='' then
+	messagebox('Info!','Data ini tidak di transfer ke GL karena account PPN pembelian di setup company kosong..!',information!)
+	goto keluar;
+end if
+if ls_accap='' then
+	messagebox('Info!','Data ini tidak di transfer ke GL karena account AP di setup company kosong..!',information!)
+	goto keluar;
+end if
+//Begin Transfer
+//DEBET
+if ldec_nettoidr < 0 then // Nilai AP (Hutang)
+	lds_update.setrow(lds_update.insertrow(0))
+	lds_update.setitem(lds_update.getrow(),'voucher',arg_order_client)
+	lds_update.setitem(lds_update.getrow(),'urut',lds_update.getrow())
+	lds_update.setitem(lds_update.getrow(),'tgl',ldt_tgl)
+	lds_update.setitem(lds_update.getrow(),'modul_id',ls_coding)
+	lds_update.setitem(lds_update.getrow(),'site_id',gs_site)
+	lds_update.setitem(lds_update.getrow(),'posting','N')
+	lds_update.setitem(lds_update.getrow(),'account_id',ls_accap)
+	lds_update.setitem(lds_update.getrow(),'ket',ls_order_reff+' '+ls_keterangan)
+	lds_update.setitem(lds_update.getrow(),'debet',abs(ldec_nettoidr))
+	lds_update.setitem(lds_update.getrow(),'debet_kurs',abs(ldec_netto))
+	lds_update.setitem(lds_update.getrow(),'kredit',0.00)
+	lds_update.setitem(lds_update.getrow(),'kredit_kurs',0.00)
+	lds_update.setitem(lds_update.getrow(),'curr_id',ls_curr)
+	lds_update.setitem(lds_update.getrow(),'rate_rp',ldec_kurs)
+	lds_update.setitem(lds_update.getrow(),'voucher_manual','XXXXXXXXXXXXXX')
+	lds_update.setitem(lds_update.getrow(),'doc_reff',arg_order_client)
+end if
+if ldec_beliidr > 0 then
+	lds_update.setrow(lds_update.insertrow(0))
+	lds_update.setitem(lds_update.getrow(),'voucher',arg_order_client)
+	lds_update.setitem(lds_update.getrow(),'urut',lds_update.getrow())
+	lds_update.setitem(lds_update.getrow(),'tgl',ldt_tgl)
+	lds_update.setitem(lds_update.getrow(),'modul_id',ls_coding)
+	lds_update.setitem(lds_update.getrow(),'site_id',gs_site)
+	lds_update.setitem(lds_update.getrow(),'posting','N')
+	lds_update.setitem(lds_update.getrow(),'account_id',ls_accbeli)
+	lds_update.setitem(lds_update.getrow(),'ket',ls_order_reff+' '+ls_keterangan)
+	lds_update.setitem(lds_update.getrow(),'debet',abs(ldec_beliidr))
+	lds_update.setitem(lds_update.getrow(),'debet_kurs',abs(ldec_beli))
+	lds_update.setitem(lds_update.getrow(),'kredit',0.00)
+	lds_update.setitem(lds_update.getrow(),'kredit_kurs',0.00)
+	lds_update.setitem(lds_update.getrow(),'curr_id',ls_curr)
+	lds_update.setitem(lds_update.getrow(),'rate_rp',ldec_kurs)
+	lds_update.setitem(lds_update.getrow(),'voucher_manual','XXXXXXXXXXXXXX')
+	lds_update.setitem(lds_update.getrow(),'doc_reff',arg_order_client)
+end if
+if ldec_potidr > 0 then
+	lds_update.setrow(lds_update.insertrow(0))
+	lds_update.setitem(lds_update.getrow(),'voucher',arg_order_client)
+	lds_update.setitem(lds_update.getrow(),'urut',lds_update.getrow())
+	lds_update.setitem(lds_update.getrow(),'tgl',ldt_tgl)
+	lds_update.setitem(lds_update.getrow(),'modul_id',ls_coding)
+	lds_update.setitem(lds_update.getrow(),'site_id',gs_site)
+	lds_update.setitem(lds_update.getrow(),'posting','N')
+	lds_update.setitem(lds_update.getrow(),'account_id',ls_accbelipot)
+	lds_update.setitem(lds_update.getrow(),'ket',ls_order_reff+' '+ls_keterangan)
+	lds_update.setitem(lds_update.getrow(),'debet',abs(ldec_potidr))
+	lds_update.setitem(lds_update.getrow(),'debet_kurs',abs(ldec_pot))
+	lds_update.setitem(lds_update.getrow(),'kredit',0.00)
+	lds_update.setitem(lds_update.getrow(),'kredit_kurs',0.00)
+	lds_update.setitem(lds_update.getrow(),'curr_id',ls_curr)
+	lds_update.setitem(lds_update.getrow(),'rate_rp',ldec_kurs)
+	lds_update.setitem(lds_update.getrow(),'voucher_manual','XXXXXXXXXXXXXX')
+	lds_update.setitem(lds_update.getrow(),'doc_reff',arg_order_client)
+end if
+if ldec_ppnidr > 0 then
+	lds_update.setrow(lds_update.insertrow(0))
+	lds_update.setitem(lds_update.getrow(),'voucher',arg_order_client)
+	lds_update.setitem(lds_update.getrow(),'urut',lds_update.getrow())
+	lds_update.setitem(lds_update.getrow(),'tgl',ldt_tgl)
+	lds_update.setitem(lds_update.getrow(),'modul_id',ls_coding)
+	lds_update.setitem(lds_update.getrow(),'site_id',gs_site)
+	lds_update.setitem(lds_update.getrow(),'posting','N')
+	lds_update.setitem(lds_update.getrow(),'account_id',ls_accbelippn)
+	lds_update.setitem(lds_update.getrow(),'ket',ls_order_reff+' '+ls_keterangan)
+	lds_update.setitem(lds_update.getrow(),'debet',abs(ldec_ppnidr))
+	lds_update.setitem(lds_update.getrow(),'debet_kurs',abs(ldec_ppn))
+	lds_update.setitem(lds_update.getrow(),'kredit',0.00)
+	lds_update.setitem(lds_update.getrow(),'kredit_kurs',0.00)
+	lds_update.setitem(lds_update.getrow(),'curr_id',ls_curr)
+	lds_update.setitem(lds_update.getrow(),'rate_rp',ldec_kurs)
+	lds_update.setitem(lds_update.getrow(),'voucher_manual','XXXXXXXXXXXXXX')
+	lds_update.setitem(lds_update.getrow(),'doc_reff',arg_order_client)
+end if
+//KREDIT
+if ldec_nettoidr > 0 then
+	lds_update.setrow(lds_update.insertrow(0))
+	lds_update.setitem(lds_update.getrow(),'voucher',arg_order_client)
+	lds_update.setitem(lds_update.getrow(),'urut',lds_update.getrow())
+	lds_update.setitem(lds_update.getrow(),'tgl',ldt_tgl)
+	lds_update.setitem(lds_update.getrow(),'modul_id',ls_coding)
+	lds_update.setitem(lds_update.getrow(),'site_id',gs_site)
+	lds_update.setitem(lds_update.getrow(),'posting','N')
+	lds_update.setitem(lds_update.getrow(),'account_id',ls_accap)
+	lds_update.setitem(lds_update.getrow(),'ket',ls_order_reff+' '+ls_keterangan)
+	lds_update.setitem(lds_update.getrow(),'kredit',abs(ldec_nettoidr))
+	lds_update.setitem(lds_update.getrow(),'kredit_kurs',abs(ldec_netto))
+	lds_update.setitem(lds_update.getrow(),'debet',0.00)
+	lds_update.setitem(lds_update.getrow(),'debet_kurs',0.00)
+	lds_update.setitem(lds_update.getrow(),'curr_id',ls_curr)
+	lds_update.setitem(lds_update.getrow(),'rate_rp',ldec_kurs)
+	lds_update.setitem(lds_update.getrow(),'voucher_manual','XXXXXXXXXXXXXX')
+	lds_update.setitem(lds_update.getrow(),'doc_reff',arg_order_client)
+end if
+if ldec_beliidr < 0 then
+	lds_update.setrow(lds_update.insertrow(0))
+	lds_update.setitem(lds_update.getrow(),'voucher',arg_order_client)
+	lds_update.setitem(lds_update.getrow(),'urut',lds_update.getrow())
+	lds_update.setitem(lds_update.getrow(),'tgl',ldt_tgl)
+	lds_update.setitem(lds_update.getrow(),'modul_id',ls_coding)
+	lds_update.setitem(lds_update.getrow(),'site_id',gs_site)
+	lds_update.setitem(lds_update.getrow(),'posting','N')
+	lds_update.setitem(lds_update.getrow(),'account_id',ls_accbeli)
+	lds_update.setitem(lds_update.getrow(),'ket',ls_order_reff+' '+ls_keterangan)
+	lds_update.setitem(lds_update.getrow(),'kredit',abs(ldec_beliidr))
+	lds_update.setitem(lds_update.getrow(),'kredit_kurs',abs(ldec_beli))
+	lds_update.setitem(lds_update.getrow(),'debet',0.00)
+	lds_update.setitem(lds_update.getrow(),'debet_kurs',0.00)
+	lds_update.setitem(lds_update.getrow(),'curr_id',ls_curr)
+	lds_update.setitem(lds_update.getrow(),'rate_rp',ldec_kurs)
+	lds_update.setitem(lds_update.getrow(),'voucher_manual','XXXXXXXXXXXXXX')
+	lds_update.setitem(lds_update.getrow(),'doc_reff',arg_order_client)
+end if
+if ldec_potidr < 0 then
+	lds_update.setrow(lds_update.insertrow(0))
+	lds_update.setitem(lds_update.getrow(),'voucher',arg_order_client)
+	lds_update.setitem(lds_update.getrow(),'urut',lds_update.getrow())
+	lds_update.setitem(lds_update.getrow(),'tgl',ldt_tgl)
+	lds_update.setitem(lds_update.getrow(),'modul_id',ls_coding)
+	lds_update.setitem(lds_update.getrow(),'site_id',gs_site)
+	lds_update.setitem(lds_update.getrow(),'posting','N')
+	lds_update.setitem(lds_update.getrow(),'account_id',ls_accbelipot)
+	lds_update.setitem(lds_update.getrow(),'ket',ls_order_reff+' '+ls_keterangan)
+	lds_update.setitem(lds_update.getrow(),'kredit',abs(ldec_potidr))
+	lds_update.setitem(lds_update.getrow(),'kredit_kurs',abs(ldec_pot))
+	lds_update.setitem(lds_update.getrow(),'debet',0.00)
+	lds_update.setitem(lds_update.getrow(),'debet_kurs',0.00)
+	lds_update.setitem(lds_update.getrow(),'curr_id',ls_curr)
+	lds_update.setitem(lds_update.getrow(),'rate_rp',ldec_kurs)
+	lds_update.setitem(lds_update.getrow(),'voucher_manual','XXXXXXXXXXXXXX')
+	lds_update.setitem(lds_update.getrow(),'doc_reff',arg_order_client)
+end if
+if ldec_ppnidr < 0 then
+	lds_update.setrow(lds_update.insertrow(0))
+	lds_update.setitem(lds_update.getrow(),'voucher',arg_order_client)
+	lds_update.setitem(lds_update.getrow(),'urut',lds_update.getrow())
+	lds_update.setitem(lds_update.getrow(),'tgl',ldt_tgl)
+	lds_update.setitem(lds_update.getrow(),'modul_id',ls_coding)
+	lds_update.setitem(lds_update.getrow(),'site_id',gs_site)
+	lds_update.setitem(lds_update.getrow(),'posting','N')
+	lds_update.setitem(lds_update.getrow(),'account_id',ls_accbelippn)
+	lds_update.setitem(lds_update.getrow(),'ket',ls_order_reff+' '+ls_keterangan)
+	lds_update.setitem(lds_update.getrow(),'kredit',abs(ldec_ppnidr))
+	lds_update.setitem(lds_update.getrow(),'kredit_kurs',abs(ldec_ppn))
+	lds_update.setitem(lds_update.getrow(),'debet',0.00)
+	lds_update.setitem(lds_update.getrow(),'debet_kurs',0.00)
+	lds_update.setitem(lds_update.getrow(),'curr_id',ls_curr)
+	lds_update.setitem(lds_update.getrow(),'rate_rp',ldec_kurs)
+	lds_update.setitem(lds_update.getrow(),'voucher_manual','XXXXXXXXXXXXXX')
+	lds_update.setitem(lds_update.getrow(),'doc_reff',arg_order_client)
+end if
+
+//messagebox('','3')
+//Delete data GL before Update
+delete from gl_journal where doc_reff = :arg_order_client using sqlca; commit;
+lds_update.accepttext()
+lds_update.update()
+commit;
+//Get last Voucher
+ls_voucher = ls_coding+string(ldt_tgl,'YYMM')
+select max(right(voucher,4))
+into :ls_max
+from gl_journal
+where left(voucher,6) = :ls_voucher
+using sqlca;
+if isnull(ls_max) then
+	ll_max = 0
+else
+	ll_max = long(ls_max)
+end if
+ll_max++
+ls_voucher = ls_coding+string(ldt_tgl,'YYMM')+string(ll_max,'0000')
+update gl_journal
+set voucher_manual = :ls_voucher
+where doc_reff = :arg_order_client
+using sqlca;
+commit;
+
+if isvalid(lds_po) then destroy lds_po
+if isvalid(lds_gl) then destroy lds_gl
+if isvalid(lds_update) then destroy lds_update
+return
+/////END of Transfer//////////
+keluar:
+if isvalid(lds_po) then destroy lds_po
+if isvalid(lds_gl) then destroy lds_gl
+if isvalid(lds_update) then destroy lds_update
+return
+
+end subroutine
+
+global subroutine f_transfer_ap (string arg_voucher);/* Donal 2012-06-14 subuh
+	Transfer data to GL using datastore
+	Jika GL sudah posting data tidak boleh di edit lagi, nanti akan ada proses re-calculate di rfresh transaksi jika diperlukan
+*/
+
+//// STATEMENT INI COPYAN DARI F_TRANSFER_AR///////////////
+
+//if arg_voucher = '101120120030005' then
+//	messagebox('','101120120030005')
+//end if
+//
+datastore lds_ap,lds_gl,lds_update
+long ll_ar,ll_gl,i,ll_kas,ll_count
+string ls_posting
+string ls_accap,ls_voucher,ls_vouchermanual,ls_acckas,ls_curr,ls_link
+string ls_faktur,ls_accbayar,ls_accpot,ls_keterangan,ls_accpotbayar
+datetime ldt_tgl
+decimal ldec_kurs,ldec_bayar,ldec_pot,ldec_potkurs,ldec_kas,ldec_bayarreal
+
+lds_ap = create datastore
+lds_gl = create datastore
+lds_update = create datastore
+
+lds_ap.dataobject = 'd_trace_ap'
+lds_gl.dataobject = 'd_trace_gl'
+lds_update.dataobject = 'd_transupdate_gl'
+
+lds_ap.settransobject(sqlca)
+lds_gl.settransobject(sqlca)
+lds_update.settransobject(sqlca)
+
+ll_ar = lds_ap.retrieve(arg_voucher)
+ll_gl = lds_gl.retrieve(arg_voucher,'AP')
+if ll_gl > 0 then
+	ls_posting = lds_gl.object.posting[1]
+end if
+if isnull(ls_posting) then ls_posting = 'N'
+//Jika jurnal sudah posting tidak di transfer lagi..!
+//if ls_posting = 'P' then goto keluar;
+
+if ll_count >0 then goto keluar;
+if ll_ar <=0 then goto keluar;
+
+for i = 1 to ll_ar
+	ls_accap = lds_ap.object.acc_ap[i]
+	ls_voucher = lds_ap.object.voucher[i]
+	ls_vouchermanual = lds_ap.object.voucher_manual[i]
+	ll_kas = lds_ap.object.kas_id[i]
+	ls_acckas = lds_ap.object.acc_kas[i]
+	ls_curr = lds_ap.object.curr_id[i]
+	ls_faktur = lds_ap.object.bukti_id[i]
+	ls_accbayar = lds_ap.object.acc_bayar[i]
+	ls_accpot = lds_ap.object.acc_pot_idr[i]
+	ls_keterangan = lds_ap.object.ket[i]
+	ldt_tgl = lds_ap.object.tgl[i]
+	ldec_kurs = lds_ap.object.kurs[i]
+	ldec_bayar = lds_ap.object.nilai_idr[i]
+	ldec_pot = lds_ap.object.nilai_potidr[i]
+	ldec_potkurs = lds_ap.object.nilai_potkurs[i]
+	ls_accpotbayar = lds_ap.object.acc_pot_bayar[i]//Jika account pot tidak di isi di pembayaran
+	ls_link =lds_ap.object.bukti_id[i]
+	
+	if isnull(ls_accap) then ls_accap = ''
+	if isnull(ls_acckas) then ls_acckas = ''
+	if isnull(ls_curr) then ls_curr = 'IDR'
+	if isnull(ls_faktur) then ls_faktur = ''
+	if isnull(ls_accbayar) then ls_accbayar = ''
+	if isnull(ls_accpot) then ls_accpot = ''
+	if isnull(ls_keterangan) then ls_keterangan = ''
+	if isnull(ldt_tgl) then ldt_tgl = gdt_today
+	if isnull(ldec_kurs) then ldec_kurs = 1
+	if isnull(ldec_bayar) then ldec_bayar = 0
+	if isnull(ldec_pot) then ldec_pot = 0
+	if isnull(ldec_potkurs) then ldec_potkurs = 0
+	if isnull(ls_accpotbayar) then ls_accpotbayar = ''
+	if ldec_kurs <=0 then ldec_kurs = 1
+	//Check required data
+	if ls_accap='' then
+		messagebox('Info!','Data ini tidak di transfer ke GL karena account AP di setup company kosong..!',information!)
+		goto keluar;
+		exit
+	end if
+	if ls_acckas='' then
+		messagebox('Info!','Data ini tidak di transfer ke GL karena account KAS pembayaran kosong..!',information!)
+		goto keluar;
+		exit
+	end if
+	if ls_accpot='' and ls_accpotbayar = '' then
+		messagebox('Info!','Data ini tidak di transfer ke GL karena account potongan di pembayaran kosong..~r Atau dapat dilakukan dgn mengisi account potongan bayar di GL SETUP!!',information!)
+		goto keluar;
+		exit
+	end if
+	if ls_accbayar='' then ls_accbayar = ls_accap
+	if ls_accpot = '' then ls_accpot = ls_accpotbayar
+	ldec_kas = ldec_bayar - ldec_pot
+	
+	ls_voucher = 'AP'+right(ls_voucher,len(ls_voucher)-2)
+	if ldec_bayar <>0 then
+		lds_update.setrow(lds_update.insertrow(0))
+		lds_update.setitem(lds_update.getrow(),'voucher',ls_voucher)
+		lds_update.setitem(lds_update.getrow(),'urut',lds_update.getrow())
+		lds_update.setitem(lds_update.getrow(),'tgl',ldt_tgl)
+		lds_update.setitem(lds_update.getrow(),'modul_id','CO')
+		lds_update.setitem(lds_update.getrow(),'site_id',gs_site)
+		lds_update.setitem(lds_update.getrow(),'posting','P')
+		lds_update.setitem(lds_update.getrow(),'kas_id',ll_kas)
+		lds_update.setitem(lds_update.getrow(),'account_id',ls_accbayar)
+		lds_update.setitem(lds_update.getrow(),'ket',ls_faktur+' '+ls_keterangan)
+		lds_update.setitem(lds_update.getrow(),'debet',ldec_bayar)
+		lds_update.setitem(lds_update.getrow(),'debet_kurs',ldec_bayar/ldec_kurs)
+		lds_update.setitem(lds_update.getrow(),'kredit',0.00)
+		lds_update.setitem(lds_update.getrow(),'kredit_kurs',0.00)
+		lds_update.setitem(lds_update.getrow(),'curr_id',ls_curr)
+		lds_update.setitem(lds_update.getrow(),'rate_rp',ldec_kurs)
+		lds_update.setitem(lds_update.getrow(),'voucher_manual',ls_vouchermanual)
+		lds_update.setitem(lds_update.getrow(),'doc_reff',ls_link)
+	end if
+	if ldec_kas <> 0 then
+		lds_update.setrow(lds_update.insertrow(0))
+		lds_update.setitem(lds_update.getrow(),'voucher',ls_voucher)
+		lds_update.setitem(lds_update.getrow(),'urut',lds_update.getrow())
+		lds_update.setitem(lds_update.getrow(),'tgl',ldt_tgl)
+		lds_update.setitem(lds_update.getrow(),'modul_id','CO')
+		lds_update.setitem(lds_update.getrow(),'site_id',gs_site)
+		lds_update.setitem(lds_update.getrow(),'posting','P')
+		lds_update.setitem(lds_update.getrow(),'kas_id',ll_kas)
+		lds_update.setitem(lds_update.getrow(),'account_id',ls_acckas)
+		lds_update.setitem(lds_update.getrow(),'ket',ls_faktur+' '+ls_keterangan)
+		lds_update.setitem(lds_update.getrow(),'kredit',ldec_kas)
+		lds_update.setitem(lds_update.getrow(),'kredit_kurs',ldec_kas/ldec_kurs)
+		lds_update.setitem(lds_update.getrow(),'debet',0.00)
+		lds_update.setitem(lds_update.getrow(),'debet_kurs',0.00)
+		lds_update.setitem(lds_update.getrow(),'curr_id',ls_curr)
+		lds_update.setitem(lds_update.getrow(),'rate_rp',ldec_kurs)
+		lds_update.setitem(lds_update.getrow(),'voucher_manual',ls_vouchermanual)
+		lds_update.setitem(lds_update.getrow(),'doc_reff',ls_link)
+	end if
+	if ldec_pot <>0 then
+		lds_update.setrow(lds_update.insertrow(0))
+		lds_update.setitem(lds_update.getrow(),'voucher',ls_voucher)
+		lds_update.setitem(lds_update.getrow(),'urut',lds_update.getrow())
+		lds_update.setitem(lds_update.getrow(),'tgl',ldt_tgl)
+		lds_update.setitem(lds_update.getrow(),'modul_id','CO')
+		lds_update.setitem(lds_update.getrow(),'site_id',gs_site)
+		lds_update.setitem(lds_update.getrow(),'posting','P')
+		lds_update.setitem(lds_update.getrow(),'kas_id',ll_kas)
+		lds_update.setitem(lds_update.getrow(),'account_id',ls_accpot)
+		lds_update.setitem(lds_update.getrow(),'ket',ls_faktur+' '+ls_keterangan)
+		lds_update.setitem(lds_update.getrow(),'kredit',ldec_pot)
+		lds_update.setitem(lds_update.getrow(),'kredit_kurs',ldec_pot/ldec_kurs)
+		lds_update.setitem(lds_update.getrow(),'debet',0.00)
+		lds_update.setitem(lds_update.getrow(),'debet_kurs',0.00)
+		lds_update.setitem(lds_update.getrow(),'curr_id',ls_curr)
+		lds_update.setitem(lds_update.getrow(),'rate_rp',ldec_kurs)
+		lds_update.setitem(lds_update.getrow(),'voucher_manual',ls_vouchermanual)
+		lds_update.setitem(lds_update.getrow(),'doc_reff',ls_link)
+	end if
+	
+next
+//Delete data GL before Update
+delete from gl_journal where voucher_manual = :ls_vouchermanual using sqlca; commit;
+lds_update.accepttext()
+lds_update.update()
+commit;
+/*
+//Get last Voucher
+ls_voucher = 'AR'+string(ldt_tgl,'YYMM')
+select max(right(voucher,4))
+into :ls_max
+from gl_journal
+where left(voucher,6) = :ls_voucher
+using sqlca;
+if isnull(ls_max) then
+	ll_max = 0
+else
+	ll_max = long(ls_max)
+end if
+ll_max++
+ls_voucher = ls_coding+string(ldt_tgl,'YYMM')+string(ll_max,'0000')
+update gl_journal
+set voucher_manual = :ls_voucher
+where doc_reff = :arg_voucher
+using sqlca;
+commit;
+*/
+if isvalid(lds_ap) then destroy lds_ap
+if isvalid(lds_gl) then destroy lds_gl
+if isvalid(lds_update) then destroy lds_update
+return
+/////END of Transfer//////////
+keluar:
+if isvalid(lds_ap) then destroy lds_ap
+if isvalid(lds_gl) then destroy lds_gl
+if isvalid(lds_update) then destroy lds_update
+return
+
+end subroutine
+

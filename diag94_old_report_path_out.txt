@@ -1,0 +1,167 @@
+﻿
+===== Tables with report_form or coa_saldo =====
+table_name	table_type
+--------------------------------------------------------------------------------
+gl_report	BASE
+gl_report_detail	BASE
+(2 rows)
+
+===== GL_REPORT all rows (Balance Sheet = report_id 02?) =====
+site_id	report_id	report_desc	report_tipe
+--------------------------------------------------------------------------------
+101	01	Income Statement	R
+101	01A	Income Statement Detail	H
+101	02	BALANCE SHEET	N
+101	10	Cash Flow	C
+101	20	Operating Expenses	6
+(5 rows)
+
+===== GL_REPORT column names =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'table_id' not found"
+
+===== v_saldo_awal view content (if it's the saldo view) =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'view_name' not found"
+
+===== Simulate ds_coa_saldo if account_id=10 (both KAS+BANK) =====
+pattern	opening_2026	movement_jan	total
+--------------------------------------------------------------------------------
+pattern=10%	71075765688.720000	-8334371650.032000	62741394038.688000
+(1 rows)
+
+===== Simulate ds_coa_saldo if account_id=101 (BANK only) =====
+pattern	opening_2026	movement_jan	total
+--------------------------------------------------------------------------------
+pattern=101%	10561210732.800000	-6185167916.010000	4376042816.790000
+(1 rows)
+
+===== SKAS all 2026 entries =====
+KAS_ID	NAMA	ACCOUNT_ID	FLAG_KAS	PERIODE	SALDO	SITE_ID
+--------------------------------------------------------------------------------
+(0 rows)
+
+===== SKAS bank total for Jan 2026 (all bank KAS_ID) =====
+skas_total_bank
+--------------------------------------------------------------------------------
+(null)
+(1 rows)
+
+===== What views exist =====
+table_name
+--------------------------------------------------------------------------------
+ap_gantung_2013
+ar_gantung_2013
+BENAR
+ml_connection_scripts
+ml_qa_messages
+ml_table_scripts
+P_SALAH
+sysalternates
+SYSARTICLECOLS
+SYSARTICLES
+sysauditoptions
+sysaudits
+SYSCAPABILITIES
+SYSCATALOG
+syscharsets
+SYSCOLAUTH
+SYSCOLSTATS
+SYSCOLUMNS
+syscolumns
+syscomments
+sysconfigures
+sysconstraints
+syscurconfigs
+sysdatabases
+sysdepends
+sysdevices
+sysengines
+SYSFOREIGNKEYS
+SYSGROUPS
+SYSINDEXES
+sysindexes
+syskeys
+syslanguages
+syslocks
+sysloginroles
+syslogins
+syslogs
+sysmessages
+sysobjects
+SYSOPTIONS
+SYSOPTORDERS
+SYSOPTPLANS
+SYSOPTSTRATEGIES
+SYSPROCAUTH
+sysprocedures
+sysprocesses
+SYSPROCPARMS
+sysprotects
+SYSPUBLICATIONS
+sysreferences
+sysremotelogins
+SYSREMOTEOPTION2
+SYSREMOTEOPTIONS
+SYSREMOTETYPES
+SYSREMOTEUSERS
+sysroles
+syssegments
+sysservers
+syssrvroles
+SYSSUBSCRIPTIONS
+SYSSYNC2
+SYSSYNCDEFINITIONS
+SYSSYNCPUBLICATIONDEFAULTS
+SYSSYNCS
+SYSSYNCSITES
+SYSSYNCSUBSCRIPTIONS
+SYSSYNCTEMPLATES
+SYSSYNCUSERS
+SYSTABAUTH
+systhresholds
+SYSTRIGGERS
+SYSTUNINGINDEXES
+systypes
+sysusages
+SYSUSERAUTH
+SYSUSERLIST
+SYSUSEROPTIONS
+SYSUSERPERMS
+sysusers
+SYSVIEWS
+v_ap
+v_aR
+v_bayar
+v_cico
+v_cico2
+v_ledger2015
+v_mutasi_stok
+v_neraca
+v_opnameap2015
+v_opnamear2015
+V_REKONSILIASI_HUTANG
+v_saldo_awal
+v_stok2014
+v_tsales
+v_tstok
+(95 rows)
+
+===== GL_JOURNAL detail for 101-201 voucher_manual 26012004R039 =====
+tgl	voucher	voucher_manual	account_id	debet	kredit	ket	modul_id	show_hide
+--------------------------------------------------------------------------------
+1/12/2026 12:00:00 AM	200410126010125	26012004R039	101-011	3066084051.140000	(null)	DEPOSITO	CI	(null)
+1/12/2026 12:00:00 AM	200410126010125	26012004R039	101-201	0.000000	1000000000.000000	Deposito - BCA ( Rp )	CI	(null)
+1/12/2026 12:00:00 AM	200410126010125	26012004R039	101-201	0.000000	1000000000.000000	Deposito - BCA ( Rp )	CI	(null)
+1/12/2026 12:00:00 AM	200410126010125	26012004R039	101-201	0.000000	1000000000.000000	Deposito - BCA ( Rp )	CI	(null)
+1/12/2026 12:00:00 AM	200410126010125	26012004R039	500-002	0.000000	22036350.380000	Pendapatan Bunga- DEPOSITO 	CI	(null)
+1/12/2026 12:00:00 AM	200410126010125	26012004R039	500-002	0.000000	22036350.380000	Pendapatan Bunga- DEPOSITO	CI	(null)
+1/12/2026 12:00:00 AM	200410126010125	26012004R039	500-002	0.000000	22036350.380000	Pendapatan Bunga- DEPOSITO	CI	(null)
+1/12/2026 12:00:00 AM	200410126010125	26012004R039	500-011	25000.000000	0.000000	Administrasi Bank	CI	(null)
+(8 rows)
+
+===== GL_JOURNAL 101-201 full Jan 2026 =====
+tgl	voucher	voucher_manual	debet	kredit	ket	modul_id
+--------------------------------------------------------------------------------
+1/12/2026 12:00:00 AM	200410126010125	26012004R039	0.000000	1000000000.000000	Deposito - BCA ( Rp )	CI
+1/12/2026 12:00:00 AM	200410126010125	26012004R039	0.000000	1000000000.000000	Deposito - BCA ( Rp )	CI
+1/12/2026 12:00:00 AM	200410126010125	26012004R039	0.000000	1000000000.000000	Deposito - BCA ( Rp )	CI
+(3 rows)

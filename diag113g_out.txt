@@ -1,0 +1,2 @@
+﻿=== AP payment vouchers (join tbyr1 flag_bayar=2) with >=2 free GL rows ===
+count: 535

@@ -1,0 +1,32 @@
+﻿================ diag117 VERIFIKASI - 2026-06-11 15:57:05 ================
+
+########## 10126040500001  (pasangan FR: 1012604FR05001) ##########
+  INPUT ap_trans  : kotor=14712724.00  ppn=642934.00  netto=15355658.00   | vendor tambahan (FR)=0.00
+  ALOKASI tstok2  : 26572609.0300   (target = main+fr = 28040724)
+  JURNAL EX utama : totalDr=13887543.030000 totalCr=13887543.000000 | Dr persediaan(102%)=13244609.030000 | Cr hutang(226%)=13887543.000000
+  JURNAL FR       : Dr=13328000.000000 Cr=13328000.000000
+  CEK: total Cr hutang(226%) = netto input? BELUM (13887543.000000 <> 15355658.00)
+  CEK: Dr persediaan = nilai invoice utama (14712724)? BELUM
+  CEK: jurnal balance (Dr=Cr)? OK
+  PEMBAYARAN: v=[1010520260012] vm=[26052004P047] tgl=05/07/2026 00:00:00 idr=15355658.00
+
+########## 10126040500002  (pasangan FR: 1012604FR05002) ##########
+  INPUT ap_trans  : kotor=19209210.00  ppn=1919017.00  netto=21128227.00   | vendor tambahan (FR)=0.00
+  ALOKASI tstok2  : 43898656.0400   (target = main+fr = 45517210)
+  JURNAL EX utama : totalDr=19509673.040000 totalCr=19509673.000000 | Dr persediaan(102%)=17590656.040000 | Cr hutang(226%)=19509673.000000
+  JURNAL FR       : Dr=26308000.000000 Cr=26308000.000000
+  CEK: total Cr hutang(226%) = netto input? BELUM (19509673.000000 <> 21128227.00)
+  CEK: Dr persediaan = nilai invoice utama (19209210)? BELUM
+  CEK: jurnal balance (Dr=Cr)? OK
+  PEMBAYARAN: belum ada
+
+########## 10126040500003  (pasangan FR: 1012604FR05003) ##########
+  INPUT ap_trans  : kotor=67475908.00  ppn=1366064.00  netto=68841972.00   | vendor tambahan (FR)=9967200.00
+  ALOKASI tstok2  : 77443108.0000   (target = main+fr = 77443108)
+  JURNAL EX utama : totalDr=68841972.000000 totalCr=68841972.000000 | Dr persediaan(102%)=67475908.000000 | Cr hutang(226%)=68841972.000000
+  JURNAL FR       : Dr=9967200.000000 Cr=9967200.000000
+  CEK: total Cr hutang(226%) = netto input? OK
+  CEK: Dr persediaan = nilai invoice utama (67475908)? OK
+  CEK: jurnal balance (Dr=Cr)? OK
+  PEMBAYARAN: belum ada
+

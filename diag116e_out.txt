@@ -1,0 +1,5 @@
+﻿=== Baris tstok2 dgn rasio k V1 (0.11926011) - semua bukti ===
+bukti=[10126040500001] tgl=04/09/2026 00:00:00 tipe=05 n=25 base=222811902.81 alloc=26572609.0300
+
+=== Baris tstok2 dgn rasio k V2 (0.08961558) - semua bukti ===
+bukti=[10126040500002] tgl=04/22/2026 00:00:00 tipe=05 n=27 base=489855218.90 alloc=43898656.0400

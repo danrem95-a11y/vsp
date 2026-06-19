@@ -1,0 +1,21 @@
+﻿
+===== ALL TABLES (INFORMATION_SCHEMA) =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ExecuteReader requires an open and available Connection. The connection's current state is closed."
+
+===== TABLES WITH SALDO/BALANCE IN NAME =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ExecuteReader requires an open and available Connection. The connection's current state is closed."
+
+===== GL BANK DEBET 76-77.5M (ALL DATES) =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ExecuteReader requires an open and available Connection. The connection's current state is closed."
+
+===== GL BANK KREDIT 76-77.5M (ALL DATES) =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ExecuteReader requires an open and available Connection. The connection's current state is closed."
+
+===== DEC 2025 BANK CI DEBET (all, sorted) =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ExecuteReader requires an open and available Connection. The connection's current state is closed."
+
+===== DEC2025 ORPHAN CI BANK (no matching tbyr1 AR) =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ExecuteReader requires an open and available Connection. The connection's current state is closed."
+
+===== CI BANK ENTRIES APPEAR IN BOTH DEC2025 AND JAN2026 =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ExecuteReader requires an open and available Connection. The connection's current state is closed."

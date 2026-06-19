@@ -1,0 +1,83 @@
+﻿=== FORENSIC: Persediaan Selisih Jan 2026 - 06/05/2026 17:25:09 ===
+
+=== STEP 1: GL Persediaan (BS2015) saldo awal + mutasi Jan 2026 ===
+Opening Jan 2026 (gl_balance): Dr=27705289703.700000 Cr=0.010000 SALDO_AWAL=27705289703.690000
+Jan 2026 GL journal: Dr=10554526987.030000 Cr=14620977802.370000 Net=-4066450815.340000
+
+=== STEP 2: GL Persediaan Jan 2026 - by modul_id ===
+modul_id | Dr | Cr | cnt
+AS | 9038992579.460000 | 9394891490.700000 | 371
+HP | 0.000000 | 5208586589.670000 | 256
+EX | 47272901.900000 | 17499722.000000 | 9
+PO | 1429238883.670000 | 0.000000 | 50
+CO | 39022622.000000 | 0.000000 | 4
+
+=== STEP 3: SINV saldo awal Feb 2026 (from closing Jan) ===
+SINV Feb 2026: rows=6482 qty=676526.76 nilai=22816442501.56
+
+=== STEP 4: SINV saldo awal Jan 2026 ===
+SINV Jan 2026 (awal): rows=6462 qty=678660.31 nilai=25813636072.43
+
+=== STEP 5: Mutasi Keluar dari tsales/tstok (current tsales2.hpp) ===
+Jenis=JUAL-22 qty=3915.00 nilai_hpp=5208586589.56373
+Jenis=CONSOUT-88 qty=76.00 nilai_hpp=3913519448.39807
+Jenis=MUTASI-OUT-19 qty=-19696.55 nilai_hpp=-476539178.80
+
+=== STEP 6: GL Persediaan KREDIT Jan 2026 by account ===
+account_id | description | total_kredit | cnt
+102-001 | Unit - Thermo King Truck Pendingin ( TR ) | 8861644989.190000 | 84
+102-020 | Unit - WORK IN PROCESS | 5004832863.470000 | 49
+102-101 | Spare Parts - Thermo King (TS) | 296289745.400000 | 142
+102-003 | Unit - NORDIC Truck Pendingin ( NR ) | 192000000.000000 | 4
+102-110 | Spare Parts - Lokal ( L ) | 182043034.670000 | 169
+102-102 | Spare Parts - Thermo King Lokal (TL) | 34203998.250000 | 53
+102-010 | Unit - TOYO ( TYU ) | 24446000.000000 | 8
+102-601 | Persediaan Dlm.Perjalanan  | 17499722.000000 | 3
+102-103 | Spare Parts - NORDIC ( NDS ) | 7816511.390000 | 6
+102-201 | Spare Parts - Material Tambahan ( MT ) | 200938.000000 | 4
+
+=== STEP 7: HPP Average recalculation check - top 20 items by diff ===
+produk_id | produk_desc | jual_qty | nilai_current | avg_hpp | hpp_formula | nilai_formula | selisih
+
+=== STEP 8: RECONCILIATION SUMMARY ===
+Total GL KREDIT Persediaan Jan 2026 = 14620977802.370000
+Total JUAL (qty*hpp) from tsales2 [tipe_22] = 5208586589.56373
+
+=== STEP 9: SINV per product - Jan vs Feb nilai (top 20 biggest diff) ===
+stok_id | sinv_jan_nilai | sinv_feb_nilai | diff
+TR.040A | 1817238781.69 | 403830840.38 | 1413407941.31
+BCS.LL007 | 0.00 | 886500519.75 | -886500519.75
+TR.039A | 2745688986.00 | 1900861605.69 | 844827380.31
+TR.038A | 2224112211.64 | 1482741474.43 | 741370737.21
+TR.1002A | 1767122971.57 | 1524576681.35 | 242546290.22
+TR.1006A | 712547937.65 | 475031958.43 | 237515979.22
+TR.910A | 760625308.80 | 597634171.20 | 162991137.60
+TR.1004A | 600763860.10 | 494746708.32 | 106017151.78
+TR.1007A | 252977065.11 | 151786239.07 | 101190826.04
+TR.1003A | 1692435909.43 | 1615507004.46 | 76928904.97
+TS.107-0349 | 9541313.75 | 68334229.00 | -58792915.25
+TS.102-1081 | 31897727.03 | 0.01 | 31897727.02
+TS.066-6384 | 38680741.71 | 61172455.31 | -22491713.60
+TS.066-8548 | 8350719.74 | 30239603.11 | -21888883.37
+TS.055-9596 | 19564673.02 | 850637.90 | 18714035.12
+TS.041-5436 | 14553968.02 | 31923112.70 | -17369144.68
+TS.045-2611 | 66010691.79 | 49508018.84 | 16502672.95
+TS.041-7059 | 29773106.96 | 13533230.42 | 16239876.54
+LF.05.0001 | 208601244.41 | 192765667.57 | 15835576.84
+TS.078-1306 | 19840383.23 | 34918808.57 | -15078425.34
+
+=== STEP 10: tstok1 tipe_trans summary Jan 2026 ===
+tipe_trans | cnt | qty | netto_hpp
+02 | 83 | 21135.00 | 0.00
+05 | 27 | 437.00 | 933655581.40
+09 | 33 | 301.00 | 0.00
+19 | 582 | -19696.55 | -476539178.80
+88 | 49 | 49.00 | 5004832863.47
+99 | 231 | 231.00 | 0.00
+
+=== STEP 11: Computed saldo akhir Jan from GL ===
+SINV awal Jan=27705289703.690000 + GL Jan Dr=10554526987.030000 - GL Jan Cr=14620977802.370000
+COMPUTED saldo akhir Jan 2026 (from GL): 23638838888.350000
+User reported: 9072870161.90
+User reported SINV Feb awal: 9072336891
+Expected diff (GL akhir Jan - SINV Feb awal): 14566501997.350000

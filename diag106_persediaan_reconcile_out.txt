@@ -1,0 +1,101 @@
+﻿=== DIAG106: Persediaan Reconcile - 06/05/2026 17:31:53 ===
+
+=== A: gl_balance Feb 2026 for BS2015 accounts (= saldo awal Feb di Balance Sheet) ===
+AccountCode | AccountDes | Dr | Cr | Saldo
+TOTAL Feb 2026 gl_balance BS2015 = 0
+
+=== B: gl_balance Jan 2026 for BS2015 accounts (= saldo awal Jan) ===
+AccountCode | AccountDes | Dr | Cr | Saldo
+102-001 | Unit - Thermo King Truck Pendingin ( TR ) | 12999133239.620000 | 0.000000 | 12999133239.620000
+102-101 | Spare Parts - Thermo King (TS) | 7067735169.290000 | 0.000000 | 7067735169.290000
+102-110 | Spare Parts - Lokal ( L ) | 3070685470.490000 | 0.000000 | 3070685470.490000
+102-006 | Unit - Thermo King  AC Bus ( TB ) | 1877122940.100000 | 0.000000 | 1877122940.100000
+102-020 | Unit - WORK IN PROCESS | 1867691015.560000 | 0.000000 | 1867691015.560000
+102-010 | Unit - TOYO ( TYU ) | 245382000.120000 | 0.000000 | 245382000.120000
+102-102 | Spare Parts - Thermo King Lokal (TL) | 163878784.110000 | 0.000000 | 163878784.110000
+102-103 | Spare Parts - NORDIC ( NDS ) | 141710154.690000 | 0.000000 | 141710154.690000
+102-201 | Spare Parts - Material Tambahan ( MT ) | 120790251.610000 | 0.000000 | 120790251.610000
+102-113 | Spare Parts - Toyo ( TY ) | 96065711.540000 | 0.000000 | 96065711.540000
+102-003 | Unit - NORDIC Truck Pendingin ( NR ) | 55094965.150000 | 0.000000 | 55094965.150000
+102-254 | Louver | 1.410000 | 0.000000 | 1.410000
+102-203 | Box / Isolasi Pendingin | 0.010000 | 0.000000 | 0.010000
+102-011 | Unit - Fuji Truck Pendingin ( FU ) | 0.000000 | 0.000000 | 0.000000
+102-611 | Persediaan Lain-lain | 0.000000 | 0.000000 | 0.000000
+102-112 | Spare Parts - Prestolite ( TSA ) | 0.000000 | 0.000000 | 0.000000
+102-106 | Spare Parts - Fuji (FS) | 0.000000 | 0.000000 | 0.000000
+102-105 | Spare Parts - TOYO ( TY=TYC ) | 0.000000 | 0.000000 | 0.000000
+102-015 | Unit - Fuji Sawa ( OB ) | 0.000000 | 0.000000 | 0.000000
+102-017 | Unit -  Fuji + TK  ( TA ) | 0.000000 | 0.000000 | 0.000000
+102-120 | Spare Parts - Service Supplies ( S ) | 0.000000 | 0.000000 | 0.000000
+102-108 | Spare Parts - Fuji Motor ( OS ) | 0.000000 | 0.000000 | 0.000000
+102-121 | Spare Parts - KONSINYASI | 0.000000 | 0.000000 | 0.000000
+102-016 | Unit - Fuji + TK Bus ( FUS ) | 0.000000 | 0.000000 | 0.000000
+102-109 | Spare Parts - Frigicool ( FP ) | 0.000000 | 0.000000 | 0.000000
+102-107 | Spare Parts - Fuji Lokal (FL) | 0.000000 | 0.000000 | 0.000000
+102-301 | Persediaan Barang Dlm. Proses - Brecket | 0.000000 | 0.000000 | 0.000000
+102-111 | Spare Parts - Louver ( VL ) | 0.000000 | 0.000000 | 0.000000
+102-601 | Persediaan Dlm.Perjalanan  | 0.000000 | 0.000000 | 0.000000
+102-018 | Unit - BINGSHAN Cold Storage ( BCS ) | 0.000000 | 0.010000 | -0.010000
+TOTAL Jan 2026 gl_balance BS2015 = 27705289703.690000
+
+=== C: gl_balance by site_id for Feb 2026, BS2015 ===
+site_id | Dr | Cr | Saldo
+
+=== D: SINV Feb 2026 nilai by im_product_group ===
+nama_group | coa_persediaan | rows | qty | nilai
+TOTAL SINV Feb 2026 by group = 0
+
+=== E: SINV Jan 2026 nilai by im_product_group ===
+nama_group | coa_persediaan | rows | qty | nilai
+TOTAL SINV Jan 2026 by group = 0
+
+=== F: gl_journal Jan 2026 BS2015 mutasi by account ===
+account_id | AccountDes | Dr | Cr | Net
+102-001 | Unit - Thermo King Truck Pendingin ( TR ) | 4935381911.470000 | 8861644989.190000 | -3926263077.720000
+102-020 | Unit - WORK IN PROCESS | 3913519448.430000 | 5004832863.470000 | -1091313415.040000
+102-103 | Spare Parts - NORDIC ( NDS ) | 4871295.000000 | 7816511.390000 | -2945216.390000
+102-003 | Unit - NORDIC Truck Pendingin ( NR ) | 192000000.000000 | 192000000.000000 | 0.000000
+102-201 | Spare Parts - Material Tambahan ( MT ) | 562000.000000 | 200938.000000 | 361062.000000
+102-010 | Unit - TOYO ( TYU ) | 29906000.000000 | 24446000.000000 | 5460000.000000
+102-110 | Spare Parts - Lokal ( L ) | 191674926.800000 | 182043034.670000 | 9631892.130000
+102-102 | Spare Parts - Thermo King Lokal (TL) | 44520000.000000 | 34203998.250000 | 10316001.750000
+102-101 | Spare Parts - Thermo King (TS) | 316568263.580000 | 296289745.400000 | 20278518.180000
+102-601 | Persediaan Dlm.Perjalanan  | 39022622.000000 | 17499722.000000 | 21522900.000000
+102-018 | Unit - BINGSHAN Cold Storage ( BCS ) | 886500519.750000 | 0.000000 | 886500519.750000
+
+=== G: Verify saldo akhir Jan per account: gl_bal_jan + gl_mutasi_jan ===
+AccountCode | AccountDes | SaldoAkhirJan | SaldoAwalJan | JanDr | JanCr
+102-001 | Unit - Thermo King Truck Pendingin ( TR ) | 9072870161.900000 | 12999133239.620000 | 4935381911.470000 | 8861644989.190000
+102-101 | Spare Parts - Thermo King (TS) | 7088013687.470000 | 7067735169.290000 | 316568263.580000 | 296289745.400000
+102-110 | Spare Parts - Lokal ( L ) | 3080317362.620000 | 3070685470.490000 | 191674926.800000 | 182043034.670000
+102-006 | Unit - Thermo King  AC Bus ( TB ) | 1877122940.100000 | 1877122940.100000 | 0.000000 | 0.000000
+102-018 | Unit - BINGSHAN Cold Storage ( BCS ) | 886500519.740000 | -0.010000 | 886500519.750000 | 0.000000
+102-020 | Unit - WORK IN PROCESS | 776377600.520000 | 1867691015.560000 | 3913519448.430000 | 5004832863.470000
+102-010 | Unit - TOYO ( TYU ) | 250842000.120000 | 245382000.120000 | 29906000.000000 | 24446000.000000
+102-102 | Spare Parts - Thermo King Lokal (TL) | 174194785.860000 | 163878784.110000 | 44520000.000000 | 34203998.250000
+102-103 | Spare Parts - NORDIC ( NDS ) | 138764938.300000 | 141710154.690000 | 4871295.000000 | 7816511.390000
+102-201 | Spare Parts - Material Tambahan ( MT ) | 121151313.610000 | 120790251.610000 | 562000.000000 | 200938.000000
+102-113 | Spare Parts - Toyo ( TY ) | 96065711.540000 | 96065711.540000 | 0.000000 | 0.000000
+102-003 | Unit - NORDIC Truck Pendingin ( NR ) | 55094965.150000 | 55094965.150000 | 192000000.000000 | 192000000.000000
+102-601 | Persediaan Dlm.Perjalanan  | 21522900.000000 | 0.000000 | 39022622.000000 | 17499722.000000
+102-254 | Louver | 1.410000 | 1.410000 | 0.000000 | 0.000000
+102-203 | Box / Isolasi Pendingin | 0.010000 | 0.010000 | 0.000000 | 0.000000
+102-112 | Spare Parts - Prestolite ( TSA ) | 0.000000 | 0.000000 | 0.000000 | 0.000000
+102-105 | Spare Parts - TOYO ( TY=TYC ) | 0.000000 | 0.000000 | 0.000000 | 0.000000
+102-111 | Spare Parts - Louver ( VL ) | 0.000000 | 0.000000 | 0.000000 | 0.000000
+102-015 | Unit - Fuji Sawa ( OB ) | 0.000000 | 0.000000 | 0.000000 | 0.000000
+102-109 | Spare Parts - Frigicool ( FP ) | 0.000000 | 0.000000 | 0.000000 | 0.000000
+102-016 | Unit - Fuji + TK Bus ( FUS ) | 0.000000 | 0.000000 | 0.000000 | 0.000000
+102-011 | Unit - Fuji Truck Pendingin ( FU ) | 0.000000 | 0.000000 | 0.000000 | 0.000000
+102-611 | Persediaan Lain-lain | 0.000000 | 0.000000 | 0.000000 | 0.000000
+102-017 | Unit -  Fuji + TK  ( TA ) | 0.000000 | 0.000000 | 0.000000 | 0.000000
+102-121 | Spare Parts - KONSINYASI | 0.000000 | 0.000000 | 0.000000 | 0.000000
+102-108 | Spare Parts - Fuji Motor ( OS ) | 0.000000 | 0.000000 | 0.000000 | 0.000000
+102-301 | Persediaan Barang Dlm. Proses - Brecket | 0.000000 | 0.000000 | 0.000000 | 0.000000
+102-107 | Spare Parts - Fuji Lokal (FL) | 0.000000 | 0.000000 | 0.000000 | 0.000000
+102-120 | Spare Parts - Service Supplies ( S ) | 0.000000 | 0.000000 | 0.000000 | 0.000000
+102-106 | Spare Parts - Fuji (FS) | 0.000000 | 0.000000 | 0.000000 | 0.000000
+TOTAL GL saldo akhir Jan 2026 = 23638838888.350000
+
+=== H: Spare parts (TS/L/TL/NDS) SINV Feb 2026 total ===
+Spare parts only SINV Feb 2026 = 7412666358.18

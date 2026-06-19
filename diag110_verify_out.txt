@@ -1,0 +1,21 @@
+﻿=== DIAG110: Verify fix - akhir_rpxx(consin_rp) vs GL saldo akhir vs SINV Feb ===
+
+=== Compute akhir_rpxx_new for 102-001 (TR) using consin_rp ===
+awal_rp (SINV Jan TR)          = 12999133239.14
+consin_rp (tstok88 TR netto*kurs)   = 4908832863.4700
+mutasi_in_rp (tstok09 TR)          = 26549048.00
+mutasi_out_rp (tstok19 TR)         = 135825948.000000
+jual*hpp (tsales22 TR @ current)   = 4908299592.72211
+consout*hpp (tsales88 TR @ current) = 3817519448.39807
+
+akhir_rpxx_NEW = awal_rp + consin_rp + mutasi_in_rp - jual*hpp - consout*hpp - mutasi_out_rp
+akhir_rpxx_NEW = 9072870161.489820
+SINV Feb TR total (current)        = 9072336890.75
+GL saldo akhir Jan 102-001        = -3926263077.720000
+
+=== SELISIH COMPARISON ===
+OLD selisih (GL - SINV_Feb)        = -12998599968.470000
+NEW selisih (GL - akhir_rpxx_NEW)  = -12999133239.209820
+
+If NEW selisih = 0, fix is CORRECT
+GL should equal akhir_rpxx_NEW after fix + re-run Closing

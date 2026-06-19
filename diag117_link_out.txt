@@ -1,0 +1,19 @@
+﻿=== 1012604FR05001 ===
+  ap: oc=1012604FR05001 order_reff=[10126040500001] bukti=[1012604FR05001] kotor=0.00 netto=0.00 vendor=[4SL.S045]
+  tstok2: n=0 sum_biayaXqty=
+=== 1012604FR05002 ===
+  ap: oc=1012604FR05002 order_reff=[10126040500002] bukti=[1012604FR05002] kotor=0.00 netto=0.00 vendor=[4SL.S045]
+  tstok2: n=0 sum_biayaXqty=
+=== 1012604FR05003 ===
+  ap: oc=1012604FR05003 order_reff=[10126040500003] bukti=[1012604FR05003] kotor=9967200.00 netto=9967200.00 vendor=[4SL.S045]
+  tstok2: n=0 sum_biayaXqty=
+
+=== apakah ap_trans FR ber-order_reff ke dok utama? cek arah sebaliknya ===
+  oc=1012604FR05001 order_reff=[10126040500001] netto=0.00
+  oc=1012604FR05002 order_reff=[10126040500002] netto=0.00
+  oc=1012604FR05003 order_reff=[10126040500003] netto=9967200.00
+
+=== tstok1.order_reff utk dok utama ===
+  oc=10126040500001 order_reff=[]
+  oc=10126040500002 order_reff=[]
+  oc=10126040500003 order_reff=[]

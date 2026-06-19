@@ -1,0 +1,1 @@
+SELECT account_id, modul_id, COUNT(*) AS rows, SUM(COALESCE(debet,0)) AS tot_dbt, SUM(COALESCE(kredit,0)) AS tot_krd, SUM(COALESCE(debet,0)-COALESCE(kredit,0)) AS net FROM gl_journal WHERE tgl BETWEEN '2026-01-01' AND '2026-01-31' AND kas_id > 0 GROUP BY account_id, modul_id ORDER BY account_id, modul_id;

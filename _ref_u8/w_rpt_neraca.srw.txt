@@ -1,0 +1,1209 @@
+$PBExportHeader$w_rpt_neraca.srw
+forward
+global type w_rpt_neraca from w_report
+end type
+type dw_journal from uo_dw within w_rpt_neraca
+end type
+type dw_is from uo_dw within w_rpt_neraca
+end type
+type dw_rl from uo_dw within w_rpt_neraca
+end type
+type dw_share1 from uo_dw within w_rpt_neraca
+end type
+type dw_rl1 from uo_dw within w_rpt_neraca
+end type
+type dw_rl3 from uo_dw within w_rpt_neraca
+end type
+type dw_rl2 from uo_dw within w_rpt_neraca
+end type
+type dw_rl4 from uo_dw within w_rpt_neraca
+end type
+type dw_rl5 from uo_dw within w_rpt_neraca
+end type
+type dw_xls from uo_dw within w_rpt_neraca
+end type
+end forward
+
+global type w_rpt_neraca from w_report
+boolean im_preview = true
+dw_journal dw_journal
+dw_is dw_is
+dw_rl dw_rl
+dw_share1 dw_share1
+dw_rl1 dw_rl1
+dw_rl3 dw_rl3
+dw_rl2 dw_rl2
+dw_rl4 dw_rl4
+dw_rl5 dw_rl5
+dw_xls dw_xls
+end type
+global w_rpt_neraca w_rpt_neraca
+
+type variables
+double id_fa,id_ca,id_as,id_ia,id_asset
+double id_liab,id_ap,id_ol
+double id_share
+long   id_zero
+
+integer ii_bulan,ii_tahun_before,ii_bulan_before,ii_tahun
+string is_report,is_rl1,is_rl2,is_voucher
+datetime idt_tgl,idt_awal
+string is_originalsql,is_originalfilter
+
+
+
+end variables
+
+forward prototypes
+public subroutine wf_neraca ()
+end prototypes
+
+public subroutine wf_neraca ();long							i, ll_row, ll_insert, ll_baris, j
+string							ls_desc, ls_account, ls_trd123, ls_t1, ls_t2, ls_t3
+double 						ld_cm1=0, ld_cm2=0,ld_cm3=0, ld_ytd1=0, ld_ytd2=0, ld_ytd3=0
+double						ld_saldo_cm, ld_saldo_ytd
+datetime						ld_period
+string							ls_rep_id,ls_sdesc,ls_nrep
+double						ld_totcur=0,ld_totytd=0,ld_ttl_mutasi=0,ld_ttl_ytd=0
+
+long							i1, ll_row1, ll_insert1, ll_baris1, j1
+string							ls_desc1, ls_account1, ls_trd1231, ls_t11, ls_t21, ls_t31
+double 						ld_cm11=0, ld_cm21=0,ld_cm31=0, ld_ytd11=0, ld_ytd21=0, ld_ytd31=0
+double						ld_saldo_cm1, ld_saldo_ytd1
+datetime						ld_period1
+string							ls_site1,ls_rep_id1,ls_sdesc1,ls_nrep1
+double						ld_totcur1=0,ld_totytd1=0,ld_ttl_mutasi1=0,ld_ttl_ytd1=0
+
+double						ld_sales1,ld_sales2,ld_sales3,ld_persen
+string							ls_sitename, ls_month, ls_year, ls_company,ls_periode
+integer 						ll_insert_t,li_tipe_t = 0
+string 						ls_trd
+datastore				   	lds_report,lds_saldo1,lds_saldo2
+
+setpointer(Hourglass!)
+open(w_wait)
+
+SELECT gl_site.company_site  INTO :ls_sitename 
+  FROM gl_site  
+ WHERE gl_site.site_id = :gs_site   ;
+if isnull(ls_sitename) then ls_sitename = 'Demo Version'
+
+if ii_bulan = 1 then
+	ii_bulan_before  = 12
+	ii_tahun_before  = ii_tahun - 1
+else
+	ii_bulan_before  = ii_bulan - 1
+	ii_tahun_before  = ii_tahun
+end if
+
+// retrieve report format
+lds_report							= create datastore
+lds_report.dataobject 			= 'ds_report_form'
+lds_report.settransobject(sqlca)
+lds_report.retrieve(gs_site,is_report) 
+
+dw_2.reset()
+ls_periode 							= 'PERIODE : ' + upper(f_bulan(ii_bulan,'L')) + ' ' + string(ii_tahun)
+ld_period 							= datetime(date(ii_tahun, ii_bulan, 1))
+
+// retrieve neraca percobaan
+lds_saldo1 = create datastore
+lds_saldo1.dataobject = 'ds_coa_saldo'
+lds_saldo1.SetTransObject(sqlca)
+
+lds_saldo2 = create datastore
+lds_saldo2.dataobject = 'ds_coa_saldo'
+lds_saldo2.SetTransObject(sqlca)
+
+for i = 1 to lds_report.rowcount()
+//	if cbx_1.checked = true then
+		ls_desc 		= lds_report.getitemstring(i,'description')
+//	else
+//		ls_desc 		= lds_report.getitemstring(i,'description2')
+//	end if
+	ls_account	= lds_report.getitemstring(i,'account_id')
+	ls_trd123 	= lds_report.getitemstring(i,'trd123')
+	ls_t1 			= lds_report.getitemstring(i,'t1')
+	ls_t2 			= lds_report.getitemstring(i,'t2')
+	ls_t3 			= lds_report.getitemstring(i,'t3')
+
+	choose case ls_trd123
+		case 'S' 
+			if li_tipe_t = 0 then
+				ll_insert =	dw_2.insertrow(0)
+				dw_2.object.description[ll_insert] = ls_desc
+			else 
+				// nilainya digabung dengan nilai yang tipe = T
+				ll_baris  = lds_saldo2.Retrieve(ii_bulan,ii_tahun,gs_site,ls_account + '%')
+				ll_baris1 = lds_saldo1.Retrieve(ii_bulan_before,ii_tahun_before,gs_site,ls_account + '%')
+				
+				// untuk nilai
+			   if ll_baris > 0 then
+					ld_ttl_ytd    = lds_saldo2.getitemnumber(1,'ttl_akhir')
+				else
+					ld_ttl_ytd    = 0
+				end if				
+					
+				if ls_t1 = '+' then
+					ld_totytd = ld_totytd + ld_ttl_ytd
+				else
+					ld_totytd = ld_totytd - ld_ttl_ytd					
+				end if
+				
+				// untuk nilai2
+			   if ll_baris1 > 0 then
+					ld_ttl_ytd1    = lds_saldo1.getitemnumber(1,'ttl_akhir')
+				else
+					ld_ttl_ytd1    = 0
+				end if				
+					
+				if ls_t1 = '+' then
+					ld_totytd1 = ld_totytd1 + ld_ttl_ytd1
+				else
+					ld_totytd1 = ld_totytd1 - ld_ttl_ytd1					
+				end if				
+			end if	
+		case 'T'
+			// get data from gl_history and gl_beginning_balance, and then check to gl_coa
+			ll_baris  = lds_saldo2.Retrieve(ii_bulan,ii_tahun,gs_site,ls_account + '%')
+			ll_baris1 = lds_saldo1.Retrieve(ii_bulan_before,ii_tahun_before,gs_site,ls_account + '%')
+			
+			if ll_baris > 0 then
+				ld_ttl_ytd    = lds_saldo2.getitemnumber(1,'ttl_akhir')
+			else
+				ld_ttl_ytd    = 0
+			end if
+				
+			if ls_t1 = '+' then
+				ld_totytd = ld_totytd + ld_ttl_ytd
+			else
+				ld_totytd = ld_totytd - ld_ttl_ytd
+			end if
+			
+			if ll_baris1 > 0 then
+				ld_ttl_ytd1    = lds_saldo1.getitemnumber(1,'ttl_akhir')
+			else
+				ld_ttl_ytd1    = 0
+			end if
+				
+			if ls_t1 = '+' then
+				ld_totytd1 = ld_totytd1 + ld_ttl_ytd1
+			else
+				ld_totytd1 = ld_totytd1 - ld_ttl_ytd1
+			end if
+
+			li_tipe_t = 1	
+			
+			ll_insert = dw_2.insertrow(0)
+			dw_2.object.description[ll_insert] 	= ls_desc
+			dw_2.object.nilai[ll_insert]			= 0	
+			dw_2.object.nilai2[ll_insert]			= 0
+			ll_insert_t = ll_insert
+		case 'R'
+			// get data from gl_history and gl_beginning_balance, and then check to gl_coa
+			ll_baris  = lds_saldo2.Retrieve(ii_bulan,ii_tahun,gs_site,ls_account + '%')
+			ll_baris1 = lds_saldo1.Retrieve(ii_bulan_before,ii_tahun_before,gs_site,ls_account + '%')
+			
+			if ll_baris > 0 then
+				ld_ttl_ytd    = lds_saldo2.getitemnumber(1,'ttl_akhir')
+			else
+				ld_ttl_ytd    = 0
+			end if
+		
+			ld_saldo_ytd = ld_ttl_ytd
+			
+			if ll_baris1 > 0 then
+				ld_ttl_ytd1    = lds_saldo1.getitemnumber(1,'ttl_akhir')
+			else
+				ld_ttl_ytd1    = 0
+			end if
+		
+			ld_saldo_ytd1 = ld_ttl_ytd1
+			
+			ll_insert = dw_2.insertrow(0)
+			dw_2.object.description[ll_insert] 	= ls_desc
+			if ls_t1 = '+' then
+				dw_2.object.nilai[ll_insert] 			= ld_saldo_ytd	
+				dw_2.object.nilai2[ll_insert] 			= ld_saldo_ytd1
+			else
+				dw_2.object.nilai[ll_insert] 			= ld_saldo_ytd	* -1
+				dw_2.object.nilai2[ll_insert] 			= ld_saldo_ytd1 * -1
+			end if
+		case 'D'
+			// get data from gl_history and gl_beginning_balance, and then check to gl_coa
+			ll_baris  = lds_saldo2.Retrieve(ii_bulan,ii_tahun,gs_site,ls_account + '%')
+			ll_baris1 = lds_saldo1.Retrieve(ii_bulan_before,ii_tahun_before,gs_site,ls_account + '%')
+			if ll_baris > 0 then
+				ld_ttl_ytd    = lds_saldo2.getitemnumber(1,'ttl_akhir')
+			else
+				ld_ttl_ytd    = 0
+			end if
+			
+			ld_saldo_ytd = ld_ttl_ytd
+			
+			if ll_baris1 > 0 then
+				ld_ttl_ytd1    = lds_saldo1.getitemnumber(1,'ttl_akhir')
+			else
+				ld_ttl_ytd1    = 0
+			end if
+			
+			ld_saldo_ytd1 = ld_ttl_ytd1
+			
+			ll_insert = dw_2.insertrow(0)
+			dw_2.object.description[ll_insert] 	= ls_desc
+			dw_2.object.nilai[ll_insert] 			= ld_saldo_ytd		
+			dw_2.object.nilai2[ll_insert] 		   = ld_saldo_ytd1		
+		case '1'
+			ld_saldo_ytd	= ld_ytd1
+			ll_insert 		= dw_2.insertrow(0)
+			dw_2.object.description[ll_insert] 	= ls_desc
+			dw_2.object.nilai[ll_insert] 			= ld_saldo_ytd	
+			
+			ld_saldo_ytd1	= ld_ytd11
+			dw_2.object.nilai2[ll_insert] 		   = ld_saldo_ytd1
+		case '2'
+			ld_saldo_ytd 	= ld_ytd2
+			ll_insert 		= dw_2.insertrow(0)
+			dw_2.object.description[ll_insert] 	= ls_desc
+			dw_2.object.nilai[ll_insert] 			= ld_saldo_ytd		
+			
+			ld_saldo_ytd1 	= ld_ytd21
+			dw_2.object.nilai2[ll_insert] 		   =  ld_saldo_ytd1		
+		case '3'
+			ld_saldo_ytd 	= ld_ytd3
+			ll_insert 		= dw_2.insertrow(0)
+			dw_2.object.description[ll_insert] 	= ls_desc
+			dw_2.object.nilai[ll_insert] 			= ld_saldo_ytd	
+			
+			ld_saldo_ytd1 	= ld_ytd31
+			dw_2.object.nilai2[ll_insert] 		   = ld_saldo_ytd1
+	end choose
+	
+	ls_trd = ''
+	if li_tipe_t = 1 then ls_trd = lds_report.getitemstring(i+1,'trd123')
+	if li_tipe_t = 1 and (ls_trd <> 'S') then
+	   // harus insert 1 row untuk hasil proses T
+		dw_2.object.nilai[ll_insert_t]		= ld_totytd
+		dw_2.object.nilai2[ll_insert_t]	= ld_totytd1
+		
+		li_tipe_t = 0
+		ls_t1	    = '+'		
+		
+		ld_saldo_ytd 	= ld_totytd
+		ld_saldo_ytd1 	= ld_totytd1
+		
+		ld_totytd  = 0
+		ld_totytd1 = 0
+	end if		
+	
+	// formula
+	if ls_t3 = '0' then
+		ld_ytd3 = 0
+		ld_ytd31 = 0
+	end if
+	if ls_t3 = '+' then
+		ld_ytd3 	= ld_ytd3 + ld_saldo_ytd
+		ld_ytd31 = ld_ytd31 + ld_saldo_ytd1
+	end if
+	if ls_t3 = '-' then
+		ld_ytd3 	= ld_ytd3 - ld_saldo_ytd
+		ld_ytd31 = ld_ytd31 - ld_saldo_ytd1
+	end if
+	
+	if ls_t2 = '0' then
+		ld_ytd2 	= 0
+		ld_ytd21 = 0
+	end if
+	if ls_t2 = '+' then
+		ld_ytd2 	= ld_ytd2 + ld_saldo_ytd
+		ld_ytd21 = ld_ytd21 + ld_saldo_ytd1
+	end if
+	if ls_t2 = '-' then
+		ld_ytd2 	= ld_ytd2 - ld_saldo_ytd
+		ld_ytd21 = ld_ytd21 - ld_saldo_ytd1
+	end if
+
+	if ls_t1 = '0' then
+		ld_ytd1 	= 0
+		ld_ytd11 = 0
+	end if
+	if ls_t1 = '+' then
+		ld_ytd1 	= ld_ytd1 + ld_saldo_ytd
+		ld_ytd11 	= ld_ytd11 + ld_saldo_ytd1
+	end if
+	if ls_t1 = '-' then
+		ld_ytd1 	= ld_ytd1 - ld_saldo_ytd
+		ld_ytd11 	= ld_ytd11 - ld_saldo_ytd1
+	end if
+	ld_saldo_ytd = 0
+	ld_saldo_ytd1 = 0
+	
+	//beep(1)
+	
+next
+
+for i = 1 to dw_2.rowcount()
+	dw_2.setitem(i,'company_name',f_company())
+//	dw_2.setitem(i,'site_name',ls_sitename)
+	dw_2.setitem(i,'periode_name',ls_periode)
+next
+
+setpointer(Arrow!)
+dw_2.setredraw(true)
+long li_flag
+li_flag = dw_1.object.flag_zero[1]
+if li_flag = 0 then
+	dw_2.SetFilter("#3>"+ String(0) + " or #4>" + String(0))
+else
+	dw_2.setfilter('')
+end if
+dw_2.filter()
+close(w_wait)
+
+end subroutine
+
+on w_rpt_neraca.create
+int iCurrent
+call super::create
+this.dw_journal=create dw_journal
+this.dw_is=create dw_is
+this.dw_rl=create dw_rl
+this.dw_share1=create dw_share1
+this.dw_rl1=create dw_rl1
+this.dw_rl3=create dw_rl3
+this.dw_rl2=create dw_rl2
+this.dw_rl4=create dw_rl4
+this.dw_rl5=create dw_rl5
+this.dw_xls=create dw_xls
+iCurrent=UpperBound(this.Control)
+this.Control[iCurrent+1]=this.dw_journal
+this.Control[iCurrent+2]=this.dw_is
+this.Control[iCurrent+3]=this.dw_rl
+this.Control[iCurrent+4]=this.dw_share1
+this.Control[iCurrent+5]=this.dw_rl1
+this.Control[iCurrent+6]=this.dw_rl3
+this.Control[iCurrent+7]=this.dw_rl2
+this.Control[iCurrent+8]=this.dw_rl4
+this.Control[iCurrent+9]=this.dw_rl5
+this.Control[iCurrent+10]=this.dw_xls
+end on
+
+on w_rpt_neraca.destroy
+call super::destroy
+if IsValid(MenuID) then destroy(MenuID)
+destroy(this.dw_journal)
+destroy(this.dw_is)
+destroy(this.dw_rl)
+destroy(this.dw_share1)
+destroy(this.dw_rl1)
+destroy(this.dw_rl3)
+destroy(this.dw_rl2)
+destroy(this.dw_rl4)
+destroy(this.dw_rl5)
+destroy(this.dw_xls)
+end on
+
+event open;call super::open;datawindowchild ldc_group
+datetime ldt_tgl1,ldt_tgl2
+dw_1.settransobject(sqlca)
+dw_1.reset()
+dw_1.insertrow(0)
+
+select periode into :ldt_tgl1
+from gl_setup;
+
+ldt_tgl1 = f_bom(ldt_tgl1)
+ldt_tgl2 = f_eom(ldt_tgl1)
+
+dw_1.setitem(1,'tgl1',ldt_tgl1)
+dw_1.setitem(1,'tgl2',ldt_tgl2)
+dw_1.setitem(1,'ll_report',1)
+dw_1.setitem(1,'ll_mode',1)
+dw_1.Setfocus()
+
+
+//open(w_closing_journal)
+
+
+is_originalsql		= dw_2.getsqlselect( )
+is_originalfilter = dw_2.Describe("DataWindow.Table.Filter")
+
+end event
+
+event ue_xls;datetime ldt1,ldt2,ldt3,ldt4
+long ll_report,ll_jenis,ll_bank
+string ls_awal
+long ll_year,ll_year2
+
+if dw_2.dataobject <> 'dw_rpt_is_compo' and dw_2.dataobject <> 'dw_rpt_is_compo_rekap'  then
+	gurningsoft_xls(dw_2)
+	return
+end if
+dw_1.accepttext()
+
+
+
+ldt1 = dw_1.object.tgl1[1]
+ll_report = dw_1.object.flag_zero[1]
+ldt1 = datetime(date(ldt1))
+
+
+ldt1 = f_bom(ldt1)
+ldt2 = f_eom(ldt1)
+
+ll_year = year(date(ldt1))
+ll_year2 = year(date(ldt2))
+if ll_year <> ll_year2 then
+	messagebox('Warning!','Tidak diperbolehkan beda tahun..!',stopsign!)
+	return
+end if
+
+ls_awal = string(ll_year)+'-01-01'
+ldt3 = datetime(ls_awal)
+
+select dateadd(day,-1,date(:ldt1)) 
+into :ldt4
+from gl_setup;
+
+
+dw_1.setitem(1,'tgl1',ldt1)
+
+
+open(w_wait)
+if dw_2.dataobject = 'dw_rpt_is_compo' or dw_2.dataobject = 'dw_rpt_is_compo_rekap' then
+	//Get Summary by Group
+	decimal ldec_jual_lalu,ldec_jual_ini,ldec_hpp_lalu,ldec_hpp_ini,ldec_biaya_lalu,ldec_biaya_ini
+	decimal ldec_dapat_lalu,ldec_dapat_ini,ldec_blain_lalu,ldec_blain_ini
+	decimal ldec_pajak_lalu,ldec_pajak_ini
+	long i,ll_urut
+	dw_rl.retrieve(ldt3,ldt4,ldt1,ldt2)
+	dw_rl.accepttext()
+	if dw_rl.getrow() <=0 then return
+	ldec_jual_lalu = dw_rl.object.penjualan_lalu[1]
+	ldec_jual_ini = dw_rl.object.penjualan_ini[1]
+	ldec_hpp_lalu = dw_rl.object.hpp_lalu[1]
+	ldec_hpp_ini = dw_rl.object.hpp_ini[1]
+	ldec_biaya_lalu = dw_rl.object.biaya_lalu[1]
+	ldec_biaya_ini = dw_rl.object.biaya_ini[1]
+	ldec_dapat_lalu = dw_rl.object.pendapatan_lalu[1]
+	ldec_dapat_ini = dw_rl.object.pendapatan_ini[1]
+	ldec_blain_lalu = dw_rl.object.biaya_lain_lalu[1]
+	ldec_blain_ini = dw_rl.object.biaya_lain_ini[1]
+	ldec_pajak_lalu = dw_rl.object.pajak_lalu[1]
+	ldec_pajak_ini = dw_rl.object.pajak_ini[1]
+	
+	dw_update.reset()
+	ll_urut = 0
+	dw_rl1.retrieve(ldt3,ldt4,ldt1,ldt2,ldec_jual_lalu,ldec_jual_ini,ldec_hpp_lalu,ldec_hpp_ini,ldec_biaya_lalu,ldec_biaya_ini,ldec_dapat_lalu,ldec_dapat_ini,ldec_blain_lalu,ldec_blain_ini,1)
+	dw_rl1.accepttext()
+	if dw_rl1.rowcount() > 0 then
+		for i = 1 to dw_rl1.rowcount()
+			ll_urut ++
+			dw_update.setrow(dw_update.insertrow(0))
+			dw_update.setitem(dw_update.getrow(),'parent_urut',1)
+			dw_update.setitem(dw_update.getrow(),'user_id',gs_user)
+			dw_update.setitem(dw_update.getrow(),'tgl1',ldt1)
+			dw_update.setitem(dw_update.getrow(),'tgl2',ldt2)
+			dw_update.setitem(dw_update.getrow(),'dataobject',dw_rl1.dataobject)
+			dw_update.setitem(dw_update.getrow(),'fincatcode',dw_rl1.object.fincatcode[i])
+			dw_update.setitem(dw_update.getrow(),'fincatdes',dw_rl1.object.fincatdes[i])
+			dw_update.setitem(dw_update.getrow(),'parentcode',dw_rl1.object.parentcode[i])
+			dw_update.setitem(dw_update.getrow(),'parentdes',dw_rl1.object.parentname[i])
+			dw_update.setitem(dw_update.getrow(),'accountcode',dw_rl1.object.accountcode[i])
+			dw_update.setitem(dw_update.getrow(),'accountdes',dw_rl1.object.accountdes[i])
+			dw_update.setitem(dw_update.getrow(),'lalu',dw_rl1.object.clalu[i])
+			dw_update.setitem(dw_update.getrow(),'ini',dw_rl1.object.cmutasi[i])
+			dw_update.setitem(dw_update.getrow(),'sdini',dw_rl1.object.cini[i])
+			dw_update.setitem(dw_update.getrow(),'jual_lalu',ldec_jual_lalu)
+			dw_update.setitem(dw_update.getrow(),'jual_ini',ldec_jual_ini)
+			dw_update.setitem(dw_update.getrow(),'hpp_lalu',ldec_hpp_lalu)
+			dw_update.setitem(dw_update.getrow(),'hpp_ini',ldec_hpp_ini)
+			dw_update.setitem(dw_update.getrow(),'biaya_lalu',ldec_biaya_lalu)
+			dw_update.setitem(dw_update.getrow(),'biaya_ini',ldec_biaya_ini)
+			dw_update.setitem(dw_update.getrow(),'dapat_lalu',ldec_dapat_lalu)
+			dw_update.setitem(dw_update.getrow(),'dapat_ini',ldec_dapat_ini)
+			dw_update.setitem(dw_update.getrow(),'biaya_lain_lalu',ldec_blain_lalu)
+			dw_update.setitem(dw_update.getrow(),'biaya_lain_ini',ldec_blain_ini)
+			dw_update.setitem(dw_update.getrow(),'pajak_lalu',ldec_pajak_lalu)
+			dw_update.setitem(dw_update.getrow(),'pajak_ini',ldec_pajak_ini)
+			dw_update.setitem(dw_update.getrow(),'urut',dw_update.getrow())
+		next
+	end if
+	//RL 2
+	dw_rl2.retrieve(ldt3,ldt4,ldt1,ldt2,ldec_jual_lalu,ldec_jual_ini,ldec_hpp_lalu,ldec_hpp_ini,ldec_biaya_lalu,ldec_biaya_ini,ldec_dapat_lalu,ldec_dapat_ini,ldec_blain_lalu,ldec_blain_ini,1)
+	dw_rl2.accepttext()
+	if dw_rl2.rowcount() > 0 then
+		for i = 1 to dw_rl2.rowcount()
+			ll_urut ++
+			dw_update.setrow(dw_update.insertrow(0))
+			dw_update.setitem(dw_update.getrow(),'parent_urut',2)
+			dw_update.setitem(dw_update.getrow(),'user_id',gs_user)
+			dw_update.setitem(dw_update.getrow(),'tgl1',ldt1)
+			dw_update.setitem(dw_update.getrow(),'tgl2',ldt2)
+			dw_update.setitem(dw_update.getrow(),'dataobject',dw_rl2.dataobject)
+			dw_update.setitem(dw_update.getrow(),'fincatcode',dw_rl2.object.fincatcode[i])
+			dw_update.setitem(dw_update.getrow(),'fincatdes',dw_rl2.object.fincatdes[i])
+			dw_update.setitem(dw_update.getrow(),'parentcode',dw_rl2.object.parentcode[i])
+			dw_update.setitem(dw_update.getrow(),'parentdes',dw_rl2.object.parentname[i])
+			dw_update.setitem(dw_update.getrow(),'accountcode',dw_rl2.object.accountcode[i])
+			dw_update.setitem(dw_update.getrow(),'accountdes',dw_rl2.object.accountdes[i])
+			dw_update.setitem(dw_update.getrow(),'lalu',dw_rl2.object.clalu[i])
+			dw_update.setitem(dw_update.getrow(),'ini',dw_rl2.object.cmutasi[i])
+			dw_update.setitem(dw_update.getrow(),'sdini',dw_rl2.object.cini[i])
+			dw_update.setitem(dw_update.getrow(),'jual_lalu',ldec_jual_lalu)
+			dw_update.setitem(dw_update.getrow(),'jual_ini',ldec_jual_ini)
+			dw_update.setitem(dw_update.getrow(),'hpp_lalu',ldec_hpp_lalu)
+			dw_update.setitem(dw_update.getrow(),'hpp_ini',ldec_hpp_ini)
+			dw_update.setitem(dw_update.getrow(),'biaya_lalu',ldec_biaya_lalu)
+			dw_update.setitem(dw_update.getrow(),'biaya_ini',ldec_biaya_ini)
+			dw_update.setitem(dw_update.getrow(),'dapat_lalu',ldec_dapat_lalu)
+			dw_update.setitem(dw_update.getrow(),'dapat_ini',ldec_dapat_ini)
+			dw_update.setitem(dw_update.getrow(),'biaya_lain_lalu',ldec_blain_lalu)
+			dw_update.setitem(dw_update.getrow(),'biaya_lain_ini',ldec_blain_ini)
+			dw_update.setitem(dw_update.getrow(),'pajak_lalu',ldec_pajak_lalu)
+			dw_update.setitem(dw_update.getrow(),'pajak_ini',ldec_pajak_ini)
+			dw_update.setitem(dw_update.getrow(),'urut',dw_update.getrow())
+		next
+	end if
+	//RL 3
+	dw_rl3.retrieve(ldt3,ldt4,ldt1,ldt2,ldec_jual_lalu,ldec_jual_ini,ldec_hpp_lalu,ldec_hpp_ini,ldec_biaya_lalu,ldec_biaya_ini,ldec_dapat_lalu,ldec_dapat_ini,ldec_blain_lalu,ldec_blain_ini,1)
+	dw_rl3.accepttext()
+	if dw_rl3.rowcount() > 0 then
+		for i = 1 to dw_rl3.rowcount()
+			ll_urut ++
+			dw_update.setrow(dw_update.insertrow(0))
+			dw_update.setitem(dw_update.getrow(),'parent_urut',3)
+			dw_update.setitem(dw_update.getrow(),'user_id',gs_user)
+			dw_update.setitem(dw_update.getrow(),'tgl1',ldt1)
+			dw_update.setitem(dw_update.getrow(),'tgl2',ldt2)
+			dw_update.setitem(dw_update.getrow(),'dataobject',dw_rl3.dataobject)
+			dw_update.setitem(dw_update.getrow(),'fincatcode',dw_rl3.object.fincatcode[i])
+			dw_update.setitem(dw_update.getrow(),'fincatdes',dw_rl3.object.fincatdes[i])
+			dw_update.setitem(dw_update.getrow(),'parentcode',dw_rl3.object.parentcode[i])
+			dw_update.setitem(dw_update.getrow(),'parentdes',dw_rl3.object.parentname[i])
+			dw_update.setitem(dw_update.getrow(),'accountcode',dw_rl3.object.accountcode[i])
+			dw_update.setitem(dw_update.getrow(),'accountdes',dw_rl3.object.accountdes[i])
+			dw_update.setitem(dw_update.getrow(),'lalu',dw_rl3.object.clalu[i])
+			dw_update.setitem(dw_update.getrow(),'ini',dw_rl3.object.cmutasi[i])
+			dw_update.setitem(dw_update.getrow(),'sdini',dw_rl3.object.cini[i])
+			dw_update.setitem(dw_update.getrow(),'jual_lalu',ldec_jual_lalu)
+			dw_update.setitem(dw_update.getrow(),'jual_ini',ldec_jual_ini)
+			dw_update.setitem(dw_update.getrow(),'hpp_lalu',ldec_hpp_lalu)
+			dw_update.setitem(dw_update.getrow(),'hpp_ini',ldec_hpp_ini)
+			dw_update.setitem(dw_update.getrow(),'biaya_lalu',ldec_biaya_lalu)
+			dw_update.setitem(dw_update.getrow(),'biaya_ini',ldec_biaya_ini)
+			dw_update.setitem(dw_update.getrow(),'dapat_lalu',ldec_dapat_lalu)
+			dw_update.setitem(dw_update.getrow(),'dapat_ini',ldec_dapat_ini)
+			dw_update.setitem(dw_update.getrow(),'biaya_lain_lalu',ldec_blain_lalu)
+			dw_update.setitem(dw_update.getrow(),'biaya_lain_ini',ldec_blain_ini)
+			dw_update.setitem(dw_update.getrow(),'pajak_lalu',ldec_pajak_lalu)
+			dw_update.setitem(dw_update.getrow(),'pajak_ini',ldec_pajak_ini)
+			dw_update.setitem(dw_update.getrow(),'urut',dw_update.getrow())
+		next
+	end if
+	
+	//RL 4
+	dw_rl4.retrieve(ldt3,ldt4,ldt1,ldt2,ldec_jual_lalu,ldec_jual_ini,ldec_hpp_lalu,ldec_hpp_ini,ldec_biaya_lalu,ldec_biaya_ini,ldec_dapat_lalu,ldec_dapat_ini,ldec_blain_lalu,ldec_blain_ini,1)
+	dw_rl4.accepttext()
+	if dw_rl4.rowcount() > 0 then
+		for i = 1 to dw_rl4.rowcount()
+			ll_urut ++
+			dw_update.setrow(dw_update.insertrow(0))
+			dw_update.setitem(dw_update.getrow(),'parent_urut',4)
+			dw_update.setitem(dw_update.getrow(),'user_id',gs_user)
+			dw_update.setitem(dw_update.getrow(),'tgl1',ldt1)
+			dw_update.setitem(dw_update.getrow(),'tgl2',ldt2)
+			dw_update.setitem(dw_update.getrow(),'dataobject',dw_rl4.dataobject)
+			dw_update.setitem(dw_update.getrow(),'fincatcode',dw_rl4.object.fincatcode[i])
+			dw_update.setitem(dw_update.getrow(),'fincatdes',dw_rl4.object.fincatdes[i])
+			dw_update.setitem(dw_update.getrow(),'parentcode',dw_rl4.object.parentcode[i])
+			dw_update.setitem(dw_update.getrow(),'parentdes',dw_rl4.object.parentname[i])
+			dw_update.setitem(dw_update.getrow(),'accountcode',dw_rl4.object.accountcode[i])
+			dw_update.setitem(dw_update.getrow(),'accountdes',dw_rl4.object.accountdes[i])
+			dw_update.setitem(dw_update.getrow(),'lalu',dw_rl4.object.clalu[i])
+			dw_update.setitem(dw_update.getrow(),'ini',dw_rl4.object.cmutasi[i])
+			dw_update.setitem(dw_update.getrow(),'sdini',dw_rl4.object.cini[i])
+			dw_update.setitem(dw_update.getrow(),'jual_lalu',ldec_jual_lalu)
+			dw_update.setitem(dw_update.getrow(),'jual_ini',ldec_jual_ini)
+			dw_update.setitem(dw_update.getrow(),'hpp_lalu',ldec_hpp_lalu)
+			dw_update.setitem(dw_update.getrow(),'hpp_ini',ldec_hpp_ini)
+			dw_update.setitem(dw_update.getrow(),'biaya_lalu',ldec_biaya_lalu)
+			dw_update.setitem(dw_update.getrow(),'biaya_ini',ldec_biaya_ini)
+			dw_update.setitem(dw_update.getrow(),'dapat_lalu',ldec_dapat_lalu)
+			dw_update.setitem(dw_update.getrow(),'dapat_ini',ldec_dapat_ini)
+			dw_update.setitem(dw_update.getrow(),'biaya_lain_lalu',ldec_blain_lalu)
+			dw_update.setitem(dw_update.getrow(),'biaya_lain_ini',ldec_blain_ini)
+			dw_update.setitem(dw_update.getrow(),'pajak_lalu',ldec_pajak_lalu)
+			dw_update.setitem(dw_update.getrow(),'pajak_ini',ldec_pajak_ini)
+			dw_update.setitem(dw_update.getrow(),'urut',dw_update.getrow())
+		next
+	end if
+	//RL 5
+	dw_rl5.retrieve(ldt3,ldt4,ldt1,ldt2,ldec_jual_lalu,ldec_jual_ini,ldec_hpp_lalu,ldec_hpp_ini,ldec_biaya_lalu,ldec_biaya_ini,ldec_dapat_lalu,ldec_dapat_ini,ldec_blain_lalu,ldec_blain_ini,ldec_pajak_lalu,ldec_pajak_ini,1)
+	dw_rl5.accepttext()
+	if dw_rl5.rowcount() > 0 then
+		for i = 1 to dw_rl5.rowcount()
+			ll_urut ++
+			dw_update.setrow(dw_update.insertrow(0))
+			dw_update.setitem(dw_update.getrow(),'parent_urut',5)
+			dw_update.setitem(dw_update.getrow(),'user_id',gs_user)
+			dw_update.setitem(dw_update.getrow(),'tgl1',ldt1)
+			dw_update.setitem(dw_update.getrow(),'tgl2',ldt2)
+			dw_update.setitem(dw_update.getrow(),'dataobject',dw_rl5.dataobject)
+			dw_update.setitem(dw_update.getrow(),'fincatcode',dw_rl5.object.fincatcode[i])
+			dw_update.setitem(dw_update.getrow(),'fincatdes',dw_rl5.object.fincatdes[i])
+			dw_update.setitem(dw_update.getrow(),'parentcode',dw_rl5.object.parentcode[i])
+			dw_update.setitem(dw_update.getrow(),'parentdes',dw_rl5.object.parentname[i])
+			dw_update.setitem(dw_update.getrow(),'accountcode',dw_rl5.object.accountcode[i])
+			dw_update.setitem(dw_update.getrow(),'accountdes',dw_rl5.object.accountdes[i])
+			dw_update.setitem(dw_update.getrow(),'lalu',dw_rl5.object.clalu[i])
+			dw_update.setitem(dw_update.getrow(),'ini',dw_rl5.object.cmutasi[i])
+			dw_update.setitem(dw_update.getrow(),'sdini',dw_rl5.object.cini[i])
+			dw_update.setitem(dw_update.getrow(),'jual_lalu',ldec_jual_lalu)
+			dw_update.setitem(dw_update.getrow(),'jual_ini',ldec_jual_ini)
+			dw_update.setitem(dw_update.getrow(),'hpp_lalu',ldec_hpp_lalu)
+			dw_update.setitem(dw_update.getrow(),'hpp_ini',ldec_hpp_ini)
+			dw_update.setitem(dw_update.getrow(),'biaya_lalu',ldec_biaya_lalu)
+			dw_update.setitem(dw_update.getrow(),'biaya_ini',ldec_biaya_ini)
+			dw_update.setitem(dw_update.getrow(),'dapat_lalu',ldec_dapat_lalu)
+			dw_update.setitem(dw_update.getrow(),'dapat_ini',ldec_dapat_ini)
+			dw_update.setitem(dw_update.getrow(),'biaya_lain_lalu',ldec_blain_lalu)
+			dw_update.setitem(dw_update.getrow(),'biaya_lain_ini',ldec_blain_ini)
+			dw_update.setitem(dw_update.getrow(),'pajak_lalu',ldec_pajak_lalu)
+			dw_update.setitem(dw_update.getrow(),'pajak_ini',ldec_pajak_ini)
+			dw_update.setitem(dw_update.getrow(),'urut',dw_update.getrow())
+		next
+	end if
+	string ls_user
+	ls_user = gs_user
+	//Delete old data
+	delete from T_RUGILABA
+	where user_id = :ls_user
+	using sqlca;
+	commit;
+	dw_update.accepttext()
+	dw_update.update()
+	commit;
+	close(w_wait)
+	if ll_report = 1 then
+		dw_search.dataobject = 'dw_rugilaba_excel'
+	else
+		dw_search.dataobject = 'dw_rugilaba_excel_rekap'
+	end if
+	dw_search.settransobject(sqlca)
+	dw_search.retrieve(gs_user)
+	gurningsoft_xls(dw_search)
+end if
+
+if dw_2.dataobject = 'dw_history_ci' then
+	dw_xls.dataobject = 'dw_history_ci_xls'
+	dw_xls.settransobject(sqlca)
+	dw_1.accepttext()
+	ldt1 = dw_1.object.tgl1[1]
+	ldt2 = dw_1.object.tgl2[1]
+	ll_bank = dw_1.object.ll_bank[1]
+	ll_report = dw_1.object.flag_zero[1]
+	ldt1 = datetime(date(ldt1))
+	ldt2 = datetime(date(ldt2))
+	
+	ldt1 = f_bom(ldt1)
+	ldt2 = f_eom(ldt2)
+	dw_xls.retrieve(ldt1,ldt2,ll_bank,0)
+	gurningsoft_xls(dw_xls)
+end if
+
+if dw_2.dataobject = 'dw_history_co' then
+	dw_xls.dataobject = 'dw_history_co_xls'
+	dw_xls.settransobject(sqlca)
+	dw_1.accepttext()
+	ldt1 = dw_1.object.tgl1[1]
+	ldt2 = dw_1.object.tgl2[1]
+	ll_bank = dw_1.object.ll_bank[1]
+	ll_report = dw_1.object.flag_zero[1]
+	ldt1 = datetime(date(ldt1))
+	ldt2 = datetime(date(ldt2))
+	
+	ldt1 = f_bom(ldt1)
+	ldt2 = f_eom(ldt2)
+	dw_xls.retrieve(ldt1,ldt2,ll_bank,0)
+	gurningsoft_xls(dw_xls)
+end if
+end event
+
+type dw_log from w_report`dw_log within w_rpt_neraca
+end type
+
+type dw_con from w_report`dw_con within w_rpt_neraca
+end type
+
+type dw_update from w_report`dw_update within w_rpt_neraca
+integer x = 0
+integer y = 352
+integer width = 3392
+string dataobject = "d_rl_excel"
+boolean resizable = true
+end type
+
+event dw_update::doubleclicked;call super::doubleclicked;gurningsoft_xls(this)
+end event
+
+type dw_search from w_report`dw_search within w_rpt_neraca
+string dataobject = "dw_rugilaba_excel"
+end type
+
+type st_split from w_report`st_split within w_rpt_neraca
+end type
+
+type dw_anim from w_report`dw_anim within w_rpt_neraca
+end type
+
+type dw_statusbar from w_report`dw_statusbar within w_rpt_neraca
+end type
+
+type dw_leftmenu from w_report`dw_leftmenu within w_rpt_neraca
+end type
+
+type dw_1 from w_report`dw_1 within w_rpt_neraca
+integer height = 344
+string dataobject = "d_range_neraca"
+end type
+
+event dw_1::ue_retrieve;call super::ue_retrieve;dw_1.accepttext()
+
+datetime ldt1,ldt2,ldt3,ldt4,ldt_start,ldt_end
+long ll_report,ll_jenis,ll_mode
+string ls_awal
+long ll_year,ll_year2,ll_bank
+
+
+
+
+ldt_start = dw_1.object.tgl1[1]
+ldt_end = dw_1.object.tgl2[1]
+
+ldt_start = f_bom(ldt_start)
+ldt_end = f_eom(ldt_end)
+
+
+ldt1 = dw_1.object.tgl1[1]
+//ldt2 = dw_1.object.tgl2[1]
+ll_report = dw_1.object.flag_zero[1]
+ll_jenis = dw_1.object.ll_report[1]
+ll_mode = dw_1.object.ll_mode[1]
+ll_bank = dw_1.object.ll_bank[1]
+
+if isnull(ll_report) then ll_report = 1
+if isnull(ll_jenis) then ll_jenis = 1
+ldt1 = datetime(date(ldt1))
+
+
+ldt1 = f_bom(ldt1)
+ldt2 = f_eom(ldt1)
+
+ll_year = year(date(ldt1))
+ll_year2 = year(date(ldt2))
+if ll_year <> ll_year2 then
+	messagebox('Warning!','Tidak diperbolehkan beda tahun..!',stopsign!)
+	return
+end if
+
+ls_awal = string(ll_year)+'-01-01'
+ldt3 = datetime(ls_awal)
+
+select dateadd(day,-1,date(:ldt1)) 
+into :ldt4
+from gl_setup;
+
+//if ldt4 < ldt3 then ldt4 = ldt3 //(Beda Tahun)
+
+dw_1.setitem(1,'tgl1',ldt1)
+
+//messagebox('',string(ldt1,'dd-mm-yyyy'))
+//messagebox('',string(ldt2,'dd-mm-yyyy'))
+//messagebox('',string(ldt3,'dd-mm-yyyy'))
+//messagebox('',string(ldt4,'dd-mm-yyyy'))
+
+if ll_mode = 1 then
+	if ll_jenis = 1 then
+		if ll_report = 1 then
+			dw_2.dataobject = 'dw_rpt_gl_trialbalance'
+		else
+			dw_2.dataobject = 'dw_rpt_gl_trialbalance_rekap'
+		end if
+	end if
+	if ll_jenis = 2 then
+		if ll_report = 1 then
+			dw_2.dataobject = 'dw_rpt_neraca_new'
+		else
+			dw_2.dataobject = 'dw_rpt_neraca_new_rekap'
+		end if
+	end if
+	
+	if ll_jenis = 4 then
+		if ll_report = 1 then
+			dw_2.dataobject = 'dw_rpt_biaya1'
+		else
+			dw_2.dataobject = 'dw_rpt_biaya2'
+		end if
+		dw_2.settransobject(sqlca)
+		dw_2.retrieve(ldt3,ldt4,ldt1,ldt2)
+		return
+	end if
+else //TAHUNAN
+	if ll_jenis = 1 then
+		if ll_report = 1 then
+			dw_2.dataobject = 'dw_rpt_gl_trialbalance_tahunan'
+		else
+			dw_2.dataobject = 'dw_rpt_gl_trialbalance_rekap_tahunan'
+		end if
+		dw_2.settransobject(sqlca)
+		dw_2.retrieve(ldt_start,ldt_end)
+		return
+	end if
+	if ll_jenis = 2 then
+		if ll_report = 1 then
+			dw_2.dataobject = 'dw_rpt_neraca_new_tahunan'
+		else
+			dw_2.dataobject = 'dw_rpt_neraca_new_rekap_tahunan'
+		end if
+		dw_2.settransobject(sqlca)
+		dw_2.retrieve(ldt_start,ldt_end)
+		return
+	end if
+	
+	if ll_jenis = 4 then
+		if ll_report = 1 then
+			dw_2.dataobject = 'dw_rpt_biaya1_tahunan'
+		else
+			dw_2.dataobject = 'dw_rpt_biaya2_tahunan'
+		end if
+		dw_2.settransobject(sqlca)
+		dw_2.retrieve(ldt_start,ldt_end)
+		return
+	end if
+end if
+
+
+
+if ll_jenis = 5 then
+	dw_2.dataobject = 'dw_history_ci'
+	dw_2.settransobject(sqlca)
+	dw_2.retrieve(ldt_start,ldt_end,ll_bank,0)
+	return
+end if
+
+if ll_jenis = 6 then
+	dw_2.dataobject = 'dw_history_co'
+	dw_2.settransobject(sqlca)
+	dw_2.retrieve(ldt_start,ldt_end,ll_bank,0)
+	return
+end if
+
+
+if ll_jenis = 3 then
+	//Get Summary by Group
+	decimal ldec_jual_lalu,ldec_jual_ini,ldec_hpp_lalu,ldec_hpp_ini,ldec_biaya_lalu,ldec_biaya_ini
+	decimal ldec_dapat_lalu,ldec_dapat_ini,ldec_blain_lalu,ldec_blain_ini
+	decimal ldec_pajak_lalu,ldec_pajak_ini
+	
+	dw_rl.retrieve(ldt3,ldt4,ldt1,ldt2)
+	dw_rl.accepttext()
+	if dw_rl.getrow() <=0 then return
+	ldec_jual_lalu = dw_rl.object.penjualan_lalu[1]
+	ldec_jual_ini = dw_rl.object.penjualan_ini[1]
+	ldec_hpp_lalu = dw_rl.object.hpp_lalu[1]
+	ldec_hpp_ini = dw_rl.object.hpp_ini[1]
+	ldec_biaya_lalu = dw_rl.object.biaya_lalu[1]
+	ldec_biaya_ini = dw_rl.object.biaya_ini[1]
+	ldec_dapat_lalu = dw_rl.object.pendapatan_lalu[1]
+	ldec_dapat_ini = dw_rl.object.pendapatan_ini[1]
+	ldec_blain_lalu = dw_rl.object.biaya_lain_lalu[1]
+	ldec_blain_ini = dw_rl.object.biaya_lain_ini[1]
+	ldec_pajak_lalu = dw_rl.object.pajak_lalu[1]
+	ldec_pajak_ini = dw_rl.object.pajak_ini[1]
+	
+	if ll_mode = 1 then
+		if ll_report = 1 then
+			dw_2.dataobject = 'dw_rpt_is_compo'
+			dw_2.settransobject(sqlca)
+			dw_2.retrieve(ldt3,ldt4,ldt1,ldt2,ldec_jual_lalu,ldec_jual_ini,ldec_hpp_lalu,ldec_hpp_ini,ldec_biaya_lalu,ldec_biaya_ini,ldec_dapat_lalu,ldec_dapat_ini,ldec_blain_lalu,ldec_blain_ini,ldec_pajak_lalu,ldec_pajak_ini,f_protect())
+			return
+		else
+			dw_2.dataobject = 'dw_rpt_is_compo_rekap'
+			dw_2.settransobject(sqlca)
+			dw_2.retrieve(ldt3,ldt4,ldt1,ldt2,ldec_jual_lalu,ldec_jual_ini,ldec_hpp_lalu,ldec_hpp_ini,ldec_biaya_lalu,ldec_biaya_ini,ldec_dapat_lalu,ldec_dapat_ini,ldec_blain_lalu,ldec_blain_ini,ldec_pajak_lalu,ldec_pajak_ini,f_protect())
+			return
+		end if
+	else
+		if ll_report = 1 then
+			dw_2.dataobject = 'dw_rpt_is_compo_tahunan'
+			dw_2.settransobject(sqlca)
+			dw_2.retrieve(ldt_start,ldt_end,ldec_jual_lalu,ldec_jual_ini,ldec_hpp_lalu,ldec_hpp_ini,ldec_biaya_lalu,ldec_biaya_ini,ldec_dapat_lalu,ldec_dapat_ini,ldec_blain_lalu,ldec_blain_ini,ldec_pajak_lalu,ldec_pajak_ini,f_protect())
+			return
+		else
+			dw_2.dataobject = 'dw_rpt_is_compo_rekap_tahunan'
+			dw_2.settransobject(sqlca)
+			dw_2.retrieve(ldt_start,ldt_end,ldec_jual_lalu,ldec_jual_ini,ldec_hpp_lalu,ldec_hpp_ini,ldec_biaya_lalu,ldec_biaya_ini,ldec_dapat_lalu,ldec_dapat_ini,ldec_blain_lalu,ldec_blain_ini,ldec_pajak_lalu,ldec_pajak_ini,f_protect())
+			return
+		end if
+	end if
+end if
+
+dw_2.settransobject(sqlca)
+
+////////////CLOSING RL BEFORE THIS////////////////////
+select re_this_year,re_ikhtisar into :is_rl1,:is_rl2 
+from gl_setup;
+idt_tgl = ldt1
+
+dw_is.retrieve(ldt3,ldt4,ldt1,ldt2)
+/////////////////////////////////////////////////////////////////
+//messagebox('',string(ldt3,'dd-mm-yyyy'))
+//messagebox('',string(ldt4,'dd-mm-yyyy'))
+//messagebox('',string(ldt1,'dd-mm-yyyy'))
+//messagebox('',string(ldt2,'dd-mm-yyyy'))
+
+dw_2.retrieve(ldt3,ldt4,ldt1,ldt2,f_protect())
+
+
+end event
+
+event dw_1::editchanged;call super::editchanged;string ls_search
+this.accepttext()
+ls_search = upper(this.object.cari[1])
+if isnull(ls_search) then ls_search = ''
+if dwo.name = 'cari' then
+	if ls_search = '' then
+		dw_2.setfilter('')
+	else	
+		dw_2.setfilter('upper(is_find) like "%' + ls_search + '%"')
+	end if
+	dw_2.filter()
+	dw_2.sort()
+	dw_2.groupcalc()
+end if
+end event
+
+event dw_1::doubleclicked;call super::doubleclicked;gurningsoft_xls(dw_update)
+end event
+
+type dw_2 from w_report`dw_2 within w_rpt_neraca
+string dataobject = "dw_history_ci"
+end type
+
+type st_1 from w_report`st_1 within w_rpt_neraca
+end type
+
+type dw_journal from uo_dw within w_rpt_neraca
+boolean visible = false
+integer x = 635
+integer y = 1324
+integer taborder = 40
+boolean bringtotop = true
+string dataobject = "d_journal_is"
+end type
+
+type dw_is from uo_dw within w_rpt_neraca
+boolean visible = false
+integer x = 850
+integer y = 356
+integer taborder = 30
+boolean bringtotop = true
+string dataobject = "dw_rpt_gl_trialbalance_get"
+boolean resizable = true
+end type
+
+event retrieveend;call super::retrieveend;datetime ldt_tgl1,ldt_tgl2
+double ld_awal,ld_mutasi,ld_akhir
+
+if this.rowcount() <= 0 then return
+open(w_wait)
+ld_awal    = this.object.tawal[1]
+//ld_mutasi = this.object.tmutasi[1]
+ld_mutasi = this.object.ttl_is[1]
+ld_akhir    = this.object.takhir[1]
+
+if isnull(ld_awal) then ld_awal = 0.00
+if isnull(ld_mutasi) then ld_mutasi = 0.00
+if isnull(ld_akhir) then ld_akhir = 0.00
+
+dw_journal.settransobject(sqlca)
+dw_journal.reset()
+
+ldt_tgl1 = dw_1.object.tgl1[1]
+ldt_tgl2 = datetime(date(f_eom(idt_tgl)))
+
+is_voucher 	= 'RL' + gs_site + string(ldt_tgl2,'yyyymm')
+delete from gl_journal where voucher = :is_voucher ;
+commit;
+
+if ld_awal = 0 and ld_mutasi = 0 and ld_akhir = 0 then
+	close(w_wait)
+	return
+end if
+/*
+if ld_mutasi <= 0 then
+	ld_mutasi = abs(ld_mutasi)
+	
+	dw_journal.insertrow(0)
+	dw_journal.setitem(dw_journal.getrow(),'voucher',is_voucher)
+	dw_journal.setitem(dw_journal.getrow(),'voucher_manual',is_voucher)
+	dw_journal.setitem(dw_journal.getrow(),'urut',dw_journal.getrow())
+	dw_journal.setitem(dw_journal.getrow(),'tgl',ldt_tgl2)
+	dw_journal.setitem(dw_journal.getrow(),'debet',ld_mutasi)
+	dw_journal.setitem(dw_journal.getrow(),'kredit',0.00)
+	dw_journal.setitem(dw_journal.getrow(),'ket','Closing Journal R/L')
+	dw_journal.setitem(dw_journal.getrow(),'modul_id','GJ')
+	dw_journal.setitem(dw_journal.getrow(),'site_id',gs_site)
+	dw_journal.setitem(dw_journal.getrow(),'posting','P')
+	dw_journal.setitem(dw_journal.getrow(),'account_id',is_rl2)
+	
+	dw_journal.scrolltorow(dw_journal.insertrow(0))
+	dw_journal.setitem(dw_journal.getrow(),'voucher',is_voucher)
+	dw_journal.setitem(dw_journal.getrow(),'voucher_manual',is_voucher)
+	dw_journal.setitem(dw_journal.getrow(),'urut',dw_journal.getrow())
+	dw_journal.setitem(dw_journal.getrow(),'tgl',ldt_tgl2)
+	dw_journal.setitem(dw_journal.getrow(),'debet',0.00)
+	dw_journal.setitem(dw_journal.getrow(),'kredit',ld_mutasi)
+	dw_journal.setitem(dw_journal.getrow(),'ket','Closing Journal R/L')
+	dw_journal.setitem(dw_journal.getrow(),'modul_id','GJ')
+	dw_journal.setitem(dw_journal.getrow(),'site_id',gs_site)
+	dw_journal.setitem(dw_journal.getrow(),'posting','P')
+	dw_journal.setitem(dw_journal.getrow(),'account_id',is_rl1)
+else
+	*/
+	
+	dw_journal.insertrow(0)
+	dw_journal.setitem(dw_journal.getrow(),'voucher',is_voucher)
+	dw_journal.setitem(dw_journal.getrow(),'voucher_manual',is_voucher)
+	dw_journal.setitem(dw_journal.getrow(),'urut',dw_journal.getrow())
+	dw_journal.setitem(dw_journal.getrow(),'tgl',ldt_tgl2)
+	if ld_mutasi >=0 then
+		dw_journal.setitem(dw_journal.getrow(),'debet',ld_mutasi)
+		dw_journal.setitem(dw_journal.getrow(),'kredit',0.00)
+	else
+		ld_mutasi = abs(ld_mutasi)
+		dw_journal.setitem(dw_journal.getrow(),'debet',0.00)
+		dw_journal.setitem(dw_journal.getrow(),'kredit',ld_mutasi)
+	end if
+	dw_journal.setitem(dw_journal.getrow(),'ket','Closing Journal R/L')
+	dw_journal.setitem(dw_journal.getrow(),'modul_id','GJ')
+	dw_journal.setitem(dw_journal.getrow(),'site_id',gs_site)
+	dw_journal.setitem(dw_journal.getrow(),'posting','P')
+	dw_journal.setitem(dw_journal.getrow(),'account_id',is_rl1)
+	/*
+	dw_journal.scrolltorow(dw_journal.insertrow(0))
+	dw_journal.setitem(dw_journal.getrow(),'voucher',is_voucher)
+	dw_journal.setitem(dw_journal.getrow(),'voucher_manual',is_voucher)
+	dw_journal.setitem(dw_journal.getrow(),'urut',dw_journal.getrow())
+	dw_journal.setitem(dw_journal.getrow(),'tgl',ldt_tgl2)
+	dw_journal.setitem(dw_journal.getrow(),'debet',0.00)
+	dw_journal.setitem(dw_journal.getrow(),'kredit',ld_mutasi)
+	dw_journal.setitem(dw_journal.getrow(),'ket','Closing Journal R/L')
+	dw_journal.setitem(dw_journal.getrow(),'modul_id','GJ')
+	dw_journal.setitem(dw_journal.getrow(),'site_id',gs_site)
+	dw_journal.setitem(dw_journal.getrow(),'posting','P')
+	dw_journal.setitem(dw_journal.getrow(),'account_id',is_rl2)
+	*/
+//end if
+
+dw_journal.accepttext()
+
+if dw_journal.update() = 1 then
+	//messagebox('',sqlca.sqlerrtext)
+	commit;
+else
+	rollback;
+	messagebox('Error','Gagal closing R/L..!')
+	close (w_wait)
+	return
+end if
+
+long ll_count
+
+//select count(*)
+//into :ll_count
+//from gl_journal
+//where voucher = :is_voucher
+//using sqlca;
+//messagebox('',ll_count)
+close(w_wait)
+	
+
+
+
+end event
+
+type dw_rl from uo_dw within w_rpt_neraca
+boolean visible = false
+integer x = 325
+integer y = 256
+integer taborder = 30
+boolean bringtotop = true
+string dataobject = "dw_rpt_is"
+boolean resizable = true
+end type
+
+type dw_share1 from uo_dw within w_rpt_neraca
+boolean visible = false
+integer x = 1646
+integer y = 1004
+integer taborder = 40
+boolean bringtotop = true
+string dataobject = "dw_rpt_is_penjualan_rekap"
+boolean resizable = true
+end type
+
+type dw_rl1 from uo_dw within w_rpt_neraca
+boolean visible = false
+integer x = 297
+integer y = 200
+integer taborder = 30
+boolean bringtotop = true
+string dataobject = "dw_rpt_is_penjualan"
+end type
+
+type dw_rl3 from uo_dw within w_rpt_neraca
+boolean visible = false
+integer x = 288
+integer y = 1060
+integer taborder = 50
+boolean bringtotop = true
+string dataobject = "dw_rpt_is_biaya"
+end type
+
+type dw_rl2 from uo_dw within w_rpt_neraca
+boolean visible = false
+integer x = 1349
+integer y = 264
+integer taborder = 40
+boolean bringtotop = true
+string dataobject = "dw_rpt_is_hpp"
+end type
+
+type dw_rl4 from uo_dw within w_rpt_neraca
+boolean visible = false
+integer x = 1435
+integer y = 1068
+integer taborder = 60
+boolean bringtotop = true
+string dataobject = "dw_rpt_is_pendapatan"
+end type
+
+type dw_rl5 from uo_dw within w_rpt_neraca
+boolean visible = false
+integer x = 2574
+integer y = 1196
+integer taborder = 70
+boolean bringtotop = true
+string dataobject = "dw_rpt_is_pajak"
+end type
+
+type dw_xls from uo_dw within w_rpt_neraca
+boolean visible = false
+integer x = 448
+integer y = 1144
+integer taborder = 70
+boolean bringtotop = true
+end type
+

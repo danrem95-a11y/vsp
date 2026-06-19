@@ -1,0 +1,11 @@
+ROWS        SA                           MU                               ADJ                              BYR                              SISA                             
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+444         29718846058.79               9022043995.000000                0.000000                         7049690126.69                    31691199927.100000               
+
+(1 rows)
+
+-- BASELINE UPDATED after restructuring (removed MONTH=1 branch, fixed SAF_IDR priority)
+-- SA=29718846058.79 matches OPNAME FAKTUR PIUTANG 2025.xls C25 grand total exactly
+-- SISA=31691199927.10 = 31.691... (correct)
+-- Old baseline (pre-fix): ROWS=445, SA=29718846127.85, SISA=31691199996.16
+

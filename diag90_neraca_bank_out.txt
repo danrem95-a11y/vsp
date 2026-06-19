@@ -1,0 +1,90 @@
+﻿
+===== VIEW DEFINITION: v_neraca =====
+ERROR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][Adaptive Server Anywhere]Column 'view_def' not found"
+
+===== v_neraca accounts (BANK/KAS related) =====
+group_id	group_name	subgroup_id	subgroup_name	fincatcode	fincatdes	accountcode	accountdes	flag_dk	show_hide
+--------------------------------------------------------------------------------
+10	AKTIVA	1010	AKTIVA LANCAR	BS2010	KAS	100-001	Kas Kecil - A	D	1
+10	AKTIVA	1010	AKTIVA LANCAR	BS2010	KAS	100-002	Kas Kecil - B	D	1
+10	AKTIVA	1010	AKTIVA LANCAR	BS2010	KAS	100-003	Kas Kecil - Diana	D	1
+10	AKTIVA	1010	AKTIVA LANCAR	BS2010	KAS	100-101	Kas United State Dollar ( US$ )	D	1
+10	AKTIVA	1010	AKTIVA LANCAR	BS2011	BANK	101-001	BCA : 284-0032003  TAM OD	D	1
+10	AKTIVA	1010	AKTIVA LANCAR	BS2011	BANK	101-010	PERMATA : 504-000060 ( PT. TAM )	D	1
+10	AKTIVA	1010	AKTIVA LANCAR	BS2011	BANK	101-011	BCA : 284-0066005  ( PT. TAM )	D	1
+10	AKTIVA	1010	AKTIVA LANCAR	BS2011	BANK	101-110	BCA US$ : 284-0020099 ( PT. TAM )	D	1
+10	AKTIVA	1010	AKTIVA LANCAR	BS2011	BANK	101-111	BCA CNY : 284-9929989 ( PT. TAM )	D	(null)
+10	AKTIVA	1010	AKTIVA LANCAR	BS2011	BANK	101-201	Deposito - BCA ( Rp )	D	1
+10	AKTIVA	1010	AKTIVA LANCAR	BS2011	BANK	101-202	Deposito - Cadangan Gaji	D	1
+(11 rows)
+
+===== gl_cate - BANK categories =====
+FinCatCode	FinCatDes
+--------------------------------------------------------------------------------
+BS2010	KAS
+BS2011	BANK
+BS2015	PERSEDIAAN BARANG
+(3 rows)
+
+===== gl_acc BS2010/BS2011 accounts vs v_neraca =====
+AccountCode	AccountDes	FinCatCode	v_neraca_fincatcode
+--------------------------------------------------------------------------------
+100-001	Kas Kecil - A	BS2010	BS2010
+100-002	Kas Kecil - B	BS2010	BS2010
+100-003	Kas Kecil - Diana	BS2010	BS2010
+100-101	Kas United State Dollar ( US$ )	BS2010	BS2010
+101-001	BCA : 284-0032003  TAM OD	BS2011	BS2011
+101-010	PERMATA : 504-000060 ( PT. TAM )	BS2011	BS2011
+101-011	BCA : 284-0066005  ( PT. TAM )	BS2011	BS2011
+101-110	BCA US$ : 284-0020099 ( PT. TAM )	BS2011	BS2011
+101-111	BCA CNY : 284-9929989 ( PT. TAM )	BS2011	BS2011
+101-201	Deposito - BCA ( Rp )	BS2011	BS2011
+101-202	Deposito - Cadangan Gaji	BS2011	BS2011
+(11 rows)
+
+===== BALANCE SHEET QUERY - accounts in BANK (BS2011) from v_neraca =====
+fincatcode	fincatdes	accountcode	accountdes	flag_dk	opening_bal	mutasi_net	saldo_jan31
+--------------------------------------------------------------------------------
+BS2011	BANK	101-001	BCA : 284-0032003  TAM OD	D	0.000000	0.000000	0.000000
+BS2011	BANK	101-010	PERMATA : 504-000060 ( PT. TAM )	D	0.000000	0.000000	0.000000
+BS2011	BANK	101-011	BCA : 284-0066005  ( PT. TAM )	D	5049572829.190000	-3766845537.860000	1282727291.330000
+BS2011	BANK	101-110	BCA US$ : 284-0020099 ( PT. TAM )	D	511637903.610000	581677621.850000	1093315525.460000
+BS2011	BANK	101-111	BCA CNY : 284-9929989 ( PT. TAM )	D	0.000000	0.000000	0.000000
+BS2011	BANK	101-201	Deposito - BCA ( Rp )	D	5000000000.000000	-3000000000.000000	2000000000.000000
+BS2011	BANK	101-202	Deposito - Cadangan Gaji	D	0.000000	0.000000	0.000000
+(7 rows)
+
+===== TOTAL BANK saldo per balance sheet logic (v_neraca accounts) =====
+fincatcode	fincatdes	total_saldo_jan31
+--------------------------------------------------------------------------------
+BS2010	KAS	9877350.000000
+BS2011	BANK	4376042816.790000
+BS2015	PERSEDIAAN BARANG	23639091393.270000
+BS2030	PIUTANG DAGANG	31691199996.160000
+BS2031	PEMBAYARAN DIMUKA	1338706882.468000
+BS2032	PIUTANG LAIN-LAIN	1653175600.000000
+BS2110	AKTIVA TETAP	28049769787.080000
+BS2111	AKUMULASI PENYUSUTAN AKTIVA TETAP	-5141924261.000000
+BS2290	AKTIVA LAIN	2400000000.000000
+BS3010	HUTANG DAGANG	11211033663.648000
+BS3011	BIAYA YMH. DIBAYAR	2104620233.000000
+BS3012	PENERIMAAN DIMUKA	461118461.940000
+BS3013	HUTANG PAJAK	899899741.840000
+BS3014	HUTANG KOMISI	763501512.000000
+BS3015	HUTANG LAIN-LAIN	31586675.000000
+BS3311	HUTANG DALAM NEGERI	0.000000
+BS3312	HUTANG PEMEGANG SAHAM	0.000000
+BS3313	PINJAMAN ANTAR PERUSAHAAN	0.000000
+BS4030	MODAL	2000000000.000000
+BS4040	LABA DITAHAN	70573393497.160000
+(20 rows)
+
+===== v_neraca BS2011 accounts NOT in gl_acc as BS2011 =====
+accountcode	accountdes	v_fincatcode	gl_acc_fincatcode
+--------------------------------------------------------------------------------
+(0 rows)
+
+===== All accounts with |saldo| approx 76.6M =====
+AccountCode	AccountDes	FinCatCode	opening	movement	saldo
+--------------------------------------------------------------------------------
+(0 rows)
