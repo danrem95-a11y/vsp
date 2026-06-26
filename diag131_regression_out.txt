@@ -1,0 +1,48 @@
+﻿
+=== FR -> 226-006 : sebaran tgl & jumlah ===
+tgl_min=01/04/2013 00:00:00 | tgl_max=05/08/2026 00:00:00 | n=101
+
+=== FR -> 226-006 : per bulan ===
+y=2013 | m=1 | n=6 | kr=82500000.000000
+y=2013 | m=2 | n=6 | kr=81881250.000000
+y=2013 | m=3 | n=7 | kr=125095000.000000
+y=2013 | m=4 | n=12 | kr=211860000.020000
+y=2013 | m=5 | n=3 | kr=46295000.000000
+y=2013 | m=6 | n=4 | kr=102000000.000000
+y=2013 | m=7 | n=12 | kr=219450000.000000
+y=2013 | m=8 | n=1 | kr=23400000.000000
+y=2013 | m=9 | n=4 | kr=91800000.000000
+y=2013 | m=10 | n=2 | kr=58800000.000000
+y=2013 | m=11 | n=2 | kr=63800000.000000
+y=2013 | m=12 | n=3 | kr=100650000.000000
+y=2014 | m=1 | n=6 | kr=126480000.000000
+y=2014 | m=2 | n=6 | kr=176250000.000000
+y=2014 | m=3 | n=1 | kr=23010000.000000
+y=2014 | m=4 | n=2 | kr=95700000.000000
+y=2014 | m=8 | n=1 | kr=33000000.000000
+y=2014 | m=9 | n=5 | kr=171875000.000000
+y=2014 | m=10 | n=4 | kr=136400000.000000
+y=2014 | m=11 | n=3 | kr=102300000.000000
+y=2014 | m=12 | n=4 | kr=138600000.000000
+y=2015 | m=3 | n=1 | kr=37125000.000000
+y=2026 | m=4 | n=3 | kr=49603200.000000
+y=2026 | m=5 | n=3 | kr=95646652.000000
+
+=== FR -> 102-601 : rentang tgl ===
+tgl_min=02/20/2015 00:00:00 | tgl_max=02/21/2026 00:00:00 | n=545
+
+=== Jurnal EX lengkap doc 10126040500001 + FR05001 (state kini) ===
+doc_reff=10126040500001 | urut=1 | account_id=102-101 | debet=13244609.030000 | kredit=0.000000 | ket=(Ekspedisi : SPARE PARTS THERMO KING) 
+doc_reff=10126040500001 | urut=2 | account_id=104-111 | debet=642934.000000 | kredit=0.000000 | ket=(PPN Ekspedisi : SPARE PARTS THERMO KING) 
+doc_reff=10126040500001 | urut=3 | account_id=226-006 | debet=0.000000 | kredit=642934.000000 | ket=(PPN Ekspedisi : SPARE PARTS THERMO KING) 
+doc_reff=10126040500001 | urut=4 | account_id=226-006 | debet=0.000000 | kredit=13244609.000000 | ket=(SPARE PARTS THERMO KING) 
+doc_reff=1012604FR05001 | urut=1 | account_id=102-101 | debet=13328000.000000 | kredit=0.000000 | ket=(Ekspedisi : SPARE PARTS THERMO KING) TK.002-130226, TK.001-070126 INV.1305352953
+doc_reff=1012604FR05001 | urut=2 | account_id=226-006 | debet=0.000000 | kredit=13328000.000000 | ket=(SPARE PARTS THERMO KING) TK.002-130226, TK.001-070126 INV.1305352953
+
+=== main doc April: ap_kotor vs tstok2 vs GL persediaan (cek nilai 13.244.609 muncul lagi?) ===
+doc=10126040500001 | ap_kotor=14712724.00 | tstok2_alloc=26572609.0300 | gl_persed=13244609.030000
+doc=10126040500002 | ap_kotor=19209210.00 | tstok2_alloc=43898656.0400 | gl_persed=17590656.040000
+
+=== ap_trans FR April: freight/ttl kini ===
+order_client=1012604FR05001 | ttl_kotor=0.00 | ttl_netto=0.00 | freight=13328000.00 | kurs=6407300.00 | kurs2=28193603.00
+order_client=1012604FR05002 | ttl_kotor=0.00 | ttl_netto=0.00 | freight=26308000.00 | kurs=13483175.00 | kurs2=59327578.00

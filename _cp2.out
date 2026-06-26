@@ -1,0 +1,10 @@
+proc_name                                                                                                                        
+--------------------------------------------------------------------------------------------------------------------------------
+sp_fa_generate_sl                                                                                                                
+sp_fa_post_period                                                                                                                
+sp_fa_rebase_jan_jun                                                                                                             
+sp_fa_regenerate_period                                                                                                          
+
+(4 rows)
+
+Execution time: 1.253 seconds

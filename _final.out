@@ -1,0 +1,11 @@
+lbl                              val                            
+---------------------------------------------------------------
+MEMO_remaining (harus 0)         0                              
+FA_DEPRECIATION posted           539                            
+FA JanJun total Dr               334147546                      
+FA MeiJun Dr (beban baru)        109963645                      
+FA JanApr Dr (harus 224.183.901) 224183901                      
+
+(5 rows)
+
+Execution time: 0.23 seconds

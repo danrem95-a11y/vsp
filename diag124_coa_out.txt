@@ -1,0 +1,21 @@
+﻿
+=== coa 102-601 (try gl_account) ===
+ERR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][SQL Anywhere]Table 'gl_account' not found"
+
+=== coa 102-601 (try account) ===
+ERR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][SQL Anywhere]Table 'account' not found"
+
+=== coa 102-601 (try coa) ===
+ERR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][SQL Anywhere]Table 'coa' not found"
+
+=== coa 102-601 (try gl_coa) ===
+ERR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][SQL Anywhere]Table 'gl_coa' not found"
+
+=== equity/penyesuaian candidates 3xx & selisih ===
+ERR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S02] [Sybase][ODBC Driver][SQL Anywhere]Table 'gl_account' not found"
+
+=== saldo 102-601 reconfirm ===
+dr=14878000549.730000 | cr=15020712365.730000 | saldo=-142711816.000000
+
+=== gl_journal columns probe (1 row EX) ===
+voucher=1012605MEMO0011 | urut=3 | tgl=05/31/2026 00:00:00 | debet=830700.000000 | kredit=0.000000 | ket=ENTERTAINMENT | kas_id= | giro_id= | modul_id=GJ | site_id=101 | inkaso_id= | cf_flag=N | cc_flag=N | depart_id1= | depart_id2= | project_id1= | project_id2= | posting=N | account_id=412-071 | voucher_manual=GJ26050005 | curr_id=IDR | rate_rp=1.00 | rekon=0 | cust_id= | flag_dp=N | group_id= | order_reff= | debet_kurs=830700.000000 | kredit_kurs= | journal_urut= | doc_reff= | dk= | ket2= | show_hide=

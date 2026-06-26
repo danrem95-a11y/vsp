@@ -1,0 +1,8 @@
+﻿
+=== tstok2 allocation (biaya_ekspedisi) per main ===
+bukti_id=10126040500001 | n=25 | sum_byk=26572609.0300 | sum_abs=26572609.030000 | sum_netto=222811902.81
+bukti_id=10126040500002 | n=27 | sum_byk=43898656.0400 | sum_abs=43898656.040000 | sum_netto=489855218.90
+
+=== Compare: ap_trans header vs GL persediaan(102-101) vs tstok2 alloc ===
+order_client=10126040500001 | ap_kotor=14712724.00 | ap_netto=15355658.00 | ap_ppn=642934.00 | tstok2_alloc=26572609.0300 | gl_persediaan_dr=13244609.030000 | gl_hutang_cr=13887543.000000
+order_client=10126040500002 | ap_kotor=19209210.00 | ap_netto=21128227.00 | ap_ppn=1919017.00 | tstok2_alloc=43898656.0400 | gl_persediaan_dr=17590656.040000 | gl_hutang_cr=19509673.000000

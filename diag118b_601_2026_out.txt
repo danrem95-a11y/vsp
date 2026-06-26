@@ -1,0 +1,46 @@
+﻿
+=== 102-601 ALL lines tgl>=2026-01-01 (every module) ===
+tgl=01/19/2026 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=2346000.000000 | kredit=0.000000 | ket=BM/PIB.000041/TK.009,001
+tgl=01/20/2026 00:00:00 | modul_id=EX | doc_reff=1012601FR05002 | urut=2 | debet=0.000000 | kredit=2346000.000000 | ket=(SPARE PARTS THERMO KING) TK.009-221025 INV.1301926177
+tgl=01/24/2026 00:00:00 | modul_id=EX | doc_reff=1012601FR05001 | urut=2 | debet=0.000000 | kredit=5032722.000000 | ket=(UNIT COLD STORAGE BINGSHAN) BN.507 INV.SHZJ2025121246
+tgl=01/27/2026 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=10121000.000000 | kredit=0.000000 | ket=BM/PIB.000042/TKM.001
+tgl=01/28/2026 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=5032722.000000 | kredit=0.000000 | ket=LS/BN.507/BMI-LINC
+tgl=01/28/2026 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=21522900.000000 | kredit=0.000000 | ket=LS/TK.G504,J506,F507
+tgl=01/28/2026 00:00:00 | modul_id=EX | doc_reff=1012601FR05003 | urut=2 | debet=0.000000 | kredit=10121000.000000 | ket=(SPARE PARTS THERMO KING) TK.001-070126 INV.1302426812
+tgl=02/09/2026 00:00:00 | modul_id=EX | doc_reff=1012602FR05004 | urut=2 | debet=0.000000 | kredit=21522900.000000 | ket=(UNIT TRUCK THERMO KING) TK.G504, TK.F507, TK.J506-251125 INV.5001849,50,51
+tgl=02/11/2026 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=23444500.000000 | kredit=0.000000 | ket=LS/TK.G505.J507,F508
+tgl=02/11/2026 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=10943300.000000 | kredit=0.000000 | ket=LS/TK.A601,B601,C601
+tgl=02/11/2026 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=10989600.000000 | kredit=0.000000 | ket=LS/TK.A505,B506,C508
+tgl=02/19/2026 00:00:00 | modul_id=EX | doc_reff=1012602FR05002 | urut=2 | debet=0.000000 | kredit=10943300.000000 | ket=(UNIT TRUCK THERMO KING) TK.A601, TK.B601, TK.C601 - 060126 INV.5001887,8,9
+tgl=02/21/2026 00:00:00 | modul_id=EX | doc_reff=1012602FR05001 | urut=2 | debet=0.000000 | kredit=23444500.000000 | ket=(UNIT TRUCK THERMO KING) TK.G505,TK.F508, TK.F507-251225 INV.5001881,82
+tgl=02/21/2026 00:00:00 | modul_id=EX | doc_reff=1012602FR05003 | urut=2 | debet=0.000000 | kredit=10989600.000000 | ket=(UNIT TRUCK THERMO KING) TK.A505, TK.B506, TK.C505 -101225 INV.80786413
+tgl=04/08/2026 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=12149000.000000 | kredit=0.000000 | ket=BM/PIB.000043/TK.001-002
+tgl=04/09/2026 00:00:00 | modul_id=EX | doc_reff=1012604FR05001 | urut=2 | debet=0.000000 | kredit=13328000.000000 | ket=(SPARE PARTS THERMO KING) TK.002-130226, TK.001-070126 INV.1305352953
+tgl=04/14/2026 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=9967200.000000 | kredit=0.000000 | ket=LS/TK.SUM601A
+tgl=04/17/2026 00:00:00 | modul_id=CO | doc_reff= | urut=4 | debet=26308000.000000 | kredit=0.000000 | ket=BM/PIB.000044/TK.003,004
+tgl=04/22/2026 00:00:00 | modul_id=EX | doc_reff=1012604FR05002 | urut=2 | debet=0.000000 | kredit=26308000.000000 | ket=(SPARE PARTS THERMO KING) TK.003-130226, TK.004-270226 INV.1307048559
+tgl=04/25/2026 00:00:00 | modul_id=EX | doc_reff=1012604FR05003 | urut=2 | debet=0.000000 | kredit=9967200.000000 | ket=(UNIT TRUCK THERMO KING) SUM 601A-020326 INV.5001993
+tgl=04/27/2026 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=23696500.000000 | kredit=0.000000 | ket=LS/TK.SUM601C
+tgl=04/27/2026 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=10944300.000000 | kredit=0.000000 | ket=LS/TK.SUM601B
+tgl=04/30/2026 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=1179000.000000 | kredit=0.000000 | ket=BM/NOTUL/TK.001,002
+tgl=05/05/2026 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=10073000.000000 | kredit=0.000000 | ket=BM/PIB.000045/TK.001,002,007
+tgl=05/21/2026 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=11858000.000000 | kredit=0.000000 | ket=BM/PIB.000046/TK.006
+tgl=05/26/2026 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=24145000.000000 | kredit=0.000000 | ket=LS/TK.SUM601D
+
+=== 102-601 per-year balance (Dr/Cr/net) ===
+thn=2015 | dr=3050037309.490000 | cr=3240711417.490000 | net=-190674108.000000
+thn=2016 | dr=2017576772.000000 | cr=2083074850.000000 | net=-65498078.000000
+thn=2017 | dr=1835252015.000000 | cr=1837618265.000000 | net=-2366250.000000
+thn=2018 | dr=1881732701.880000 | cr=1880931501.880000 | net=801200.000000
+thn=2019 | dr=1462803138.360000 | cr=1440636208.360000 | net=22166930.000000
+thn=2020 | dr=969471605.000000 | cr=982831235.000000 | net=-13359630.000000
+thn=2021 | dr=653229000.000000 | cr=662612300.000000 | net=-9383300.000000
+thn=2022 | dr=899723550.000000 | cr=902627150.000000 | net=-2903600.000000
+thn=2023 | dr=586105125.000000 | cr=586105125.000000 | net=0.000000
+thn=2024 | dr=713005137.000000 | cr=703382437.000000 | net=9622700.000000
+thn=2025 | dr=500545302.000000 | cr=510168002.000000 | net=-9622700.000000
+thn=2026 | dr=214720022.000000 | cr=134003222.000000 | net=80716800.000000
+
+=== 102-601 2026 net by module ===
+modul_id=EX | dr=0.000000 | cr=134003222.000000 | net=-134003222.000000 | n=10
+modul_id=CO | dr=214720022.000000 | cr=0.000000 | net=214720022.000000 | n=16

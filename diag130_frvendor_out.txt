@@ -1,0 +1,63 @@
+﻿
+=== Akun KREDIT pada jurnal EX dok freight (doc_reff LIKE %FR%) - histori ===
+account_id=102-601 | n=545 | total_kredit=14914844973.730000
+account_id=226-006 | n=101 | total_kredit=2393521102.020000
+
+=== Vendor FR (ap_trans anak) tipe 05, 2025-2026 ===
+vendor_id=4SL.L004 | n=1
+vendor_id=4SL.S029 | n=78
+vendor_id=4SL.S045 | n=583
+vendor_id=X001 | n=1
+
+=== Master supplier mengandung 'LAIN' ===
+ERR: Exception calling "ExecuteReader" with "0" argument(s): "ERROR [42S22] [Sybase][ODBC Driver][SQL Anywhere]Column 'supplier_id' not found"
+
+=== Per dok FR 2026: vendor + akun kredit ===
+doc=1012501FR05001 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012501FR05002 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012502FR05001 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012502FR05002 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012502FR05003 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012502FR05004 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012503FR05001 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012503FR05003 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012503FR05005 | vendor_id=4SL.S045 | kredit_acc=
+doc=1012503FR05006 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012503FR05004 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012505FR05001 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012506FR05001 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012506FR05002 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012507FR05004 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012507FR05001 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012507FR05002 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012507FR05003 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012508FR05001 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012509FR05001 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012509FR05002 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012509FR05003 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012509FR05004 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012510FR05001 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012511FR05001 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012511FR05003 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012511FR05004 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012511FR05005 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012511FR05006 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012511FR05002 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012512FR05001 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012512FR05003 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012512FR05004 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012512FR05002 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012601FR05002 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012601FR05001 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012601FR05003 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012602FR05004 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012602FR05002 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012602FR05001 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012602FR05003 | vendor_id=4SL.S045 | kredit_acc=102-601
+doc=1012603FR05001 | vendor_id=4SL.S045 | kredit_acc=
+doc=1012604FR05001 | vendor_id=4SL.S045 | kredit_acc=226-006
+doc=1012604FR05002 | vendor_id=4SL.S045 | kredit_acc=226-006
+doc=1012604FR05003 | vendor_id=4SL.S045 | kredit_acc=226-006
+doc=1012605FR05001 | vendor_id=4SL.S045 | kredit_acc=226-006
+doc=1012605FR05002 | vendor_id=4SL.S045 | kredit_acc=226-006
+doc=1012605FR05003 | vendor_id=X001 | kredit_acc=226-006

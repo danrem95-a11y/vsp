@@ -1,0 +1,1 @@
+SELECT count(*) depr_rows, count(distinct asset_code) aset, CAST(sum(depreciation_amount) AS numeric(20,2)) total_depr FROM FA_DEPRECIATION WHERE site_id='101' AND period BETWEEN '2026-01-01' AND '2026-06-30';

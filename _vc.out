@@ -1,0 +1,10 @@
+category_code n           
+-------------------------
+BGN           32          
+KDR           31          
+PBK           38          
+PKT           178         
+
+(4 rows)
+
+Execution time: 0.195 seconds

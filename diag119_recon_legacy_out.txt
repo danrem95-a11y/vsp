@@ -1,0 +1,94 @@
+﻿
+=== RECON 2026 main ekspedisi: faktur(ap) vs tstok2 alloc vs GL ===
+doc=10126010500002 | tgl=01/20/2026 00:00:00 | vendor_id=4SL.L010 | ap_kotor=8337955.00 | ap_ppn=409915.00 | child_freight_BM=2346000.00 | tstok2_alloc=10683955.0000 | gl_main_persed=8337955.000000 | gl_main_hutang=8747870.000000
+doc=10126010500001 | tgl=01/24/2026 00:00:00 | vendor_id=4SL.A040 | ap_kotor=0.00 | ap_ppn=0.00 | child_freight_BM= | tstok2_alloc=5032722.0000 | gl_main_persed=0.000000 | gl_main_hutang=0.000000
+doc=10126010500003 | tgl=01/28/2026 00:00:00 | vendor_id=4SL.L010 | ap_kotor=21435225.00 | ap_ppn=917075.00 | child_freight_BM=10121000.00 | tstok2_alloc=31556224.9000 | gl_main_persed=21435224.900000 | gl_main_hutang=22352300.000000
+doc=10126020500004 | tgl=02/09/2026 00:00:00 | vendor_id=4SL.H018 | ap_kotor=63401885.00 | ap_ppn=697420.74 | child_freight_BM= | tstok2_alloc=84924785.0200 | gl_main_persed=63401885.020000 | gl_main_hutang=64099306.000000
+doc=10126020500002 | tgl=02/19/2026 00:00:00 | vendor_id=4SL.H018 | ap_kotor=58010310.00 | ap_ppn=867125.36 | child_freight_BM= | tstok2_alloc=68953610.0400 | gl_main_persed=58010310.040000 | gl_main_hutang=58877435.000000
+doc=10126020500001 | tgl=02/21/2026 00:00:00 | vendor_id=4SL.H018 | ap_kotor=61013610.00 | ap_ppn=1260243.36 | child_freight_BM= | tstok2_alloc=84458110.0800 | gl_main_persed=61013610.080000 | gl_main_hutang=62273853.000000
+doc=10126020500003 | tgl=02/21/2026 00:00:00 | vendor_id=4SL.H018 | ap_kotor=59743650.00 | ap_ppn=1294922.36 | child_freight_BM= | tstok2_alloc=70733250.0400 | gl_main_persed=59743650.040000 | gl_main_hutang=61038572.000000
+doc=10126030500001 | tgl=03/14/2026 00:00:00 | vendor_id=4SL.A040 | ap_kotor=4872000.00 | ap_ppn=535920.00 | child_freight_BM= | tstok2_alloc=4872000.0000 | gl_main_persed=4872000.000000 | gl_main_hutang=5407920.000000
+doc=10126040500001 | tgl=04/09/2026 00:00:00 | vendor_id=4SL.L010 | ap_kotor=14712724.00 | ap_ppn=642934.00 | child_freight_BM=13328000.00 | tstok2_alloc=26572609.0300 | gl_main_persed=13244609.030000 | gl_main_hutang=13887543.000000
+doc=10126040500002 | tgl=04/22/2026 00:00:00 | vendor_id=4SL.L010 | ap_kotor=19209210.00 | ap_ppn=1919017.00 | child_freight_BM=26308000.00 | tstok2_alloc=43898656.0400 | gl_main_persed=17590656.040000 | gl_main_hutang=19509673.000000
+doc=10126040500003 | tgl=04/25/2026 00:00:00 | vendor_id=4SL.H018 | ap_kotor=67475908.00 | ap_ppn=1366064.00 | child_freight_BM= | tstok2_alloc=77443108.0000 | gl_main_persed=67475908.000000 | gl_main_hutang=68841972.000000
+
+=== 102-601 by module ALL years (Dr/Cr/net) ===
+modul_id=CO | dr=14693719248.730000 | cr=0.000000 | net=14693719248.730000 | n=917
+modul_id=EX | dr=0.000000 | cr=14964448173.730000 | net=-14964448173.730000 | n=548
+modul_id=GJ | dr=90482429.000000 | cr=253540.000000 | net=90228889.000000 | n=6
+
+=== 102-601 2015-2016 by year+module ===
+y=2015 | modul_id=CO | dr=3031080309.490000 | cr=0.000000 | net=3031080309.490000 | n=63
+y=2015 | modul_id=EX | dr=0.000000 | cr=3240711417.490000 | net=-3240711417.490000 | n=32
+y=2015 | modul_id=GJ | dr=18957000.000000 | cr=0.000000 | net=18957000.000000 | n=1
+y=2016 | modul_id=CO | dr=2017576772.000000 | cr=0.000000 | net=2017576772.000000 | n=127
+y=2016 | modul_id=EX | dr=0.000000 | cr=2082821310.000000 | net=-2082821310.000000 | n=62
+y=2016 | modul_id=GJ | dr=0.000000 | cr=253540.000000 | net=-253540.000000 | n=1
+
+=== 102-601 EARLIEST 20 entries (cari saldo awal/opening) ===
+tgl=02/13/2015 00:00:00 | modul_id=GJ | doc_reff= | urut=1 | debet=18957000.000000 | kredit=0.000000 | ket=Persediaan Dlm.Perjalanan - Thermo King TK.107-241014
+tgl=02/20/2015 00:00:00 | modul_id=EX | doc_reff=1011502FR05002 | urut=2 | debet=0.000000 | kredit=318957000.000000 | ket=(UNIT TRUCK THERMO KING) TK.107-241014, inv. 30006457, TAM 02.01.15
+tgl=04/29/2015 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=10746841.000000 | kredit=0.000000 | ket=BM-PIB. 004177
+tgl=05/06/2015 00:00:00 | modul_id=EX | doc_reff=1011505FR05003 | urut=2 | debet=0.000000 | kredit=10746841.000000 | ket=(UNIT BUS THERMO KING) TK.600-160315, inv. 30006698, TAM 5.4.2015
+tgl=05/18/2015 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=12628242.000000 | kredit=0.000000 | ket=LS/PIB.312189/TK.200
+tgl=06/01/2015 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=39935000.000000 | kredit=0.000000 | ket=BM-TK.508 PIB.313320 INV.3000415/30006767
+tgl=06/09/2015 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=55000000.000000 | kredit=0.000000 | ket=TK.508 - PIB.313320
+tgl=06/09/2015 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=40147000.000000 | kredit=0.000000 | ket=BM.TK.508 (KE.2) PIB.313379.INV.30006774
+tgl=06/09/2015 00:00:00 | modul_id=EX | doc_reff=1011506FR05003 | urut=2 | debet=0.000000 | kredit=94935000.000000 | ket=(UNIT BUS THERMO KING) TK.602(1)-300415, INV.30006767, TAM.6.2.2015
+tgl=06/10/2015 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=39684000.000000 | kredit=0.000000 | ket=BM - TK.508 (KE.3) - PIB.313394
+tgl=06/13/2015 00:00:00 | modul_id=EX | doc_reff=1011506FR05004 | urut=2 | debet=0.000000 | kredit=95147000.000000 | ket=(UNIT BUS THERMO KING) TK.602(2)-300415, INV. 30006774, TAM.6.6.2015
+tgl=06/15/2015 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=55000000.000000 | kredit=0.000000 | ket=PIB.313379/TK.602/INV.3000774
+tgl=06/16/2015 00:00:00 | modul_id=CO | doc_reff= | urut=5 | debet=40323000.000000 | kredit=0.000000 | ket=BM-TK.510A- PIB.313446
+tgl=06/16/2015 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=40323000.000000 | kredit=0.000000 | ket=BM-TK.510B-PIB.313447
+tgl=06/17/2015 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=39684000.000000 | kredit=0.000000 | ket=BM-TK.508(KE.4)-PIB.313395.
+tgl=06/17/2015 00:00:00 | modul_id=EX | doc_reff=1011506FR05007 | urut=2 | debet=0.000000 | kredit=40323000.000000 | ket=(UNIT BUS THERMO KING) TK.604A-300415, INV. 30006808, TAM.06.13.2015
+tgl=06/18/2015 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=55000000.000000 | kredit=0.000000 | ket=PIB.313395/TK.602/INV.30006797
+tgl=06/18/2015 00:00:00 | modul_id=EX | doc_reff=1011506FR05005 | urut=2 | debet=0.000000 | kredit=94684000.000000 | ket=(UNIT BUS THERMO KING) TK.602(3)-300415, INV. 30006795, TAM.06.07.2015
+tgl=06/19/2015 00:00:00 | modul_id=CO | doc_reff= | urut=2 | debet=55000000.000000 | kredit=0.000000 | ket=PIB.313394/TK.602/INV.3000675
+tgl=06/19/2015 00:00:00 | modul_id=EX | doc_reff=1011506FR05006 | urut=2 | debet=0.000000 | kredit=94684000.000000 | ket=(UNIT BUS THERMO KING) TK.602(4)-300415, INV. 30006797, TAM.06.08.2015
+
+=== 102-601 2015 monthly net ===
+m=2 | dr=18957000.000000 | cr=318957000.000000 | net=-300000000.000000 | n=2
+m=4 | dr=10746841.000000 | cr=0.000000 | net=10746841.000000 | n=1
+m=5 | dr=12628242.000000 | cr=10746841.000000 | net=1881401.000000 | n=2
+m=6 | dr=460096000.000000 | cr=460096000.000000 | net=0.000000 | n=16
+m=7 | dr=45892483.440000 | cr=12628242.000000 | net=33264241.440000 | n=6
+m=8 | dr=36193992.000000 | cr=41352362.580000 | net=-5158370.580000 | n=5
+m=9 | dr=163335000.000000 | cr=142004448.860000 | net=21330551.140000 | n=11
+m=10 | dr=733699727.650000 | cr=750843359.000000 | net=-17143631.350000 | n=19
+m=11 | dr=1459162131.400000 | cr=1504083164.050000 | net=-44921032.650000 | n=25
+m=12 | dr=109325892.000000 | cr=0.000000 | net=109325892.000000 | n=9
+
+=== 102-601 2015 biggest single CREDIT lines (top 15) ===
+tgl=02/20/2015 00:00:00 | modul_id=EX | doc_reff=1011502FR05002 | kredit=318957000.000000 | ket=(UNIT TRUCK THERMO KING) TK.107-241014, inv. 30006457, TAM 02.01.15
+tgl=10/24/2015 00:00:00 | modul_id=EX | doc_reff=1011510FR05005 | kredit=231990632.000000 | ket=(UNIT BUS THERMO KING) TK.612-210715, INV. 30007091, TAM.10.15.2015
+tgl=10/24/2015 00:00:00 | modul_id=EX | doc_reff=1011510FR05004 | kredit=231990363.000000 | ket=(UNIT BUS THERMO KING) TK.611-210715, INV. 30007078, TAM.10.14.2015
+tgl=11/25/2015 00:00:00 | modul_id=EX | doc_reff=1011511FR05006 | kredit=229712534.400000 | ket=(UNIT BUS THERMO KING) TK.617-240815, INV. 30007176, TAM.11.09.2015
+tgl=11/25/2015 00:00:00 | modul_id=EX | doc_reff=1011511FR05007 | kredit=229712534.400000 | ket=(UNIT BUS THERMO KING) TK.618-240815, INV. 30007177, TAM.11.10.2015
+tgl=11/10/2015 00:00:00 | modul_id=EX | doc_reff=1011511FR05011 | kredit=223030477.000000 | ket=(UNIT BUS THERMO KING) TK.615-210715, inv. 30007153, TAM.11.03.2015
+tgl=11/13/2015 00:00:00 | modul_id=EX | doc_reff=1011511FR05002 | kredit=223030477.000000 | ket=(UNIT BUS THERMO KING) TK.614-210715, INV. 30007142, TAM.22.05.2015
+tgl=11/21/2015 00:00:00 | modul_id=EX | doc_reff=1011511FR05001 | kredit=222394477.000000 | ket=(UNIT BUS THERMO KING) TK.613-210715, INV.30007160, TAM.11.07.2015
+tgl=10/06/2015 00:00:00 | modul_id=EX | doc_reff=1011510FR05001 | kredit=125591332.000000 | ket=(UNIT BUS THERMO KING) TK.609-210715, INV. 30007029A, TAM.10.03.2015
+tgl=10/06/2015 00:00:00 | modul_id=EX | doc_reff=1011510FR05002 | kredit=125591332.000000 | ket=(UNIT BUS THERMO KING) TK.609-210715, INV. 30007029B, TAM.10.03.2015
+tgl=11/26/2015 00:00:00 | modul_id=EX | doc_reff=1011511FR05005 | kredit=114856267.200000 | ket=(UNIT BUS THERMO KING) TK.616B-240815, INV. 30007175, TAM.11.13.2015
+tgl=11/26/2015 00:00:00 | modul_id=EX | doc_reff=1011511FR05012 | kredit=114856267.200000 | ket=(UNIT BUS THERMO KING) TK.619-250815, INV. 30007178, TAM.11.11.2015
+tgl=11/21/2015 00:00:00 | modul_id=EX | doc_reff=1011511FR05004 | kredit=111188267.200000 | ket=(UNIT BUS THERMO KING) TK.616A-240815, INV. 30007166, TAM.12.01.2015
+tgl=06/13/2015 00:00:00 | modul_id=EX | doc_reff=1011506FR05004 | kredit=95147000.000000 | ket=(UNIT BUS THERMO KING) TK.602(2)-300415, INV. 30006774, TAM.6.6.2015
+tgl=06/09/2015 00:00:00 | modul_id=EX | doc_reff=1011506FR05003 | kredit=94935000.000000 | ket=(UNIT BUS THERMO KING) TK.602(1)-300415, INV.30006767, TAM.6.2.2015
+
+=== 102-601 2015 biggest single DEBET lines (top 15) ===
+tgl=11/20/2015 00:00:00 | modul_id=CO | doc_reff= | debet=217686000.000000 | ket=BM/PIB.000175/TK.617/INV.30007176
+tgl=11/20/2015 00:00:00 | modul_id=CO | doc_reff= | debet=217686000.000000 | ket=BM/PIB.000176/TK.618/INV.30007177
+tgl=11/03/2015 00:00:00 | modul_id=CO | doc_reff= | debet=211064000.000000 | ket=BM/PIB.004005/TK.615/INV.30007153
+tgl=11/03/2015 00:00:00 | modul_id=CO | doc_reff= | debet=211064000.000000 | ket=BM/PIB.004006/TK.614/INV.30007142
+tgl=11/12/2015 00:00:00 | modul_id=CO | doc_reff= | debet=210428000.000000 | ket=BM/PIB.004024/TK.613/INV.30007160
+tgl=10/20/2015 00:00:00 | modul_id=CO | doc_reff= | debet=206758000.000000 | ket=BM/PIB.003993/TK.612A.B/INV.30007091
+tgl=10/20/2015 00:00:00 | modul_id=CO | doc_reff= | debet=206758000.000000 | ket=BM/PIB.003997/TK.611A.B/INV.30007078
+tgl=10/05/2015 00:00:00 | modul_id=CO | doc_reff= | debet=113309000.000000 | ket=BM/PIB.039599/TK.609A
+tgl=10/05/2015 00:00:00 | modul_id=CO | doc_reff= | debet=113309000.000000 | ket=BM/PIB.039772/TK.609B 
+tgl=11/20/2015 00:00:00 | modul_id=CO | doc_reff= | debet=108843000.000000 | ket=BM/PIB.000174/TK.616B/INV.30007175
+tgl=11/20/2015 00:00:00 | modul_id=CO | doc_reff= | debet=108843000.000000 | ket=BM/PIB.000177/TK.619/INV.30007178
+tgl=11/10/2015 00:00:00 | modul_id=CO | doc_reff= | debet=105175000.000000 | ket=BM/PIB.000172/TK.616A/INV.30007166
+tgl=09/03/2015 00:00:00 | modul_id=CO | doc_reff= | debet=84771000.000000 | ket=BM/PIB.0000162/TK.604E
+tgl=06/09/2015 00:00:00 | modul_id=CO | doc_reff= | debet=55000000.000000 | ket=TK.508 - PIB.313320
+tgl=06/18/2015 00:00:00 | modul_id=CO | doc_reff= | debet=55000000.000000 | ket=PIB.313395/TK.602/INV.30006797

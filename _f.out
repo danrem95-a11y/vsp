@@ -1,0 +1,13 @@
+lbl                  val                                                
+-----------------------------------------------------------------------
+FA_COA_count         9                                                  
+MEMO:1012601MEMO0026 5                                                  
+MEMO:1012602MEMO0020 5                                                  
+MEMO:1012603MEMO0016 5                                                  
+MEMO:1012604MEMO0018 5                                                  
+gl_setup_period      2026-01-01 00:00:00.000                            
+FA_vouchers_existing 0                                                  
+
+(7 rows)
+
+Execution time: 0.202 seconds

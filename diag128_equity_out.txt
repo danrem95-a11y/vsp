@@ -1,0 +1,44 @@
+﻿
+=== Akun ekuitas/laba & penyesuaian (dari gl_report_detail) ===
+account_id= | description=TOTAL LABA DITAHAN
+account_id= | description=LABA KOTOR PENJUALAN
+account_id= | description=LABA DITAHAN
+account_id= | description=LABA (RUGI) SEBELUM PAJAK
+account_id= | description=LABA (RUGI) BERSIH
+account_id= | description=LABA ( RUGI ) OPERASIONAL
+account_id=203-001 | description=     Biaya Ditangguhkan - Selisih Stok
+account_id=204-001 | description=     Akum Amort.B.Ditangguhkan - Selisih Stok
+account_id=330-001 | description=     Pinjaman - Grand Prince ( US$ 500,000 )
+account_id=330-002 | description=     Pinjaman - Holding ( US$ 25,350 )
+account_id=330-003 | description=     Pinjaman - MarkIV ( US$ 30,000 ) 
+account_id=330-101 | description=     Hutang Bank - BCA
+account_id=330-104 | description=     Hutang Bank - Permata
+account_id=330-201 | description=     Pinjaman dari Mrs. Hartati Santoso
+account_id=330-202 | description=     Pinjaman dari Mr. Budiman Santoso
+account_id=330-301 | description=     Pinjaman dari TAM Bekasi
+account_id=330-302 | description=     Pinjaman dari TAM Pramuka
+account_id=330-304 | description=     Pinjaman dari TAM Solo
+account_id=330-306 | description=     Pinjaman dari TAM Surabaya
+account_id=375-001 | description=     Modal Disetor
+account_id=376-001 | description=     Laba ( Rugi )  Di tahan Tahun -Tahun Lalu
+account_id=376-002 | description=     Laba di cadangkan Untuk Bad Debt
+account_id=376-003 | description=     Laba Di cadangkan Untuk Karyawan
+account_id=376-101 | description=     Laba ( Rugi ) Tahun Berjalan
+account_id=500-003 | description=     Selisih Pembayaran / Kurs (+)
+account_id=500-004 | description=     Laba Penjualan Aktiva
+account_id=500-013 | description=     Selisih Pembayaran / Kurs (-)
+
+=== Akun 3xx terpakai di gl_journal (saldo) ===
+account_id=330-101 | saldo=3076565900.000000 | n=512
+account_id=330-201 | saldo=0.000000 | n=6
+account_id=330-202 | saldo=0.000000 | n=14
+account_id=330-203 | saldo=0.000000 | n=4
+account_id=330-204 | saldo=0.000000 | n=2
+account_id=330-212 | saldo=0.000000 | n=18
+account_id=330-301 | saldo=0.000000 | n=2
+account_id=376-001 | saldo=24398073678.390000 | n=319
+account_id=376-002 | saldo=-4343640412.120000 | n=230
+account_id=376-003 | saldo=185561950.000000 | n=1
+account_id=376-004 | saldo=9400000000.000000 | n=19
+account_id=376-006 | saldo=0.000000 | n=2
+account_id=376-101 | saldo=-83906477670.560001 | n=186

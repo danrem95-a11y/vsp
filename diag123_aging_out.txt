@@ -1,0 +1,129 @@
+﻿###################### LAPORAN 1: AGING / DEKOMPOSISI 102-601 ######################
+
+=== 1a. Saldo per tahun + saldo akumulatif akhir tahun ===
+y=2015 | dr=3050037309.490000 | cr=3240711417.490000 | yr_net=-190674108.000000 | cum_saldo=-190674108.000000
+y=2016 | dr=2017576772.000000 | cr=2083074850.000000 | yr_net=-65498078.000000 | cum_saldo=-256172186.000000
+y=2017 | dr=1835252015.000000 | cr=1837618265.000000 | yr_net=-2366250.000000 | cum_saldo=-258538436.000000
+y=2018 | dr=1881732701.880000 | cr=1880931501.880000 | yr_net=801200.000000 | cum_saldo=-257737236.000000
+y=2019 | dr=1462803138.360000 | cr=1440636208.360000 | yr_net=22166930.000000 | cum_saldo=-235570306.000000
+y=2020 | dr=969471605.000000 | cr=982831235.000000 | yr_net=-13359630.000000 | cum_saldo=-248929936.000000
+y=2021 | dr=653229000.000000 | cr=662612300.000000 | yr_net=-9383300.000000 | cum_saldo=-258313236.000000
+y=2022 | dr=899723550.000000 | cr=902627150.000000 | yr_net=-2903600.000000 | cum_saldo=-261216836.000000
+y=2023 | dr=586105125.000000 | cr=586105125.000000 | yr_net=0.000000 | cum_saldo=-261216836.000000
+y=2024 | dr=713005137.000000 | cr=703382437.000000 | yr_net=9622700.000000 | cum_saldo=-251594136.000000
+y=2025 | dr=500545302.000000 | cr=510168002.000000 | yr_net=-9622700.000000 | cum_saldo=-261216836.000000
+y=2026 | dr=308518894.000000 | cr=190013874.000000 | yr_net=118505020.000000 | cum_saldo=-142711816.000000
+
+=== 1b. Rekonsiliasi by-NILAI (seluruh ledger): OVER-CREDIT = legacy hole (kredit>debet), top 25 ===
+amt=229712534.400000 | dcnt=0 | ccnt=2 | netcnt=2 | over_credit=459425068.800000
+amt=223030477.000000 | dcnt=0 | ccnt=2 | netcnt=2 | over_credit=446060954.000000
+amt=318957000.000000 | dcnt=0 | ccnt=1 | netcnt=1 | over_credit=318957000.000000
+amt=305948571.000000 | dcnt=0 | ccnt=1 | netcnt=1 | over_credit=305948571.000000
+amt=251622350.000000 | dcnt=0 | ccnt=1 | netcnt=1 | over_credit=251622350.000000
+amt=125591332.000000 | dcnt=0 | ccnt=2 | netcnt=2 | over_credit=251182664.000000
+amt=231990632.000000 | dcnt=0 | ccnt=1 | netcnt=1 | over_credit=231990632.000000
+amt=231990363.000000 | dcnt=0 | ccnt=1 | netcnt=1 | over_credit=231990363.000000
+amt=114856267.200000 | dcnt=0 | ccnt=2 | netcnt=2 | over_credit=229712534.400000
+amt=222394477.000000 | dcnt=0 | ccnt=1 | netcnt=1 | over_credit=222394477.000000
+amt=211373500.000000 | dcnt=0 | ccnt=1 | netcnt=1 | over_credit=211373500.000000
+amt=209377400.000000 | dcnt=0 | ccnt=1 | netcnt=1 | over_credit=209377400.000000
+amt=94684000.000000 | dcnt=0 | ccnt=2 | netcnt=2 | over_credit=189368000.000000
+amt=50484000.000000 | dcnt=0 | ccnt=3 | netcnt=3 | over_credit=151452000.000000
+amt=121316600.000000 | dcnt=0 | ccnt=1 | netcnt=1 | over_credit=121316600.000000
+amt=111188267.200000 | dcnt=0 | ccnt=1 | netcnt=1 | over_credit=111188267.200000
+amt=95147000.000000 | dcnt=0 | ccnt=1 | netcnt=1 | over_credit=95147000.000000
+amt=94935000.000000 | dcnt=0 | ccnt=1 | netcnt=1 | over_credit=94935000.000000
+amt=94559000.000000 | dcnt=0 | ccnt=1 | netcnt=1 | over_credit=94559000.000000
+amt=90523140.000000 | dcnt=0 | ccnt=1 | netcnt=1 | over_credit=90523140.000000
+amt=90331200.000000 | dcnt=0 | ccnt=1 | netcnt=1 | over_credit=90331200.000000
+amt=89686000.000000 | dcnt=0 | ccnt=1 | netcnt=1 | over_credit=89686000.000000
+amt=89311120.860000 | dcnt=0 | ccnt=1 | netcnt=1 | over_credit=89311120.860000
+amt=83033500.000000 | dcnt=0 | ccnt=1 | netcnt=1 | over_credit=83033500.000000
+amt=82729000.000000 | dcnt=0 | ccnt=1 | netcnt=1 | over_credit=82729000.000000
+
+=== 1c. TOTAL over-credit (legacy hole) vs TOTAL under-credit (open in-transit) ===
+total_over_credit_legacy=10161934757.910000 | total_under_credit_open=10019222941.910000
+
+=== 1d. 2026 detail (semua baris 102-601) - utk lihat matched vs open ===
+tgl=01/19/2026 00:00:00 | modul_id=CO | dr=2346000 | cr=0 | ket=BM/PIB.000041/TK.009,001
+tgl=01/20/2026 00:00:00 | modul_id=EX | dr=0 | cr=2346000 | ket=(SPARE PARTS THERMO KING) TK.009-221025 INV.1301926177
+tgl=01/24/2026 00:00:00 | modul_id=EX | dr=0 | cr=5032722 | ket=(UNIT COLD STORAGE BINGSHAN) BN.507 INV.SHZJ2025121246
+tgl=01/27/2026 00:00:00 | modul_id=CO | dr=10121000 | cr=0 | ket=BM/PIB.000042/TKM.001
+tgl=01/28/2026 00:00:00 | modul_id=CO | dr=21522900 | cr=0 | ket=LS/TK.G504,J506,F507
+tgl=01/28/2026 00:00:00 | modul_id=CO | dr=5032722 | cr=0 | ket=LS/BN.507/BMI-LINC
+tgl=01/28/2026 00:00:00 | modul_id=EX | dr=0 | cr=10121000 | ket=(SPARE PARTS THERMO KING) TK.001-070126 INV.1302426812
+tgl=02/09/2026 00:00:00 | modul_id=EX | dr=0 | cr=21522900 | ket=(UNIT TRUCK THERMO KING) TK.G504, TK.F507, TK.J506-251125 INV.5001849,50,51
+tgl=02/11/2026 00:00:00 | modul_id=CO | dr=23444500 | cr=0 | ket=LS/TK.G505.J507,F508
+tgl=02/11/2026 00:00:00 | modul_id=CO | dr=10989600 | cr=0 | ket=LS/TK.A505,B506,C508
+tgl=02/11/2026 00:00:00 | modul_id=CO | dr=10943300 | cr=0 | ket=LS/TK.A601,B601,C601
+tgl=02/19/2026 00:00:00 | modul_id=EX | dr=0 | cr=10943300 | ket=(UNIT TRUCK THERMO KING) TK.A601, TK.B601, TK.C601 - 060126 INV.5001887,8,9
+tgl=02/21/2026 00:00:00 | modul_id=EX | dr=0 | cr=10989600 | ket=(UNIT TRUCK THERMO KING) TK.A505, TK.B506, TK.C505 -101225 INV.80786413
+tgl=02/21/2026 00:00:00 | modul_id=EX | dr=0 | cr=23444500 | ket=(UNIT TRUCK THERMO KING) TK.G505,TK.F508, TK.F507-251225 INV.5001881,82
+tgl=04/08/2026 00:00:00 | modul_id=CO | dr=12149000 | cr=0 | ket=BM/PIB.000043/TK.001-002
+tgl=04/14/2026 00:00:00 | modul_id=CO | dr=9967200 | cr=0 | ket=LS/TK.SUM601A
+tgl=04/17/2026 00:00:00 | modul_id=CO | dr=26308000 | cr=0 | ket=BM/PIB.000044/TK.003,004
+tgl=04/25/2026 00:00:00 | modul_id=EX | dr=0 | cr=9967200 | ket=(UNIT TRUCK THERMO KING) SUM 601A-020326 INV.5001993
+tgl=04/27/2026 00:00:00 | modul_id=CO | dr=23696500 | cr=0 | ket=LS/TK.SUM601C
+tgl=04/27/2026 00:00:00 | modul_id=CO | dr=10944300 | cr=0 | ket=LS/TK.SUM601B
+tgl=04/30/2026 00:00:00 | modul_id=CO | dr=1179000 | cr=0 | ket=BM/NOTUL/TK.001,002
+tgl=05/05/2026 00:00:00 | modul_id=CO | dr=10073000 | cr=0 | ket=BM/PIB.000045/TK.001,002,007
+tgl=05/05/2026 00:00:00 | modul_id=EX | dr=0 | cr=23696500 | ket=(UNIT TRUCK THERMO KING) SUM.601C-020326 INV.5002010
+tgl=05/06/2026 00:00:00 | modul_id=EX | dr=0 | cr=10944300 | ket=(UNIT TRUCK THERMO KING) SUM.601B-020326 INV.5002012
+tgl=05/07/2026 00:00:00 | modul_id=CO | dr=50932852 | cr=0 | ket=TK.001,002,007 Persediaan Dlm.Perjalanan 
+tgl=05/08/2026 00:00:00 | modul_id=EX | dr=0 | cr=61005852 | ket=(SPARE PARTS THERMO KING) TK.001-070126, TK.002-130226, TK.007-010825 INV.1308402951
+tgl=05/19/2026 00:00:00 | modul_id=CO | dr=42866020 | cr=0 | ket=Persediaan Dlm.Perjalanan - FREIGHT TK.006
+tgl=05/21/2026 00:00:00 | modul_id=CO | dr=11858000 | cr=0 | ket=BM/PIB.000046/TK.006
+tgl=05/26/2026 00:00:00 | modul_id=CO | dr=24145000 | cr=0 | ket=LS/TK.SUM601D
+
+=== 1e. 2026 nilai under-credit (debet tanpa kredit pasangan) = OPEN in-transit ===
+amt=50932852.000000 | dcnt=1 | ccnt=0 | open_cnt=1 | open_value=50932852.000000
+amt=42866020.000000 | dcnt=1 | ccnt=0 | open_cnt=1 | open_value=42866020.000000
+amt=26308000.000000 | dcnt=1 | ccnt=0 | open_cnt=1 | open_value=26308000.000000
+amt=24145000.000000 | dcnt=1 | ccnt=0 | open_cnt=1 | open_value=24145000.000000
+amt=12149000.000000 | dcnt=1 | ccnt=0 | open_cnt=1 | open_value=12149000.000000
+amt=11858000.000000 | dcnt=1 | ccnt=0 | open_cnt=1 | open_value=11858000.000000
+amt=10073000.000000 | dcnt=1 | ccnt=0 | open_cnt=1 | open_value=10073000.000000
+amt=1179000.000000 | dcnt=1 | ccnt=0 | open_cnt=1 | open_value=1179000.000000
+
+###################### LAPORAN 2: DRILL-DOWN LEGACY 2015-2016 ######################
+
+=== 2a. Semua baris 102-601 mengandung 'TK.107' (kasus -300jt) ===
+tgl=02/13/2015 00:00:00 | modul_id=GJ | doc_reff= | dr=18957000 | cr=0 | ket=Persediaan Dlm.Perjalanan - Thermo King TK.107-241014
+tgl=02/20/2015 00:00:00 | modul_id=EX | doc_reff=1011502FR05002 | dr=0 | cr=318957000 | ket=(UNIT TRUCK THERMO KING) TK.107-241014, inv. 30006457, TAM 02.01.15
+
+=== 2b. 2015 H1 (Jan-Jun) semua baris EX (kredit kapitalisasi) - cek barang dari 2014 ===
+tgl=02/20/2015 00:00:00 | doc_reff=1011502FR05002 | cr=318957000 | ket=(UNIT TRUCK THERMO KING) TK.107-241014, inv. 30006457, TAM 02.01.15
+tgl=05/06/2015 00:00:00 | doc_reff=1011505FR05003 | cr=10746841 | ket=(UNIT BUS THERMO KING) TK.600-160315, inv. 30006698, TAM 5.4.2015
+tgl=06/09/2015 00:00:00 | doc_reff=1011506FR05003 | cr=94935000 | ket=(UNIT BUS THERMO KING) TK.602(1)-300415, INV.30006767, TAM.6.2.2015
+tgl=06/13/2015 00:00:00 | doc_reff=1011506FR05004 | cr=95147000 | ket=(UNIT BUS THERMO KING) TK.602(2)-300415, INV. 30006774, TAM.6.6.2015
+tgl=06/17/2015 00:00:00 | doc_reff=1011506FR05007 | cr=40323000 | ket=(UNIT BUS THERMO KING) TK.604A-300415, INV. 30006808, TAM.06.13.2015
+tgl=06/18/2015 00:00:00 | doc_reff=1011506FR05005 | cr=94684000 | ket=(UNIT BUS THERMO KING) TK.602(3)-300415, INV. 30006795, TAM.06.07.2015
+tgl=06/19/2015 00:00:00 | doc_reff=1011506FR05006 | cr=94684000 | ket=(UNIT BUS THERMO KING) TK.602(4)-300415, INV. 30006797, TAM.06.08.2015
+tgl=06/25/2015 00:00:00 | doc_reff=1011506FR05008 | cr=40323000 | ket=(UNIT BUS THERMO KING) TK.604B-130515, INV. 30006809, TAM.06.12.2015
+
+=== 2c. EX credits 2015-2016 yg TIDAK ada debet senilai sama di SELURUH ledger 102-601 (top 25 over-credit) ===
+amt=229712534.400000 | dcnt=0 | ccnt=2 | over_credit=459425068.800000
+amt=223030477.000000 | dcnt=0 | ccnt=2 | over_credit=446060954.000000
+amt=318957000.000000 | dcnt=0 | ccnt=1 | over_credit=318957000.000000
+amt=305948571.000000 | dcnt=0 | ccnt=1 | over_credit=305948571.000000
+amt=125591332.000000 | dcnt=0 | ccnt=2 | over_credit=251182664.000000
+amt=231990632.000000 | dcnt=0 | ccnt=1 | over_credit=231990632.000000
+amt=231990363.000000 | dcnt=0 | ccnt=1 | over_credit=231990363.000000
+amt=114856267.200000 | dcnt=0 | ccnt=2 | over_credit=229712534.400000
+amt=222394477.000000 | dcnt=0 | ccnt=1 | over_credit=222394477.000000
+amt=94684000.000000 | dcnt=0 | ccnt=2 | over_credit=189368000.000000
+amt=121316600.000000 | dcnt=0 | ccnt=1 | over_credit=121316600.000000
+amt=111188267.200000 | dcnt=0 | ccnt=1 | over_credit=111188267.200000
+amt=95147000.000000 | dcnt=0 | ccnt=1 | over_credit=95147000.000000
+amt=94935000.000000 | dcnt=0 | ccnt=1 | over_credit=94935000.000000
+amt=90523140.000000 | dcnt=0 | ccnt=1 | over_credit=90523140.000000
+amt=89311120.860000 | dcnt=0 | ccnt=1 | over_credit=89311120.860000
+amt=71035000.000000 | dcnt=0 | ccnt=1 | over_credit=71035000.000000
+amt=64875000.000000 | dcnt=0 | ccnt=1 | over_credit=64875000.000000
+amt=64245180.000000 | dcnt=0 | ccnt=1 | over_credit=64245180.000000
+amt=62538800.000000 | dcnt=0 | ccnt=1 | over_credit=62538800.000000
+amt=51830340.000000 | dcnt=0 | ccnt=1 | over_credit=51830340.000000
+amt=47468500.000000 | dcnt=0 | ccnt=1 | over_credit=47468500.000000
+amt=40271950.000000 | dcnt=0 | ccnt=1 | over_credit=40271950.000000
+amt=39159000.000000 | dcnt=0 | ccnt=1 | over_credit=39159000.000000
+amt=38173000.000000 | dcnt=0 | ccnt=1 | over_credit=38173000.000000

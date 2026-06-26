@@ -1,0 +1,7 @@
+depr_rows   aset        total_depr             
+----------------------------------------------
+539         95          334147547.86           
+
+(1 rows)
+
+Execution time: 0.191 seconds

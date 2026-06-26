@@ -1,0 +1,16 @@
+﻿
+=== Vendor FR x akun kredit (seluruh sejarah) ===
+vendor_id=4SL.L004 | account_id=226-006 | n_dok=1 | tgl_min=12/04/2013 00:00:00 | tgl_max=12/04/2013 00:00:00
+vendor_id=4SL.S029 | account_id=226-006 | n_dok=74 | tgl_min=01/04/2013 00:00:00 | tgl_max=03/18/2015 00:00:00
+vendor_id=4SL.S045 | account_id=102-601 | n_dok=526 | tgl_min=02/20/2015 00:00:00 | tgl_max=02/21/2026 00:00:00
+vendor_id=4SL.S045 | account_id=226-006 | n_dok=5 | tgl_min=04/09/2026 00:00:00 | tgl_max=05/06/2026 00:00:00
+vendor_id=X001 | account_id=226-006 | n_dok=1 | tgl_min=05/08/2026 00:00:00 | tgl_max=05/08/2026 00:00:00
+
+=== 226-006 FR: per vendor ===
+vendor_id=4SL.L004 | n=1 | tmin=12/04/2013 00:00:00 | tmax=12/04/2013 00:00:00
+vendor_id=4SL.S029 | n=94 | tmin=01/04/2013 00:00:00 | tmax=03/18/2015 00:00:00
+vendor_id=4SL.S045 | n=5 | tmin=04/09/2026 00:00:00 | tmax=05/06/2026 00:00:00
+vendor_id=X001 | n=1 | tmin=05/08/2026 00:00:00 | tmax=05/08/2026 00:00:00
+
+=== kolom tabel mcstsupp ===
+FLAG_VENDOR=1 | VENDOR_ID=P01 | NAMA=PRINSIPAL ALL | ALAMAT1= | ALAMAT2= | TELPON= | FAX= | FLAG_NPWP=0 | NPWP= | PIMPINAN= | KREDIT_LIMIT=0.00 | POT=0.00 | SLM_ID= | ACCOUNTAP= | ACCOUNTINV= | ACCOUNTSALES= | PAYMENT_TIPE= | BANK1= | AC1= | AN1= | BANK2= | AC2= | AN2= | BANK3= | AC3= | AN3= | TOP_DAY=30 | flag_ekspedisi=N | harga_ekspedisi_m3=0.00 | harga_ekspedisi_kg=0.00 | harga_ekspedisi_koli=0.00 | tanggungan_ekspedisi=D | pct_risk=0.00 | pct_dist=0.00 | supplier_disc2=0.00 | harga_volume1=0.00 | harga_volume2=0.00 | harga_countainer1=0.00 | harga_countainer2=0.00 | supplier_pkp=

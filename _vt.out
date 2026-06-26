@@ -1,0 +1,11 @@
+table_name                                                                                                                       
+--------------------------------------------------------------------------------------------------------------------------------
+FA_ASSET                                                                                                                         
+FA_ASSET_AUDIT                                                                                                                   
+FA_CATEGORY                                                                                                                      
+FA_DEPRECIATION                                                                                                                  
+FA_PERIOD                                                                                                                        
+
+(5 rows)
+
+Execution time: 0.383 seconds

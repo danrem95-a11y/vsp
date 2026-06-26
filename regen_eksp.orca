@@ -1,0 +1,7 @@
+start session
+set debug true
+set liblist "C:\BTV\Apps\cute.pbl;C:\BTV\Apps\controls.pbl;C:\BTV\Apps\function.pbl;C:\BTV\Apps\powerfilter.pbd;C:\BTV\Apps\lib.pbl;C:\BTV\Apps\objects.pbl;C:\BTV\Apps\dropdownapi.pbl;C:\BTV\Apps\wddo.pbl;C:\BTV\Apps\param.pbl;C:\BTV\Apps\administrator.pbl;C:\BTV\Apps\pipeline.pbl;C:\BTV\Apps\pbchat.pbl;C:\BTV\Apps\icontray.pbl;C:\BTV\Apps\powerfilter.pbd;C:\BTV\Apps\stok.pbl;C:\BTV\Apps\stok_report.pbl;C:\BTV\Apps\master.pbl;C:\BTV\Apps\master_report.pbl;C:\BTV\Apps\po_trans.pbl;C:\BTV\Apps\po_report.pbl;C:\BTV\Apps\ekspedisi.pbl;C:\BTV\Apps\ekspedisi_report.pbl;C:\BTV\Apps\so_trans.pbl;C:\BTV\Apps\so_report.pbl;C:\BTV\Apps\ap_trans.pbl;C:\BTV\Apps\ap_report.pbl;C:\BTV\Apps\ar_trans.pbl;C:\BTV\Apps\ar_report.pbl;C:\BTV\Apps\kasbank_trans.pbl;C:\BTV\Apps\kasbank_report.pbl;C:\BTV\Apps\gl_trans.pbl;C:\BTV\Apps\gl_report.pbl;C:\BTV\Apps\transfer_data.pbl;C:\BTV\Apps\excel.pbl;C:\BTV\Apps\konsinyasi.pbl;C:\BTV\Apps\efaktur.pbl;C:\BTV\Apps\fixed_aset.pbl;C:\BTV\Apps\fa_trans.pbl;C:\BTV\Apps\fa_reports.pbl"
+set application "C:\BTV\Apps\cute.pbl" "cute"
+build library "C:\BTV\Apps\ekspedisi.pbl" "" pbd
+build library "C:\BTV\Apps\ekspedisi_report.pbl" "" pbd
+end session

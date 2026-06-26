@@ -1,9 +1,0 @@
-Could not execute statement.
-  Table 'sysview' not found
-  SQLCODE=-141, ODBC 3 State="42S02"
-  File: "_v2.sql" on line 1, column 1
-  SELECT viewname FROM sys.sysview WHERE viewname LIKE 'v_fa_recon%'
-  You can continue executing or stop.
-1. Stop
-2. Continue
-Select an option: 

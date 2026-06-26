@@ -1,0 +1,37 @@
+﻿
+=== 102-601 GRAND total ===
+dr=14878000549.730000 | cr=15020712365.730000 | saldo=-142711816.000000
+
+=== 102-601 by year net ===
+y=2015 | net=-190674108.000000 | n=96
+y=2016 | net=-65498078.000000 | n=190
+y=2017 | net=-2366250.000000 | n=201
+y=2018 | net=801200.000000 | n=204
+y=2019 | net=22166930.000000 | n=200
+y=2020 | net=-13359630.000000 | n=107
+y=2021 | net=-9383300.000000 | n=87
+y=2022 | net=-2903600.000000 | n=133
+y=2023 | net=0.000000 | n=77
+y=2024 | net=9622700.000000 | n=81
+y=2025 | net=-9622700.000000 | n=69
+y=2026 | net=118505020.000000 | n=29
+
+=== RECON 2026 main ekspedisi ===
+doc=10126010500002 | tgl=01/20/2026 00:00:00 | vendor_id=4SL.L010 | ap_kotor=8337955.00 | tstok2_alloc=10683955.0000 | gl_main_persed=8337955.000000
+doc=10126010500001 | tgl=01/24/2026 00:00:00 | vendor_id=4SL.A040 | ap_kotor=0.00 | tstok2_alloc=5032722.0000 | gl_main_persed=0.000000
+doc=10126010500003 | tgl=01/28/2026 00:00:00 | vendor_id=4SL.L010 | ap_kotor=21435225.00 | tstok2_alloc=31556224.9000 | gl_main_persed=21435224.900000
+doc=10126020500004 | tgl=02/09/2026 00:00:00 | vendor_id=4SL.H018 | ap_kotor=63401885.00 | tstok2_alloc=84924785.0200 | gl_main_persed=63401885.020000
+doc=10126020500002 | tgl=02/19/2026 00:00:00 | vendor_id=4SL.H018 | ap_kotor=58010310.00 | tstok2_alloc=68953610.0400 | gl_main_persed=58010310.040000
+doc=10126020500001 | tgl=02/21/2026 00:00:00 | vendor_id=4SL.H018 | ap_kotor=61013610.00 | tstok2_alloc=84458110.0800 | gl_main_persed=61013610.080000
+doc=10126020500003 | tgl=02/21/2026 00:00:00 | vendor_id=4SL.H018 | ap_kotor=59743650.00 | tstok2_alloc=70733250.0400 | gl_main_persed=59743650.040000
+doc=10126030500001 | tgl=03/14/2026 00:00:00 | vendor_id=4SL.A040 | ap_kotor=4872000.00 | tstok2_alloc=4872000.0000 | gl_main_persed=4872000.000000
+doc=10126040500001 | tgl=04/09/2026 00:00:00 | vendor_id=4SL.L010 | ap_kotor=14712724.00 | tstok2_alloc=14712724.0000 | gl_main_persed=14712724.000000
+doc=10126040500002 | tgl=04/22/2026 00:00:00 | vendor_id=4SL.L010 | ap_kotor=19209210.00 | tstok2_alloc=19209210.0000 | gl_main_persed=19209210.000000
+doc=10126040500003 | tgl=04/25/2026 00:00:00 | vendor_id=4SL.H018 | ap_kotor=67475908.00 | tstok2_alloc=77443108.0000 | gl_main_persed=67475908.000000
+doc=10126050500001 | tgl=05/05/2026 00:00:00 | vendor_id=4SL.H018 | ap_kotor=62798790.00 | tstok2_alloc=86495290.0400 | gl_main_persed=62798790.040000
+doc=10126050500002 | tgl=05/06/2026 00:00:00 | vendor_id=4SL.H018 | ap_kotor=63818790.00 | tstok2_alloc=74763089.9600 | gl_main_persed=63818789.960000
+doc=10126050500003 | tgl=05/08/2026 00:00:00 | vendor_id=4SL.L010 | ap_kotor=9963526.00 | tstok2_alloc=70969377.9700 | gl_main_persed=9963525.970000
+
+=== Case1/2 header + GL ===
+order_client=10126040500001 | ttl_kotor=14712724.00 | ttl_netto=15355658.00 | ttl_ppn=642934.00
+order_client=10126040500002 | ttl_kotor=19209210.00 | ttl_netto=21128227.00 | ttl_ppn=1919017.00

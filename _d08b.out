@@ -1,0 +1,12 @@
+0 row(s) affected
+1 row(s) inserted
+1 row(s) inserted
+0 row(s) affected
+16 row(s) inserted
+result                                               
+----------------------------------------------------
+menu62 items=8  grant(6205/6270)=16                  
+
+(1 rows)
+
+Execution time: 1.143 seconds

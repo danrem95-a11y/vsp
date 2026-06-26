@@ -1,0 +1,15 @@
+obj               n                    
+--------------------------------------
+FA_CATEGORY       5                    
+recon views       2                    
+FA procs          5                    
+GL FA Dr total    334147546            
+GL FA vouchers    6                    
+FA_GL_LINK        1078                 
+FA_PERIOD(posted) 6                    
+FA_DEPRECIATION   539                  
+FA_ASSET          296                  
+
+(9 rows)
+
+Execution time: 0.546 seconds

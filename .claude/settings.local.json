@@ -12,7 +12,8 @@
       "PowerShell($content = Get-Content 'c:\\\\BTV\\\\debug\\\\dw_rpt_jual_faktur1_rekap.srd' -Raw; $lines = $content -split '\\\\n'; $found = @\\(\\); for\\($i=0; $i -lt $lines.Length; $i++\\) { if \\($lines[$i] -match 'group\\\\s+\\(header|footer|=|by\\)'\\) { $found += \"Line $i`: $\\($lines[$i]\\)\" } }; $found | Select-Object -First 50)",
       "Bash(grep -n \"^group\\\\|group\\\\s\" c:\\\\\\\\BTV\\\\\\\\debug\\\\\\\\dw_rpt_jual_faktur1_rekap.srd)",
       "Bash(grep -n \"^group\\\\|group \" \"/mnt/c/BTV/debug/dw_rpt_jual_faktur1_rekap.srd\" | head -20)",
-      "Read(//mnt/c/BTV/debug/**)"
+      "Read(//mnt/c/BTV/debug/**)",
+      "Bash(\"/c/Program Files (x86)/SQL Anywhere 11/Bin32/dbisql.exe\" *)"
     ],
     "additionalDirectories": [
       "\\tmp"
