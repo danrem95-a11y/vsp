@@ -1,0 +1,36 @@
+=== R1: KOMPOSISI komponen L (102-110) ===
+  awal_rp=3117324322 | beli_rp_inc_eksp=220166624 | eksp_only=0 | retjual_rp=0 | consin_rp=0 | consin_evap_rp=0 | mutin_rp=34107058 | jual_real=53144391 | jual_evap_rp=0 | retbeli_rp=0 | consout_rp=0 | mutout_A=90203403 | total_clamped=3228250210
+=== R2: dampak CLAMP (AKHIR<0 -> 0) di L ===
+  discarded_by_clamp=0 | n_clamped=0 | neg_valued_kept=0 | n_negval=10 | clamp_pos_lost=0 | clamp_neg_avoided=0
+=== R3: top 15 unit L by nilai (desc) ===
+  PRODUK_ID=LF.05.0001 | akhir=1278.50 | nil=237323245
+  PRODUK_ID=LK.02.0030 | akhir=3197.00 | nil=158316177
+  PRODUK_ID=LE.015.0042 | akhir=17.00 | nil=124631023
+  PRODUK_ID=LB.02.0003 | akhir=51.00 | nil=84921989
+  PRODUK_ID=LE.015.0044 | akhir=6.00 | nil=71500000
+  PRODUK_ID=LA.007.0012 | akhir=11.00 | nil=66000000
+  PRODUK_ID=LK.02.0054 | akhir=66.00 | nil=62590909
+  PRODUK_ID=LB.01.0136 | akhir=37.00 | nil=62459959
+  PRODUK_ID=LK.02.0057 | akhir=2959.00 | nil=61371161
+  PRODUK_ID=LE.01.0002 | akhir=3.00 | nil=56645270
+  PRODUK_ID=LB.01.0134 | akhir=38.00 | nil=56196325
+  PRODUK_ID=LB.01.0081 | akhir=14.00 | nil=56000000
+  PRODUK_ID=LB.01.0133 | akhir=37.00 | nil=55556333
+  PRODUK_ID=LK.02.0028 | akhir=2146.00 | nil=54992284
+  PRODUK_ID=LR.09.0002 | akhir=720.00 | nil=49224805
+=== R4: top 15 unit L nilai NEGATIF (asc), AKHIR>=0 ===
+  PRODUK_ID=LB.01.0138 | akhir=0.00 | nilun=0
+  PRODUK_ID=LB.01.0130 | akhir=0.00 | nilun=0
+  PRODUK_ID=LP.05.0008 | akhir=0.00 | nilun=0
+  PRODUK_ID=LD.01.0036 | akhir=0.00 | nilun=0
+  PRODUK_ID=LV.01.0078 | akhir=0.00 | nilun=0
+  PRODUK_ID=LH.03.0002 | akhir=0.00 | nilun=0
+  PRODUK_ID=LI.01.0002 | akhir=0.00 | nilun=0
+  PRODUK_ID=LC.12.0004 | akhir=0.00 | nilun=0
+  PRODUK_ID=LK.01.0003 | akhir=0.00 | nilun=0
+  PRODUK_ID=LP.01.0041 | akhir=0.00 | nilun=0
+  PRODUK_ID=L0.01.0015 | akhir=0.00 | nilun=0
+  PRODUK_ID=LA.007.0008 | akhir=0.00 | nilun=0
+  PRODUK_ID=BF.01.0028 | akhir=0.00 | nilun=0
+  PRODUK_ID=LA.007.0009 | akhir=0.00 | nilun=0
+  PRODUK_ID=LA.007.0011 | akhir=0.00 | nilun=0

@@ -1,0 +1,5 @@
+===== GATE 1: SUM(SISA_IDR) report opname (per-voucher) April 2026 =====
+  AP report: n=84  total_sisa_idr=8,238,241,410.02
+    (11459 ms)
+  AR report: n=463  total_sisa_idr=19,658,007,939.85
+    (51485 ms)

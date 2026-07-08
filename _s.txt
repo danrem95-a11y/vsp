@@ -1,0 +1,1227 @@
+﻿$PBExportHeader$w_nbeli.srw
+forward
+global type w_nbeli from w_trans
+end type
+end forward
+
+global type w_nbeli from w_trans
+integer width = 4425
+integer height = 2212
+string title = "w_beli"
+boolean resizable = false
+boolean ib_cari1 = true
+boolean ib_cari2 = true
+boolean ib_info = true
+end type
+global w_nbeli w_nbeli
+
+type variables
+long ii_poso
+Integer			ii_btb = 0
+string is_flag = 'PO'
+end variables
+
+on w_nbeli.create
+call super::create
+end on
+
+on w_nbeli.destroy
+call super::destroy
+if IsValid(MenuID) then destroy(MenuID)
+end on
+
+event ue_retrieve;call super::ue_retrieve;choose case tab_1.selectedtab
+	case 1
+		tab_1.selectedtab = 2
+		idw_up2.triggerevent('ue_retrieve')
+	case 2
+		idw_up2.triggerevent('ue_retrieve')
+end choose
+end event
+
+type dw_log from w_trans`dw_log within w_nbeli
+end type
+
+type dw_con from w_trans`dw_con within w_nbeli
+end type
+
+type dw_update from w_trans`dw_update within w_nbeli
+string dataobject = "dw_ap_update"
+end type
+
+type dw_search from w_trans`dw_search within w_nbeli
+end type
+
+type st_split from w_trans`st_split within w_nbeli
+end type
+
+type dw_anim from w_trans`dw_anim within w_nbeli
+end type
+
+type dw_statusbar from w_trans`dw_statusbar within w_nbeli
+integer y = 2144
+end type
+
+type dw_leftmenu from w_trans`dw_leftmenu within w_nbeli
+end type
+
+type tab_1 from w_trans`tab_1 within w_nbeli
+integer height = 2036
+end type
+
+type tabpage_1 from w_trans`tabpage_1 within tab_1
+integer height = 1908
+string text = "Entry Pembelian Non Item"
+end type
+
+type st_split2 from w_trans`st_split2 within tabpage_1
+end type
+
+type dw_1 from w_trans`dw_1 within tabpage_1
+integer height = 928
+string dataobject = "dw_nbeli_entry11"
+end type
+
+event dw_1::buttonclicked;call super::buttonclicked;choose case dwo.name
+	case 'b_print'
+		triggerevent('ue_print')
+end choose
+end event
+
+event dw_1::itemchanged;call super::itemchanged;string ls_vendor,ls_vendor_id,ls_nama,ls_flag,ls_order
+string ls_order_reff,ls_prinsipal,ls_destination,ls_proyek
+string ls_kurs,ls_group_id,ls_keterangan,ls_curr_id,ls_curr,ls_null
+decimal ld_ppn,ld_kurs,ld_rate
+datetime ldt_tgl
+if dwo.name = 'vendor_id' then
+	this.accepttext()
+	ls_vendor = this.object.vendor_id[1]
+	if isnull(ls_vendor_id) then 
+		this.setitem(1,'vendor_id','')
+		this.setitem(1,'nama_vendor','')
+		return
+     end if
+	
+	SELECT MCSTSUPP.NAMA   
+    INTO :ls_nama
+    FROM MCSTSUPP
+    WHERE ( MCSTSUPP.FLAG_VENDOR = 2 ) AND
+         ( MCSTSUPP.VENDOR_ID = :ls_vendor ) ;
+	if ls_nama = '' then 
+		this.setitem(1,'vendor_id','')
+		this.setitem(1,'nama_vendor','')
+		return
+   end if		
+			  
+	this.setitem(1,'flag_vendor',2)		  
+	this.setitem(1,'nama_vendor',ls_nama)
+end if
+
+if dwo.name = 'prinsipal_id' then
+	this.accepttext()
+	ls_vendor = this.object.prinsipal_id[1]
+	if isnull(ls_vendor) then ls_vendor = ''
+	gs_prinsipal = ls_vendor 
+	
+	if isnull(ls_vendor_id) then 
+		this.setitem(1,'prinsipal_id','')
+		this.setitem(1,'nama_prinsipal','')
+		return
+     end if
+	  
+	SELECT MCSTSUPP.NAMA   
+    INTO :ls_nama
+    FROM MCSTSUPP
+    WHERE ( MCSTSUPP.FLAG_VENDOR = 1 ) AND
+         ( MCSTSUPP.VENDOR_ID = :ls_vendor ) ;
+	if ls_nama = '' then 
+		this.setitem(1,'prinsipal_id','')
+		this.setitem(1,'nama_prinsipal','')
+		return
+   end if	
+	
+	this.setitem(1,'flag_prinsipal',1)		  
+	this.setitem(1,'nama_prinsipal',ls_nama)
+end if
+
+if dwo.name = 'order_reff' then
+	this.accepttext()
+	ls_flag = this.object.flag_btb[row] 
+	ls_order_reff = this.object.order_reff[1]	
+	
+	if ls_flag = 'PO' then
+		SELECT MCSTSUPP.NAMA,   
+			   TORDER1.ORDER_ID,
+			   TORDER1.PPN,
+			   TORDER1.VENDOR_ID,
+			   TORDER1.PRINSIPAL_ID,
+			   TORDER1.DESTINATION_SITE,
+			   torder1.proyek,
+			   torder1.curr_id,
+			   torder1.kurs,
+			   torder1.group_id,
+				torder1.keterangan	
+    INTO  :ls_nama,   
+	 		:ls_order,
+			:ld_ppn,
+			:ls_vendor,
+			:ls_prinsipal,
+			:ls_destination,
+			:ls_proyek,
+			:ls_curr,
+			:ld_kurs,
+			:ls_group_id,
+			:ls_keterangan
+    FROM MCSTSUPP,
+	 		TORDER1
+   WHERE ( TORDER1.VENDOR_ID = MCSTSUPP.VENDOR_ID ) AND
+			( TORDER1.FLAG_ORDER = 2 ) AND
+         ( TORDER1.ORDER_CLIENT = :ls_order_reff );
+			
+		this.setitem(1,'vendor_id',ls_vendor)		  
+		this.setitem(1,'nama_vendor',ls_nama)
+	else
+		SELECT MCUST.CUST_NAME,   
+					TORDER1.ORDER_ID,
+					TORDER1.PPN,
+					TORDER1.VENDOR_ID,
+					TORDER1.PRINSIPAL_ID,
+					TORDER1.DESTINATION_SITE,
+					torder1.proyek,
+					torder1.curr_id,
+					torder1.kurs,
+					torder1.group_id,
+					torder1.keterangan	
+		 INTO  :ls_nama,   
+				:ls_order,
+				:ld_ppn,
+				:ls_vendor,
+				:ls_prinsipal,
+				:ls_destination,
+				:ls_proyek,
+				:ls_curr,
+				:ld_kurs,
+				:ls_group_id,
+				:ls_keterangan
+		 FROM MCUST,
+				TORDER1
+		WHERE ( TORDER1.VENDOR_ID = MCUST.CUST_ID ) AND
+				( TORDER1.FLAG_ORDER = 1 ) AND
+				( TORDER1.ORDER_CLIENT = :ls_order_reff );
+		ls_prinsipal = 'P001'
+		this.setitem(1,'cust_id',ls_vendor)		  
+		this.setitem(1,'cust_name',ls_nama)
+	end if
+			
+	if isnull(ls_prinsipal) then ls_prinsipal = ''
+	gs_prinsipal = ls_prinsipal 		
+			  
+	this.setitem(1,'flag_vendor',2)		  	
+	this.setitem(1,'ppn',ld_ppn)
+	this.setitem(1,'destination_site',ls_destination)
+	this.setitem(1,'proyek',ls_proyek)
+	this.setitem(1,'curr_id',ls_curr)
+	this.setitem(1,'kurs',ld_kurs)
+	this.setitem(1,'keterangan',ls_keterangan)
+	
+	if ls_flag = 'PO' then
+		SELECT MCSTSUPP.NAMA 
+		 INTO :ls_nama
+		 FROM MCSTSUPP
+		WHERE ( MCSTSUPP.FLAG_VENDOR = 1 ) AND
+				( MCSTSUPP.VENDOR_ID = :ls_prinsipal );
+	else
+		ls_nama = 'TRADING'
+	end if
+	
+	this.setitem(1,'flag_prinsipal',1)		  
+	this.setitem(1,'prinsipal_id',ls_prinsipal)
+	this.setitem(1,'nama_prinsipal',ls_nama)
+	
+	idw_down3.Settransobject(SQLCA)
+	idw_down3.reset()
+	idw_down3.retrieve(ls_order)
+end if	
+
+if dwo.name = 'tgl' or dwo.name = 'curr_id' then
+	ldt_tgl = this.object.tgl[1]
+	ldt_tgl = datetime(date(ldt_tgl))
+	ls_curr_id = this.object.curr_id[1]
+	
+	if isnull(ls_curr_id) then ls_curr_id = 'IDR'	
+	if ls_curr_id <> 'IDR' then
+		select rate_rp INTO :ld_rate from gl_rate where curr_id = :ls_curr_id
+		and tgl = :ldt_tgl;
+	end if
+	if isnull(ld_rate) then ld_rate = 1
+	if  ls_curr_id = 'IDR' then ld_rate = 1
+	this.setitem(1,'kurs',ld_rate)
+end if
+
+end event
+
+event dw_1::ue_insert;call super::ue_insert;is_key = ''
+this.reset()
+this.insertrow(0)
+this.setitem(1,'tgl',gdt_today)
+idw_down2.reset()
+idw_down1.triggerevent('ue_insert')
+this.setfocus()
+end event
+
+event dw_1::ue_print;call super::ue_print;if this.getrow()<=0 then return
+
+string ls_bukti
+ls_bukti = this.object.bukti_id[getrow()]
+if ls_bukti = '' or isnull(ls_bukti) then return
+
+dw_cetak.retrieve(ls_bukti)
+dw_cetak.Modify("DataWindow.Print.Paper.Size = 256")
+dw_cetak.Modify("DataWindow.Print.CustomPage.Length = 139,7")
+dw_cetak.Modify("DataWindow.Print.CustomPage.Width = 215,9")
+dw_cetak.Modify("DataWindow.Print.Preview.Buttons = 'Yes'")
+dw_cetak.Modify("DataWindow.Print.Preview = 'Yes'")
+dw_cetak.Modify("DataWindow.Print.Preview.Rulers = 'Yes'")
+dw_cetak.visible = true
+Openwithparm(w_prompt_print,dw_cetak)
+If Message.doubleparm = -1 then return
+dw_cetak.print()
+update tstok1 set flag_print = isnull(flag_print,0) + 1 where bukti_id = :ls_bukti ;
+commit;
+
+end event
+
+event dw_1::ue_save;call super::ue_save;string ls_periode,ls_bukti,ls_vendor,ls_order_oke,ls_order, ls_flag,ls_order_client
+datetime ldt_tgl,ldt_tgl_due
+long ll_top_day,ll_count
+
+idw_up1.accepttext()
+ls_order_client = idw_up1.object.order_client[1]
+ldt_tgl       = idw_up1.object.tgl[1]
+ldt_tgl       = datetime(date(ldt_tgl))
+idw_up1.setitem(1,'tgl',ldt_tgl)
+
+if f_lock_trx(ldt_tgl) then return
+if f_block_tahun(ldt_tgl) = 1 then return
+if idw_up1.object.flag_btb[1] = 'PO' then
+	ls_vendor  = idw_up1.object.vendor_id[1]
+	if isnull(ls_vendor) or trim(ls_vendor) = '' then
+		Messagebox('Error','Vendor ID must be entry ..!')
+		return 
+	end if
+elseif idw_up1.object.flag_btb[1] = 'SO' then
+	ls_vendor  = idw_up1.object.cust_id[1]
+	if isnull(ls_vendor) or trim(ls_vendor) = '' then
+		Messagebox('Error','Cust ID must be entry ..!')
+		return 
+	end if
+end if
+
+select top_day into :ll_top_day from MCSTSUPP
+where vendor_id = :ls_vendor ;
+if isnull(ll_top_day) then ll_top_day = 0
+
+ls_vendor  = idw_up1.object.prinsipal_id[1]
+if isnull(ls_vendor) or trim(ls_vendor) = '' then
+	Messagebox('Error','Prinsipal ID must be entry ..!')
+	return 
+end if
+
+ii_poso  		= idw_up1.object.flag_po[1]
+ls_order 		= idw_up1.object.order_reff[1]
+is_key   		= idw_up1.object.bukti_id[1]
+if ii_poso = 1 then
+	if isnull(ls_order) or trim(ls_order) = '' then
+		Messagebox('Error','Please fill in Purchase Order ID ...!')
+		Return 
+	end if
+end if
+
+if isnull(is_key) or trim(is_key) = '' then
+	ls_periode = gs_site + string(ldt_tgl,'yymm') + '99'
+	SELECT MAX(substring(bukti_id,10,5)) INTO :ls_bukti FROM TSTOK1
+	 WHERE left(bukti_id,9) = :ls_periode ;
+	if isnull(ls_bukti) then ls_bukti = '00000'
+	ls_bukti = ls_periode + string((long(ls_bukti) + 1),'00000')
+	
+	if is_flag = 'PO' then
+		ls_flag = '99'
+	else
+		ls_flag = '99'
+	end if
+	idw_up1.setitem(1,'bukti_id',ls_bukti)
+	idw_up1.setitem(1,'tipe_trans',ls_flag)
+	idw_up1.setitem(1,'site_id',gs_site)
+	idw_up1.setitem(1,'user_id',gs_user)
+	idw_up1.setitem(1,'flag_prinsipal',1)	
+	idw_up1.setitem(1,'order_oke','N')
+	is_key = ls_bukti
+	//noitem
+	//Select lbm into :ls_periode from gl_site ;	
+    ls_periode = 'NOITEM' + String(ldt_tgl,'yymm')
+	 SELECT MAX(substring(order_client,11,5)) INTO :ls_order_client FROM TSTOK1
+	 WHERE left(order_client,10) = :ls_periode ;
+	if isnull(ls_order_client) then ls_order_client = '00000'
+	ls_order_client = ls_periode + string((long(ls_order_client) + 1),'00000')
+	
+	idw_up1.setitem(1,'order_oke','Y')
+	idw_up1.setitem(1,'order_client',ls_order_client)
+	idw_down1.object.bukti_id[idw_down1.getrow( )] = is_key
+else
+	//cek pembayaran
+	if f_bypass_trans() = 1 then
+		select count(*)
+		into :ll_count
+		from tbyr2
+		where bukti_id = :ls_order_client
+		using sqlca;
+		if ll_count >0 then 
+			messagebox('Warning!','Faktur sudah dibayar dan tidak dapat diedit..!',stopsign!)
+			return
+		end if
+	end if
+end if
+
+ls_order_oke = idw_up1.object.order_oke[1]
+if ls_order_oke = 'Y' then
+	idw_up1.modify('order_client.visible = 1')
+else
+	idw_up1.modify('order_client.visible = 0')
+end if
+idw_up1.accepttext()
+
+// ============================================================
+// Validasi Balance Jurnal: total DEBET harus = total KREDIT
+// ============================================================
+decimal ldec_bal_debet, ldec_bal_kredit
+ldec_bal_debet  = 0
+ldec_bal_kredit = 0
+
+select sum(isnull(netto,0.00))
+into :ldec_bal_debet
+from tstok2
+where bukti_id = :is_key and upper(sat_kecil) = 'DEBET'
+using sqlca;
+
+select sum(isnull(netto,0.00))
+into :ldec_bal_kredit
+from tstok2
+where bukti_id = :is_key and upper(sat_kecil) = 'KREDIT'
+using sqlca;
+
+if isnull(ldec_bal_debet)  then ldec_bal_debet  = 0
+if isnull(ldec_bal_kredit) then ldec_bal_kredit = 0
+
+if ldec_bal_debet <> ldec_bal_kredit then
+   messagebox('Warning! Jurnal Tidak Balance', &
+      'Total DEBET  : ' + string(ldec_bal_debet,  '#,###,###,##0.00') + '~r~n' + &
+      'Total KREDIT : ' + string(ldec_bal_kredit, '#,###,###,##0.00') + '~r~n~r~n' + &
+      'Selisih      : ' + string(abs(ldec_bal_debet - ldec_bal_kredit), '#,###,###,##0.00') + '~r~n~r~n' + &
+      'Data tidak dapat disimpan sebelum jurnal balance.', &
+      stopsign!)
+   return
+end if
+// ============================================================
+
+	if is_flag = 'PO' then
+	// posting to ap_trans
+	dw_update.settransobject(sqlca)
+	dw_update.retrieve(is_key)
+	if dw_update.rowcount() <= 0 then
+		dw_update.Reset()
+		dw_update.insertrow(0)
+		dw_update.setitem(1,'bukti_id',idw_up1.object.bukti_id[1])
+	end if
+	dw_update.setitem(1,'tipe_trans',idw_up1.object.tipe_trans[1])
+	dw_update.setitem(1,'site_id',idw_up1.object.site_id[1])
+	dw_update.setitem(1,'tgl',idw_up1.object.tgl[1])
+	dw_update.setitem(1,'flag_prinsipal',idw_up1.object.flag_prinsipal[1])
+	dw_update.setitem(1,'prinsipal_id',idw_up1.object.prinsipal_id[1])
+	dw_update.setitem(1,'order_reff',idw_up1.object.order_reff[1])
+	dw_update.setitem(1,'bukti_reff',idw_up1.object.bukti_reff[1])
+	dw_update.setitem(1,'from_site',idw_up1.object.from_site[1])
+	dw_update.setitem(1,'destination_site',idw_up1.object.destination_site[1])
+	dw_update.setitem(1,'ttl_kotor',idw_up1.object.ttl_kotor[1])
+	dw_update.setitem(1,'ttl_pot',idw_up1.object.ttl_pot[1])
+	dw_update.setitem(1,'ttl_netto',idw_up1.object.ttl_netto[1])
+	dw_update.setitem(1,'keterangan',idw_up1.object.keterangan[1])
+	dw_update.setitem(1,'ppn',idw_up1.object.ppn[1])
+	dw_update.setitem(1,'ttl_ppn',idw_up1.object.ttl_ppn[1])
+	dw_update.setitem(1,'flag_vendor',idw_up1.object.flag_vendor[1])
+	dw_update.setitem(1,'vendor_id',idw_up1.object.vendor_id[1])
+	dw_update.setitem(1,'order_client',idw_up1.object.order_client[1])
+	dw_update.setitem(1,'order_oke',idw_up1.object.order_oke[1])
+	dw_update.setitem(1,'user_id',idw_up1.object.user_id[1])
+	dw_update.setitem(1,'curr_id',idw_up1.object.curr_id[1])
+	dw_update.setitem(1,'kurs',idw_up1.object.kurs[1])
+	
+	// mencari tgl_due
+	ldt_tgl_due = Datetime(RelativeDate(date(ldt_tgl), ll_top_day))
+	dw_update.setitem(1,'tgl_due',ldt_tgl_due)
+	
+	dw_update.accepttext()
+	idw_up1.accepttext()
+	if idw_up1.update() = 1 and dw_update.update() = 1 then
+		commit;
+	else
+		rollback;
+	end if
+else
+	if idw_up1.update() = 1 then
+		commit;
+	else
+		rollback;
+	end if
+end if
+
+if idw_down2.rowcount() >0 then
+	ls_order_client = this.object.order_client[1]
+	if gi_auto_pogl>0 then
+		setpointer(hourglass!)
+		f_transfer_nonitempo(ls_order_client)
+		setpointer(arrow!)
+	end if
+	this.triggerevent('ue_insert')
+end if
+end event
+
+type cb_2 from w_trans`cb_2 within tabpage_1
+end type
+
+type cb_1 from w_trans`cb_1 within tabpage_1
+end type
+
+type tab_2 from w_trans`tab_2 within tabpage_1
+integer y = 1028
+end type
+
+type tabpage_3 from w_trans`tabpage_3 within tab_2
+end type
+
+type gb_info from w_trans`gb_info within tabpage_3
+alignment alignment = right!
+end type
+
+type em_qty_akhir4 from w_trans`em_qty_akhir4 within tabpage_3
+end type
+
+type em_qty_akhir3 from w_trans`em_qty_akhir3 within tabpage_3
+end type
+
+type em_qty_akhir2 from w_trans`em_qty_akhir2 within tabpage_3
+end type
+
+type em_qty_akhir from w_trans`em_qty_akhir within tabpage_3
+end type
+
+type sle_satuan4 from w_trans`sle_satuan4 within tabpage_3
+end type
+
+type sle_satuan3 from w_trans`sle_satuan3 within tabpage_3
+end type
+
+type sle_satuan2 from w_trans`sle_satuan2 within tabpage_3
+end type
+
+type sle_satuan from w_trans`sle_satuan within tabpage_3
+end type
+
+type dw_4 from w_trans`dw_4 within tabpage_3
+integer y = 104
+string dataobject = "dw_nbeli_entry12"
+end type
+
+event dw_4::itemchanged;call super::itemchanged;string ls_stok,ls_nama,ls_sat1,ls_sat2,ls_sat3,ls_prinsipal_id,ls_gudang
+double ld_hrg,ld_qty,ld_nilai,ld_hna1,ld_hna2,ld_hna3,ld_isi1,ld_isi2
+double ld_qty1,ld_qty2,ld_qty3,ld_pot,ld_netto,ld_qty_akhir,ld_hrg_besar
+dec ld_mod,ld_akhir1,ld_akhir2,ld_akhir3,ld_sisa,ld_ppn
+
+
+string ls_coaname,ls_coacode
+if dwo.name = 'coa_id' then
+	this.accepttext()
+	ls_coacode = data
+	this.setitem(1,'qty',1)
+	
+	select accountdes into:ls_coaname from gl_acc where accountcode = :ls_coacode using sqlca;
+	if isnull(ls_coaname) or ls_coaname = '' then return
+	setitem(row,'accountdes',ls_coaname)
+end if
+end event
+
+event dw_4::ue_insert;call super::ue_insert;long ll_urut
+string ls_bukti_id,ls_gudang_id
+
+idw_up1.accepttext()
+if idw_up1.getrow( ) < 1 then return
+
+ls_bukti_id = idw_up1.object.bukti_id[1]
+select max(urut) into :ll_urut from tstok2 where bukti_id = :ls_bukti_id ;
+if isnull(ll_urut) then ll_urut = 0
+ll_urut ++
+
+decimal ldec_debet,ldec_ppn,ldec_kredit
+
+//Debet
+select sum(isnull(netto,0.00))
+into :ldec_debet
+from tstok2
+where bukti_id = :ls_bukti_id and sat_kecil = 'DEBET'
+using sqlca;
+//Kredit
+select sum(isnull(netto,0.00))
+into :ldec_kredit
+from tstok2
+where bukti_id = :ls_bukti_id and sat_kecil = 'KREDIT'
+using sqlca;
+
+
+
+this.reset()
+this.Insertrow(0)
+this.setitem(1,'urut',ll_urut)
+this.Setfocus()
+
+//if mod(ll_urut,2)>0 then
+//	this.setitem(1,'sat_kecil','DEBET')
+//else
+//	this.setitem(1,'sat_kecil','KREDIT')
+//end if
+if isnull(ldec_debet) then ldec_debet = 0
+if isnull(ldec_kredit) then ldec_kredit = 0
+this.setitem(1,'debet',ldec_debet)
+this.setitem(1,'kredit',ldec_kredit)
+
+tab_1.tabpage_1.tab_2.tabpage_3.em_qty_akhir4.text = string(0,'#,###,###')
+this.setitem(this.getrow(),'stok_id','9999999999')
+end event
+
+event dw_4::ue_save;call super::ue_save;long ll_urut,ll_count
+string ls_stok,ls_stok_desc,ls_gudang, ls_order_reff,ls_satkecil,ls_coa
+double ld_qty,ld_qty1,ld_qty2,ld_qty3
+Double ld_qty_akhir
+Double ld_qty_old
+decimal ldec_harga
+string ls_order_client
+
+idw_up1.accepttext()
+datetime ldt_tgl
+ldt_tgl = idw_up1.object.tgl[1]
+if f_lock_trx(ldt_tgl) then return
+if f_block_tahun(ldt_tgl) = 1 then return
+this.accepttext()
+idw_up1.accepttext()
+ls_order_client = idw_up1.object.order_client[1]
+ld_qty_old    = 0.00
+ld_qty_akhir = 0.00
+
+ls_coa = this.object.coa_id[1]
+ls_stok 		 = this.object.stok_id[1]
+//ls_stok_desc = this.object.produk_desc[1]
+ld_qty  	      = this.object.qty[1]
+ld_qty1  	      = this.object.qty1[1]
+ld_qty2  	      = this.object.qty2[1]
+ld_qty3  	      = this.object.qty3[1]
+ls_gudang     = this.object.gudang_id[1]
+ls_order_reff = idw_up1.object.order_reff[1]
+ls_satkecil = this.object.sat_kecil[1]
+ldec_harga = this.object.hrg[1]
+
+if isnull(ls_coa) or ls_coa = '' then
+	messagebox('','COA ID tidak valid..!')
+	return
+end if
+select count(*)
+into :ll_count from gl_acc where accountcode = :ls_coa using sqlca;
+if isnull(ll_count) or ll_count <=0 then
+	messagebox('','COA ID tidak ditemukan di master COA..!')
+	return
+end if
+if isnull(ls_satkecil) or ls_satkecil = '' then
+	messagebox('','Posisi D/K invalid..!')
+	return
+end if
+if isnull(ld_qty) or ld_qty < 0 then 
+	this.setitem(this.getrow(),'qty',1)
+end if
+if isnull(ldec_harga) or ldec_harga = 0 then
+	messagebox('','Harga tidak valid..!')
+	return
+end if
+this.setitem(1,'kotor',ldec_harga)
+this.setitem(1,'netto',ldec_harga)
+this.accepttext()
+ll_urut = this.object.urut[1]
+if isnull(ll_urut) then ll_urut = 0
+
+if isnull(is_key) then is_key = ''
+if is_key = '' then
+   idw_up1.triggerevent('ue_save')
+	this.setitem(1,'bukti_id',is_key)
+else
+	//cek pembayaran
+	if f_bypass_trans() = 1 then
+		select count(*)
+		into :ll_count
+		from tbyr2
+		where bukti_id = :ls_order_client
+		using sqlca;
+		if ll_count >0 then 
+			messagebox('Warning!','Faktur sudah dibayar dan tidak dapat diedit..!',stopsign!)
+			return
+		end if
+	end if
+end if
+if is_key='' or isnull(is_key) then return
+
+if ll_urut = 0 then
+	select max(urut) into :ll_urut from TSTOK2
+	where bukti_id = :is_key ;
+	if isnull(ll_urut) then ll_urut = 0
+	
+	this.setitem(1,'urut',ll_urut + 1)
+	 f_log("2030","NON-ITEM","NEW","Add COA no : "+ls_coa,is_key)
+else
+	ld_qty_old = this.object.qty_old[1]
+	if isnull(ld_qty_old) then ld_qty_old= 0.00
+	 f_log("2030","NON-ITEM","EDIT","Edit COA no : "+ls_COA,is_key)
+end if
+this.setitem(1,'bukti_id',is_key)
+this.setitem(1,"order_reff",ls_order_reff)
+/* ------------tidak usah update stok pembelian non item
+// Check Stok Akhir & Update Stok AKhir  (SINV2)
+dw_detail.Settransobject(SQLCA)
+dw_detail.Reset()
+dw_detail.Retrieve(gs_site,ls_stok,ls_gudang)
+if dw_detail.rowcount() <= 0 then
+	dw_detail.Insertrow(0)
+	dw_detail.Setitem(1,'site_id',gs_site)
+	dw_detail.Setitem(1,'stok_id',ls_stok)
+	dw_detail.Setitem(1,'flag_vendor',3)
+	dw_detail.Setitem(1,'gudang_id',ls_gudang)
+	dw_detail.Setitem(1,'qty_akhir',0.00)
+end if
+dw_detail.Accepttext()
+ld_qty_akhir = dw_detail.object.qty_akhir[1]
+if isnull(ld_qty_akhir) then ld_qty_akhir = 0
+
+ld_qty_akhir = ld_qty_akhir + ld_qty - ld_qty_old
+dw_detail.Setitem(1,'qty_akhir',ld_qty_akhir)
+
+dw_detail.Accepttext()
+*/
+this.accepttext()
+
+// ============================================================
+// Validasi Balance Jurnal: total DEBET harus = total KREDIT
+// ============================================================
+decimal ldec_chk_debet, ldec_chk_kredit
+ldec_chk_debet  = 0
+ldec_chk_kredit = 0
+
+select sum(isnull(netto,0.00))
+into :ldec_chk_debet
+from tstok2
+where bukti_id = :is_key and upper(sat_kecil) = 'DEBET'
+using sqlca;
+
+select sum(isnull(netto,0.00))
+into :ldec_chk_kredit
+from tstok2
+where bukti_id = :is_key and upper(sat_kecil) = 'KREDIT'
+using sqlca;
+
+if isnull(ldec_chk_debet)  then ldec_chk_debet  = 0
+if isnull(ldec_chk_kredit) then ldec_chk_kredit = 0
+
+// Tambahkan nilai baris yang sedang diinput (belum committed ke DB)
+decimal ldec_row_netto
+ldec_row_netto = this.object.netto[1]
+if isnull(ldec_row_netto) then ldec_row_netto = 0
+
+string ls_row_satkecil
+ls_row_satkecil = upper(this.object.sat_kecil[1])
+if isnull(ls_row_satkecil) then ls_row_satkecil = ''
+
+if ls_row_satkecil = 'DEBET' then
+   ldec_chk_debet  = ldec_chk_debet  + ldec_row_netto
+elseif ls_row_satkecil = 'KREDIT' then
+   ldec_chk_kredit = ldec_chk_kredit + ldec_row_netto
+end if
+
+if ldec_chk_debet <> ldec_chk_kredit then
+   messagebox('Warning! Jurnal Tidak Balance', &
+      'Total DEBET  : ' + string(ldec_chk_debet,  '#,###,###,##0.00') + '~r~n' + &
+      'Total KREDIT : ' + string(ldec_chk_kredit, '#,###,###,##0.00') + '~r~n~r~n' + &
+      'Selisih      : ' + string(abs(ldec_chk_debet - ldec_chk_kredit), '#,###,###,##0.00') + '~r~n~r~n' + &
+      'Data tidak dapat disimpan sebelum jurnal balance.', &
+      stopsign!)
+   return
+end if
+// ============================================================
+
+if this.update() = 1 /*and dw_detail.update() = 1*/ then
+commit;
+else
+rollback;
+end if
+
+
+
+// update tstok1 & ap_trans 
+update tstok1 
+	 set tstok1.ttl_kotor = isnull( hasil.ttl_netto,0.00),
+		  tstok1.ttl_pot = isnull( hasil.ttl_kotor,0.00) - isnull( hasil.ttl_netto,0.00),
+		  tstok1.ttl_netto = (isnull( hasil.ttl_netto,0.00)) //+ isnull(tstok1.ttl_ppn,0.00) -->Ppn jangan di jumlah karna sudah di jurnal
+ from	tstok1,
+			(
+			select sum(isnull(kotor,0.00)) as ttl_kotor,
+					sum(isnull(netto,0.00)) as ttl_netto
+			 from tstok2
+			 where (tstok2.bukti_id = :is_key and upper(sat_kecil) = 'DEBET') 
+		) hasil
+where (tstok1.bukti_id = :is_key) ;
+if sqlca.sqlcode = 0 then
+	commit;
+else
+	rollback;
+end if	
+
+update ap_trans
+	 set ap_trans.ttl_kotor = isnull(tstok1.ttl_kotor,0.00),
+		  ap_trans.ttl_pot = isnull(tstok1.ttl_pot,0.00),
+		 ap_trans.ttl_ppn = isnull(tstok1.ttl_ppn,0.00),
+		 ap_trans.ttl_netto = isnull(tstok1.ttl_netto,0.00)
+from ap_trans,tstok1
+where (ap_trans.bukti_id = tstok1.bukti_id) and
+			 (ap_trans.bukti_id = :is_key) ;
+if sqlca.sqlcode = 0 then
+	commit;
+else
+	rollback;
+end if	
+
+idw_up1.retrieve(is_key)
+
+idw_down2.Reset()
+idw_down2.retrieve(is_key)
+
+
+
+triggerevent('ue_insert')
+end event
+
+type cb_4 from w_trans`cb_4 within tabpage_3
+end type
+
+type cb_3 from w_trans`cb_3 within tabpage_3
+end type
+
+type tabpage_4 from w_trans`tabpage_4 within tab_2
+end type
+
+type st_cari from w_trans`st_cari within tabpage_4
+end type
+
+type sle_cari from w_trans`sle_cari within tabpage_4
+end type
+
+type dw_5 from w_trans`dw_5 within tabpage_4
+string dataobject = "dw_nbeli_list12"
+end type
+
+event dw_5::doubleclicked;call super::doubleclicked;triggerevent('ue_edit')
+end event
+
+event dw_5::ue_delete;call super::ue_delete;long ll_urut,ll_count
+double ld_qty,ld_qty_akhir
+string ls_stok,ls_gudang,ls_order
+datetime ldt_tgl
+if this.getrow() <= 0 then return
+ls_stok 		= this.object.stok_id[this.getrow()]
+ls_gudang 	= this.object.gudang_id[this.getrow()]
+ld_qty  		= this.object.qty[this.getrow()]
+ls_order = idw_up1.object.order_client[1]
+ldt_tgl = idw_up1.object.tgl[1]
+
+if f_lock_trx(ldt_tgl) then return
+
+if isnull(ld_qty) then ld_qty = 0.00
+
+//cek pembayaran
+	select count(*)
+	into :ll_count
+	from tbyr2
+	where bukti_id = :ls_order
+	using sqlca;
+	if ll_count >0 then
+		messagebox('Warning!','Faktur sudah dibayar, tidak dapat diedit..!',stopsign!)
+		return
+	end if
+	
+if messagebox('Delete','Are you sure to want to delete this data ?',Question!,yesno!,2)=2 then return 
+/*
+// Check Stok Akhir & Update Stok AKhir
+dw_detail.Settransobject(SQLCA)
+dw_detail.Reset()
+dw_detail.Retrieve(gs_site,ls_stok,ls_gudang)
+if dw_detail.rowcount() <= 0 then
+	dw_detail.Insertrow(0)
+	dw_detail.Setitem(1,'site_id',gs_site)
+	dw_detail.Setitem(1,'stok_id',ls_stok)
+	dw_detail.Setitem(1,'flag_vendor',3)
+	dw_detail.Setitem(1,'gudang_id',ls_gudang)
+	dw_detail.Setitem(1,'qty_akhir',0.00)
+end if
+dw_detail.Accepttext()
+ld_qty_akhir = dw_detail.object.qty_akhir[1]
+if isnull(ld_qty_akhir) then ld_qty_akhir = 0
+ld_qty_akhir = ld_qty_akhir - ld_qty
+dw_detail.Setitem(1,'qty_akhir',ld_qty_akhir)
+
+dw_detail.Accepttext()
+*/
+this.deleterow(0)
+this.accepttext()
+if this.update() = 1 /*and dw_detail.update() = 1 */then
+	commit;
+else
+	rollback;
+end if
+
+// update tstok1 & ap_trans 
+update tstok1 
+	 set tstok1.ttl_kotor = isnull( hasil.ttl_netto,0.00)/2,
+		  tstok1.ttl_pot = isnull( hasil.ttl_kotor,0.00) - isnull( hasil.ttl_netto,0.00),
+		  tstok1.ttl_netto = (isnull( hasil.ttl_netto,0.00)/2)// + isnull(tstok1.ttl_ppn,0.00)
+ from	tstok1,
+			(
+			select sum(isnull(kotor,0.00)) as ttl_kotor,
+					sum(isnull(netto,0.00)) as ttl_netto
+			 from tstok2
+			 where (tstok2.bukti_id = :is_key) 
+		) hasil
+where (tstok1.bukti_id = :is_key) ;
+if sqlca.sqlcode = 0 then
+	commit;
+else
+	rollback;
+end if	
+
+update ap_trans
+	 set ap_trans.ttl_kotor = isnull(tstok1.ttl_kotor,0.00),
+		  ap_trans.ttl_pot = isnull(tstok1.ttl_pot,0.00),
+		 ap_trans.ttl_ppn = isnull(tstok1.ttl_ppn,0.00),
+		 ap_trans.ttl_netto = isnull(tstok1.ttl_netto,0.00)
+from ap_trans,tstok1
+where (ap_trans.bukti_id = tstok1.bukti_id) and
+			 (ap_trans.bukti_id = :is_key) ;
+if sqlca.sqlcode = 0 then
+	commit;
+else
+	rollback;
+end if	
+
+idw_up1.retrieve(is_key)
+
+ f_log("2030","NON-ITEM","DELETE","Delete COA no : "+ls_stok,is_key)
+this.Reset()
+this.retrieve(is_key)
+end event
+
+event dw_5::ue_edit;call super::ue_edit;long ll_urut
+INteger	li_flag
+string ls_Stok,ls_gudang, ls_reff
+double ld_qty_akhir,ld_qty_old
+double ld_akhir1,ld_akhir2,ld_akhir3,ld_sisa,ld_mod
+Double ld_isi1,ld_isi2
+
+double ld_kotor,ld_pot,ld_potongan
+
+if this.getrow() <= 0 then return
+
+ls_reff		= this.object.order_reff[this.getrow()]
+
+ll_urut 		= this.object.urut[this.getrow()]
+ld_qty_old 	= this.object.qty[this.getrow()]
+ls_stok 		= this.object.stok_id[this.getrow()]
+ls_gudang 	= this.object.gudang_id[this.getrow()]	
+
+ld_kotor 		= this.object.kotor[this.getrow()]
+ld_pot 		= this.object.tstok2_pot[this.getrow()]
+ld_potongan	= Round(ld_kotor * ld_pot/100,2)
+
+decimal ldec_debet,ldec_ppn,ldec_kredit
+idw_up1.accepttext()
+ldec_ppn = idw_up1.object.ttl_ppn[1]
+//Debet
+select sum(isnull(netto,0.00))
+into :ldec_debet
+from tstok2
+where bukti_id = :is_key and sat_kecil = 'DEBET'
+using sqlca;
+//Kredit
+select sum(isnull(netto,0.00))
+into :ldec_kredit
+from tstok2
+where bukti_id = :is_key and sat_kecil = 'KREDIT'
+using sqlca;
+if isnull(ldec_ppn) then ldec_ppn = 0
+if isnull(ldec_debet) then ldec_debet = 0
+if isnull(ldec_kredit) then ldec_kredit = 0
+
+idw_down1.retrieve(is_key,ll_urut)
+idw_down1.setitem(1,'qty_old',ld_qty_old)
+idw_down1.setitem(1,'potongan',ld_potongan)
+idw_down1.setitem(1,'debet',ldec_debet)
+idw_down1.setitem(1,'kredit',ldec_kredit)
+itab.SelectTab(1)
+idw_down1.Setfocus()
+
+// load qty_akhir
+ld_isi1 		= idw_down1.object.isi_sedang[1]	
+ld_isi2 		= idw_down1.object.isi_besar[1]	
+
+dw_detail.settransobject(sqlca)
+dw_detail.retrieve(gs_site,ls_stok,ls_gudang)
+if dw_detail.rowcount() <= 0 then
+	ld_qty_akhir = 0
+else
+	ld_qty_akhir = dw_detail.object.qty_akhir[1]
+end if
+if isnull(ld_qty_akhir) then ld_qty_akhir = 0
+
+// ambil modulus quantity	
+ld_akhir1 = 0
+ld_akhir2 = 0
+ld_akhir3 = 0
+
+ld_mod  = ld_qty_akhir
+If ld_mod >= ld_isi2 and ld_isi2 <> 0  then
+	ld_sisa = mod(ld_mod,ld_isi2)
+	ld_akhir1 = (ld_mod - ld_sisa)/ld_isi2
+Else
+	ld_sisa = ld_mod
+End if
+ld_mod = ld_sisa
+If ld_mod >= ld_isi1 and ld_isi1 <> 0 then
+	ld_sisa = mod(ld_mod,ld_isi1)
+	ld_akhir2 = (ld_mod - ld_sisa)/ld_isi1
+Else
+	ld_sisa = ld_mod
+end if
+
+ld_akhir3 = ld_sisa
+//------------------------------------------------
+
+tab_1.tabpage_1.tab_2.tabpage_3.em_qty_akhir4.text = string(ld_qty_akhir,'###,###0')
+
+idw_up1.accepttext( )
+
+double ld_nilai,ld_ppn
+
+ld_ppn = idw_up1.getitemnumber( 1, 'ppn')
+If isnull(ld_ppn) then ld_ppn = 0.00
+
+
+end event
+
+type cb_6 from w_trans`cb_6 within tabpage_4
+end type
+
+type cb_5 from w_trans`cb_5 within tabpage_4
+end type
+
+type tabpage_5 from w_trans`tabpage_5 within tab_2
+boolean visible = false
+end type
+
+type dw_6 from w_trans`dw_6 within tabpage_5
+end type
+
+type cb_7 from w_trans`cb_7 within tabpage_5
+end type
+
+type tabpage_2 from w_trans`tabpage_2 within tab_1
+integer height = 1908
+string text = "List Pembelian Non Item"
+end type
+
+type st_split4 from w_trans`st_split4 within tabpage_2
+end type
+
+type st_split3 from w_trans`st_split3 within tabpage_2
+end type
+
+type dw_info from w_trans`dw_info within tabpage_2
+integer y = 1724
+string dataobject = "dw_nbeli_list12"
+end type
+
+type dw_3 from w_trans`dw_3 within tabpage_2
+integer height = 1204
+string dataobject = "dw_nbeli_list11"
+end type
+
+event dw_3::clicked;call super::clicked;if row <=0 then return
+
+string ls_bukti
+ls_bukti = this.object.bukti_id[row]
+idw_info.retrieve(ls_bukti)
+end event
+
+event dw_3::rowfocuschanged;call super::rowfocuschanged;if currentrow <=0 then return
+
+string ls_bukti
+ls_bukti = this.object.bukti_id[currentrow]
+idw_info.retrieve(ls_bukti)
+end event
+
+event dw_3::ue_delete;call super::ue_delete;if getrow() <=0 then return
+string ls_bukti,ls_order,ls_faktur
+long ll_count
+datetime ldt_tgl
+
+ldt_tgl = this.object.tgl[getrow()]
+ls_order = this.object.order_client[getrow()]
+ls_bukti = this.object.bukti_id[getrow()]
+ls_faktur = this.object.bukti_reff[getrow()]
+
+if f_lock_trx(ldt_tgl) then return
+
+select count(*)
+into :ll_count
+from tbyr2
+where bukti_id = :ls_order using sqlca;
+if ll_count>0 then
+	messagebox('Warning!','Faktur ini sudah melakukan transaksi pembayaran, Tidak dapat dihapus..!')
+	return
+end if
+
+
+if Messagebox('Warning!','Are You sure to delete this data..?',Question!,Yesno!,2) = 1 then
+   UPDATE SINV2
+	    SET QTY_AKHIR = QTY_AKHIR - ISNULL(LBM.QTY_AKHIR,0.00)
+	 FROM SINV2,
+			 (			SELECT 	STOK_ID AS STOK_ID,
+			 						GUDANG_ID AS GUDANG_ID,
+									SUM(QTY) AS QTY
+						FROM TSTOK2
+						WHERE BUKTI_ID = :ls_bukti
+						GROUP BY  STOK_ID,GUDANG_ID
+			 ) LBM
+  WHERE (SINV2.STOK_ID = LBM.STOK_ID) AND
+  			(SINV2.GUDANG_ID = LBM.GUDANG_ID);
+  commit;	
+	
+  Delete from TSTOK2 where bukti_id = :ls_bukti ;
+  Commit;
+  Delete from TSTOK1 where bukti_id = :ls_bukti ;
+  Commit;
+  Delete from AP_TRANS where bukti_id = :ls_bukti ;
+  Commit;
+  delete from gl_journal
+  where isnull(doc_reff,'') = :ls_order
+  commit;
+   f_log("2030","NON-ITEM","DELETE","Delete faktur no : "+ls_faktur,ls_bukti)
+  this.triggerevent('ue_retrieve')
+end if
+
+end event
+
+event dw_3::ue_edit;call super::ue_edit;if getrow() <=0 then return
+string ls_bukti
+ls_bukti = this.object.bukti_id[getrow()]
+is_key = ls_bukti
+
+idw_up1.retrieve(ls_bukti)
+idw_down2.retrieve(ls_bukti)
+tab_1.selectedtab = 1
+itab.selectedtab = 2
+idw_up1.setfocus()
+
+end event
+
+event dw_3::ue_print;call super::ue_print;if this.getrow()<=0 then return
+
+string ls_bukti,ls_faktur
+ls_faktur = this.object.bukti_reff[getrow()]
+ls_bukti = this.object.bukti_id[getrow()]
+if isnull(ls_faktur) then ls_faktur = ''
+dw_cetak.retrieve(ls_bukti)
+dw_cetak.Modify("DataWindow.Print.Paper.Size = 256")
+dw_cetak.Modify("DataWindow.Print.CustomPage.Length = 139,7")
+dw_cetak.Modify("DataWindow.Print.CustomPage.Width = 215,9")
+dw_cetak.Modify("DataWindow.Print.Preview.Buttons = 'Yes'")
+dw_cetak.Modify("DataWindow.Print.Preview = 'Yes'")
+dw_cetak.Modify("DataWindow.Print.Preview.Rulers = 'Yes'")
+dw_cetak.visible = true
+Openwithparm(w_prompt_print,dw_cetak)
+If Message.doubleparm = -1 then return
+dw_cetak.print()
+update tstok1 set flag_print = isnull(flag_print,0) + 1 where bukti_id = :ls_bukti ;
+commit;
+ f_log("2030","NON-ITEM","PRINT","Print faktur no : "+ls_faktur,ls_bukti)
+end event
+
+event dw_3::ue_retrieve;call super::ue_retrieve;//idw_arg1 = tab_1.tabpage_2.dw_arg
+idw_arg1.accepttext()
+datetime ldt1,ldt2
+long ll_all
+
+ldt1 = idw_arg1.object.tgl1[1]
+ldt2 = idw_arg1.object.tgl2[1]
+ll_all = idw_arg1.object.all[1]
+
+this.retrieve(ldt1,ldt2,ll_all)
+idw_info.reset()
+end event
+
+type dw_2 from w_trans`dw_2 within tabpage_2
+end type
+
+event dw_2::constructor;call super::constructor;this.reset()
+this.insertrow(0)
+datetime ldt1,ldt2
+
+ldt1 = f_bom(gdt_today)
+ldt2 = f_eom(gdt_today)
+
+this.setitem(1,'tgl1',ldt1)
+this.setitem(1,'tgl2',ldt2)
+end event
+
+event dw_2::editchanged;call super::editchanged;if dwo.name = 'tgl1' or dwo.name = 'tgl2' then
+	this.accepttext()
+	triggerevent('ue_retrieve')
+end if
+
+string ls_nama
+if dwo.name = 'cari' then
+	this.accepttext()
+	ls_nama = upper(this.object.cari[1])
+	if isnull(ls_nama) then ls_nama = ''
+
+	if ls_nama = '' then
+		idw_up2.setfilter('')
+	else	
+		idw_up2.setfilter('upper(is_find) like "%' + ls_nama + '%"')
+	end if
+	idw_up2.filter()
+	idw_up2.sort()
+	idw_up2.groupcalc()
+	//idw_info.reset()
+	//idw_info.triggerevent('rowfocuschanged')
+end if
+end event
+
+type dw_cetak from w_trans`dw_cetak within w_nbeli
+string dataobject = "d_po_cetak_form"
+end type
+
+type st_split1 from w_trans`st_split1 within w_nbeli
+end type
+
+type dw_detail from w_trans`dw_detail within w_nbeli
+string dataobject = "dw_sinv2_update"
+end type

@@ -1,0 +1,20 @@
+===== #1 FIX VIEW AP: bayar/adj di-anchor ke GL (target = 8,238,241,410.02) =====
+  ap_saf (anchored) = 14,456,916,766.09
+  ap_inv (anchored) = 17,436,972,274.11
+  ap_adj (anchored) = -1,398,500.00
+  ap_byr (anchored) = 23,654,249,130.18
+  >>> AP SUBLEDGER (fixed) = 8,238,241,410.02   (report=8,238,241,410.02  selisih=0.00)
+
+===== #2 FORENSIK: GL orphan (voucher tanpa pasangan subledger) per bulan+modul =====
+--- AR 103-001: orphan debet YTD per bulan (no ar_trans & no SAF) ---
+   1 | CI | 164 | -6973080126.69
+   2 | CI | 145 | -10901683936.00
+   3 | CI | 104 | -10276093615.00
+   4 | CI | 210 | -19210587909.77
+   5 | CI | 120 | -6658898478.44
+--- AP 226-001: orphan kredit YTD per bulan (no ap_trans & no SAF) ---
+   1 | CO | 33 | 4545243402.42
+   2 | CO | 47 | 4873807290.25
+   3 | CO | 35 | 7300267818.10
+   4 | CO | 48 | 5196628093.24
+   5 | CO | 27 | 2576737813.12

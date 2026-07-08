@@ -1,0 +1,18 @@
+===================== GATE 2 - AR (April 2026) =====================
+  AR SAF opening 2026 (anchored) = 29,718,846,058.79   (757 ms)
+  AR mutasi GLdebet anchored JanApr = 42,527,275,618.52   (23175 ms)
+  AR adj PUTIH JanApr = -4,766,806,200.00   (287 ms)
+  AR bayar TBYR JanApr = 47,821,307,537.46   (821 ms)
+  AR ledger openingYTD Apr = 20,117,869,958.91   (493 ms)
+  AR SUBLEDGER = 19,658,007,939.85
+  AR LEDGER    = 20,117,869,958.91
+  AR SELISIH   = -459,862,019.06  status=FAIL
+===================== GATE 2 - AP (April 2026) =====================
+  AP SAF opening 2026 (anchored) = 14,456,916,766.09   (588 ms)
+  AP mutasi AP_TRANS JanApr anchored = 17,436,972,274.11   (348 ms)
+  AP adj PUTIH JanApr = -1,398,500.00   (275 ms)
+  AP bayar TBYR JanApr = 25,156,637,126.18   (333 ms)
+  AP ledger openingYTD Apr = -9,562,745,809.51   (313 ms)
+  AP SUBLEDGER    = 6,735,853,414.02
+  AP LEDGER (net) = -9,562,745,809.51  abs=9,562,745,809.51
+  AP SELISIH (sub-absled) = -2,826,892,395.49  status=FAIL

@@ -1,0 +1,22 @@
+=== REPORT (dw_stok_gl_mutasi fixed) TR.1006A ===
+   awal_rp = 602812303.51
+   beli_rp = 1499990722.92
+   mutin = 0.00
+   jual_real = 0.00
+   jual_evap = 824628637.82
+   consin = 453545750.79
+   consin_evap = 361085891.75
+   consout = 536008614.58
+   mutout = 0.00
+   retbeli = 0.00
+=== REFRESH (dw_refresh_stok = SINV/ledger) TR.1006A ===
+   awal_rp = 602812303.51
+   beli_rp = 1499990722.92
+   mutin = 0.00
+   jual_real = 0.00
+   jual_evap = 824628637.82
+   consin = 453545750.79
+   consin_evap = 371082887.01
+   consout = 536008614.58
+   mutout = 0.00
+   retbeli = 0.00

@@ -1,0 +1,824 @@
+﻿$PBExportHeader$dw_stok_gl_mutasi.srd
+
+release 11.5;
+
+datawindow(units=0 timer_interval=0 color=16777215 brushmode=0 transparency=0 gradient.angle=0 gradient.color=8421504 gradient.focus=0 gradient.repetition.count=0 gradient.repetition.length=100 gradient.repetition.mode=0 gradient.scale=100 gradient.spread=100 gradient.transparency=0 picture.blur=0 picture.clip.bottom=0 picture.clip.left=0 picture.clip.right=0 picture.clip.top=0 picture.mode=0 picture.scale.x=100 picture.scale.y=100 picture.transparency=0 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.background=no print.preview.background=no print.preview.outline=yes hidegrayline=yes showbackcoloronxp=no picture.file="" )
+
+header(height=416 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
+
+summary(height=80 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
+
+footer(height=0 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
+
+detail(height=72 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
+
+table(column=(type=char(25) updatewhereclause=yes name=group_product dbname="im_product_group.group_product" )
+
+ column=(type=char(50) updatewhereclause=yes name=nama_group dbname="im_product_group.nama_group" )
+
+ column=(type=char(15) updatewhereclause=yes name=hpp dbname="im_product_group.hpp" )
+
+ column=(type=char(15) updatewhereclause=yes name=persediaan dbname="im_product_group.persediaan" )
+
+ column=(type=char(15) updatewhereclause=yes name=penjualan dbname="im_product_group.penjualan" )
+
+ column=(type=char(16) updatewhereclause=yes name=produk_id dbname="im_product_group.produk_id" )
+
+ column=(type=char(70) updatewhereclause=yes name=produk_desc dbname="im_product_group.produk_desc" )
+
+ column=(type=decimal(2) updatewhereclause=yes name=awal dbname="im_product_group.awal" )
+
+ column=(type=decimal(2) updatewhereclause=yes name=awal_rp dbname="im_product_group.awal_rp" )
+
+ column=(type=decimal(6) updatewhereclause=yes name=mutasi_in dbname="im_product_group.mutasi_in" )
+
+ column=(type=decimal(6) updatewhereclause=yes name=beli dbname="im_product_group.beli" )
+
+ column=(type=decimal(6) updatewhereclause=yes name=beli_rp dbname="im_product_group.beli_rp" )
+
+ column=(type=decimal(6) updatewhereclause=yes name=ret_beli dbname="im_product_group.ret_beli" )
+
+ column=(type=decimal(6) updatewhereclause=yes name=ret_beli_rp dbname="im_product_group.ret_beli_rp" )
+
+ column=(type=decimal(2) updatewhereclause=yes name=ekspedisi dbname="im_product_group.ekspedisi" )
+
+ column=(type=decimal(6) updatewhereclause=yes name=ekspedisi_rp dbname="im_product_group.ekspedisi_rp" )
+
+ column=(type=decimal(6) updatewhereclause=yes name=mutasi_out dbname="im_product_group.mutasi_out" )
+
+ column=(type=decimal(2) updatewhereclause=yes name=jual dbname="im_product_group.jual" )
+
+ column=(type=decimal(4) updatewhereclause=yes name=jual_rp dbname="im_product_group.jual_rp" )
+
+ column=(type=number updatewhereclause=yes name=jual_real dbname="im_product_group.jual_real" )
+
+ column=(type=decimal(2) updatewhereclause=yes name=jual_by_evap dbname="im_product_group.jual_by_evap" )
+
+ column=(type=number updatewhereclause=yes name=jual_by_evap_rp dbname="im_product_group.jual_by_evap_rp" )
+
+ column=(type=decimal(6) updatewhereclause=yes name=ret_jual dbname="im_product_group.ret_jual" )
+
+ column=(type=decimal(6) updatewhereclause=yes name=ret_jual_rp dbname="im_product_group.ret_jual_rp" )
+
+ column=(type=decimal(6) updatewhereclause=yes name=mutasi_in_rp dbname="im_product_group.mutasi_in_rp" )
+
+ column=(type=decimal(6) updatewhereclause=yes name=mutasi_out_rp dbname="im_product_group.mutasi_out_rp" )
+
+ column=(type=decimal(2) updatewhereclause=yes name=consin dbname="im_product_group.consin" )
+
+ column=(type=decimal(4) updatewhereclause=yes name=consin_rp dbname="im_product_group.consin_rp" )
+
+ column=(type=decimal(2) updatewhereclause=yes name=consin_by_evap dbname="im_product_group.consin_by_evap" )
+
+ column=(type=number updatewhereclause=yes name=consin_by_evap_rp dbname="im_product_group.consin_by_evap_rp" )
+
+ column=(type=decimal(2) updatewhereclause=yes name=consout dbname="im_product_group.consout" )
+
+ column=(type=number updatewhereclause=yes name=consout_rp dbname="im_product_group.consout_rp" )
+
+ column=(type=decimal(6) updatewhereclause=yes name=akhir dbname="im_product_group.akhir" )
+
+ column=(type=char(212) updatewhereclause=yes name=is_find dbname="is_find" )
+
+ retrieve="SELECT 
+
+ A.GROUP_PRODUCT,B.NAMA_GROUP,B.HPP,B.PERSEDIAAN,B.PENJUALAN,A.PRODUK_ID,A.PRODUK_DESC,
+
+A.AWAL,A.AWAL_RP,
+
+A.MUTASI_IN,A.BELI,A.BELI_RP,A.RET_BELI,A.RET_BELI_RP,A.EKSPEDISI,A.EKSPEDISI_RP,A.MUTASI_OUT,
+
+A.JUAL,A.JUAL_RP,A.JUAL_REAL,
+
+A.JUAL_BY_EVAP,
+
+A.JUAL_BY_EVAP_RP,
+
+A.RET_JUAL,A.RET_JUAL_RP,
+
+A.MUTASI_IN_RP,A.MUTASI_OUT_RP,
+
+A.CONSIN , A.CONSIN_RP,A.CONSIN_BY_EVAP,A.CONSIN_BY_EVAP_RP,
+
+A.CONSOUT,A.CONSOUT_RP,
+
+A.AKHIR,a.produk_id+' '+a.group_product+' '+b.nama_group+' '+b.hpp+' '+b.persediaan+' '+b.penjualan+' '+a.produk_desc as is_find
+
+ FROM (
+
+SELECT IM_PRODUK.GROUP_PRODUCT,IM_PRODUK.PRODUK_ID,
+
+			IM_PRODUK.PRODUK_DESC,
+
+	ISNULL(AWAL.AWAL,0) AS AWAL,
+
+    ISNULL(AWAL.AWAL_RP,0) AS AWAL_RP,
+
+ISNULL(CONSIN.QTY,0)  CONSIN,
+
+ISNULL(CONSIN.NILAI,0) CONSIN_RP,
+
+ISNULL(CONSIN_BY_EVAP.QTY,0) CONSIN_BY_EVAP,
+
+ISNULL(CONSIN_BY_EVAP.NILAI,0) CONSIN_BY_EVAP_RP,
+
+ISNULL(CONSOUT.CONSOUT,0) CONSOUT,
+
+ISNULL(CONSOUT.CONSOUT_RP,0) CONSOUT_RP,
+
+ISNULL(JUAL.QTY,0) AS JUAL,  
+
+            ISNULL(JUAL.JUAL_RP,0) + ISNULL(JUAL_BY_EVAP.JUAL_RP2,0) AS JUAL_RP, 
+
+            ISNULL(JUAL.NILAI,0) AS JUAL_REAL, 
+
+ISNULL(JUAL_BY_EVAP.QTY,0) AS JUAL_BY_EVAP,
+
+ISNULL(JUAL_BY_EVAP.NILAI,0) AS JUAL_BY_EVAP_RP,
+
+ 			ABS(ISNULL(RET_JUAL.RET_JUAL,0)) AS RET_JUAL,   
+
+            ABS(ISNULL(RET_JUAL.RET_JUAL_RP,0)) AS RET_JUAL_RP,
+
+			ABS(ISNULL(STOK.BELI,0)) AS BELI,
+
+            ISNULL(STOK_RP.BELI,0) + ISNULL(STOK_RP.EKSPEDISI,0) AS BELI_RP,
+
+--ISNULL(STOK_RP.BELI,0)AS BELI_RP,
+
+            ABS(ISNULL(STOK_RP.RET_BELI,0.00)) AS RET_BELI_RP,
+
+			ABS(ISNULL(STOK.RET_BELI,0)) AS RET_BELI,
+
+			ABS(ISNULL(STOK.MUTASI_IN,0)) AS MUTASI_IN,
+
+            ABS(ISNULL(STOK_RP.MUTASI_IN,0)) AS MUTASI_IN_RP,
+
+			ABS(ISNULL(STOK.MUTASI_OUT,0))  AS MUTASI_OUT,
+
+            ABS(ISNULL(STOK_RP.MUTASI_OUT,0)) AS MUTASI_OUT_RP,
+
+            ISNULL(STOK_RP.EKSPEDISI,0)AS EKSPEDISI_RP,
+
+            ISNULL(STOK.EKSPEDISI,0) AS EKSPEDISI,
+
+			(ABS(ISNULL(AWAL.AWAL,0)) - ABS(ISNULL(JUAL.QTY,0)) - ABS(ISNULL(JUAL_BY_EVAP.QTY,0)) + ABS(ISNULL(RET_JUAL.RET_JUAL,0))  
+
+			+ ABS(ISNULL(STOK.BELI,0)) - ABS(ISNULL(STOK.RET_BELI,0)) - ABS(ISNULL(CONSOUT.CONSOUT,0)) + ABS(ISNULL(CONSIN.QTY,0)) +
+
+            ABS(ISNULL(CONSIN_BY_EVAP.QTY,0)) + ABS(ISNULL(STOK.MUTASI_IN,0)) -  ABS(ISNULL(STOK.MUTASI_OUT,0)) ) AS AKHIR
+
+  	FROM IM_PRODUK,
+
+			(  SELECT 	(SINV.STOK_ID) AS KEY1,   
+
+							SUM(SINV.QTY) AS AWAL,
+
+					         SUM(SINV.NILAI) AS AWAL_RP,
+
+							AVG(SINV.HPP_AVG) AS HPP_AVG
+
+				FROM     SINV 
+
+			WHERE    	( SINV.PERIODE = :arg_tgl) 
+
+			   GROUP BY (SINV.STOK_ID)   
+
+			) AWAL,
+
+	
+
+			(  SELECT 	SINV.STOK_ID AS STOK_ID,   
+
+							SUM(SINV.NILAI) AS AWAL
+
+				FROM     SINV  
+
+			WHERE    	( SINV.PERIODE = :arg_tgl) 
+
+			   GROUP BY SINV.STOK_ID   
+
+			) AWAL_RP,
+
+
+
+			( SELECT A.STOK_ID,SUM(A.QTY) AS QTY,SUM(A.NILAI) as NILAI,SUM(A.JUAL_RP) JUAL_RP
+
+            FROM
+
+                (
+
+                SELECT B.STOK_ID,B.QTY,B.STOK_ID+ISNULL(B.EVAP,'') AS KEY1,B.QTY * ISNULL(B.HPP,0) as NILAI,
+
+                B.NETTO * ISNULL(A.KURS,1) as JUAL_RP
+
+                FROM TSALES1 A,TSALES2 B
+
+                WHERE A.BUKTI_ID = B.BUKTI_ID
+
+                AND A.TIPE_TRANS = '22'
+
+                --AND ISNULL(B.EVAP,'') <> ''
+
+                AND A.TGL BETWEEN :arg_tgl AND:arg_tgl2
+
+                AND ISNULL(B.qty,0) <> 0
+
+                AND A.ORDER_OKE = 'Y'
+
+                AND B.STOK_ID+ISNULL(B.EVAP,'') NOT IN
+
+                    (
+
+                        SELECT B.STOK_ID+ISNULL(B.EVAP,'') 
+
+                        FROM TSALES1 A,TSALES2 B
+
+                        WHERE A.BUKTI_ID = B.BUKTI_ID
+
+                        AND A.TIPE_TRANS = '88'
+
+                        AND A.TGL < :arg_tgl)
+
+                )A
+
+                 GROUP BY A.STOK_ID
+
+			) JUAL,
+
+(
+
+        SELECT A.STOK_ID,SUM(A.QTY) AS QTY,SUM(A.QTY * ISNULL(A.HPP,0)) AS NILAI,SUM(A.JUAL_RP2) JUAL_RP2
+
+FROM
+
+    (
+
+    SELECT B.STOK_ID,B.QTY,ISNULL(B.HPP,0) AS HPP,B.STOK_ID+ISNULL(B.EVAP,'') AS KEY1,
+
+	ISNULL(B.NETTO,0) * ISNULL(A.KURS,1) AS JUAL_RP2
+
+    FROM TSALES1 A,TSALES2 B
+
+    WHERE A.BUKTI_ID = B.BUKTI_ID
+
+    AND A.TIPE_TRANS = '22'
+
+    AND ISNULL(B.EVAP,'') <> ''
+
+    AND ISNULL(B.QTY,0) <> 0
+
+    AND A.TGL BETWEEN :arg_tgl AND:arg_tgl2
+
+    )A
+
+    GROUP BY A.STOK_ID
+
+ )JUAL_BY_EVAP,   
+
+
+
+( SELECT 	(TSALES2.STOK_ID) AS KEY1,   
+
+	SUM(CASE WHEN TSALES1.TIPE_TRANS = '88' THEN TSALES2.QTY ELSE 0 END ) AS CONSOUT,
+
+		SUM(CASE WHEN TSALES1.TIPE_TRANS = '88' THEN ( TSALES2.HPP * TSALES2.QTY)  ELSE 0 END )  AS CONSOUT_RP					
+
+				FROM   	TSALES1,   
+
+							TSALES2
+
+			  WHERE 	( TSALES1.BUKTI_ID = TSALES2.BUKTI_ID ) AND  
+
+							(TSALES1.TGL BETWEEN :arg_tgl AND:arg_tgl2) AND
+
+							( TSALES1.ORDER_OKE = 'Y' ) AND
+
+							ISNULL(TSALES2.QTY,0) <>0
+
+			   GROUP BY (TSALES2.STOK_ID)
+
+			) CONSOUT,
+
+
+
+
+
+			( SELECT 	(TSALES2.STOK_ID) AS KEY1,							
+
+							SUM(CASE WHEN TSALES1.TIPE_TRANS IN ('32','26','36') THEN TSALES2.QTY ELSE 0 END ) AS RET_JUAL,	
+
+							SUM(CASE WHEN TSALES1.TIPE_TRANS IN ('32','26','36') THEN ABS(( TSALES2.NETTO)    * ISNULL(TSALES1.KURS,1)) ELSE 0 END )  AS RET_JUAL_RP						
+
+							
+
+				FROM   	TSALES1,   
+
+							TSALES2  ,MCUST
+
+			  WHERE 	( TSALES1.BUKTI_ID = TSALES2.BUKTI_ID ) AND  
+
+							TSALES1.CUST_ID = MCUST.CUST_ID AND
+
+							(TSALES1.TGL BETWEEN :arg_tgl AND:arg_tgl2) AND
+
+							ISNULL(TSALES2.QTY,0) <>0 AND
+
+							ISNULL(TSALES2.HRG,0) <> 0 AND
+
+							TSALES1.tipe_trans in('32','26','36')
+
+			   GROUP BY (TSALES2.STOK_ID)
+
+			) RET_JUAL,
+
+
+
+	
+
+
+
+			( SELECT 	(TSTOK2.STOK_ID) AS KEY1,   
+
+							SUM( CASE WHEN TSTOK1.TIPE_TRANS = '02' THEN TSTOK2.QTY ELSE 0 END ) AS BELI,
+
+							SUM( CASE WHEN TSTOK1.TIPE_TRANS = '12' THEN TSTOK2.QTY ELSE 0 END ) AS RET_BELI,
+
+	                        SUM( CASE WHEN TSTOK1.TIPE_TRANS = '88' THEN TSTOK2.QTY ELSE 0 END ) AS CONSIN,
+
+	                        SUM( CASE WHEN TSTOK1.TIPE_TRANS = '05'  THEN TSTOK2.QTY ELSE 0 END ) AS EKSPEDISI,
+
+							SUM( CASE WHEN TSTOK1.TIPE_TRANS = '09'  THEN TSTOK2.QTY ELSE 0 END ) AS MUTASI_IN,
+
+							SUM( CASE WHEN TSTOK1.TIPE_TRANS = '19'  THEN TSTOK2.QTY ELSE 0 END ) AS MUTASI_OUT
+
+				FROM  	TSTOK1,   
+
+							TSTOK2,IM_PRODUK,IM_PRODUCT_GROUP
+
+				 WHERE 	( TSTOK1.BUKTI_ID = TSTOK2.BUKTI_ID ) AND  
+
+IM_PRODUK.PRODUK_ID = TSTOK2.STOK_ID AND
+
+IM_PRODUK.GROUP_PRODUCT = IM_PRODUCT_GROUP.KODE_GROUP AND
+
+							(TSTOK1.TGL BETWEEN :arg_tgl AND:arg_tgl2) AND
+
+                              ( TSTOK1.ORDER_OKE = 'Y' ) AND
+
+							ISNULL(TSTOK2.QTY,0) <> 0
+
+			   GROUP BY (TSTOK2.STOK_ID)
+
+			 ) STOK,
+
+
+
+			( SELECT 	TSTOK2.STOK_ID AS STOK_ID,   
+
+							SUM( CASE WHEN TSTOK1.TIPE_TRANS = '02' THEN ( TSTOK2.NETTO * ISNULL(TSTOK1.KURS,1) )   ELSE 0 END) AS BELI,
+
+SUM( CASE WHEN TSTOK1.TIPE_TRANS = '88' THEN (TSTOK2.NETTO * ISNULL(TSTOK1.KURS,1))    ELSE 0 END) AS CONSIN,
+
+							SUM( CASE WHEN TSTOK1.TIPE_TRANS = '12' THEN ABS(TSTOK2.NETTO_HPP) ELSE 0 END ) AS RET_BELI,
+
+							SUM( CASE WHEN TSTOK1.TIPE_TRANS = '09' THEN (TSTOK2.NETTO) ELSE 0 END ) AS MUTASI_IN,
+
+							SUM( CASE WHEN TSTOK1.TIPE_TRANS = '19' THEN ABS(TSTOK2.NETTO_HPP) ELSE 0 END ) AS MUTASI_OUT,
+
+                            SUM( CASE WHEN TSTOK1.TIPE_TRANS = '05' THEN ABS(TSTOK2.BIAYA_EKSPEDISI)*ABS(ISNULL(TSTOK2.QTY,0)) ELSE 0 END ) AS EKSPEDISI
+
+
+
+				FROM  	TSTOK1,   
+
+							TSTOK2,IM_PRODUK,IM_PRODUCT_GROUP
+
+				 WHERE 	( TSTOK1.BUKTI_ID = TSTOK2.BUKTI_ID ) AND  
+
+IM_PRODUK.PRODUK_ID = TSTOK2.STOK_ID AND
+
+IM_PRODUK.GROUP_PRODUCT = IM_PRODUCT_GROUP.KODE_GROUP AND
+
+							(TSTOK1.TGL BETWEEN :arg_tgl AND:arg_tgl2) AND
+
+							( ISNULL(TSTOK1.ORDER_OKE,'N') = 'Y' ) AND
+
+							ISNULL(TSTOK2.QTY,0) <> 0
+
+			   GROUP BY TSTOK2.STOK_ID
+
+			 ) STOK_RP,
+
+(
+
+        SELECT A.STOK_ID,SUM(A.QTY) AS QTY,SUM(A.QTY * ISNULL(A.NETTO,0)) AS NILAI
+
+    FROM
+
+        (
+
+        SELECT B.STOK_ID,B.QTY,B.STOK_ID+ISNULL(B.COA_ID,'') AS KEY1,B.NETTO
+
+        FROM TSTOK1 A,TSTOK2 B
+
+        WHERE A.BUKTI_ID = B.BUKTI_ID
+
+        AND A.TIPE_TRANS = '88'
+
+        AND ISNULL(B.QTY,0) <> 0
+
+        AND A.TGL BETWEEN :arg_tgl AND:arg_tgl2
+
+        AND B.STOK_ID + ISNULL(B.COA_ID,'') NOT IN
+
+            (
+
+            SELECT B.STOK_ID+ISNULL(B.EVAP,'')
+
+            FROM TSALES1 A,TSALES2 B
+
+            WHERE A.BUKTI_ID = B.BUKTI_ID
+
+            AND A.TIPE_TRANS = '88'
+
+            AND A.TGL < :arg_tgl)
+
+            )A
+
+        GROUP BY A.STOK_ID
+
+)CONSIN,
+
+(
+
+SELECT A.STOK_ID,SUM(A.QTY) AS QTY,SUM(A.QTY * ISNULL(A.NETTO,0)) AS NILAI
+
+    FROM
+
+        (
+
+        SELECT B.STOK_ID,B.QTY,ISNULL(B.NETTO,0) AS NETTO,B.STOK_ID+ISNULL(B.COA_ID,'') AS KEY1
+
+        FROM TSTOK1 A,TSTOK2 B
+
+        WHERE A.BUKTI_ID = B.BUKTI_ID
+
+        AND A.TIPE_TRANS = '88'
+
+        AND ISNULL(B.QTY,0) <> 0
+
+        AND A.TGL BETWEEN :arg_tgl AND:arg_tgl2
+
+        )A,
+
+        (
+
+        SELECT B.STOK_ID+ISNULL(B.EVAP,'') AS KEY1
+
+        FROM TSALES1 A,TSALES2 B
+
+        WHERE A.BUKTI_ID = B.BUKTI_ID
+
+        AND A.TIPE_TRANS = '88'
+
+        AND ISNULL(B.QTY,0) <> 0
+
+        AND A.TGL < :arg_tgl
+
+        )B
+
+        WHERE A.KEY1 = B.KEY1
+
+        GROUP BY A.STOK_ID
+
+        )CONSIN_BY_EVAP
+
+
+
+WHERE	IM_PRODUK.STOK_ITEM = 'Y' AND
+
+			(IM_PRODUK.PRODUK_ID *= AWAL.KEY1) AND
+
+			(IM_PRODUK.PRODUK_ID *= JUAL.STOK_ID) AND
+
+            (IM_PRODUK.PRODUK_ID *= JUAL_BY_EVAP.STOK_ID) AND
+
+			(IM_PRODUK.PRODUK_ID *= CONSOUT.KEY1) AND
+
+			(IM_PRODUK.PRODUK_ID *= RET_JUAL.KEY1) AND
+
+			(IM_PRODUK.PRODUK_ID *= STOK.KEY1) AND
+
+			(IM_PRODUK.PRODUK_ID *= AWAL_RP.STOK_ID) AND
+
+         	(IM_PRODUK.PRODUK_ID *= STOK_RP.STOK_ID) AND
+
+            (IM_PRODUK.PRODUK_ID *= CONSIN_BY_EVAP.STOK_ID) AND
+
+            (IM_PRODUK.PRODUK_ID *= CONSIN.STOK_ID)             
+
+ORDER BY IM_PRODUK.PRODUK_ID ASC
+
+) A,IM_PRODUCT_GROUP B 
+
+WHERE A.GROUP_PRODUCT = B.KODE_GROUP AND
+
+((a.group_product = :arg_group) or 1 = :arg_all1) and
+
+((a.awal <>0 or a.awal_rp <>0 or a.mutasi_in <> 0 or a.beli <> 0 or a.beli_rp <>0 or
+
+a.ret_beli<>0 or a.ret_beli_rp <> 0 or a.ekspedisi <> 0 or a.ekspedisi_rp <> 0 or a.mutasi_out <> 0 or a.jual <> 0 or a.ret_jual <> 0 or jual_by_evap <> 0 or consin_by_evap <> 0) or 1 = :arg_zero) 
+
+AND ((A.akhir <0) or 1 = :flag_minus)
+
+" arguments=(("arg_tgl", datetime),("arg_tgl2", datetime),("arg_group", string),("arg_all1", number),("arg_zero", number),("flag_minus", number))  sort="nama_group A produk_id A " )
+
+group(level=1 header.height=72 trailer.height=164 by=("nama_group" ) header.suppress=yes header.color="536870912" header.transparency="0" header.gradient.color="8421504" header.gradient.transparency="0" header.gradient.angle="0" header.brushmode="0" header.gradient.repetition.mode="0" header.gradient.repetition.count="0" header.gradient.repetition.length="100" header.gradient.focus="0" header.gradient.scale="100" header.gradient.spread="100" trailer.color="536870912" trailer.transparency="0" trailer.gradient.color="8421504" trailer.gradient.transparency="0" trailer.gradient.angle="0" trailer.brushmode="0" trailer.gradient.repetition.mode="0" trailer.gradient.repetition.count="0" trailer.gradient.repetition.length="100" trailer.gradient.focus="0" trailer.gradient.scale="100" trailer.gradient.spread="100" )
+
+compute(band=header alignment="0" expression="f_company()"border="4" color="33554432" x="14" y="12" height="80" width="1243" format="[GENERAL]" html.valueishtml="0"  name=compute_16 visible="1"  font.face="Cambria" font.height="-10" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="
+
+No.
+
+" border="2" color="33554432" x="9" y="252" height="156" width="128" html.valueishtml="0"  name=t_22 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="0" text="LAPORAN MUTASI PERSEDIAAN" border="0" color="33554432" x="14" y="108" height="60" width="873" html.valueishtml="0"  name=t_29 visible="1"  font.face="Cambria" font.height="-10" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=header alignment="0" expression="'PERIODE : '+string(arg_tgl,'mmm yyyy')"border="0" color="33554432" x="14" y="180" height="60" width="1074" format="[GENERAL]" html.valueishtml="0"  name=compute_17 visible="1"  font.face="Cambria" font.height="-10" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Kode
+
+Produk
+
+" border="2" color="33554432" x="142" y="252" height="156" width="407" html.valueishtml="0"  name=t_1 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="
+
+Nama
+
+Produk" border="2" color="33554432" x="553" y="252" height="156" width="1134" html.valueishtml="0"  name=t_38 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Saldo Awal
+
+" border="2" color="33554432" x="1691" y="252" height="104" width="763" html.valueishtml="0"  name=t_39 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Mutasi Masuk" border="2" color="33554432" x="2459" y="252" height="52" width="2921" html.valueishtml="0"  name=t_23 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Pembelian" border="2" color="33554432" x="2459" y="308" height="48" width="695" html.valueishtml="0"  name=t_9 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Retur P'Jualan" border="2" color="33554432" x="3159" y="308" height="48" width="704" html.valueishtml="0"  name=t_26 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Qty" border="2" color="33554432" x="1691" y="360" height="48" width="219" html.valueishtml="0"  name=t_5 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Rp." border="2" color="33554432" x="1915" y="360" height="48" width="539" html.valueishtml="0"  name=t_6 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Qty" border="2" color="33554432" x="2459" y="360" height="48" width="219" html.valueishtml="0"  name=t_10 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Rp." border="2" color="33554432" x="2683" y="360" height="48" width="471" html.valueishtml="0"  name=t_11 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Qty" border="2" color="33554432" x="3159" y="360" height="48" width="219" html.valueishtml="0"  name=t_7 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Rp." border="2" color="33554432" x="3383" y="360" height="48" width="480" html.valueishtml="0"  name=t_8 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Adjust.[+]" border="2" color="33554432" x="4663" y="308" height="48" width="718" html.valueishtml="0"  name=t_12 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="W.I.P" border="2" color="33554432" x="3867" y="308" height="48" width="791" html.valueishtml="0"  name=t_25 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Qty" border="2" color="33554432" x="4663" y="360" height="48" width="251" html.valueishtml="0"  name=t_13 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Qty" border="2" color="33554432" x="6523" y="360" height="48" width="219" html.valueishtml="0"  name=t_42 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Rp." border="2" color="33554432" x="6747" y="360" height="48" width="462" html.valueishtml="0"  name=t_41 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Rp." border="2" color="33554432" x="6021" y="360" height="48" width="498" html.valueishtml="0"  name=t_43 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Qty" border="2" color="33554432" x="7209" y="360" height="48" width="251" html.valueishtml="0"  name=t_32 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Rp." border="2" color="33554432" x="5385" y="360" height="48" width="443" html.valueishtml="0"  name=t_19 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Rp." border="2" color="33554432" x="4919" y="360" height="48" width="462" html.valueishtml="0"  name=t_21 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Rp." border="2" color="33554432" x="4123" y="360" height="48" width="535" html.valueishtml="0"  name=t_30 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="HPP Average
+
+" border="2" color="33554432" x="5385" y="252" height="104" width="443" html.valueishtml="0"  name=t_17 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Penjualan" border="2" color="33554432" x="5833" y="308" height="48" width="686" html.valueishtml="0"  name=t_33 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Retur Pembelian" border="2" color="33554432" x="6523" y="308" height="48" width="686" html.valueishtml="0"  name=t_34 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="W.I.P" border="2" color="33554432" x="7209" y="308" height="48" width="768" html.valueishtml="0"  name=t_31 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Rp." border="2" color="33554432" x="7465" y="360" height="48" width="512" html.valueishtml="0"  name=t_36 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Qty" border="2" color="33554432" x="7982" y="360" height="48" width="251" html.valueishtml="0"  name=t_40 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Qty" border="2" color="33554432" x="8745" y="360" height="48" width="219" html.valueishtml="0"  name=t_16 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Rp." border="2" color="33554432" x="8238" y="360" height="48" width="503" html.valueishtml="0"  name=t_18 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Adjust.[-]" border="2" color="33554432" x="7982" y="308" height="48" width="759" html.valueishtml="0"  name=t_35 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Mutasi Keluar" border="2" color="33554432" x="5833" y="252" height="52" width="2907" html.valueishtml="0"  name=t_27 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Saldo Akhir
+
+" border="2" color="33554432" x="8745" y="252" height="104" width="791" html.valueishtml="0"  name=t_14 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Penjualan Real
+
+" border="2" color="33554432" x="9541" y="252" height="104" width="731" html.valueishtml="0"  name=t_2 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=header alignment="1" expression="string(today(),'dd mmm yyyy hh:mm:ss')"border="0" color="33554432" x="9554" y="80" height="60" width="718" format="[General]" html.valueishtml="0"  name=date_1 visible="1"  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=header alignment="1" expression="'Page ' + page() + ' of ' + pageCount()"border="0" color="33554432" x="9554" y="16" height="60" width="718" format="[general]" html.valueishtml="0"  name=page_1 visible="1"  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Qty" border="2" color="33554432" x="5833" y="360" height="48" width="183" html.valueishtml="0"  name=t_44 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Rp." border="2" color="33554432" x="8969" y="360" height="48" width="567" html.valueishtml="0"  name=t_24 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Rp." border="2" color="33554432" x="9765" y="360" height="48" width="507" html.valueishtml="0"  name=t_4 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Qty" border="2" color="33554432" x="3867" y="360" height="48" width="251" html.valueishtml="0"  name=t_28 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=header alignment="2" text="Qty" border="2" color="33554432" x="9541" y="360" height="48" width="219" html.valueishtml="0"  name=t_3 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+column(band=header.1 id=2 alignment="0" tabsequence=32766 border="4" color="33554432" x="23" y="4" height="64" width="1006" format="[general]" html.valueishtml="0"  name=nama_group visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Cambria" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+column(band=header.1 id=19 alignment="1" tabsequence=32766 border="4" color="33554432" x="8846" y="0" height="64" width="507" format="#,##0.00" html.valueishtml="0"  name=jual_rp visible="0" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=detail alignment="2" expression="cumulativesum(1 for group 1) +'.'"border="4" color="33554432" x="32" y="4" height="64" width="133" format="[General]" html.valueishtml="0"  name=compute_6 visible="1"  font.face="Cambria" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="1" tooltip.isbubble="1" tooltip.maxwidth="1" tooltip.textcolor="134217751" tooltip.tip="Double klik untuk lihat historis.." tooltip.transparency="1" transparency="0" )
+
+column(band=detail id=6 alignment="0" tabsequence=32766 border="4" color="33554432" x="178" y="4" height="64" width="357" format="[general]" html.valueishtml="0"  name=produk_id visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Cambria" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="1" tooltip.isbubble="1" tooltip.maxwidth="1" tooltip.textcolor="134217751" tooltip.tip="Double klik untuk lihat historis.." tooltip.transparency="1" transparency="0" )
+
+column(band=detail id=7 alignment="0" tabsequence=32766 border="4" color="33554432" x="553" y="4" height="64" width="1134" format="[general]" html.valueishtml="0"  name=produk_desc visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Cambria" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="1" tooltip.isbubble="1" tooltip.maxwidth="1" tooltip.textcolor="134217751" tooltip.tip="Double klik untuk lihat historis.." tooltip.transparency="1" transparency="0" )
+
+column(band=detail id=8 alignment="1" tabsequence=32766 border="4" color="33554432" x="1691" y="4" height="64" width="219" format="#,##0" html.valueishtml="0"  name=awal visible="1" edit.limit=0 edit.case=any edit.format="##,#0" edit.autoselect=yes  font.face="Cambria" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="1" tooltip.isbubble="1" tooltip.maxwidth="1" tooltip.textcolor="134217751" tooltip.tip="Double klik untuk lihat historis.." tooltip.transparency="1" transparency="0" )
+
+compute(band=detail alignment="1" expression="/* (awal_rp + beli_rp + ret_jual_rp + cadj_plus + consin_rp) - (cjual_rp + ret_beli_rp +cadj_min +consout_rp) */"border="4" color="33554432" x="8283" y="152" height="64" width="507" format="#,##0.00" html.valueishtml="0"  name=cfinal visible="0"  font.face="Cambria" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="1" tooltip.isbubble="1" tooltip.maxwidth="1" tooltip.textcolor="134217751" tooltip.tip="Double klik untuk lihat historis.." tooltip.transparency="1" transparency="0" )
+
+column(band=detail id=9 alignment="1" tabsequence=32766 border="4" color="33554432" x="1915" y="4" height="64" width="539" format="#,##0.00" html.valueishtml="0"  name=awal_rp visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Cambria" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="1" tooltip.isbubble="1" tooltip.maxwidth="1" tooltip.textcolor="134217751" tooltip.tip="Double klik untuk lihat historis.." tooltip.transparency="1" transparency="0" )
+
+column(band=detail id=11 alignment="1" tabsequence=32766 border="4" color="33554432" x="2459" y="4" height="64" width="219" format="#,##0" html.valueishtml="0"  name=beli visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Cambria" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="1" tooltip.isbubble="1" tooltip.maxwidth="1" tooltip.textcolor="134217751" tooltip.tip="Double klik untuk lihat historis.." tooltip.transparency="1" transparency="0" )
+
+column(band=detail id=12 alignment="1" tabsequence=32766 border="4" color="33554432" x="2683" y="4" height="64" width="471" format="#,##0.00" html.valueishtml="0"  name=beli_rp visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Cambria" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="1" tooltip.isbubble="1" tooltip.maxwidth="1" tooltip.textcolor="134217751" tooltip.tip="Double klik untuk lihat historis.." tooltip.transparency="1" transparency="0" )
+
+column(band=detail id=23 alignment="1" tabsequence=32766 border="4" color="33554432" x="3159" y="4" height="64" width="219" format="#,##0" html.valueishtml="0"  name=ret_jual visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Cambria" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="1" tooltip.isbubble="1" tooltip.maxwidth="1" tooltip.textcolor="134217751" tooltip.tip="Double klik untuk lihat historis.." tooltip.transparency="1" transparency="0" )
+
+column(band=detail id=10 alignment="1" tabsequence=32766 border="4" color="33554432" x="4663" y="4" height="64" width="251" format="#,##0" html.valueishtml="0"  name=mutasi_in visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Cambria" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="1" tooltip.isbubble="1" tooltip.maxwidth="1" tooltip.textcolor="134217751" tooltip.tip="Double klik untuk lihat historis.." tooltip.transparency="1" transparency="0" )
+
+column(band=detail id=13 alignment="1" tabsequence=32766 border="4" color="33554432" x="6523" y="4" height="64" width="219" format="#,##0" html.valueishtml="0"  name=ret_beli visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Cambria" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="1" tooltip.isbubble="1" tooltip.maxwidth="1" tooltip.textcolor="134217751" tooltip.tip="Double klik untuk lihat historis.." tooltip.transparency="1" transparency="0" )
+
+compute(band=detail alignment="1" expression="if(akhir<>0, akhir_rpxx/akhir, 0)"border="4" color="33554432" x="5385" y="4" height="64" width="443" format="#,##0.00" html.valueishtml="0"  name=hppx visible="1"  font.face="Cambria" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1073741824" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+column(band=detail id=31 alignment="1" tabsequence=32766 border="4" color="33554432" x="7209" y="4" height="64" width="251" format="#,##0" html.valueishtml="0"  name=consout visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Cambria" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=detail alignment="1" expression=" mutasi_in_rp "border="4" color="33554432" x="4919" y="4" height="64" width="462" format="#,##0.00" html.valueishtml="0"  name=mutasi_inx visible="1"  font.face="Cambria" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=detail alignment="1" expression="jual_by_evap_rp  + jual_real"border="4" color="33554432" x="6034" y="4" height="64" width="485" format="#,##0.00" html.valueishtml="0"  name=cjual_rp visible="1"  font.face="Cambria" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="1" tooltip.isbubble="1" tooltip.maxwidth="1" tooltip.textcolor="134217751" tooltip.tip="Double klik untuk lihat historis.." tooltip.transparency="1" transparency="0" )
+
+compute(band=detail alignment="1" expression=" ret_beli_rp "border="4" color="33554432" x="6747" y="4" height="64" width="462" format="#,##0.00" html.valueishtml="0"  name=cretbeli_rp visible="1"  font.face="Cambria" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="1" tooltip.isbubble="1" tooltip.maxwidth="1" tooltip.textcolor="134217751" tooltip.tip="Double klik untuk lihat historis.." tooltip.transparency="1" transparency="0" )
+
+compute(band=detail alignment="1" expression="consin_rp + consin_by_evap_rp"border="4" color="33554432" x="4123" y="4" height="64" width="535" format="#,##0.00" html.valueishtml="0"  name=consinx visible="1"  font.face="Cambria" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=detail alignment="1" expression="consout_rp"border="4" color="33554432" x="7465" y="4" height="64" width="512" format="#,##0.00" html.valueishtml="0"  name=consout_rpx visible="1"  font.face="Cambria" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+column(band=detail id=17 alignment="1" tabsequence=32766 border="4" color="33554432" x="7982" y="4" height="64" width="251" format="#,##0" html.valueishtml="0"  name=mutasi_out visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Cambria" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="1" tooltip.isbubble="1" tooltip.maxwidth="1" tooltip.textcolor="134217751" tooltip.tip="Double klik untuk lihat historis.." tooltip.transparency="1" transparency="0" )
+
+compute(band=detail alignment="1" expression="mutasi_out_rp"border="4" color="33554432" x="8238" y="4" height="64" width="503" format="#,##0.00" html.valueishtml="0"  name=mutasi_out_rpx visible="1"  font.face="Cambria" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.tip="Double klik untuk lihat historis.." tooltip.transparency="0" transparency="0" )
+
+button(band=detail text=".." enabled=yes action="0" border="0" color="33554432" x="10286" y="0" height="72" width="137" vtextalign="0" htextalign="0"  name=b_delete visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="1" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.tip="Klik untuk hapus data~t'Klik untuk menghapus kode '+ produk_id +'~~rDan memindahkan ke kode lain..!'" tooltip.title="Migrasi data" tooltip.transparency="0" transparency="0" )
+
+compute(band=detail alignment="2" expression=" jual +  jual_by_evap "border="4" color="33554432" x="5833" y="4" height="64" width="183" format="#,##0" html.valueishtml="0"  name=jual_qty visible="1"  font.face="Cambria" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="1" tooltip.isbubble="1" tooltip.maxwidth="1" tooltip.textcolor="134217751" tooltip.tip="Double klik untuk lihat historis.." tooltip.transparency="1" transparency="0" )
+
+column(band=detail id=33 alignment="1" tabsequence=32766 border="4" color="33554432" x="8745" y="4" height="64" width="219" format="#,##0" html.valueishtml="0"  name=akhir visible="1" edit.limit=0 edit.case=any edit.format="##,#0" edit.autoselect=yes  font.face="Cambria" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="1" tooltip.isbubble="1" tooltip.maxwidth="1" tooltip.textcolor="134217751" tooltip.tip="Double klik untuk lihat historis.." tooltip.transparency="1" transparency="0" )
+
+compute(band=detail alignment="1" expression="awal_rp + beli_rp + ret_jual_rp +  consin_by_evap_rp +consin_rp + mutasi_in_rp - cjual_rp - ret_beli_rp - consout_rp - mutasi_out_rp"border="4" color="33554432" x="8969" y="4" height="64" width="567" format="#,##0.00" html.valueishtml="0"  name=akhir_rpxx visible="1"  font.face="Cambria" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+column(band=detail id=19 alignment="1" tabsequence=32766 border="4" color="33554432" x="9765" y="4" height="64" width="507" format="#,##0.00" html.valueishtml="0"  name=jual_rp_1 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Cambria" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+column(band=detail id=24 alignment="1" tabsequence=32766 border="4" color="33554432" x="3383" y="4" height="64" width="480" format="#,##0.00" html.valueishtml="0"  name=ret_jual_rp visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Cambria" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="1" tooltip.isbubble="1" tooltip.maxwidth="1" tooltip.textcolor="134217751" tooltip.tip="Double klik untuk lihat historis.." tooltip.transparency="1" transparency="0" )
+
+compute(band=detail alignment="1" expression="consin+consin_by_evap"border="4" color="33554432" x="3867" y="4" height="64" width="251" format="#,##0" html.valueishtml="0"  name=consin_qty visible="1"  font.face="Cambria" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=detail alignment="1" expression="jual+jual_by_evap"border="0" color="33554432" x="9541" y="4" height="64" width="219" format="#,##0" html.valueishtml="0"  name=compute_47 visible="1"  font.face="Cambria" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+line(band=trailer.1 x1="9" y1="156" x2="10263" y2="156"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="1073741824" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(awal_rp for group 1)"border="4" color="33554432" x="1915" y="4" height="68" width="539" format="#,##0.00" html.valueishtml="0"  name=compute_18 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(beli_rp for group 1)"border="4" color="33554432" x="2683" y="4" height="68" width="480" format="#,##0.00" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(ret_jual_rp for group 1)"border="4" color="33554432" x="3392" y="4" height="68" width="471" format="#,##0.00" html.valueishtml="0"  name=compute_21 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(ret_jual for group 1)"border="4" color="33554432" x="3168" y="4" height="68" width="219" format="#,##0" html.valueishtml="0"  name=compute_22 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(awal for group 1)"border="4" color="33554432" x="1691" y="4" height="68" width="219" format="#,##0" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(if(beli_rp<>0,beli,0) for group 1)"border="4" color="33554432" x="2459" y="4" height="68" width="219" format="[General]" html.valueishtml="0"  name=compute_19 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=trailer.1 alignment="1" text="SUB TOTAL =~t'SUB TOTAL '+ nama_group + '='" border="0" color="33554432" x="407" y="12" height="48" width="1248" html.valueishtml="0"  name=t_15 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(consin_qty for group 1)"border="4" color="33554432" x="3867" y="4" height="68" width="251" format="#,##0" html.valueishtml="0"  name=compute_14 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(mutasi_in for group 1)"border="4" color="33554432" x="4667" y="4" height="68" width="251" format="#,##0" html.valueishtml="0"  name=compute_20 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(consout for group 1)"border="4" color="33554432" x="7218" y="4" height="68" width="251" format="#,##0" html.valueishtml="0"  name=compute_43 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(mutasi_inx for group 1)"border="4" color="33554432" x="4919" y="4" height="68" width="462" format="#,##0.00" html.valueishtml="0"  name=compute_15 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(jual_qty for group 1)"border="4" color="33554432" x="5838" y="4" height="68" width="183" format="#,##0" html.valueishtml="0"  name=compute_4 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(cjual_rp for group 1)"border="4" color="33554432" x="6034" y="4" height="68" width="485" format="#,##0.00" html.valueishtml="0"  name=compute_11 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(ret_beli for group 1)"border="4" color="33554432" x="6528" y="4" height="68" width="219" format="#,##0" html.valueishtml="0"  name=compute_12 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(cretbeli_rp for group 1)"border="4" color="33554432" x="6747" y="4" height="68" width="462" format="#,##0.00" html.valueishtml="0"  name=compute_8 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(consinx for group 1)"border="4" color="33554432" x="4123" y="4" height="68" width="535" format="#,##0.00" html.valueishtml="0"  name=compute_31 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(mutasi_out for group 1)"border="4" color="33554432" x="7986" y="4" height="68" width="251" format="#,##0" html.valueishtml="0"  name=compute_9 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(consout_rpx for group 1)"border="4" color="33554432" x="7474" y="4" height="68" width="512" format="#,##0.00" html.valueishtml="0"  name=compute_44 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(akhir for group 1)"border="4" color="33554432" x="8750" y="4" height="68" width="219" format="#,##0" html.valueishtml="0"  name=compute_10 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(mutasi_out_rpx for group 1)"border="4" color="33554432" x="8242" y="4" height="68" width="503" format="#,##0.00" html.valueishtml="0"  name=compute_25 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(akhir_rpxx for group 1) "border="4" color="33554432" x="8969" y="4" height="68" width="567" format="#,##0.00" html.valueishtml="0"  name=compute_13 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=trailer.1 alignment="1" expression="sum(jual_rp for group 1)"border="4" color="33554432" x="9765" y="4" height="68" width="507" format="#,##0.00" html.valueishtml="0"  name=compute_3 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(awal_rp for all)"border="4" color="33554432" x="1915" y="4" height="68" width="539" format="#,##0.00" html.valueishtml="0"  name=compute_35 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(beli_rp for all)"border="4" color="33554432" x="2683" y="4" height="68" width="480" format="#,##0.00" html.valueishtml="0"  name=compute_37 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(ret_jual_rp for all)"border="4" color="33554432" x="3392" y="4" height="68" width="471" format="#,##0.00" html.valueishtml="0"  name=compute_40 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(ret_jual for all)"border="4" color="33554432" x="3168" y="4" height="68" width="219" format="#,##0" html.valueishtml="0"  name=compute_39 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(awal for all)"border="4" color="33554432" x="1691" y="4" height="68" width="219" format="#,##0" html.valueishtml="0"  name=compute_23 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(if(beli_rp<>0,beli,0) for all)"border="4" color="33554432" x="2459" y="4" height="68" width="219" format="[General]" html.valueishtml="0"  name=compute_36 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+text(band=summary alignment="1" text="GRAND TOTAL =" border="0" color="33554432" x="407" y="12" height="48" width="1248" html.valueishtml="0"  name=t_20 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="/* sum(chpp for all) */"border="0" color="33554432" x="3877" y="96" height="60" width="690" format="#,##0.00" html.valueishtml="0"  name=compute_5 visible="1"  font.face="Cambria" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(consin_qty for all)"border="4" color="33554432" x="3867" y="4" height="68" width="251" format="#,##0" html.valueishtml="0"  name=compute_41 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(mutasi_in for all)"border="4" color="33554432" x="4663" y="4" height="68" width="251" format="#,##0" html.valueishtml="0"  name=compute_38 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(jual_qty for all)"border="4" color="33554432" x="5838" y="4" height="68" width="183" format="#,##0" html.valueishtml="0"  name=compute_32 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(cretbeli_rp for all)"border="4" color="33554432" x="6752" y="4" height="68" width="462" format="#,##0.00" html.valueishtml="0"  name=compute_29 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(ret_beli for all)"border="4" color="33554432" x="6528" y="4" height="68" width="219" format="#,##0" html.valueishtml="0"  name=compute_34 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(cjual_rp for all)"border="4" color="33554432" x="6039" y="4" height="68" width="485" format="#,##0.00" html.valueishtml="0"  name=compute_33 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(consout for all)"border="4" color="33554432" x="7218" y="4" height="68" width="251" format="#,##0" html.valueishtml="0"  name=compute_45 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(mutasi_inx for all)"border="4" color="33554432" x="4919" y="4" height="68" width="462" format="#,##0.00" html.valueishtml="0"  name=compute_24 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(consinx for all)"border="4" color="33554432" x="4123" y="4" height="68" width="535" format="#,##0.00" html.valueishtml="0"  name=compute_42 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(mutasi_out for all)"border="4" color="33554432" x="7986" y="4" height="68" width="251" format="#,##0" html.valueishtml="0"  name=compute_28 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(consout_rpx for all)"border="4" color="33554432" x="7474" y="4" height="68" width="512" format="#,##0.00" html.valueishtml="0"  name=compute_46 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(akhir for all)"border="4" color="33554432" x="8750" y="4" height="68" width="219" format="#,##0" html.valueishtml="0"  name=compute_27 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(mutasi_out_rpx for all)"border="4" color="33554432" x="8242" y="4" height="68" width="503" format="#,##0.00" html.valueishtml="0"  name=compute_30 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(akhir_rpxx for all)"border="4" color="33554432" x="8974" y="4" height="68" width="567" format="#,##0.00" html.valueishtml="0"  name=compute_26 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+compute(band=summary alignment="1" expression="sum(jual_rp for all)"border="4" color="33554432" x="9765" y="4" height="68" width="507" format="#,##0.00" html.valueishtml="0"  name=compute_7 visible="1"  font.face="Cambria" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+
+
+
+sparse(names="nama_group")htmltable(border="1" )
+
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+
+xhtmlgen() cssgen(sessionspecific="0" )
+
+xmlgen(inline="0" )
+
+xsltgen()
+
+jsgen()
+
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+
+import.xml()
+
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+
+export.xhtml()
+
+ 
+

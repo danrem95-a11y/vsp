@@ -1,0 +1,12 @@
+===== (a) AR: TBYR bayar per flag_bayar (anchored) vs CI GL =====
+  TBYR AR bayar per flag_bayar (Jan-Apr, anchored ke ar_trans):
+   1 | 632 | 47821307537.46
+  CI GL total = 47,361,445,587.46   TBYR(1,2) = 47,821,307,537.46   gap = 459,861,950.00
+  TBYR tanpa jurnal CI (voucher bayar tak ada di GL 103-001) = 47,361,445,587.46
+
+===== (b) AP: ukur GL 226-001 + 226-006 bersama + split flag =====
+  GL 226-001+006: open=-14,456,916,767.60  debet=22,331,143,231.38  kredit=17,436,972,273.29  bal_net=-9,562,745,809.51  abs=9,562,745,809.51
+  AP subledger(report) = 8,238,241,410.02   gap(sub - |GLbal|) = -1,324,504,399.49
+  TBYR AP bayar per flag_bayar (Jan-Apr, anchored ke ap_trans):
+   2 | 492 | 25156637126.18
+  CO GL(226-001+006) = 22,329,744,731.38   TBYR AP(anchored) = 23,654,249,130.18   gap = 1,324,504,398.80

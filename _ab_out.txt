@@ -1,0 +1,4 @@
+=== A (awal) vs B (avg periode berjalan) per akun ===
+  acc=102-101 | simA=7137597205 | simB=7135901736
+  acc=102-102 | simA=165300804 | simB=165396736
+  acc=102-110 | simA=3228250210 | simB=3228062467
