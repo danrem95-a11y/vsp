@@ -1,0 +1,37 @@
+BAND header height=116
+BAND detail height=88
+BAND summary height=160
+BAND footer height=0
+--- group defs ---
+  group L1 by "category_code" 
+--- objek (text/column/compute) band + name + x + width + text ---
+  [text] category_code_t band=header x=40 y=16 w=0 text="Kategori"
+  [column] category_code band=detail x=40 y=8 w=300 
+  [text] asset_code_t band=header x=370 y=16 w=0 text="Kode"
+  [column] asset_code band=detail x=370 y=8 w=340 
+  [text] asset_name_t band=header x=740 y=16 w=0 text="Nama Aset"
+  [column] asset_name band=detail x=740 y=8 w=1100 
+  [text] acquisition_date_t band=header x=1870 y=16 w=0 text="Tgl Perolehan"
+  [column] acquisition_date band=detail x=1870 y=8 w=400 
+  [text] acquisition_cost_t band=header x=2300 y=16 w=0 text="Harga Perolehan"
+  [column] acquisition_cost band=detail x=2300 y=8 w=800 
+  [text] accum_dep_t band=header x=3960 y=16 w=0 text="Akum s/d Tgl"
+  [column] accum_dep band=detail x=3960 y=8 w=800 
+  [text] book_value_t band=header x=4790 y=16 w=0 text="Nilai Buku"
+  [column] book_value band=detail x=4790 y=8 w=800 
+  [text] status_t band=header x=5620 y=16 w=0 text="St"
+  [column] status band=detail x=5620 y=8 w=160 
+  [text] t_grand band=summary x=40 y=20 w=0 text="GRAND TOTAL :"
+  [compute] c_grand band=summary x=4790 y=20 w=800 expr="sum(book_value for all)"
+  [text] penyusutan_t band=header x=3130 y=16 w=0 text="Penyusutan"
+  [column] penyusutan band=detail x=3130 y=8 w=800 
+  [text] g_label band=header x=40 y=16 w=0 text="Golongan :"
+  [compute] g_golongan band=header x=360 y=20 w=2000 expr="category_code+'  -  '+category_name"
+  [text] gt_label band=trailer x=1000 y=16 w=0 text="Subtotal Golongan :"
+  [compute] gt_acquisition_cost band=trailer x=2300 y=20 w=800 expr="sum(acquisition_cost for group 1)"
+  [compute] gt_penyusutan band=trailer x=3130 y=20 w=800 expr="sum(penyusutan for group 1)"
+  [compute] gt_accum_dep band=trailer x=3960 y=20 w=800 expr="sum(accum_dep for group 1)"
+  [compute] gt_book_value band=trailer x=4790 y=20 w=800 expr="sum(book_value for group 1)"
+  [compute] cg_acquisition_cost band=summary x=2300 y=20 w=800 expr="sum(acquisition_cost for all)"
+  [compute] cg_penyusutan band=summary x=3130 y=20 w=800 expr="sum(penyusutan for all)"
+  [compute] cg_accum_dep band=summary x=3960 y=20 w=800 expr="sum(accum_dep for all)"

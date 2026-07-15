@@ -1,0 +1,307 @@
+SHEETS: ['PENYUSUTAN AKTIVA 2026']
+
+===== SHEET: 'PENYUSUTAN AKTIVA 2026' rows=320 cols=24 =====
+r002 | PT. THERMO ASRI MAKMUR
+r003 | Penyusutan Aktiva Tetap
+r004 | Bulan | : | Januari 2026
+r006 |  |  | Periode |  | 01 - 2026 | sd | 01 - 2026 | ↨ |  |  | Detail | √ |  | ⓿ | Generate Penyusutan
+r007 |  |  |  |  |  |  |  |  |  |  | Rekap
+r009 |  |  | Kode |  | Keterangan |  |  |  | Tgl Perolehan |  | Tarif |  | Harga Perolehan |  | Penyusutan |  | Akum. Penyusutan |  | Nilai Buku |  | No. Voucher |  | Status
+r011 | Golongan : |  | TNH  -  Tanah
+r012 |  |  | TNH-0001 |  | Sukoharjo | Sukoharjo | Sukoharjo |  | 42733 |  | 0% |  | 180500000 |  | 0 |  | 0 |  | 180500000 |  | FA101202601 |  | Posted | A
+r013 |  |  | TNH-0002 |  | Semarang | Semarang | Semarang |  | 42733 |  | 0% |  | 373012500 |  | 0 |  | 0 |  | 373012500 |  | FA101202601 |  | Posted | A
+r014 |  |  | TNH-0003 |  | Surabaya | Surabaya | Surabaya |  | 42733 |  | 0% |  | 155000000 |  | 0 |  | 0 |  | 155000000 |  | FA101202601 |  | Posted | A
+r015 |  |  | TNH-0004 |  | Bekasi | Bekasi | Bekasi |  | 42733 |  | 0% |  | 264450000 |  | 0 |  | 0 |  | 264450000 |  | FA101202601 |  | Posted | A
+r016 |  |  | TNH-0005 |  | Bekasi | Bekasi | Bekasi |  | 42733 |  | 0% |  | 86558000 |  | 0 |  | 0 |  | 86558000 |  | FA101202601 |  | Posted | A
+r017 |  |  | TNH-0006 |  | Bekasi | Bekasi | Bekasi |  | 42733 |  | 0% |  | 74992000 |  | 0 |  | 0 |  | 74992000 |  | FA101202601 |  | Posted | A
+r018 |  |  | TNH-0007 |  | Bali | Bali | Bali |  | 44651 |  | 0% |  | 1493850000 |  | 0 |  | 0 |  | 1493850000 |  | FA101202601 |  | Posted | A
+r019 |  |  | TNH-0008 |  | Bali Turun Hak Tanah | Bali Turun Hak Tanah | Bali Turun Hak Tanah |  | 44991 |  | 0% |  | 7500000 |  | 0 |  | 0 |  | 7500000 |  | FA101202601 |  | Posted | A
+r020 |  |  | TNH-0009 |  | Bali 1.810 M2 Desa Sanur Kauh, Denpasar Selatan, Denpasar | Bali 1.810 M2 Desa Sanur Kauh, Denpasar Selatan, Denpasar | Bali 1.810 M2 Desa Sanur Kauh, Denpasar Selatan, Denpasar |  | 45016 |  | 0% |  | 14500000000 |  | 0 |  | 0 |  | 14500000000 |  | FA101202601 |  | Posted | A
+r021 |  |  | TNH-0010 |  | Bali BPHTB  1.810 M2 | Bali BPHTB  1.810 M2 | Bali BPHTB  1.810 M2 |  | 45028 |  | 0% |  | 721000000 |  | 0 |  | 0 |  | 721000000 |  | FA101202601 |  | Posted | A
+r022 |  |  | TNH-0011 |  | Bali B.Validasi, Akte, BBN, PNB, Akte Notaris | Bali B.Validasi, Akte, BBN, PNB, Akte Notaris | Bali B.Validasi, Akte, BBN, PNB, Akte Notaris |  | 45028 |  | 0% |  | 77200000 |  | 0 |  | 0 |  | 77200000 |  | FA101202601 |  | Posted | A
+r024 |  |  |  |  | Subtotal Golongan : |  |  |  |  |  |  |  | 17934062500 |  | 0 |  | 0 |  | 17934062500
+r026 | Golongan : |  | BGN  -  Bangunan
+r027 |  |  | BGN-0001 |  | Bangunan | Bangunan | Bangunan |  | 41722 |  | 0.10 |  | 124000000.00 |  | 0 |  | 124000000.00 |  | 0 |  | FA101202601 |  | Posted | F
+r028 |  |  | BGN-0002 |  | Bangunan | Bangunan | Bangunan |  | 41750 |  | 0.10 |  | 93000000.00 |  | 0 |  | 93000000.00 |  | 0 |  | FA101202601 |  | Posted | F
+r029 |  |  | BGN-0003 |  | Bangunan | Bangunan | Bangunan |  | 41817 |  | 0.10 |  | 77500000.00 |  | 0 |  | 77500000.00 |  | 0 |  | FA101202601 |  | Posted | F
+r030 |  |  | BGN-0004 |  | Bangunan | Bangunan | Bangunan |  | 41817 |  | 0.10 |  | 39000000.00 |  | 0 |  | 39000000.00 |  | 0 |  | FA101202601 |  | Posted | F
+r031 |  |  | BGN-0005 |  | Bangunan | Bangunan | Bangunan |  | 41926 |  | 0.10 |  | 40000000 |  | 0 |  | 40000000 |  | 0 |  | FA101202601 |  | Posted | F
+r032 |  |  | BGN-0006 |  | Bangunan | Bangunan | Bangunan |  | 41934 |  | 0.10 |  | 21000000 |  | 0 |  | 21000000 |  | 0 |  | FA101202601 |  | Posted | F
+r033 |  |  | BGN-0007 |  | Renovasi Gedung Lt.2 | Renovasi Gedung Lt.2 | Renovasi Gedung Lt.2 |  | 42010 |  | 0.10 |  | 58000000 |  | 0 |  | 58000000 |  | 0 |  | FA101202601 |  | Posted | F
+r034 |  |  | BGN-0008 |  | Renovasi Gedung Lt.2 | Renovasi Gedung Lt.2 | Renovasi Gedung Lt.2 |  | 42033 |  | 0.10 |  | 60000000 |  | 0 |  | 60000000 |  | 0 |  | FA101202601 |  | Posted | F
+r035 |  |  | BGN-0009 |  | Sliding door lt.2 | Sliding door lt.2 | Sliding door lt.2 |  | 42102 |  | 0.10 |  | 9500000 |  | 0 |  | 9500000 |  | 0 |  | FA101202601 |  | Posted | F
+r036 |  |  | BGN-0010 |  | Renovasi Gedung Lt.1 | Renovasi Gedung Lt.1 | Renovasi Gedung Lt.1 |  | 42107 |  | 0.10 |  | 37000000.00 |  | 0 |  | 37000000.00 |  | 0 |  | FA101202601 |  | Posted | F
+r037 |  |  | BGN-0011 |  | Renovasi Gedung Lt.1 | Renovasi Gedung Lt.1 | Renovasi Gedung Lt.1 |  | 42116 |  | 0.10 |  | 68000000.00 |  | 0 |  | 68000000.00 |  | 0 |  | FA101202601 |  | Posted | F
+r038 |  |  | BGN-0012 |  | Renovasi Gedung Lt.1 | Renovasi Gedung Lt.1 | Renovasi Gedung Lt.1 |  | 42137 |  | 0.10 |  | 35000000.00 |  | 0 |  | 35000000.00 |  | 0 |  | FA101202601 |  | Posted | F
+r039 |  |  | BGN-0013 |  | Renovasi Gedung Lt.1 | Renovasi Gedung Lt.1 | Renovasi Gedung Lt.1 |  | 42247 |  | 0.10 |  | 39250000 |  | 0 |  | 39250000 |  | 0 |  | FA101202601 |  | Posted | F
+r040 |  |  | BGN-0014 |  | Renovasi Gedung Lt.1 | Renovasi Gedung Lt.1 | Renovasi Gedung Lt.1 |  | 42325 |  | 0.10 |  | 3600000.00 |  | 0 |  | 3600000.00 |  | 0 |  | FA101202601 |  | Posted | F
+r041 |  |  | BGN-0015 |  | Renovasi Kantor Belakang-Progress-1 | Renovasi Kantor Belakang-Progress-1 | Renovasi Kantor Belakang-Progress-1 |  | 42380 |  | 0.10 |  | 64000000.00 |  | 0 |  | 64000000.00 |  | 0 |  | FA101202601 |  | Posted | F
+r042 |  |  | BGN-0016 |  | Renovasi Kantor Belakang-Progress-2 | Renovasi Kantor Belakang-Progress-2 | Renovasi Kantor Belakang-Progress-2 |  | 42411 |  | 0.10 |  | 64000000.00 |  | 0 |  | 63547400.61 |  | 452599.39 |  | FA101202601 |  | Posted | A
+r043 |  |  | BGN-0017 |  | Renovasi Kantor Belakang-Progress-3 | Renovasi Kantor Belakang-Progress-3 | Renovasi Kantor Belakang-Progress-3 |  | 42426 |  | 0.10 |  | 64000000.00 |  | 0 |  | 63547400.61 |  | 452599.39 |  | FA101202601 |  | Posted | A
+r044 |  |  | BGN-0018 |  | Renovasi Kantor Belakang-Progress-4 | Renovasi Kantor Belakang-Progress-4 | Renovasi Kantor Belakang-Progress-4 |  | 42440 |  | 0.10 |  | 48000000.00 |  | 0 |  | 47309090.91 |  | 690909.09 |  | FA101202601 |  | Posted | A
+r045 |  |  | BGN-0019 |  | Renovasi Kantor Belakang & Kanopi | Renovasi Kantor Belakang & Kanopi | Renovasi Kantor Belakang & Kanopi |  | 42487 |  | 0.10 |  | 65000000.00 |  | 0 |  | 63572635.14 |  | 1427364.86 |  | FA101202601 |  | Posted | A
+r046 |  |  | BGN-0020 |  | Perbaikan Atap Gudang-Pembyrn ke-1 | Perbaikan Atap Gudang-Pembyrn ke-1 | Perbaikan Atap Gudang-Pembyrn ke-1 |  | 42523 |  | 0.10 |  | 10000000.00 |  | 0 |  | 9622050.15 |  | 377949.85 |  | FA101202601 |  | Posted | A
+r047 |  |  | BGN-0021 |  | Biaya Perbaikan Atap Spandek ke-2 | Biaya Perbaikan Atap Spandek ke-2 | Biaya Perbaikan Atap Spandek ke-2 |  | 42543 |  | 0.10 |  | 20000000.00 |  | 0 |  | 19244100.29 |  | 755899.71 |  | FA101202601 |  | Posted | A
+r048 |  |  | BGN-0022 |  | Renovasi Kantor Belakang 5% retensi | Renovasi Kantor Belakang 5% retensi | Renovasi Kantor Belakang 5% retensi |  | 42545 |  | 0.10 |  | 18500000.00 |  | 0 |  | 17800792.77 |  | 699207.23 |  | FA101202601 |  | Posted | A
+r049 |  |  | BGN-0023 |  | Renovasi plafon luar gudang depan/Belakang | Renovasi plafon luar gudang depan/Belakang | Renovasi plafon luar gudang depan/Belakang |  | 42552 |  | 0.10 |  | 3000000 |  | 0 |  | 2861842.11 |  | 138157.89 |  | FA101202601 |  | Posted | A
+r050 |  |  | BGN-0024 |  | Pelunasan penggantian atap spanduk | Pelunasan penggantian atap spanduk | Pelunasan penggantian atap spanduk |  | 42552 |  | 0.10 |  | 25000000.00 |  | 0 |  | 23848684.21 |  | 1151315.79 |  | FA101202601 |  | Posted | A
+r051 |  |  | BGN-0025 |  | Anta Dwi Bangunan- Bayar Matrial Bangunan | Anta Dwi Bangunan- Bayar Matrial Bangunan | Anta Dwi Bangunan- Bayar Matrial Bangunan |  | 42653 |  | 0.10 |  | 47000000 |  | 0 |  | 43610576.92 |  | 3389423.08 |  | FA101202601 |  | Posted | A
+r052 |  |  | BGN-0026 |  | Perbaikan Kamar Mandi Belakang | Perbaikan Kamar Mandi Belakang | Perbaikan Kamar Mandi Belakang |  | 42650 |  | 0.10 |  | 7200000 |  | 0 |  | 6680769.23 |  | 519230.77 |  | FA101202601 |  | Posted | A
+r053 |  |  | BGN-0027 |  | Kanopi Kantor Belakang,Kamar Mandi | Kanopi Kantor Belakang,Kamar Mandi | Kanopi Kantor Belakang,Kamar Mandi |  | 42650 |  | 0.10 |  | 7935000.00 |  | 0 |  | 7362764.42 |  | 572235.58 |  | FA101202601 |  | Posted | A
+r054 |  |  | BGN-0028 |  | Renovasi Kamar Mandi, R.Satpam | Renovasi Kamar Mandi, R.Satpam | Renovasi Kamar Mandi, R.Satpam |  | 42670 |  | 0.10 |  | 16095000.00 |  | 0 |  | 14934302.88 |  | 1160697.12 |  | FA101202601 |  | Posted | A
+r055 |  |  | BGN-0029 |  | PL.Pembuatan Khusen Pintu Ko. Asem | PL.Pembuatan Khusen Pintu Ko. Asem | PL.Pembuatan Khusen Pintu Ko. Asem |  | 42685 |  | 0.10 |  | 8300000.00 |  | 0 |  | 7625918.08 |  | 674081.92 |  | FA101202601 |  | Posted | A
+r056 |  |  | BGN-0030 |  | Renovasi Bengkel Srby | Renovasi Bengkel Srby | Renovasi Bengkel Srby |  | 43158 |  | 0.10 |  | 56400000 |  | 0 |  | 44650000 |  | 11750000 |  | FA101202601 |  | Posted | A
+r057 |  |  | BGN-0031 |  | Pemb.ke-1.Renovasi Tangga/Mess | Pemb.ke-1.Renovasi Tangga/Mess | Pemb.ke-1.Renovasi Tangga/Mess |  | 43193 |  | 0.10 |  | 20000000 |  | 0 |  | 15500000 |  | 4500000 |  | FA101202601 |  | Posted | A
+r058 |  |  | BGN-0032 |  | Pemb.ke-2.Renovasi Tangga/Mess | Pemb.ke-2.Renovasi Tangga/Mess | Pemb.ke-2.Renovasi Tangga/Mess |  | 43202 |  | 0.10 |  | 10000000 |  | 0 |  | 7750000 |  | 2250000 |  | FA101202601 |  | Posted | A
+r059 |  |  | BGN-0033 |  | Pemb.ke-3.Renovasi Tangga/Mess | Pemb.ke-3.Renovasi Tangga/Mess | Pemb.ke-3.Renovasi Tangga/Mess |  | 43202 |  | 0.10 |  | 10000000 |  | 0 |  | 7750000 |  | 2250000 |  | FA101202601 |  | Posted | A
+r060 |  |  | BGN-0034 |  | Pemb.ke-4.Renovasi Tangga/Mess | Pemb.ke-4.Renovasi Tangga/Mess | Pemb.ke-4.Renovasi Tangga/Mess |  | 43214 |  | 0.10 |  | 20000000 |  | 0 |  | 15500000 |  | 4500000 |  | FA101202601 |  | Posted | A
+r061 |  |  | BGN-0035 |  | PL Renovasi Tangga/Mess | PL Renovasi Tangga/Mess | PL Renovasi Tangga/Mess |  | 43224 |  | 0.10 |  | 14065000 |  | 0 |  | 10783166.67 |  | 3281833.33 |  | FA101202601 |  | Posted | A
+r062 |  |  | BGN-0036 |  | Carport - Parkiran | Carport - Parkiran | Carport - Parkiran |  | 43487 |  | 0.10 |  | 17500000 |  | 0 |  | 12250000 |  | 5250000 |  | FA101202601 |  | Posted | A
+r063 |  |  | BGN-0037 |  | Perbaikan Gudang | Perbaikan Gudang | Perbaikan Gudang |  | 43496 |  | 0.10 |  | 24400000 |  | 0 |  | 17080000 |  | 7320000 |  | FA101202601 |  | Posted | A
+r064 |  |  | BGN-0038 |  | Bengkel BALI Jl. Danau Poso No.2A Sanur - Bali | Bengkel BALI Jl. Danau Poso No.2A Sanur - Bali | Bengkel BALI Jl. Danau Poso No.2A Sanur - Bali |  | 45474 |  | 0.05 |  | 2366891932 |  | 0 |  | 177516894.90 |  | 2189375037.10 |  | FA101202601 |  | Posted | A
+r066 |  |  |  |  | Subtotal Golongan : |  |  |  |  |  |  |  | 3712136932 |  | 0 |  | 1469198389.91 |  | 2242938542.09
+r068 | Golongan : |  | KDR  -  Kendaraan
+r069 |  |  | KDR-0001 |  | Isuzu Elf NKR 55 95  B 9147 KDA | Isuzu Elf NKR 55 95  B 9147 KDA | Isuzu Elf NKR 55 95  B 9147 KDA |  | 40522 |  | 12.50% |  | 258015000 |  | 0 |  | 258015000 |  | 0 |  | FA101202601 |  | Posted | F
+r070 |  |  | KDR-0002 |  | Toyota Kijang Inova Diesel B 1022 KOF | Toyota Kijang Inova Diesel B 1022 KOF | Toyota Kijang Inova Diesel B 1022 KOF |  | 41243 |  | 12.50% |  | 278911510 |  | 0 |  | 278911510 |  | 0 |  | FA101202601 |  | Posted | F
+r071 |  |  | KDR-0003 |  | Motor Honda B 3576 KJO | Motor Honda B 3576 KJO | Motor Honda B 3576 KJO |  | 41320 |  | 12.50% |  | 11760273 |  | 0 |  | 11760273 |  | 0 |  | FA101202601 |  | Posted | F
+r072 |  |  | KDR-0004 |  | Motor Supra X B 3963 KJI | Motor Supra X B 3963 KJI | Motor Supra X B 3963 KJI |  | 41339 |  | 12.50% |  | 11893636 |  | 0 |  | 11893636 |  | 0 |  | FA101202601 |  | Posted | F
+r073 |  |  | KDR-0005 |  | Mobil HRV | Mobil HRV | Mobil HRV |  | 42727 |  | 12.50% |  | 321312180 |  | 0 |  | 321312180 |  | 0 |  | FA101202601 |  | Posted | F
+r074 |  |  | KDR-0006 |  | Motor Honda Vario 150 ESP | Motor Honda Vario 150 ESP | Motor Honda Vario 150 ESP |  | 42830 |  | 12.50% |  | 21975000 |  | 0 |  | 21975000 |  | 0 |  | FA101202601 |  | Posted | F
+r075 |  |  | KDR-0007 |  | Mobil Grand Max (PT.Tam) | Mobil Grand Max (PT.Tam) | Mobil Grand Max (PT.Tam) |  | 42940 |  | 12.50% |  | 159575520 |  | 0 |  | 159575520 |  | 0 |  | FA101202601 |  | Posted | F
+r076 |  |  | KDR-0008 |  | Kijang Inova | Kijang Inova | Kijang Inova |  | 42998 |  | 12.50% |  | 350363636 |  | 0 |  | 350363636 |  | 0 |  | FA101202601 |  | Posted | F
+r077 |  |  | KDR-0009 |  | Kijang Inova-Assecories Innova | Kijang Inova-Assecories Innova | Kijang Inova-Assecories Innova |  | 42998 |  | 12.50% |  | 72919000 |  | 0 |  | 72919000 |  | 0 |  | FA101202601 |  | Posted | F
+r078 |  |  | KDR-0010 |  | Mobil Proton Exora Thn2009 | Mobil Proton Exora Thn2009 | Mobil Proton Exora Thn2009 |  | 43026 |  | 12.50% |  | 60000000 |  | 0 |  | 60000000 |  | 0 |  | FA101202601 |  | Posted | F
+r079 |  |  | KDR-0011 |  | Mobil Toyota Innova G 2009 | Mobil Toyota Innova G 2009 | Mobil Toyota Innova G 2009 |  | 43046 |  | 12.50% |  | 135000000 |  | 0 |  | 135000000 |  | 0 |  | FA101202601 |  | Posted | F
+r080 |  |  | KDR-0012 |  | Motor Honda Vario Black | Motor Honda Vario Black | Motor Honda Vario Black |  | 43143 |  | 12.50% |  | 21400000 |  | 0 |  | 21177083.33 |  | 222916.67 |  | FA101202601 |  | Posted | A
+r081 |  |  | KDR-0013 |  | Motor N-MAX | Motor N-MAX | Motor N-MAX |  | 43353 |  | 12.50% |  | 27000000 |  | 0 |  | 24750000 |  | 2250000 |  | FA101202601 |  | Posted | A
+r082 |  |  | KDR-0014 |  | 2 Unit Mobil Mitsubishi Expander Ultimate | 2 Unit Mobil Mitsubishi Expander Ultimate | 2 Unit Mobil Mitsubishi Expander Ultimate |  | 44837 |  | 12.50% |  | 525798600 |  | 0 |  | 213605681.25 |  | 312192918.75 |  | FA101202601 |  | Posted | A
+r083 |  |  | KDR-0015 |  | 2 Unit Mobil Mitsubishi Expander Ultimate | 2 Unit Mobil Mitsubishi Expander Ultimate | 2 Unit Mobil Mitsubishi Expander Ultimate |  | 44868 |  | 12.50% |  | 525798600 |  | 0 |  | 208128612.50 |  | 317669987.50 |  | FA101202601 |  | Posted | A
+r084 |  |  | KDR-0016 |  | 3 Unit Mobil Mitsubishi Expander Ultimate | 3 Unit Mobil Mitsubishi Expander Ultimate | 3 Unit Mobil Mitsubishi Expander Ultimate |  | 44917 |  | 12.50% |  | 788697900 |  | 0 |  | 303977315.62 |  | 484720584.38 |  | FA101202601 |  | Posted | A
+r085 |  |  | KDR-0017 |  | Motor Yamaha PCX 150CBS | Motor Yamaha PCX 150CBS | Motor Yamaha PCX 150CBS |  | 45463 |  | 12.50% |  | 30192399 |  | 0 |  | 5975578.97 |  | 24216820.03 |  | FA101202601 |  | Posted | A
+r086 |  |  | KDR-0018 |  | Mobil Toyota Innova Zenix 2.0 Q HV CVT | Mobil Toyota Innova Zenix 2.0 Q HV CVT | Mobil Toyota Innova Zenix 2.0 Q HV CVT |  | 45642 |  | 12.50% |  | 612142766 |  | 0 |  | 82894332.90 |  | 529248433.10 |  | FA101202601 |  | Posted | A
+r087 |  |  | KDR-0019 |  | Mobil Toyota All New Veloz 1.5 Q CVT | Mobil Toyota All New Veloz 1.5 Q CVT | Mobil Toyota All New Veloz 1.5 Q CVT |  | 45642 |  | 12.50% |  | 282760478 |  | 0 |  | 38290481.40 |  | 244469996.60 |  | FA101202601 |  | Posted | A
+r088 |  |  | KDR-0020 |  | Mobil Daihatsu Grand Max MB 1.5 D PS | Mobil Daihatsu Grand Max MB 1.5 D PS | Mobil Daihatsu Grand Max MB 1.5 D PS |  | 45642 |  | 12.50% |  | 235749638 |  | 0 |  | 31924430.15 |  | 203825207.85 |  | FA101202601 |  | Posted | A
+r089 |  |  | KDR-0021 |  | Motor Honda Vario 160ABS | Motor Honda Vario 160ABS | Motor Honda Vario 160ABS |  | 45799 |  | 12.50% |  | 28671531 |  | 0 |  | 2389294.25 |  | 26282236.75 |  | FA101202601 |  | Posted | A
+r090 |  |  | KDR-0022 |  | Mobil JAECOO-J7-SHS | Mobil JAECOO-J7-SHS | Mobil JAECOO-J7-SHS |  | 45883 |  | 12.50% |  | 463126809 |  | 0 |  | 24121187.97 |  | 439005621.03 |  | FA101202601 |  | Posted | A
+r092 |  |  |  |  | Subtotal Golongan : |  |  |  |  |  |  |  | 5223064476 |  | 0 |  | 2638959753.33 |  | 2584104722.67
+r094 | Golongan : |  | PBK  -  Peralatan Bengkel
+r095 |  |  | PBK-0001 |  | Jet Pump Shimitsu PC 268 - Bit | Jet Pump Shimitsu PC 268 - Bit | Jet Pump Shimitsu PC 268 - Bit |  | 40792 |  | 12.50% |  | 1400000 |  | 0 |  | 1400000.00 |  | 0 |  | FA101202601 |  | Posted | F
+r096 |  |  | PBK-0002 |  | Gloor Blender Potong | Gloor Blender Potong | Gloor Blender Potong |  | 40843 |  | 12.50% |  | 1800000 |  | 0 |  | 1800000 |  | 0 |  | FA101202601 |  | Posted | F
+r097 |  |  | PBK-0003 |  | Vacum Pump Robin Air 3/4 PK 15121A | Vacum Pump Robin Air 3/4 PK 15121A | Vacum Pump Robin Air 3/4 PK 15121A |  | 41351 |  | 12.50% |  | 10100000 |  | 0 |  | 10100000.00 |  | 0 |  | FA101202601 |  | Posted | F
+r098 |  |  | PBK-0004 |  | Mesin Gurinda | Mesin Gurinda | Mesin Gurinda |  | 41572 |  | 12.50% |  | 970000 |  | 0 |  | 970000 |  | 0 |  | FA101202601 |  | Posted | F
+r099 |  |  | PBK-0005 |  | Stang Rivet Lobster HND-005 | Stang Rivet Lobster HND-005 | Stang Rivet Lobster HND-005 |  | 42013 |  | 12.50% |  | 637000 |  | 0 |  | 637000 |  | 0 |  | FA101202601 |  | Posted | F
+r100 |  |  | PBK-0006 |  | Kipas | Kipas | Kipas |  | 42146 |  | 12.50% |  | 278000 |  | 0 |  | 278000 |  | 0 |  | FA101202601 |  | Posted | F
+r101 |  |  | PBK-0007 |  | Etalase mading | Etalase mading | Etalase mading |  | 42252 |  | 12.50% |  | 450000 |  | 0 |  | 450000 |  | 0 |  | FA101202601 |  | Posted | F
+r102 |  |  | PBK-0008 |  | Mesin Bor Tangan Hitachi | Mesin Bor Tangan Hitachi | Mesin Bor Tangan Hitachi |  | 42510 |  | 12.50% |  | 550000 |  | 0 |  | 550000 |  | 0 |  | FA101202601 |  | Posted | F
+r103 |  |  | PBK-0009 |  | Bor Listrik Maxtex-MT 808 2 bh@500.000 | Bor Listrik Maxtex-MT 808 2 bh@500.000 | Bor Listrik Maxtex-MT 808 2 bh@500.000 |  | 42515 |  | 12.50% |  | 1000000 |  | 0 |  | 1000000.00 |  | 0 |  | FA101202601 |  | Posted | F
+r104 |  |  | PBK-0010 |  | Hydraulic Hand Stacker | Hydraulic Hand Stacker | Hydraulic Hand Stacker |  | 42812 |  | 12.50% |  | 12521700 |  | 0 |  | 12521700 |  | 0 |  | FA101202601 |  | Posted | F
+r105 |  |  | PBK-0011 |  | Mesin Vacum | Mesin Vacum | Mesin Vacum |  | 43207 |  | 12.50% |  | 4770000 |  | 0 |  | 4571250 |  | 198750 |  | FA101202601 |  | Posted | A
+r106 |  |  | PBK-0012 |  | Pompa Merk Shimizu | Pompa Merk Shimizu | Pompa Merk Shimizu |  | 43749 |  | 12.50% |  | 1850000 |  | 0 |  | 1445312.50 |  | 404687.50 |  | FA101202601 |  | Posted | A
+r107 |  |  | PBK-0013 |  | 1 Unit Chain Hoist | 1 Unit Chain Hoist | 1 Unit Chain Hoist |  | 43769 |  | 12.50% |  | 24818182 |  | 0 |  | 19389204.69 |  | 5428977.31 |  | FA101202601 |  | Posted | A
+r108 |  |  | PBK-0014 |  | 1 Unit Mesin Las | 1 Unit Mesin Las | 1 Unit Mesin Las |  | 43902 |  | 12.50% |  | 2000000 |  | 0 |  | 1458333.33 |  | 541666.67 |  | FA101202601 |  | Posted | A
+r109 |  |  | PBK-0015 |  | Digital Multimeter | Digital Multimeter | Digital Multimeter |  | 44365 |  | 12.50% |  | 5031000 |  | 0 |  | 2882343.75 |  | 2148656.25 |  | FA101202601 |  | Posted | A
+r110 |  |  | PBK-0016 |  | Clamp Meter | Clamp Meter | Clamp Meter |  | 44365 |  | 12.50% |  | 2826000 |  | 0 |  | 1619062.50 |  | 1206937.50 |  | FA101202601 |  | Posted | A
+r111 |  |  | PBK-0017 |  | Refrigeran Leak Detector | Refrigeran Leak Detector | Refrigeran Leak Detector |  | 44365 |  | 12.50% |  | 5580000 |  | 0 |  | 3196875 |  | 2383125 |  | FA101202601 |  | Posted | A
+r112 |  |  | PBK-0018 |  | Temperatur Data Logger | Temperatur Data Logger | Temperatur Data Logger |  | 44365 |  | 12.50% |  | 2295000 |  | 0 |  | 1314843.75 |  | 980156.25 |  | FA101202601 |  | Posted | A
+r113 |  |  | PBK-0019 |  | Digital Manifold Testo | Digital Manifold Testo | Digital Manifold Testo |  | 44365 |  | 12.50% |  | 6862500 |  | 0 |  | 3931640.62 |  | 2930859.38 |  | FA101202601 |  | Posted | A
+r114 |  |  | PBK-0020 |  | Digital Manifold Testo 570 | Digital Manifold Testo 570 | Digital Manifold Testo 570 |  | 44365 |  | 12.50% |  | 16425000 |  | 0 |  | 9410156.25 |  | 7014843.75 |  | FA101202601 |  | Posted | A
+r115 |  |  | PBK-0021 |  | Infrared Thermometer | Infrared Thermometer | Infrared Thermometer |  | 44365 |  | 12.50% |  | 4428000 |  | 0 |  | 2536875 |  | 1891125 |  | FA101202601 |  | Posted | A
+r116 |  |  | PBK-0022 |  | High Presurre | High Presurre | High Presurre |  | 44365 |  | 12.50% |  | 7476900 |  | 0 |  | 4283640.62 |  | 3193259.38 |  | FA101202601 |  | Posted | A
+r117 |  |  | PBK-0023 |  | Pompa Shimizu | Pompa Shimizu | Pompa Shimizu |  | 44380 |  | 12.50% |  | 950000 |  | 0 |  | 534375 |  | 415625 |  | FA101202601 |  | Posted | A
+r118 |  |  | PBK-0024 |  | Mesin Bor Makita | Mesin Bor Makita | Mesin Bor Makita |  | 44390 |  | 12.50% |  | 4600000 |  | 0 |  | 2587500 |  | 2012500 |  | FA101202601 |  | Posted | A
+r119 |  |  | PBK-0025 |  | Clamp Thermo Operated | Clamp Thermo Operated | Clamp Thermo Operated |  | 44496 |  | 12.50% |  | 3030000 |  | 0 |  | 1609687.50 |  | 1420312.50 |  | FA101202601 |  | Posted | A
+r120 |  |  | PBK-0026 |  | V-Belt Tension Meter RTM | V-Belt Tension Meter RTM | V-Belt Tension Meter RTM |  | 44497 |  | 12.50% |  | 35000000 |  | 0 |  | 18593750 |  | 16406250 |  | FA101202601 |  | Posted | A
+r121 |  |  | PBK-0027 |  | Temperatus Data, USB Conection | Temperatus Data, USB Conection | Temperatus Data, USB Conection |  | 44721 |  | 12.50% |  | 17244000 |  | 0 |  | 7723875 |  | 9520125 |  | FA101202601 |  | Posted | A
+r122 |  |  | PBK-0028 |  | Dongkrak Botol 32 Ton + Bracket | Dongkrak Botol 32 Ton + Bracket | Dongkrak Botol 32 Ton + Bracket |  | 44816 |  | 12.50% |  | 2300000 |  | 0 |  | 958333.33 |  | 1341666.67 |  | FA101202601 |  | Posted | A
+r123 |  |  | PBK-0029 |  | 2 Unit Mesin Bor Batere DF333 | 2 Unit Mesin Bor Batere DF333 | 2 Unit Mesin Bor Batere DF333 |  | 44900 |  | 12.50% |  | 2500000 |  | 0 |  | 963541.67 |  | 1536458.33 |  | FA101202601 |  | Posted | A
+r124 |  |  | PBK-0030 |  | Unit Pompa Air Shimizu PC 268 | Unit Pompa Air Shimizu PC 268 | Unit Pompa Air Shimizu PC 268 |  | 44929 |  | 12.50% |  | 1900000 |  | 0 |  | 712500 |  | 1187500 |  | FA101202601 |  | Posted | A
+r125 |  |  | PBK-0033 |  | Unit Pompa Air Shimizu PC 1353 + PC 268 | Unit Pompa Air Shimizu PC 1353 + PC 268 | Unit Pompa Air Shimizu PC 1353 + PC 268 |  | 13-Peb-23 |  | 12.50% |  | 2550000 |  | 0 |  | 929687.50 |  | 1620312.50 |  | FA101202601 |  | Posted | A
+r126 |  |  | PBK-0034 |  | Pcs Timbangan ECO - Freon | Pcs Timbangan ECO - Freon | Pcs Timbangan ECO - Freon |  | 16-Mei-23 |  | 12.50% |  | 1081081.08 |  | 0 |  | 360360.36 |  | 720720.72 |  | FA101202601 |  | Posted | A
+r127 |  |  | PBK-0035 |  | Pcs TESTO -Temperature Data | Pcs TESTO -Temperature Data | Pcs TESTO -Temperature Data |  | 45112 |  | 12.50% |  | 23200000 |  | 0 |  | 7250000 |  | 15950000 |  | FA101202601 |  | Posted | A
+r128 |  |  | PBK-0036 |  | Unit BOR Dudukkan 16 MM | Unit BOR Dudukkan 16 MM | Unit BOR Dudukkan 16 MM |  | 45134 |  | 12.50% |  | 4850000 |  | 0 |  | 1515625 |  | 3334375 |  | FA101202601 |  | Posted | A
+r129 |  |  | PBK-0037 |  | Unit Pompa Air Shimizu | Unit Pompa Air Shimizu | Unit Pompa Air Shimizu |  | 45210 |  | 12.50% |  | 1000000 |  | 0 |  | 281250 |  | 718750 |  | FA101202601 |  | Posted | A
+r130 |  |  | PBK-0038 |  | Unit Pompa Air Shimizu ( Mess ) | Unit Pompa Air Shimizu ( Mess ) | Unit Pompa Air Shimizu ( Mess ) |  | 45475 |  | 12.50% |  | 1500000 |  | 0 |  | 281250 |  | 1218750 |  | FA101202601 |  | Posted
+r131 |  |  | PBK-0039 |  | Set Cutting Gloor / Mata Blender | Set Cutting Gloor / Mata Blender | Set Cutting Gloor / Mata Blender |  | 45540 |  | 12.50% |  | 950000 |  | 0 |  | 158333.33 |  | 791666.67 |  | FA101202601 |  | Posted
+r132 |  |  | PBK-0040 |  | Unit Hand Pallet 3 Ton | Unit Hand Pallet 3 Ton | Unit Hand Pallet 3 Ton |  | 45586 |  | 12.50% |  | 4600000 |  | 0 |  | 718750 |  | 3881250 |  | FA101202601 |  | Posted
+r134 |  |  |  |  | Subtotal Golongan : |  |  |  |  |  |  |  | 221324363.08 |  | 0 |  | 130925056.71 |  | 90399306.37
+r136 | Golongan : |  | PKT  -  Peralatan Kantor
+r137 |  |  | PKT-0001 |  | Komputer Intel P-IV 3.0 Lengkap | Komputer Intel P-IV 3.0 Lengkap | Komputer Intel P-IV 3.0 Lengkap |  | 39157 |  | 25% |  | 9000000 |  | 0 |  | 9000000 |  | 0 |  | FA101202601 |  | Posted | F
+r138 |  |  | PKT-0002 |  | CD Rom | CD Rom | CD Rom |  | 39157 |  | 25% |  | 140000 |  | 0 |  | 140000 |  | 0 |  | FA101202601 |  | Posted | F
+r139 |  |  | PKT-0003 |  | Switch Hub 5 Port | Switch Hub 5 Port | Switch Hub 5 Port |  | 39157 |  | 25% |  | 136000 |  | 0 |  | 136000 |  | 0 |  | FA101202601 |  | Posted | F
+r140 |  |  | PKT-0004 |  | Printer Epson LQ 2180 | Printer Epson LQ 2180 | Printer Epson LQ 2180 |  | 39157 |  | 25% |  | 4300000 |  | 0 |  | 4300000 |  | 0 |  | FA101202601 |  | Posted | F
+r141 |  |  | PKT-0005 |  | Kabel Instalasi Computer | Kabel Instalasi Computer | Kabel Instalasi Computer |  | 39157 |  | 25% |  | 618250 |  | 0 |  | 618250 |  | 0 |  | FA101202601 |  | Posted | F
+r142 |  |  | PKT-0006 |  | HP N.2126 + Perdana Fren | HP N.2126 + Perdana Fren | HP N.2126 + Perdana Fren |  | 39294 |  | 25% |  | 510000 |  | 0 |  | 510000 |  | 0 |  | FA101202601 |  | Posted | F
+r143 |  |  | PKT-0007 |  | Printer Epson LX-300 | Printer Epson LX-300 | Printer Epson LX-300 |  | 39314 |  | 25% |  | 1600000 |  | 0 |  | 1600000 |  | 0 |  | FA101202601 |  | Posted | F
+r144 |  |  | PKT-0008 |  | Mesin Foto copy Canon IR-2016 | Mesin Foto copy Canon IR-2016 | Mesin Foto copy Canon IR-2016 |  | 39342 |  | 25% |  | 16500000 |  | 0 |  | 16500000 |  | 0 |  | FA101202601 |  | Posted | F
+r145 |  |  | PKT-0009 |  | Komputer Intel P-IV 2140 | Komputer Intel P-IV 2140 | Komputer Intel P-IV 2140 |  | 39463 |  | 25% |  | 6341000 |  | 0 |  | 6341000 |  | 0 |  | FA101202601 |  | Posted | F
+r146 |  |  | PKT-0010 |  | UPS 650 VA u/ Absensi | UPS 650 VA u/ Absensi | UPS 650 VA u/ Absensi |  | 39506 |  | 25% |  | 1275000 |  | 0 |  | 1275000 |  | 0 |  | FA101202601 |  | Posted | F
+r147 |  |  | PKT-0011 |  | Key Phone+Kabel 100 m | Key Phone+Kabel 100 m | Key Phone+Kabel 100 m |  | 39552 |  | 25% |  | 775000 |  | 0 |  | 775000 |  | 0 |  | FA101202601 |  | Posted | F
+r148 |  |  | PKT-0012 |  | Stand Fan Miyako Kas-1627 KB | Stand Fan Miyako Kas-1627 KB | Stand Fan Miyako Kas-1627 KB |  | 39574 |  | 25% |  | 208000 |  | 0 |  | 208000 |  | 0 |  | FA101202601 |  | Posted | F
+r149 |  |  | PKT-0013 |  | UPS APC BR 500 i | UPS APC BR 500 i | UPS APC BR 500 i |  | 39577 |  | 25% |  | 825000 |  | 0 |  | 825000 |  | 0 |  | FA101202601 |  | Posted | F
+r150 |  |  | PKT-0014 |  | Stabilizer Matrunaga | Stabilizer Matrunaga | Stabilizer Matrunaga |  | 39577 |  | 25% |  | 180000 |  | 0 |  | 180000 |  | 0 |  | FA101202601 |  | Posted | F
+r151 |  |  | PKT-0015 |  | Mesin Foto Copy Minolta BIZHUB 163 | Mesin Foto Copy Minolta BIZHUB 163 | Mesin Foto Copy Minolta BIZHUB 163 |  | 39589 |  | 25% |  | 14000000 |  | 0 |  | 14000000 |  | 0 |  | FA101202601 |  | Posted | F
+r152 |  |  | PKT-0016 |  | Printer PHD 2180 | Printer PHD 2180 | Printer PHD 2180 |  | 39593 |  | 25% |  | 876500 |  | 0 |  | 876500 |  | 0 |  | FA101202601 |  | Posted | F
+r153 |  |  | PKT-0017 |  | Hp Nokia 1325 Black | Hp Nokia 1325 Black | Hp Nokia 1325 Black |  | 39594 |  | 25% |  | 575000 |  | 0 |  | 575000 |  | 0 |  | FA101202601 |  | Posted | F
+r154 |  |  | PKT-0018 |  | UPS APC BR 5001 | UPS APC BR 5001 | UPS APC BR 5001 |  | 39644 |  | 25% |  | 950000 |  | 0 |  | 950000 |  | 0 |  | FA101202601 |  | Posted | F
+r155 |  |  | PKT-0019 |  | AC Fujiaire Tipe FBS-18/FC-18 (2 pk) | AC Fujiaire Tipe FBS-18/FC-18 (2 pk) | AC Fujiaire Tipe FBS-18/FC-18 (2 pk) |  | 39841 |  | 25% |  | 4500000 |  | 0 |  | 4500000 |  | 0 |  | FA101202601 |  | Posted | F
+r156 |  |  | PKT-0020 |  | AC Fujiaire Tipe FBS-09/FC-09 (1 pk) | AC Fujiaire Tipe FBS-09/FC-09 (1 pk) | AC Fujiaire Tipe FBS-09/FC-09 (1 pk) |  | 39841 |  | 25% |  | 4000000 |  | 0 |  | 4000000 |  | 0 |  | FA101202601 |  | Posted | F
+r157 |  |  | PKT-0021 |  | Monitor LCD LG 17" | Monitor LCD LG 17" | Monitor LCD LG 17" |  | 40318 |  | 25% |  | 1320000 |  | 0 |  | 1320000 |  | 0 |  | FA101202601 |  | Posted | F
+r158 |  |  | PKT-0022 |  | Mesin Penghancur kertas | Mesin Penghancur kertas | Mesin Penghancur kertas |  | 40318 |  | 25% |  | 800000 |  | 0 |  | 800000 |  | 0 |  | FA101202601 |  | Posted | F
+r159 |  |  | PKT-0023 |  | Monitor LCD 19" Samsung B 1920 | Monitor LCD 19" Samsung B 1920 | Monitor LCD 19" Samsung B 1920 |  | 40332 |  | 25% |  | 1340000 |  | 0 |  | 1340000 |  | 0 |  | FA101202601 |  | Posted | F
+r160 |  |  | PKT-0024 |  | Printer HP Laserjet 1102 | Printer HP Laserjet 1102 | Printer HP Laserjet 1102 |  | 40612 |  | 25% |  | 1150000 |  | 0 |  | 1150000 |  | 0 |  | FA101202601 |  | Posted | F
+r161 |  |  | PKT-0025 |  | UPS APC BE 525 AS | UPS APC BE 525 AS | UPS APC BE 525 AS |  | 40612 |  | 25% |  | 1100000 |  | 0 |  | 1100000 |  | 0 |  | FA101202601 |  | Posted | F
+r162 |  |  | PKT-0026 |  | Netbook Ienovo Ideapad B 460-640 | Netbook Ienovo Ideapad B 460-640 | Netbook Ienovo Ideapad B 460-640 |  | 40847 |  | 25% |  | 4200000 |  | 0 |  | 4200000 |  | 0 |  | FA101202601 |  | Posted | F
+r163 |  |  | PKT-0027 |  | Notebook HP Pavilion G4 1003 TX | Notebook HP Pavilion G4 1003 TX | Notebook HP Pavilion G4 1003 TX |  | 40851 |  | 25% |  | 5820000 |  | 0 |  | 5820000 |  | 0 |  | FA101202601 |  | Posted | F
+r164 |  |  | PKT-0028 |  | Printer HP Deskjet 1050 | Printer HP Deskjet 1050 | Printer HP Deskjet 1050 |  | 40858 |  | 25% |  | 500000 |  | 0 |  | 500000 |  | 0 |  | FA101202601 |  | Posted | F
+r165 |  |  | PKT-0029 |  | Penghancur Kertas Secure Type 6315A | Penghancur Kertas Secure Type 6315A | Penghancur Kertas Secure Type 6315A |  | 40891 |  | 25% |  | 850000 |  | 0 |  | 850000 |  | 0 |  | FA101202601 |  | Posted | F
+r166 |  |  | PKT-0030 |  | Telpon Panasonic TSC11MX | Telpon Panasonic TSC11MX | Telpon Panasonic TSC11MX |  | 40547 |  | 25% |  | 497000 |  | 0 |  | 497000 |  | 0 |  | FA101202601 |  | Posted | F
+r167 |  |  | PKT-0031 |  | Mesin Tik Elektrik Brother GX 8250 | Mesin Tik Elektrik Brother GX 8250 | Mesin Tik Elektrik Brother GX 8250 |  | 40569 |  | 25% |  | 1575000 |  | 0 |  | 1575000 |  | 0 |  | FA101202601 |  | Posted | F
+r168 |  |  | PKT-0032 |  | Mesin Tik Manual Brtoher 13" | Mesin Tik Manual Brtoher 13" | Mesin Tik Manual Brtoher 13" |  | 40569 |  | 25% |  | 650000 |  | 0 |  | 650000 |  | 0 |  | FA101202601 |  | Posted | F
+r169 |  |  | PKT-0033 |  | Processor Intel Core i3 2100 3.1 Chz | Processor Intel Core i3 2100 3.1 Chz | Processor Intel Core i3 2100 3.1 Chz |  | 40984 |  | 25% |  | 3880000 |  | 0 |  | 3880000 |  | 0 |  | FA101202601 |  | Posted | F
+r170 |  |  | PKT-0034 |  | Kipas Angin | Kipas Angin | Kipas Angin |  | 41194 |  | 25% |  | 430000 |  | 0 |  | 430000 |  | 0 |  | FA101202601 |  | Posted | F
+r171 |  |  | PKT-0035 |  | C Mos Fan | C Mos Fan | C Mos Fan |  | 41205 |  | 25% |  | 346300 |  | 0 |  | 346300 |  | 0 |  | FA101202601 |  | Posted | F
+r172 |  |  | PKT-0036 |  | AC Split Sharp 1 PK | AC Split Sharp 1 PK | AC Split Sharp 1 PK |  | 41204 |  | 25% |  | 2400000 |  | 0 |  | 2400000 |  | 0 |  | FA101202601 |  | Posted | F
+r173 |  |  | PKT-0037 |  | Hardisk 160 GB IDE Seagate | Hardisk 160 GB IDE Seagate | Hardisk 160 GB IDE Seagate |  | 41108 |  | 25% |  | 475000 |  | 0 |  | 475000 |  | 0 |  | FA101202601 |  | Posted | F
+r174 |  |  | PKT-0038 |  | CCTV Equipment | CCTV Equipment | CCTV Equipment |  | 41124 |  | 25% |  | 24415530 |  | 0 |  | 24415530 |  | 0 |  | FA101202601 |  | Posted | F
+r175 |  |  | PKT-0039 |  | UPS APC SU A 650 i | UPS APC SU A 650 i | UPS APC SU A 650 i |  | 41166 |  | 25% |  | 770000 |  | 0 |  | 770000 |  | 0 |  | FA101202601 |  | Posted | F
+r176 |  |  | PKT-0040 |  | Projector Infocus IN 114 | Projector Infocus IN 114 | Projector Infocus IN 114 |  | 41214 |  | 25% |  | 3400000 |  | 0 |  | 3400000 |  | 0 |  | FA101202601 |  | Posted | F
+r177 |  |  | PKT-0041 |  | Intel Core+Main board+ram | Intel Core+Main board+ram | Intel Core+Main board+ram |  | 41355 |  | 25% |  | 3750000 |  | 0 |  | 3750000 |  | 0 |  | FA101202601 |  | Posted | F
+r178 |  |  | PKT-0042 |  | AC Fujiaire | AC Fujiaire | AC Fujiaire |  | 41479 |  | 25% |  | 5480000 |  | 0 |  | 5480000 |  | 0 |  | FA101202601 |  | Posted | F
+r179 |  |  | PKT-0043 |  | PC Core I3-220 | PC Core I3-220 | PC Core I3-220 |  | 41521 |  | 25% |  | 8150000 |  | 0 |  | 8150000 |  | 0 |  | FA101202601 |  | Posted | F
+r180 |  |  | PKT-0044 |  | Scanner Canon Lide 110+kabel | Scanner Canon Lide 110+kabel | Scanner Canon Lide 110+kabel |  | 41575 |  | 25% |  | 710000 |  | 0 |  | 710000 |  | 0 |  | FA101202601 |  | Posted | F
+r181 |  |  | PKT-0045 |  | Eratone-HP Nokia Asha 310 Black | Eratone-HP Nokia Asha 310 Black | Eratone-HP Nokia Asha 310 Black |  | 41592 |  | 25% |  | 910000 |  | 0 |  | 910000 |  | 0 |  | FA101202601 |  | Posted | F
+r182 |  |  | PKT-0046 |  | Printer Canon MJ2570 | Printer Canon MJ2570 | Printer Canon MJ2570 |  | 41723 |  | 25% |  | 800000 |  | 0 |  | 800000 |  | 0 |  | FA101202601 |  | Posted | F
+r183 |  |  | PKT-0047 |  | Lenovo S410P-8529 | Lenovo S410P-8529 | Lenovo S410P-8529 |  | 41766 |  | 25% |  | 8750000 |  | 0 |  | 8750000 |  | 0 |  | FA101202601 |  | Posted | F
+r184 |  |  | PKT-0048 |  | Notebook Dell Inspiron 11-3137 | Notebook Dell Inspiron 11-3137 | Notebook Dell Inspiron 11-3137 |  | 41780 |  | 25% |  | 3500000 |  | 0 |  | 3500000 |  | 0 |  | FA101202601 |  | Posted | F
+r185 |  |  | PKT-0049 |  | AC Split Daikin 1 PK FT 25LV +R25LV | AC Split Daikin 1 PK FT 25LV +R25LV | AC Split Daikin 1 PK FT 25LV +R25LV |  | 41817 |  | 25% |  | 18900000 |  | 0 |  | 18900000 |  | 0 |  | FA101202601 |  | Posted | F
+r186 |  |  | PKT-0050 |  | AC Split Daikin 3/4 PK FT 20LV +R20LV | AC Split Daikin 3/4 PK FT 20LV +R20LV | AC Split Daikin 3/4 PK FT 20LV +R20LV |  | 41817 |  | 25% |  | 5900000 |  | 0 |  | 5900000 |  | 0 |  | FA101202601 |  | Posted | F
+r187 |  |  | PKT-0051 |  | Kitchen set, meja | Kitchen set, meja | Kitchen set, meja |  | 41832 |  | 25% |  | 18954660 |  | 0 |  | 18954660 |  | 0 |  | FA101202601 |  | Posted | F
+r188 |  |  | PKT-0052 |  | PABX Panasonic 824 + key phone | PABX Panasonic 824 + key phone | PABX Panasonic 824 + key phone |  | 41858 |  | 25% |  | 16450000 |  | 0 |  | 16450000 |  | 0 |  | FA101202601 |  | Posted | F
+r189 |  |  | PKT-0053 |  | Laptop Lenovo G400 | Laptop Lenovo G400 | Laptop Lenovo G400 |  | 41863 |  | 25% |  | 4700000 |  | 0 |  | 4700000 |  | 0 |  | FA101202601 |  | Posted | F
+r190 |  |  | PKT-0054 |  | Dispenser Sharp SWD 70 | Dispenser Sharp SWD 70 | Dispenser Sharp SWD 70 |  | 41877 |  | 25% |  | 2699000 |  | 0 |  | 2699000 |  | 0 |  | FA101202601 |  | Posted | F
+r191 |  |  | PKT-0055 |  | PT. Global Inti Solusi-CCTV + perbaikan | PT. Global Inti Solusi-CCTV + perbaikan | PT. Global Inti Solusi-CCTV + perbaikan |  | 41878 |  | 25% |  | 2300000 |  | 0 |  | 2300000 |  | 0 |  | FA101202601 |  | Posted | F
+r192 |  |  | PKT-0056 |  | Lenovo AIO C460-9023 | Lenovo AIO C460-9023 | Lenovo AIO C460-9023 |  | 41902 |  | 25% |  | 6700000 |  | 0 |  | 6700000 |  | 0 |  | FA101202601 |  | Posted | F
+r193 |  |  | PKT-0057 |  | Printer Dotmatrix Epson LQ310 | Printer Dotmatrix Epson LQ310 | Printer Dotmatrix Epson LQ310 |  | 41902 |  | 25% |  | 2475000 |  | 0 |  | 2475000 |  | 0 |  | FA101202601 |  | Posted | F
+r194 |  |  | PKT-0058 |  | Led Lenovo 18,5" | Led Lenovo 18,5" | Led Lenovo 18,5" |  | 41902 |  | 25% |  | 5200000 |  | 0 |  | 5200000 |  | 0 |  | FA101202601 |  | Posted | F
+r195 |  |  | PKT-0059 |  | Notebook Lenovo B490-8053 | Notebook Lenovo B490-8053 | Notebook Lenovo B490-8053 |  | 41928 |  | 25% |  | 6100000 |  | 0 |  | 6100000 |  | 0 |  | FA101202601 |  | Posted | F
+r196 |  |  | PKT-0060 |  | AC 1 PK | AC 1 PK | AC 1 PK |  | 42027 |  | 25% |  | 3259000 |  | 0 |  | 3259000 |  | 0 |  | FA101202601 |  | Posted | F
+r197 |  |  | PKT-0061 |  | 1 Unit HP GLx Grand Prime Black | 1 Unit HP GLx Grand Prime Black | 1 Unit HP GLx Grand Prime Black |  | 42037 |  | 25% |  | 2499000 |  | 0 |  | 2499000 |  | 0 |  | FA101202601 |  | Posted | F
+r198 |  |  | PKT-0062 |  | Printer Canon | Printer Canon | Printer Canon |  | 42052 |  | 25% |  | 2175000 |  | 0 |  | 2175000 |  | 0 |  | FA101202601 |  | Posted | F
+r199 |  |  | PKT-0063 |  | 1 Pc Lenovo B350 | 1 Pc Lenovo B350 | 1 Pc Lenovo B350 |  | 42053 |  | 25% |  | 6546750 |  | 0 |  | 6546750 |  | 0 |  | FA101202601 |  | Posted | F
+r200 |  |  | PKT-0064 |  | Printer HP 2445 | Printer HP 2445 | Printer HP 2445 |  | 42053 |  | 25% |  | 5250000 |  | 0 |  | 5250000 |  | 0 |  | FA101202601 |  | Posted | F
+r201 |  |  | PKT-0065 |  | Pesawat telpon | Pesawat telpon | Pesawat telpon |  | 42039 |  | 25% |  | 2550000 |  | 0 |  | 2550000 |  | 0 |  | FA101202601 |  | Posted | F
+r202 |  |  | PKT-0066 |  | Printer Epson LQ310 + Cable Printer | Printer Epson LQ310 + Cable Printer | Printer Epson LQ310 + Cable Printer |  | 42075 |  | 25% |  | 2525000 |  | 0 |  | 2525000 |  | 0 |  | FA101202601 |  | Posted | F
+r203 |  |  | PKT-0067 |  | PC Rakitan Interactive | PC Rakitan Interactive | PC Rakitan Interactive |  | 42075 |  | 25% |  | 5670000 |  | 0 |  | 5670000 |  | 0 |  | FA101202601 |  | Posted | F
+r204 |  |  | PKT-0068 |  | Printer+mainboard | Printer+mainboard | Printer+mainboard |  | 42093 |  | 25% |  | 1950000 |  | 0 |  | 1950000 |  | 0 |  | FA101202601 |  | Posted | F
+r205 |  |  | PKT-0069 |  | Interactive CPU | Interactive CPU | Interactive CPU |  | 42118 |  | 25% |  | 5000000 |  | 0 |  | 5000000 |  | 0 |  | FA101202601 |  | Posted | F
+r206 |  |  | PKT-0070 |  | Fax Panasonic KXFT 983 | Fax Panasonic KXFT 983 | Fax Panasonic KXFT 983 |  | 42123 |  | 25% |  | 1275000 |  | 0 |  | 1275000 |  | 0 |  | FA101202601 |  | Posted | F
+r207 |  |  | PKT-0071 |  | Laptop I unit | Laptop I unit | Laptop I unit |  | 42146 |  | 25% |  | 2550000 |  | 0 |  | 2550000 |  | 0 |  | FA101202601 |  | Posted | F
+r208 |  |  | PKT-0072 |  | Interactive-1 unit Rakitan+Monitor | Interactive-1 unit Rakitan+Monitor | Interactive-1 unit Rakitan+Monitor |  | 42171 |  | 25% |  | 6060000 |  | 0 |  | 6060000 |  | 0 |  | FA101202601 |  | Posted | F
+r209 |  |  | PKT-0073 |  | 1 unit CPU Pentium IV Lengkap | 1 unit CPU Pentium IV Lengkap | 1 unit CPU Pentium IV Lengkap |  | 42194 |  | 25% |  | 5190000 |  | 0 |  | 5190000 |  | 0 |  | FA101202601 |  | Posted | F
+r210 |  |  | PKT-0074 |  | Desk fan Maspion | Desk fan Maspion | Desk fan Maspion |  | 42186 |  | 25% |  | 285000 |  | 0 |  | 285000 |  | 0 |  | FA101202601 |  | Posted | F
+r211 |  |  | PKT-0075 |  | Printer HP Deskjet 2180 | Printer HP Deskjet 2180 | Printer HP Deskjet 2180 |  | 42215 |  | 25% |  | 415000 |  | 0 |  | 415000 |  | 0 |  | FA101202601 |  | Posted | F
+r212 |  |  | PKT-0076 |  | Led Monitor LG 19,5 | Led Monitor LG 19,5 | Led Monitor LG 19,5 |  | 42246 |  | 25% |  | 1250000 |  | 0 |  | 1250000 |  | 0 |  | FA101202601 |  | Posted | F
+r213 |  |  | PKT-0077 |  | Ac Daikin Split 2PK | Ac Daikin Split 2PK | Ac Daikin Split 2PK |  | 42348 |  | 25% |  | 7153637 |  | 0 |  | 7153637 |  | 0 |  | FA101202601 |  | Posted | F
+r214 |  |  | PKT-0078 |  | Handphone | Handphone | Handphone |  | 42340 |  | 25% |  | 1439000 |  | 0 |  | 1439000 |  | 0 |  | FA101202601 |  | Posted | F
+r215 |  |  | PKT-0079 |  | Printer Canon & tinta HP 21 black | Printer Canon & tinta HP 21 black | Printer Canon & tinta HP 21 black |  | 42460 |  | 25% |  | 700000 |  | 0 |  | 700000 |  | 0 |  | FA101202601 |  | Posted | F
+r216 |  |  | PKT-0080 |  | Kipas angin dinding musholla TK | Kipas angin dinding musholla TK | Kipas angin dinding musholla TK |  | 42480 |  | 25% |  | 249000 |  | 0 |  | 249000 |  | 0 |  | FA101202601 |  | Posted | F
+r217 |  |  | PKT-0081 |  | Cannon HP Epson  Pixma MG 25705 | Cannon HP Epson  Pixma MG 25705 | Cannon HP Epson  Pixma MG 25705 |  | 42493 |  | 25% |  | 797000 |  | 0 |  | 797000 |  | 0 |  | FA101202601 |  | Posted | F
+r218 |  |  | PKT-0082 |  | UPS APC 650 | UPS APC 650 | UPS APC 650 |  | 42605 |  | 25% |  | 950000 |  | 0 |  | 950000 |  | 0 |  | FA101202601 |  | Posted | F
+r219 |  |  | PKT-0083 |  | Stabilizer Minamoto SM 1000 (500 Watt) | Stabilizer Minamoto SM 1000 (500 Watt) | Stabilizer Minamoto SM 1000 (500 Watt) |  | 42621 |  | 25% |  | 640000 |  | 0 |  | 640000 |  | 0 |  | FA101202601 |  | Posted | F
+r220 |  |  | PKT-0084 |  | 1 Unit Mesin TIK Olympia 13" | 1 Unit Mesin TIK Olympia 13" | 1 Unit Mesin TIK Olympia 13" |  | 42634 |  | 25% |  | 1300000 |  | 0 |  | 1300000 |  | 0 |  | FA101202601 |  | Posted | F
+r221 |  |  | PKT-0085 |  | Casio DR - 240 | Casio DR - 240 | Casio DR - 240 |  | 42647 |  | 25% |  | 900000 |  | 0 |  | 900000 |  | 0 |  | FA101202601 |  | Posted | F
+r222 |  |  | PKT-0086 |  | UPS APC800, Battery UPS 12V-7 | UPS APC800, Battery UPS 12V-7 | UPS APC800, Battery UPS 12V-7 |  | 42678 |  | 25% |  | 340000 |  | 0 |  | 340000 |  | 0 |  | FA101202601 |  | Posted | F
+r223 |  |  | PKT-0087 |  | Printer MP 287 + Infus | Printer MP 287 + Infus | Printer MP 287 + Infus |  | 42695 |  | 25% |  | 1200000 |  | 0 |  | 1200000 |  | 0 |  | FA101202601 |  | Posted | F
+r224 |  |  | PKT-0088 |  | Monitor,Keyboard,Mouse | Monitor,Keyboard,Mouse | Monitor,Keyboard,Mouse |  | 42751 |  | 25% |  | 1380000 |  | 0 |  | 1380000 |  | 0 |  | FA101202601 |  | Posted | F
+r225 |  |  | PKT-0089 |  | 1 unit CPU Pentium IV Lengkap | 1 unit CPU Pentium IV Lengkap | 1 unit CPU Pentium IV Lengkap |  | 42789 |  | 25% |  | 5600000 |  | 0 |  | 5600000 |  | 0 |  | FA101202601 |  | Posted | F
+r226 |  |  | PKT-0090 |  | Telepon Krisbow Big Button | Telepon Krisbow Big Button | Telepon Krisbow Big Button |  | 42807 |  | 25% |  | 189000 |  | 0 |  | 189000 |  | 0 |  | FA101202601 |  | Posted | F
+r227 |  |  | PKT-0091 |  | 1 Unit PC Rakitan,Proccessor | 1 Unit PC Rakitan,Proccessor | 1 Unit PC Rakitan,Proccessor |  | 42863 |  | 25% |  | 4500000 |  | 0 |  | 4500000 |  | 0 |  | FA101202601 |  | Posted | F
+r228 |  |  | PKT-0092 |  | Printer Epson LQ-310 | Printer Epson LQ-310 | Printer Epson LQ-310 |  | 42867 |  | 25% |  | 2550000 |  | 0 |  | 2550000 |  | 0 |  | FA101202601 |  | Posted | F
+r229 |  |  | PKT-0093 |  | 1 unit CPU Pentium IV Lengkap | 1 unit CPU Pentium IV Lengkap | 1 unit CPU Pentium IV Lengkap |  | 42901 |  | 25% |  | 5750000 |  | 0 |  | 5750000 |  | 0 |  | FA101202601 |  | Posted | F
+r230 |  |  | PKT-0094 |  | Monitor LG 20MP | Monitor LG 20MP | Monitor LG 20MP |  | 42942 |  | 25% |  | 1225000 |  | 0 |  | 1225000 |  | 0 |  | FA101202601 |  | Posted | F
+r231 |  |  | PKT-0095 |  | Thinkserver Lenovo TS150 | Thinkserver Lenovo TS150 | Thinkserver Lenovo TS150 |  | 42956 |  | 25% |  | 10060000 |  | 0 |  | 10060000 |  | 0 |  | FA101202601 |  | Posted | F
+r232 |  |  | PKT-0096 |  | 1 unit CPU Pentium IV Lengkap | 1 unit CPU Pentium IV Lengkap | 1 unit CPU Pentium IV Lengkap |  | 42956 |  | 25% |  | 4725000 |  | 0 |  | 4725000 |  | 0 |  | FA101202601 |  | Posted | F
+r233 |  |  | PKT-0097 |  | Keyboard Logitech | Keyboard Logitech | Keyboard Logitech |  | 42970 |  | 25% |  | 115000 |  | 0 |  | 115000 |  | 0 |  | FA101202601 |  | Posted | F
+r234 |  |  | PKT-0098 |  | AC Sharp 2PK | AC Sharp 2PK | AC Sharp 2PK |  | 43008 |  | 25% |  | 7109000 |  | 0 |  | 7109000 |  | 0 |  | FA101202601 |  | Posted | F
+r235 |  |  | PKT-0099 |  | AC Sharp 1PK | AC Sharp 1PK | AC Sharp 1PK |  | 43008 |  | 25% |  | 4179000 |  | 0 |  | 4179000 |  | 0 |  | FA101202601 |  | Posted | F
+r236 |  |  | PKT-0100 |  | Printer Epson LX.310 | Printer Epson LX.310 | Printer Epson LX.310 |  | 43059 |  | 25% |  | 2275000 |  | 0 |  | 2275000 |  | 0 |  | FA101202601 |  | Posted | F
+r237 |  |  | PKT-0101 |  | Printer Epson LX310 | Printer Epson LX310 | Printer Epson LX310 |  | 43087 |  | 25% |  | 2275000 |  | 0 |  | 2275000 |  | 0 |  | FA101202601 |  | Posted | F
+r238 |  |  | PKT-0102 |  | Handphone | Handphone | Handphone |  | 43100 |  | 25% |  | 2500000 |  | 0 |  | 2500000 |  | 0 |  | FA101202601 |  | Posted | F
+r239 |  |  | PKT-0103 |  | Printer Barcode | Printer Barcode | Printer Barcode |  | 43116 |  | 25% |  | 3800000 |  | 0 |  | 3800000 |  | 0 |  | FA101202601 |  | Posted | F
+r240 |  |  | PKT-0104 |  | Scanner Barcode | Scanner Barcode | Scanner Barcode |  | 43116 |  | 25% |  | 1200000 |  | 0 |  | 1200000 |  | 0 |  | FA101202601 |  | Posted | F
+r241 |  |  | PKT-0105 |  | Komputer GB H81 | Komputer GB H81 | Komputer GB H81 |  | 43154 |  | 25% |  | 4575000 |  | 0 |  | 4575000 |  | 0 |  | FA101202601 |  | Posted | F
+r242 |  |  | PKT-0106 |  | Scanner Barcode | Scanner Barcode | Scanner Barcode |  | 43159 |  | 25% |  | 7900000 |  | 0 |  | 7900000 |  | 0 |  | FA101202601 |  | Posted | F
+r243 |  |  | PKT-0107 |  | Komputer HRD | Komputer HRD | Komputer HRD |  | 43179 |  | 25% |  | 7560000 |  | 0 |  | 7560000 |  | 0 |  | FA101202601 |  | Posted | F
+r244 |  |  | PKT-0108 |  | Printer MP 287 | Printer MP 287 | Printer MP 287 |  | 43182 |  | 25% |  | 1175000 |  | 0 |  | 1175000 |  | 0 |  | FA101202601 |  | Posted | F
+r245 |  |  | PKT-0109 |  | AC Sharp | AC Sharp | AC Sharp |  | 43251 |  | 25% |  | 3299000 |  | 0 |  | 3299000 |  | 0 |  | FA101202601 |  | Posted | F
+r246 |  |  | PKT-0110 |  | UPS | UPS | UPS |  | 43259 |  | 25% |  | 2060000 |  | 0 |  | 2060000 |  | 0 |  | FA101202601 |  | Posted | F
+r247 |  |  | PKT-0111 |  | 1 Unit Komputer | 1 Unit Komputer | 1 Unit Komputer |  | 43256 |  | 25% |  | 6100000 |  | 0 |  | 6100000 |  | 0 |  | FA101202601 |  | Posted | F
+r248 |  |  | PKT-0112 |  | 1 Unit Komputer | 1 Unit Komputer | 1 Unit Komputer |  | 43307 |  | 25% |  | 6100000 |  | 0 |  | 6100000 |  | 0 |  | FA101202601 |  | Posted | F
+r249 |  |  | PKT-0113 |  | 1 Unit Komputer | 1 Unit Komputer | 1 Unit Komputer |  | 43402 |  | 25% |  | 6130000 |  | 0 |  | 6130000 |  | 0 |  | FA101202601 |  | Posted | F
+r250 |  |  | PKT-0114 |  | Stabilizer Matsuyama | Stabilizer Matsuyama | Stabilizer Matsuyama |  | 43402 |  | 25% |  | 41545000 |  | 0 |  | 41545000 |  | 0 |  | FA101202601 |  | Posted | F
+r251 |  |  | PKT-0115 |  | 1 Unit AC - Daikin 2 PK | 1 Unit AC - Daikin 2 PK | 1 Unit AC - Daikin 2 PK |  | 43473 |  | 25% |  | 6200000 |  | 0 |  | 6200000 |  | 0 |  | FA101202601 |  | Posted | F
+r252 |  |  | PKT-0116 |  | Roller Blind | Roller Blind | Roller Blind |  | 43503 |  | 25% |  | 855400 |  | 0 |  | 855400 |  | 0 |  | FA101202601 |  | Posted | F
+r253 |  |  | PKT-0117 |  | 1 Unit AC - Panasonic 2 PK | 1 Unit AC - Panasonic 2 PK | 1 Unit AC - Panasonic 2 PK |  | 43525 |  | 25% |  | 5440000 |  | 0 |  | 5440000 |  | 0 |  | FA101202601 |  | Posted | F
+r254 |  |  | PKT-0118 |  | 2 Unit Printer HP Deskjet 2677 | 2 Unit Printer HP Deskjet 2677 | 2 Unit Printer HP Deskjet 2677 |  | 43626 |  | 25% |  | 2258000 |  | 0 |  | 2258000 |  | 0 |  | FA101202601 |  | Posted | F
+r255 |  |  | PKT-0119 |  | 1 Unit  Dispenser Sanken | 1 Unit  Dispenser Sanken | 1 Unit  Dispenser Sanken |  | 43650 |  | 25% |  | 701000 |  | 0 |  | 701000 |  | 0 |  | FA101202601 |  | Posted | F
+r256 |  |  | PKT-0120 |  | 1 Unit  AC - Daikin 2 PK | 1 Unit  AC - Daikin 2 PK | 1 Unit  AC - Daikin 2 PK |  | 43762 |  | 25% |  | 6200000 |  | 0 |  | 6200000 |  | 0 |  | FA101202601 |  | Posted | F
+r257 |  |  | PKT-0121 |  | CCTV | CCTV | CCTV |  | 43980 |  | 25% |  | 27045200 |  | 0 |  | 27045200 |  | 0 |  | FA101202601 |  | Posted | F
+r258 |  |  | PKT-0122 |  | HD Weatherproff, Adaptor, Kabel Dll. | HD Weatherproff, Adaptor, Kabel Dll. | HD Weatherproff, Adaptor, Kabel Dll. |  | 43980 |  | 25% |  | 4706000 |  | 0 |  | 4706000 |  | 0 |  | FA101202601 |  | Posted | F
+r259 |  |  | PKT-0123 |  | 1 Unit Mesin Absensi | 1 Unit Mesin Absensi | 1 Unit Mesin Absensi |  | 43992 |  | 25% |  | 3900000 |  | 0 |  | 3900000 |  | 0 |  | FA101202601 |  | Posted | F
+r260 |  |  | PKT-0124 |  | 1 Unit Kulkas | 1 Unit Kulkas | 1 Unit Kulkas |  | 43993 |  | 25% |  | 1200000 |  | 0 |  | 1200000 |  | 0 |  | FA101202601 |  | Posted | F
+r261 |  |  | PKT-0125 |  | 1 Unit Telephone KX-505 | 1 Unit Telephone KX-505 | 1 Unit Telephone KX-505 |  | 44002 |  | 25% |  | 235000 |  | 0 |  | 235000 |  | 0 |  | FA101202601 |  | Posted | F
+r262 |  |  | PKT-0126 |  | 1 Unit Kipas Angin Miyako | 1 Unit Kipas Angin Miyako | 1 Unit Kipas Angin Miyako |  | 44035 |  | 25% |  | 280000 |  | 0 |  | 280000 |  | 0 |  | FA101202601 |  | Posted | F
+r263 |  |  | PKT-0127 |  | 1 Unit Oven Microwave | 1 Unit Oven Microwave | 1 Unit Oven Microwave |  | 44040 |  | 25% |  | 1225900 |  | 0 |  | 1225900 |  | 0 |  | FA101202601 |  | Posted | F
+r264 |  |  | PKT-0128 |  | Unit LAPTOP - VIVO BOOK + Antivirus | Unit LAPTOP - VIVO BOOK + Antivirus | Unit LAPTOP - VIVO BOOK + Antivirus |  | 44244 |  | 25% |  | 13300000 |  | 0 |  | 13300000 |  | 0 |  | FA101202601 |  | Posted | F
+r265 |  |  | PKT-0129 |  | Unit Printer | Unit Printer | Unit Printer |  | 44251 |  | 25% |  | 1996000 |  | 0 |  | 1996000 |  | 0 |  | FA101202601 |  | Posted | F
+r266 |  |  | PKT-0130 |  | Unit UPS GPOWER GP200 800VA | Unit UPS GPOWER GP200 800VA | Unit UPS GPOWER GP200 800VA |  | 44285 |  | 25% |  | 625000 |  | 0 |  | 625000 |  | 0 |  | FA101202601 |  | Posted | F
+r267 |  |  | PKT-0131 |  | Unit Dispenser | Unit Dispenser | Unit Dispenser |  | 44326 |  | 25% |  | 1448000 |  | 0 |  | 1448000 |  | 0 |  | FA101202601 |  | Posted | F
+r268 |  |  | PKT-0132 |  | 4 Unit Desktop ASUS | 4 Unit Desktop ASUS | 4 Unit Desktop ASUS |  | 44354 |  | 25% |  | 24900000 |  | 0 |  | 24900000 |  | 0 |  | FA101202601 |  | Posted | F
+r269 |  |  | PKT-0133 |  | 2 Unit Printer EPSON L3110 | 2 Unit Printer EPSON L3110 | 2 Unit Printer EPSON L3110 |  | 44354 |  | 25% |  | 4300000 |  | 0 |  | 4300000 |  | 0 |  | FA101202601 |  | Posted | F
+r270 |  |  | PKT-0134 |  | Unit Printer EPSON L3150 | Unit Printer EPSON L3150 | Unit Printer EPSON L3150 |  | 44354 |  | 25% |  | 3105000 |  | 0 |  | 3105000 |  | 0 |  | FA101202601 |  | Posted | F
+r271 |  |  | PKT-0135 |  | Unit PC AIO LENOVO | Unit PC AIO LENOVO | Unit PC AIO LENOVO |  | 44354 |  | 25% |  | 9980000 |  | 0 |  | 9980000 |  | 0 |  | FA101202601 |  | Posted | F
+r272 |  |  | PKT-0136 |  | 3 Unit LAPTOP- LENOVO 141TL05 | 3 Unit LAPTOP- LENOVO 141TL05 | 3 Unit LAPTOP- LENOVO 141TL05 |  | 44354 |  | 25% |  | 32550000 |  | 0 |  | 32550000 |  | 0 |  | FA101202601 |  | Posted | F
+r273 |  |  | PKT-0137 |  | Unit LAPTOP- LENOVO Ideapad Slim | Unit LAPTOP- LENOVO Ideapad Slim | Unit LAPTOP- LENOVO Ideapad Slim |  | 44368 |  | 25% |  | 11850000 |  | 0 |  | 11850000 |  | 0 |  | FA101202601 |  | Posted | F
+r274 |  |  | PKT-0138 |  | Unit TP-Link 16 Port Gigabit Smart Switch | Unit TP-Link 16 Port Gigabit Smart Switch | Unit TP-Link 16 Port Gigabit Smart Switch |  | 44412 |  | 25% |  | 2020000 |  | 0 |  | 2020000 |  | 0 |  | FA101202601 |  | Posted | F
+r275 |  |  | PKT-0139 |  | 2 Unit Komputer Lenovo A10 | 2 Unit Komputer Lenovo A10 | 2 Unit Komputer Lenovo A10 |  | 44446 |  | 25% |  | 12197000 |  | 0 |  | 12197000 |  | 0 |  | FA101202601 |  | Posted | F
+r276 |  |  | PKT-0140 |  | Unit Printer Epson L-3210 | Unit Printer Epson L-3210 | Unit Printer Epson L-3210 |  | 44456 |  | 25% |  | 2576100 |  | 0 |  | 2576100 |  | 0 |  | FA101202601 |  | Posted | F
+r277 |  |  | PKT-0141 |  | License PB Appeon 50% | License PB Appeon 50% | License PB Appeon 50% |  | 44459 |  | 25% |  | 50000000 |  | 0 |  | 50000000 |  | 0 |  | FA101202601 |  | Posted | F
+r278 |  |  | PKT-0142 |  | License PB Appeon sisa 50% Lunas | License PB Appeon sisa 50% Lunas | License PB Appeon sisa 50% Lunas |  | 44482 |  | 25% |  | 50000000 |  | 0 |  | 50000000 |  | 0 |  | FA101202601 |  | Posted | F
+r279 |  |  | PKT-0143 |  | Unit Komputer Lenovo A.10A340 | Unit Komputer Lenovo A.10A340 | Unit Komputer Lenovo A.10A340 |  | 44530 |  | 25% |  | 8525000 |  | 0 |  | 8525000 |  | 0 |  | FA101202601 |  | Posted | F
+r280 |  |  | PKT-0144 |  | RAM Server DIMM 16GB PC2400 SK HYNIX | RAM Server DIMM 16GB PC2400 SK HYNIX | RAM Server DIMM 16GB PC2400 SK HYNIX |  | 44552 |  | 25% |  | 2961900 |  | 0 |  | 2961900 |  | 0 |  | FA101202601 |  | Posted | F
+r281 |  |  | PKT-0145 |  | 2 Unit AC Merk GREE | 2 Unit AC Merk GREE | 2 Unit AC Merk GREE |  | 44575 |  | 25% |  | 12100000 |  | 0 |  | 12100000 |  | 0 |  | FA101202601 |  | Posted | F
+r282 |  |  | PKT-0146 |  | Unit Tangga Multiporse 4x4 Step | Unit Tangga Multiporse 4x4 Step | Unit Tangga Multiporse 4x4 Step |  | 44651 |  | 25% |  | 1878000 |  | 0 |  | 1799750 |  | 78250 |  | FA101202601 |  | Posted | A
+r283 |  |  | PKT-0147 |  | Unit AC Merk PANASONIC 2 PK | Unit AC Merk PANASONIC 2 PK | Unit AC Merk PANASONIC 2 PK |  | 44749 |  | 25% |  | 9245000 |  | 0 |  | 8089375 |  | 1155625 |  | FA101202601 |  | Posted | A
+r284 |  |  | PKT-0148 |  | Unit Printer Epson L-3210 | Unit Printer Epson L-3210 | Unit Printer Epson L-3210 |  | 44792 |  | 25% |  | 2508600 |  | 0 |  | 2142762.50 |  | 365837.50 |  | FA101202601 |  | Posted | A
+r285 |  |  | PKT-0149 |  | Unit AC Merk PANASONIC 1 PK | Unit AC Merk PANASONIC 1 PK | Unit AC Merk PANASONIC 1 PK |  | 44917 |  | 25% |  | 4700000 |  | 0 |  | 3622916.67 |  | 1077083.33 |  | FA101202601 |  | Posted | A
+r286 |  |  | PKT-0151 |  | Unit AC Merk PANASONIC 2 PK | Unit AC Merk PANASONIC 2 PK | Unit AC Merk PANASONIC 2 PK |  | 44917 |  | 25% |  | 9306000 |  | 0 |  | 7173375 |  | 2132625 |  | FA101202601 |  | Posted | A
+r287 |  |  | PKT-0152 |  | 2 Unit SSD Server + Stabilizer | 2 Unit SSD Server + Stabilizer | 2 Unit SSD Server + Stabilizer |  | 44956 |  | 25% |  | 6300000 |  | 0 |  | 4725000 |  | 1575000 |  | FA101202601 |  | Posted | A
+r288 |  |  | PKT-0153 |  | 2 Unit AC Merk PANASONIC 1 PK | 2 Unit AC Merk PANASONIC 1 PK | 2 Unit AC Merk PANASONIC 1 PK |  | 45100 |  | 25% |  | 8600000 |  | 0 |  | 5554166.67 |  | 3045833.33 |  | FA101202601 |  | Posted | A
+r289 |  |  | PKT-0154 |  | Unit Dispenser merk SHARP | Unit Dispenser merk SHARP | Unit Dispenser merk SHARP |  | 45113 |  | 25% |  | 2799000 |  | 0 |  | 1749375 |  | 1049625 |  | FA101202601 |  | Posted | A
+r290 |  |  | PKT-0155 |  | Unit AC Merk PANASONIC 2 PK | Unit AC Merk PANASONIC 2 PK | Unit AC Merk PANASONIC 2 PK |  | 45125 |  | 25% |  | 7250000 |  | 0 |  | 4531250 |  | 2718750 |  | FA101202601 |  | Posted | A
+r291 |  |  | PKT-0156 |  | 2 Set Office Chair Lionet 1 | 2 Set Office Chair Lionet 1 | 2 Set Office Chair Lionet 1 |  | 45138 |  | 25% |  | 7350000 |  | 0 |  | 4593750 |  | 2756250 |  | FA101202601 |  | Posted | A
+r292 |  |  | PKT-0157 |  | 2 Unit Printer Epson LQ-310 | 2 Unit Printer Epson LQ-310 | 2 Unit Printer Epson LQ-310 |  | 45193 |  | 25% |  | 4750500 |  | 0 |  | 2771125 |  | 1979375 |  | FA101202601 |  | Posted | A
+r293 |  |  | PKT-0158 |  | Unit AC Merk PANASONIC 2 PK | Unit AC Merk PANASONIC 2 PK | Unit AC Merk PANASONIC 2 PK |  | 45230 |  | 25% |  | 7600000 |  | 0 |  | 4275000 |  | 3325000 |  | FA101202601 |  | Posted | A
+r294 |  |  | PKT-0159 |  | Unit LCD Monitor | Unit LCD Monitor | Unit LCD Monitor |  | 45384 |  | 25% |  | 1100000 |  | 0 |  | 481250 |  | 618750 |  | FA101202601 |  | Posted | A
+r295 |  |  | PKT-0160 |  | Unit Laptop LENOVO R7773 | Unit Laptop LENOVO R7773 | Unit Laptop LENOVO R7773 |  | 45481 |  | 25% |  | 8584685 |  | 0 |  | 3219256.88 |  | 5365428.12 |  | FA101202601 |  | Posted | A
+r296 |  |  | PKT-0161 |  | Unit Laptop LENOVO R5753 | Unit Laptop LENOVO R5753 | Unit Laptop LENOVO R5753 |  | 45481 |  | 25% |  | 7503603 |  | 0 |  | 2813851.12 |  | 4689751.88 |  | FA101202601 |  | Posted | A
+r297 |  |  | PKT-0162 |  | Set CCTV - Bali | Set CCTV - Bali | Set CCTV - Bali |  | 45482 |  | 25% |  | 4147866 |  | 0 |  | 1555449.75 |  | 2592416.25 |  | FA101202601 |  | Posted | A
+r298 |  |  | PKT-0163 |  | 2 Unit Computer Core I7 - 7000 | 2 Unit Computer Core I7 - 7000 | 2 Unit Computer Core I7 - 7000 |  | 45523 |  | 25% |  | 11300000 |  | 0 |  | 4002083.33 |  | 7297916.67 |  | FA101202601 |  | Posted | A
+r299 |  |  | PKT-0164 |  | Set Vertical Blind - Bangunan Bali | Set Vertical Blind - Bangunan Bali | Set Vertical Blind - Bangunan Bali |  | 45540 |  | 25% |  | 12938000 |  | 0 |  | 4312666.67 |  | 8625333.33 |  | FA101202601 |  | Posted | A
+r300 |  |  | PKT-0165 |  | Unit TV HISENE 43 | Unit TV HISENE 43 | Unit TV HISENE 43 |  | 45565 |  | 25% |  | 3799000 |  | 0 |  | 1266333.33 |  | 2532666.67 |  | FA101202601 |  | Posted | A
+r301 |  |  | PKT-0166 |  | Unit LAPTOP NB MODERN | Unit LAPTOP NB MODERN | Unit LAPTOP NB MODERN |  | 45616 |  | 25% |  | 8017117 |  | 0 |  | 2338325.79 |  | 5678791.21 |  | FA101202601 |  | Posted | A
+r302 |  |  | PKT-0167 |  | Unit PRINTER HP SMART TANK 580 | Unit PRINTER HP SMART TANK 580 | Unit PRINTER HP SMART TANK 580 |  | 45616 |  | 25% |  | 2072072 |  | 0 |  | 604354.33 |  | 1467717.67 |  | FA101202601 |  | Posted | A
+r303 |  |  | PKT-0168 |  | Set Roller Blind - Ruang Meeting | Set Roller Blind - Ruang Meeting | Set Roller Blind - Ruang Meeting |  | 45672 |  | 25% |  | 7757855 |  | 0 |  | 1939463.75 |  | 5818391.25 |  | FA101202601 |  | Posted | A
+r304 |  |  | PKT-0169 |  | Unit Proyektor Infocus | Unit Proyektor Infocus | Unit Proyektor Infocus |  | 45680 |  | 25% |  | 4670200 |  | 0 |  | 1167550 |  | 3502650 |  | FA101202601 |  | Posted | A
+r305 |  |  | PKT-0170 |  | 2 Unit Printer HP Smart 520 | 2 Unit Printer HP Smart 520 | 2 Unit Printer HP Smart 520 |  | 45681 |  | 25% |  | 3706712 |  | 0 |  | 926678 |  | 2780034 |  | FA101202601 |  | Posted | A
+r306 |  |  | PKT-0171 |  | 5 Buah Kursi IC046 | 5 Buah Kursi IC046 | 5 Buah Kursi IC046 |  | 45730 |  | 25% |  | 4400000 |  | 0 |  | 916666.67 |  | 3483333.33 |  | FA101202601 |  | Posted | A
+r307 |  |  | PKT-0172 |  | Unit Mesin Absensi | Unit Mesin Absensi | Unit Mesin Absensi |  | 45777 |  | 25% |  | 2522524 |  | 0 |  | 472973.25 |  | 2049550.75 |  | FA101202601 |  | Posted | A
+r308 |  |  | PKT-0173 |  | Unit Dispenser SHARP SWD7 | Unit Dispenser SHARP SWD7 | Unit Dispenser SHARP SWD7 |  | 45827 |  | 25% |  | 2229500 |  | 0 |  | 325135.42 |  | 1904364.58 |  | FA101202601 |  | Posted | A
+r309 |  |  | PKT-0174 |  | Unit Laptop LENOVO Yoga | Unit Laptop LENOVO Yoga | Unit Laptop LENOVO Yoga |  | 45917 |  | 25% |  | 18866600 |  | 0 |  | 1572216.67 |  | 17294383.33 |  | FA101202601 |  | Posted | A
+r310 |  |  | PKT-0175 |  | Unit PRINTER HP Smart Tank 580 Wifi | Unit PRINTER HP Smart Tank 580 Wifi | Unit PRINTER HP Smart Tank 580 Wifi |  | 45923 |  | 25% |  | 2388155 |  | 0 |  | 199012.92 |  | 2189142.08 |  | FA101202601 |  | Posted | A
+r311 |  |  | PKT-0176 |  | Unit PRINTER HP Smart Tank 580 Wifi | Unit PRINTER HP Smart Tank 580 Wifi | Unit PRINTER HP Smart Tank 580 Wifi |  | 45967 |  | 25% |  | 2073400 |  | 0 |  | 86391.67 |  | 1987008.33 |  | FA101202601 |  | Posted | A
+r312 |  |  | PKT-0177 |  | Unit KOMPUTER Desktop Core i7 | Unit KOMPUTER Desktop Core i7 | Unit KOMPUTER Desktop Core i7 |  | 46014 |  | 25% |  | 3750000 |  | 0 |  | 78125 |  | 3671875 |  | FA101202601 |  | Posted | A
+r313 |  |  | PKT-0178 |  | Unit AC Merk GREE 2 PK | Unit AC Merk GREE 2 PK | Unit AC Merk GREE 2 PK |  | 46030 |  | 25% |  | 0 |  | 0 |  | 0 |  | 0 |  | FA101202601 |  | Posted | A
+r314 |  |  | PKT-0179 |  | Unit Monitor 22" | Unit Monitor 22" | Unit Monitor 22" |  | 46037 |  | 25% |  | 0 |  | 0 |  | 0 |  | 0 |  | FA101202601 |  | Posted | A
+r316 |  |  |  |  | Subtotal Golongan : |  |  |  |  |  |  |  | 950446516 |  | 0 |  | 845637757.37 |  | 104808758.62
+r319 | GRAND TOTAL : |  |  |  |  |  |  |  |  |  |  |  | 28041034787.08 |  | 0 |  | 5084720957.33 |  | 22956313829.75
