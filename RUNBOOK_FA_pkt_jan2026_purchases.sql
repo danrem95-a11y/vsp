@@ -25,6 +25,39 @@ UPDATE FA_ASSET SET acquisition_cost=785000, book_value_beginning=785000, accum_
  WHERE site_id='101' AND asset_code='PKT-0179';
 COMMIT;
 
+-- Engine: metode WP (sisa-buku/sisa-umur) + ATURAN "susut mulai bulan perolehan".
+-- Tambahan `p_period >= a.beginning_period` -> aset hanya disusutkan dari bulan beginning_period-nya:
+--   opening (bp=2025-12-31) -> susut mulai Jan 2026 ; pembelian Jan (bp=2026-01-01) -> mulai Jan ;
+--   pembelian Feb dst -> otomatis mulai bulan belinya (bukan Jan). NBV desimal ditampilkan bulat di laporan.
+IF EXISTS(SELECT 1 FROM SYS.SYSPROCEDURE p JOIN SYS.SYSUSERPERM u ON p.creator=u.user_id WHERE u.user_name='DBA' AND p.proc_name='sp_fa_generate_sl')
+   THEN DROP PROCEDURE sp_fa_generate_sl END IF;
+CREATE PROCEDURE sp_fa_generate_sl(IN p_period timestamp, IN p_site varchar(4))
+BEGIN
+   IF EXISTS(SELECT 1 FROM FA_PERIOD WHERE site_id=p_site AND period=p_period AND status IN ('P','C')) THEN
+      RAISERROR 17001 'Periode sudah diposting/closed - pakai regenerate';
+   END IF;
+   DELETE FROM FA_DEPRECIATION WHERE site_id=p_site AND period=p_period AND posting_status='D';
+   INSERT INTO FA_DEPRECIATION (site_id,asset_code,period,depreciation_amount,accum_depreciation,book_value,posting_status)
+   SELECT a.site_id, a.asset_code, p_period, dep.amt,
+          a.accum_dep_beginning + prior.acc + dep.amt,
+          a.acquisition_cost - (a.accum_dep_beginning + prior.acc + dep.amt), 'D'
+   FROM FA_ASSET a
+   JOIN FA_CATEGORY c ON c.site_id=a.site_id AND c.category_code=a.category_code
+   , LATERAL (SELECT COALESCE(SUM(d.depreciation_amount),0) AS acc, COUNT(*) AS cnt
+                FROM FA_DEPRECIATION d
+               WHERE d.site_id=a.site_id AND d.asset_code=a.asset_code AND d.period<p_period) prior
+   , LATERAL (SELECT CASE
+                        WHEN (prior.cnt + 1) >= a.remaining_life_begin THEN (a.book_value_beginning - prior.acc)
+                        WHEN ROUND(a.book_value_beginning/NULLIF(a.remaining_life_begin,0),2) < (a.book_value_beginning - prior.acc)
+                             THEN ROUND(a.book_value_beginning/NULLIF(a.remaining_life_begin,0),2)
+                        ELSE (a.book_value_beginning - prior.acc) END AS amt) dep
+   WHERE a.site_id=p_site AND a.status='A' AND c.depreciable_yn='Y'
+     AND a.remaining_life_begin>0
+     AND p_period >= a.beginning_period
+     AND (a.book_value_beginning - prior.acc) > 0
+     AND dep.amt > 0;
+END;
+
 -- Regenerate + repost Jan-Jul 2026 (2 aset ini kini ikut tersusut mulai Jan)
 CALL sp_fa_regenerate_period('2026-01-31','101');  CALL sp_fa_build_gl_link('2026-01-31','101');
 CALL sp_fa_regenerate_period('2026-02-28','101');  CALL sp_fa_build_gl_link('2026-02-28','101');
