@@ -1,0 +1,5 @@
+﻿Found 67 PBL(s) under C:\BTV\Apps
+Running pblexporter.exe (this can take a while for many/large PBLs)...
+pblexporter.exe exited with code 
+export.log was not created - pblexporter.exe likely failed before it could run (check the exit code / SySAM licensing 
+/ job file).

@@ -1,0 +1,69 @@
+[2026-09-01 01:04:18] ========================================
+[2026-09-01 01:04:18] POWERBUILDER PBL EXPORT
+[2026-09-01 01:04:18] ========================================
+[2026-09-01 01:04:18] PBL NOT FOUND: C:\BTV\debug\pblexporter\_test_inputixed_aset.pbl
+[2026-09-01 01:04:18] 
+[2026-09-01 01:04:18] ========================================
+[2026-09-01 01:04:18] SUMMARY
+[2026-09-01 01:04:18] ========================================
+[2026-09-01 01:04:18] 
+[2026-09-01 01:04:18] PBL	FOUND	EXPORTED	FAILED	STATUS
+[2026-09-01 01:04:18] ------------------------------------------------------------------
+[2026-09-01 01:04:18] TOTAL	0	0	0	OK
+[2026-09-01 01:04:18] 
+[2026-09-01 01:04:18] PBL Found       : 0
+[2026-09-01 01:04:18] Objects Found   : 0
+[2026-09-01 01:04:18] Objects Exported: 0
+[2026-09-01 01:04:18] Objects Failed  : 0
+[2026-09-01 01:05:59] ========================================
+[2026-09-01 01:05:59] POWERBUILDER PBL EXPORT
+[2026-09-01 01:05:59] ========================================
+[2026-09-01 01:05:59] 
+[2026-09-01 01:05:59] PBL: fixed_aset.pbl
+[2026-09-01 01:05:59] Output: C:\BTV\debug\pblexporter\_test_output\fixed_aset
+[2026-09-01 01:05:59] PBL DONE: fixed_aset.pbl  Found=0 Exported=0 Failed=0
+[2026-09-01 01:05:59] 
+[2026-09-01 01:05:59] ========================================
+[2026-09-01 01:05:59] SUMMARY
+[2026-09-01 01:05:59] ========================================
+[2026-09-01 01:05:59] 
+[2026-09-01 01:05:59] PBL	FOUND	EXPORTED	FAILED	STATUS
+[2026-09-01 01:05:59] fixed_aset.pbl	0	0	0	OK
+[2026-09-01 01:05:59] ------------------------------------------------------------------
+[2026-09-01 01:05:59] TOTAL	0	0	0	OK
+[2026-09-01 01:05:59] 
+[2026-09-01 01:05:59] PBL Found       : 1
+[2026-09-01 01:05:59] Objects Found   : 0
+[2026-09-01 01:05:59] Objects Exported: 0
+[2026-09-01 01:05:59] Objects Failed  : 0
+[2026-09-01 01:08:25] ========================================
+[2026-09-01 01:08:25] POWERBUILDER PBL EXPORT
+[2026-09-01 01:08:25] ========================================
+[2026-09-01 01:08:25] 
+[2026-09-01 01:08:25] PBL: fixed_aset.pbl
+[2026-09-01 01:08:25] Output: C:\BTV\debug\pblexporter\_test_output\fixed_aset
+[2026-09-01 01:08:25] PBL DONE: fixed_aset.pbl  Found=0 Exported=0 Failed=0
+[2026-09-01 01:08:25] 
+[2026-09-01 01:08:25] PBL: dropdownapi.pbl
+[2026-09-01 01:08:25] Output: C:\BTV\debug\pblexporter\_test_output\dropdownapi
+[2026-09-01 01:08:25] PBL=dropdownapi.pbl Object=w_ddo_base32 Type=Window Source=w_ddo_base32.srw Status=SUCCESS
+[2026-09-01 01:08:25] PBL=dropdownapi.pbl Object=w_ddo Type=Window Source=w_ddo.srw Status=SUCCESS
+[2026-09-01 01:08:25] PBL=dropdownapi.pbl Object=d_ddo_test Type=DataWindow Source=d_ddo_test.srd Status=SUCCESS
+[2026-09-01 01:08:25] PBL=dropdownapi.pbl Object=f_dropdownsignal32 Type=Function Source=f_dropdownsignal32.srf Status=SUCCESS
+[2026-09-01 01:08:25] PBL=dropdownapi.pbl Object=n_ddo_winapi32 Type=UserObject Source=n_ddo_winapi32.sru Status=SUCCESS
+[2026-09-01 01:08:25] PBL DONE: dropdownapi.pbl  Found=5 Exported=5 Failed=0
+[2026-09-01 01:08:25] 
+[2026-09-01 01:08:25] ========================================
+[2026-09-01 01:08:25] SUMMARY
+[2026-09-01 01:08:25] ========================================
+[2026-09-01 01:08:25] 
+[2026-09-01 01:08:25] PBL	FOUND	EXPORTED	FAILED	STATUS
+[2026-09-01 01:08:25] fixed_aset.pbl	0	0	0	OK
+[2026-09-01 01:08:25] dropdownapi.pbl	5	5	0	OK
+[2026-09-01 01:08:25] ------------------------------------------------------------------
+[2026-09-01 01:08:25] TOTAL	5	5	0	OK
+[2026-09-01 01:08:25] 
+[2026-09-01 01:08:25] PBL Found       : 2
+[2026-09-01 01:08:25] Objects Found   : 5
+[2026-09-01 01:08:25] Objects Exported: 5
+[2026-09-01 01:08:25] Objects Failed  : 0

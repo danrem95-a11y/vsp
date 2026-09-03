@@ -1,0 +1,124 @@
+07/23 15:46:08.879 ** DONE    conn: 194   STMT_EXECUTE            
+07/23 15:46:08.880 ** REQUEST conn: 194   STMT_DROP               Stmt=65541 
+07/23 15:46:08.880 ** DONE    conn: 194   STMT_DROP               
+07/23 15:46:08.880 ** REQUEST conn: 194   COMMIT                  
+07/23 15:46:08.880 ** DONE    conn: 194   COMMIT                  
+07/23 15:46:09.412 ** REQUEST conn: 32    STMT_DROP               Stmt=234012 
+07/23 15:46:09.412 ** DONE    conn: 32    STMT_DROP               
+07/23 15:46:09.412 ** REQUEST conn: 32    STMT_PREPARE            "select property( 'MaxMessage' )"
+07/23 15:46:09.413 ** DONE    conn: 32    STMT_PREPARE            Stmt=234014 
+07/23 15:46:09.413 ** REQUEST conn: 32    CURSOR_OPEN             Stmt=234014 
+07/23 15:46:09.413 ** DONE    conn: 32    CURSOR_OPEN             Crsr=234015 
+07/23 15:46:09.414 ** REQUEST conn: 32    CURSOR_CLOSE            Crsr=234015 
+07/23 15:46:09.414 ** DONE    conn: 32    CURSOR_CLOSE            
+07/23 15:46:09.450 ** REQUEST conn: 192   STMT_DROP               Stmt=79661 
+07/23 15:46:09.450 ** DONE    conn: 192   STMT_DROP               
+07/23 15:46:09.450 ** REQUEST conn: 192   STMT_PREPARE            [large string unavailable]
+07/23 15:46:09.450 ** EXTRA   conn: 192   SELECT "user_log"."log_id",              "user_log"."user_id",              "user_log"."item_id",              "user_log"."item_desc",              "user_log"."log_date",              "user_log"."log_action",              "user_log"."log_desc",              "user_log"."log_reff"        FROM "user_log"     where cast(log_date as date) = cast(getdate() as date)  order by log_id desc, log_date desc
+07/23 15:46:09.450 ** DONE    conn: 192   STMT_PREPARE            Stmt=79663 
+07/23 15:46:09.450 ** REQUEST conn: 192   STMT_EXECUTE            Stmt=-1 
+07/23 15:46:09.450 ** WARNING conn: 192   code: 111 "Statement cannot be executed"
+07/23 15:46:09.450 ** DONE    conn: 192   STMT_EXECUTE            
+07/23 15:46:09.450 ** REQUEST conn: 192   CURSOR_OPEN             Stmt=79663 
+07/23 15:46:09.450 ** DONE    conn: 192   CURSOR_OPEN             Crsr=79664 
+07/23 15:46:09.451 ** REQUEST conn: 192   CURSOR_CLOSE            Crsr=79664 
+07/23 15:46:09.451 ** DONE    conn: 192   CURSOR_CLOSE            
+07/23 15:46:13.417 ** REQUEST conn: 32    STMT_DROP               Stmt=234014 
+07/23 15:46:13.417 ** DONE    conn: 32    STMT_DROP               
+07/23 15:46:13.417 ** REQUEST conn: 32    STMT_PREPARE            "select property( 'MaxMessage' )"
+07/23 15:46:13.417 ** DONE    conn: 32    STMT_PREPARE            Stmt=234016 
+07/23 15:46:13.418 ** REQUEST conn: 32    CURSOR_OPEN             Stmt=234016 
+07/23 15:46:13.418 ** DONE    conn: 32    CURSOR_OPEN             Crsr=234017 
+07/23 15:46:13.418 ** REQUEST conn: 32    CURSOR_CLOSE            Crsr=234017 
+07/23 15:46:13.418 ** DONE    conn: 32    CURSOR_CLOSE            
+07/23 15:46:14.441 ** REQUEST conn: 192   STMT_DROP               Stmt=79663 
+07/23 15:46:14.441 ** DONE    conn: 192   STMT_DROP               
+07/23 15:46:14.441 ** REQUEST conn: 192   STMT_PREPARE            [large string unavailable]
+07/23 15:46:14.442 ** EXTRA   conn: 192   SELECT "user_log"."log_id",              "user_log"."user_id",              "user_log"."item_id",              "user_log"."item_desc",              "user_log"."log_date",              "user_log"."log_action",              "user_log"."log_desc",              "user_log"."log_reff"        FROM "user_log"     where cast(log_date as date) = cast(getdate() as date)  order by log_id desc, log_date desc
+07/23 15:46:14.442 ** DONE    conn: 192   STMT_PREPARE            Stmt=79665 
+07/23 15:46:14.442 ** REQUEST conn: 192   STMT_EXECUTE            Stmt=-1 
+07/23 15:46:14.442 ** WARNING conn: 192   code: 111 "Statement cannot be executed"
+07/23 15:46:14.442 ** DONE    conn: 192   STMT_EXECUTE            
+07/23 15:46:14.442 ** REQUEST conn: 192   CURSOR_OPEN             Stmt=79665 
+07/23 15:46:14.442 ** DONE    conn: 192   CURSOR_OPEN             Crsr=79666 
+07/23 15:46:14.443 ** REQUEST conn: 192   CURSOR_CLOSE            Crsr=79666 
+07/23 15:46:14.443 ** DONE    conn: 192   CURSOR_CLOSE            
+07/23 15:46:17.417 ** REQUEST conn: 32    STMT_DROP               Stmt=234016 
+07/23 15:46:17.417 ** DONE    conn: 32    STMT_DROP               
+07/23 15:46:17.417 ** REQUEST conn: 32    STMT_PREPARE            "select property( 'MaxMessage' )"
+07/23 15:46:17.418 ** DONE    conn: 32    STMT_PREPARE            Stmt=234018 
+07/23 15:46:17.418 ** REQUEST conn: 32    CURSOR_OPEN             Stmt=234018 
+07/23 15:46:17.418 ** DONE    conn: 32    CURSOR_OPEN             Crsr=234019 
+07/23 15:46:17.419 ** REQUEST conn: 32    CURSOR_CLOSE            Crsr=234019 
+07/23 15:46:17.419 ** DONE    conn: 32    CURSOR_CLOSE            
+07/23 15:46:19.444 ** REQUEST conn: 192   STMT_DROP               Stmt=79665 
+07/23 15:46:19.444 ** DONE    conn: 192   STMT_DROP               
+07/23 15:46:19.444 ** REQUEST conn: 192   STMT_PREPARE            [large string unavailable]
+07/23 15:46:19.444 ** EXTRA   conn: 192   SELECT "user_log"."log_id",              "user_log"."user_id",              "user_log"."item_id",              "user_log"."item_desc",              "user_log"."log_date",              "user_log"."log_action",              "user_log"."log_desc",              "user_log"."log_reff"        FROM "user_log"     where cast(log_date as date) = cast(getdate() as date)  order by log_id desc, log_date desc
+07/23 15:46:19.444 ** DONE    conn: 192   STMT_PREPARE            Stmt=79667 
+07/23 15:46:19.444 ** REQUEST conn: 192   STMT_EXECUTE            Stmt=-1 
+07/23 15:46:19.444 ** WARNING conn: 192   code: 111 "Statement cannot be executed"
+07/23 15:46:19.444 ** DONE    conn: 192   STMT_EXECUTE            
+07/23 15:46:19.444 ** REQUEST conn: 192   CURSOR_OPEN             Stmt=79667 
+07/23 15:46:19.444 ** DONE    conn: 192   CURSOR_OPEN             Crsr=79668 
+07/23 15:46:19.445 ** REQUEST conn: 192   CURSOR_CLOSE            Crsr=79668 
+07/23 15:46:19.445 ** DONE    conn: 192   CURSOR_CLOSE            
+07/23 15:46:21.427 ** REQUEST conn: 32    STMT_DROP               Stmt=234018 
+07/23 15:46:21.428 ** DONE    conn: 32    STMT_DROP               
+07/23 15:46:21.428 ** REQUEST conn: 32    STMT_PREPARE            "select property( 'MaxMessage' )"
+07/23 15:46:21.428 ** DONE    conn: 32    STMT_PREPARE            Stmt=234020 
+07/23 15:46:21.428 ** REQUEST conn: 32    CURSOR_OPEN             Stmt=234020 
+07/23 15:46:21.428 ** DONE    conn: 32    CURSOR_OPEN             Crsr=234021 
+07/23 15:46:21.429 ** REQUEST conn: 32    CURSOR_CLOSE            Crsr=234021 
+07/23 15:46:21.429 ** DONE    conn: 32    CURSOR_CLOSE            
+07/23 15:46:24.446 ** REQUEST conn: 192   STMT_DROP               Stmt=79667 
+07/23 15:46:24.446 ** DONE    conn: 192   STMT_DROP               
+07/23 15:46:24.446 ** REQUEST conn: 192   STMT_PREPARE            [large string unavailable]
+07/23 15:46:24.446 ** EXTRA   conn: 192   SELECT "user_log"."log_id",              "user_log"."user_id",              "user_log"."item_id",              "user_log"."item_desc",              "user_log"."log_date",              "user_log"."log_action",              "user_log"."log_desc",              "user_log"."log_reff"        FROM "user_log"     where cast(log_date as date) = cast(getdate() as date)  order by log_id desc, log_date desc
+07/23 15:46:24.446 ** DONE    conn: 192   STMT_PREPARE            Stmt=79669 
+07/23 15:46:24.447 ** REQUEST conn: 192   STMT_EXECUTE            Stmt=-1 
+07/23 15:46:24.447 ** WARNING conn: 192   code: 111 "Statement cannot be executed"
+07/23 15:46:24.447 ** DONE    conn: 192   STMT_EXECUTE            
+07/23 15:46:24.447 ** REQUEST conn: 192   CURSOR_OPEN             Stmt=79669 
+07/23 15:46:24.447 ** DONE    conn: 192   CURSOR_OPEN             Crsr=79670 
+07/23 15:46:24.447 ** REQUEST conn: 192   CURSOR_CLOSE            Crsr=79670 
+07/23 15:46:24.447 ** DONE    conn: 192   CURSOR_CLOSE            
+07/23 15:46:25.439 ** REQUEST conn: 32    STMT_DROP               Stmt=234020 
+07/23 15:46:25.439 ** DONE    conn: 32    STMT_DROP               
+07/23 15:46:25.439 ** REQUEST conn: 32    STMT_PREPARE            "select property( 'MaxMessage' )"
+07/23 15:46:25.440 ** DONE    conn: 32    STMT_PREPARE            Stmt=234022 
+07/23 15:46:25.440 ** REQUEST conn: 32    CURSOR_OPEN             Stmt=234022 
+07/23 15:46:25.440 ** DONE    conn: 32    CURSOR_OPEN             Crsr=234023 
+07/23 15:46:25.440 ** REQUEST conn: 32    CURSOR_CLOSE            Crsr=234023 
+07/23 15:46:25.440 ** DONE    conn: 32    CURSOR_CLOSE            
+07/23 15:46:29.440 ** REQUEST conn: 192   STMT_DROP               Stmt=79669 
+07/23 15:46:29.440 ** DONE    conn: 192   STMT_DROP               
+07/23 15:46:29.440 ** REQUEST conn: 192   STMT_PREPARE            [large string unavailable]
+07/23 15:46:29.440 ** EXTRA   conn: 192   SELECT "user_log"."log_id",              "user_log"."user_id",              "user_log"."item_id",              "user_log"."item_desc",              "user_log"."log_date",              "user_log"."log_action",              "user_log"."log_desc",              "user_log"."log_reff"        FROM "user_log"     where cast(log_date as date) = cast(getdate() as date)  order by log_id desc, log_date desc
+07/23 15:46:29.440 ** DONE    conn: 192   STMT_PREPARE            Stmt=79671 
+07/23 15:46:29.440 ** REQUEST conn: 192   STMT_EXECUTE            Stmt=-1 
+07/23 15:46:29.440 ** WARNING conn: 192   code: 111 "Statement cannot be executed"
+07/23 15:46:29.440 ** DONE    conn: 192   STMT_EXECUTE            
+07/23 15:46:29.440 ** REQUEST conn: 192   CURSOR_OPEN             Stmt=79671 
+07/23 15:46:29.440 ** DONE    conn: 192   CURSOR_OPEN             Crsr=79672 
+07/23 15:46:29.441 ** REQUEST conn: 192   CURSOR_CLOSE            Crsr=79672 
+07/23 15:46:29.441 ** DONE    conn: 192   CURSOR_CLOSE            
+07/23 15:46:29.453 ** REQUEST conn: 32    STMT_DROP               Stmt=234022 
+07/23 15:46:29.453 ** DONE    conn: 32    STMT_DROP               
+07/23 15:46:29.453 ** REQUEST conn: 32    STMT_PREPARE            "select property( 'MaxMessage' )"
+07/23 15:46:29.453 ** DONE    conn: 32    STMT_PREPARE            Stmt=234024 
+07/23 15:46:29.453 ** REQUEST conn: 32    CURSOR_OPEN             Stmt=234024 
+07/23 15:46:29.453 ** DONE    conn: 32    CURSOR_OPEN             Crsr=234025 
+07/23 15:46:29.454 ** REQUEST conn: 32    CURSOR_CLOSE            Crsr=234025 
+07/23 15:46:29.454 ** DONE    conn: 32    CURSOR_CLOSE            
+07/23 15:46:33.472 ** REQUEST conn: 32    STMT_DROP               Stmt=234024 
+07/23 15:46:33.472 ** DONE    conn: 32    STMT_DROP               
+07/23 15:46:33.472 ** REQUEST conn: 32    STMT_PREPARE            "select property( 'MaxMessage' )"
+07/23 15:46:33.473 ** DONE    conn: 32    STMT_PREPARE            Stmt=234026 
+07/23 15:46:33.473 ** REQUEST conn: 32    CURSOR_OPEN             Stmt=234026 
+07/23 15:46:33.473 ** DONE    conn: 32    CURSOR_OPEN             Crsr=234027 
+07/23 15:46:33.473 ** REQUEST conn: 32    CURSOR_CLOSE            Crsr=234027 
+07/23 15:46:33.473 ** DONE    conn: 32    CURSOR_CLOSE            
+07/23 15:46:33.894 ** REQUEST conn: 194   STMT_PREPARE            "call sa_server_option('RequestLogging','NONE')"
+07/23 15:46:33.894 ** DONE    conn: 194   STMT_PREPARE            Stmt=65542 
+07/23 15:46:33.894 ** REQUEST conn: 194   STMT_EXECUTE            Stmt=-1 

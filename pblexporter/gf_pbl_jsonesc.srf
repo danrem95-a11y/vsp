@@ -1,0 +1,40 @@
+$PBExportHeader$gf_pbl_jsonesc.srf
+global type gf_pbl_jsonesc from function_object
+end type
+
+forward prototypes
+global function string gf_pbl_jsonesc (string as_s)
+end prototypes
+
+global function string gf_pbl_jsonesc (string as_s);// Escape a short string (object/pbl/file name) for embedding in a JSON string value.
+// Only ever called on names/paths, never on full exported source text, so the
+// character-by-character loop stays cheap.
+string ls_out, lc
+long i, ll
+
+IF IsNull(as_s) THEN RETURN ""
+ls_out = ""
+ll = Len(as_s)
+FOR i = 1 TO ll
+	lc = Mid(as_s, i, 1)
+	CHOOSE CASE lc
+		CASE '"'
+			ls_out += '\"'
+		CASE '\'
+			ls_out += '\\'
+		CASE Char(13)
+			ls_out += '\r'
+		CASE Char(10)
+			ls_out += '\n'
+		CASE Char(9)
+			ls_out += '\t'
+		CASE ELSE
+			IF Asc(lc) < 32 THEN
+				// drop other control characters
+			ELSE
+				ls_out += lc
+			END IF
+	END CHOOSE
+NEXT
+RETURN ls_out
+end function

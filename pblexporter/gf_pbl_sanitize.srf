@@ -1,0 +1,20 @@
+$PBExportHeader$gf_pbl_sanitize.srf
+global type gf_pbl_sanitize from function_object
+end type
+
+forward prototypes
+global function string gf_pbl_sanitize (string as_name)
+end prototypes
+
+global function string gf_pbl_sanitize (string as_name);// Replace characters illegal in Windows filenames with underscore.
+string ls_bad, lc, ls
+integer i, ll
+ls = as_name
+ls_bad = "\/:*?~"<>|"
+ll = Len(ls)
+FOR i = 1 TO ll
+	lc = Mid(ls, i, 1)
+	IF Pos(ls_bad, lc) > 0 THEN ls = Replace(ls, i, 1, "_")
+NEXT
+RETURN ls
+end function

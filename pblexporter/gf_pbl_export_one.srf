@@ -1,0 +1,163 @@
+$PBExportHeader$gf_pbl_export_one.srf
+global type gf_pbl_export_one from function_object
+end type
+
+forward prototypes
+global function long gf_pbl_export_one (string as_pbl, string as_pblname, string as_destbase, string as_logfile, string as_failfile, ref long al_found, ref long al_ok, ref long al_fail)
+end prototypes
+
+global function long gf_pbl_export_one (string as_pbl, string as_pblname, string as_destbase, string as_logfile, string as_failfile, ref long al_found, ref long al_ok, ref long al_fail);// Export every object PowerScript's LibraryExport can see (10 native types) from
+// one PBL into a single flat destination folder, verifying every write, and
+// building a _manifest.json alongside export.log / failed_objects.log entries.
+//
+// PowerScript's LibExportType has no case for Proxy Object or Binary entries -
+// those two types only exist in the external ORCA C API (PBORC115.DLL), which
+// this machine cannot license-check-out. Rather than silently omitting such
+// entries, this function cross-checks LibraryDirectoryEx(..., DirAll!) against
+// what the 10-type loop found and logs any leftover names as skipped/unsupported,
+// so the FOUND/EXPORTED/FAILED totals stay honest.
+string ls_dir, ls_line, ls_name, ls_type, ls_ext, ls_path, ls_src, ls_q
+string ls_foundnames[], ls_manifest, ls_entry
+long ll_start, ll_nl, ll_t, ll_n, ll_written, i, j
+LibExportType le
+boolean lb_first, lb_found
+
+// Build JSON with a quote-character variable (Char(34)) rather than mixing
+// single-quoted literals with ~r~n escapes - only double-quoted literals are
+// proven, in this codebase, to resolve ~r~n/~t escape sequences.
+ls_q = Char(34)
+
+al_found = 0
+al_ok = 0
+al_fail = 0
+ll_n = 0
+lb_first = TRUE
+ls_manifest = "{~r~n  " + ls_q + "pbl" + ls_q + ": " + ls_q + gf_pbl_jsonesc(as_pblname) + ls_q + &
+	",~r~n  " + ls_q + "objects" + ls_q + ": [~r~n"
+
+FOR i = 1 TO 10
+	CHOOSE CASE i
+		CASE 1  ; ls_type = "Application" ; le = ExportApplication! ; ls_dir = LibraryDirectory(as_pbl, DirApplication!)
+		CASE 2  ; ls_type = "Window"      ; le = ExportWindow!      ; ls_dir = LibraryDirectory(as_pbl, DirWindow!)
+		CASE 3  ; ls_type = "DataWindow"  ; le = ExportDataWindow!  ; ls_dir = LibraryDirectory(as_pbl, DirDataWindow!)
+		CASE 4  ; ls_type = "Function"    ; le = ExportFunction!    ; ls_dir = LibraryDirectory(as_pbl, DirFunction!)
+		CASE 5  ; ls_type = "Menu"        ; le = ExportMenu!        ; ls_dir = LibraryDirectory(as_pbl, DirMenu!)
+		CASE 6  ; ls_type = "Structure"   ; le = ExportStructure!   ; ls_dir = LibraryDirectory(as_pbl, DirStructure!)
+		CASE 7  ; ls_type = "Query"       ; le = ExportQuery!       ; ls_dir = LibraryDirectory(as_pbl, DirQuery!)
+		CASE 8  ; ls_type = "UserObject"  ; le = ExportUserObject!  ; ls_dir = LibraryDirectory(as_pbl, DirUserObject!)
+		CASE 9  ; ls_type = "Pipeline"    ; le = ExportPipeline!    ; ls_dir = LibraryDirectory(as_pbl, DirPipeline!)
+		CASE 10 ; ls_type = "Project"     ; le = ExportProject!     ; ls_dir = LibraryDirectory(as_pbl, DirProject!)
+	END CHOOSE
+
+	IF IsNull(ls_dir) OR ls_dir = "" THEN CONTINUE
+	ls_ext = gf_pbl_ext(ls_type)
+
+	ll_start = 1
+	DO WHILE ll_start <= Len(ls_dir)
+		ll_nl = Pos(ls_dir, "~n", ll_start)
+		IF ll_nl = 0 THEN
+			ls_line = Mid(ls_dir, ll_start)
+			ll_start = Len(ls_dir) + 1
+		ELSE
+			ls_line = Mid(ls_dir, ll_start, ll_nl - ll_start)
+			ll_start = ll_nl + 1
+		END IF
+		IF Trim(ls_line) = "" THEN CONTINUE
+
+		ll_t = Pos(ls_line, "~t")
+		IF ll_t > 0 THEN
+			ls_name = Left(ls_line, ll_t - 1)
+		ELSE
+			ls_name = ls_line
+		END IF
+		ls_name = Trim(ls_name)
+		IF ls_name = "" THEN CONTINUE
+
+		al_found ++
+		ll_n ++
+		ls_foundnames[ll_n] = ls_name
+
+		ls_src = LibraryExport(as_pbl, ls_name, le)
+
+		IF NOT lb_first THEN ls_manifest += ",~r~n"
+		lb_first = FALSE
+
+		IF IsNull(ls_src) OR Len(ls_src) <= 0 THEN
+			al_fail ++
+			gf_pbl_log(as_failfile, as_pblname + "~t" + ls_name + "~t" + ls_type + "~tLibraryExport returned empty")
+			gf_pbl_log(as_logfile, "PBL=" + as_pblname + " Object=" + ls_name + " Type=" + ls_type + " Status=FAILED (LibraryExport empty)")
+			ls_entry = '    {"name": "' + gf_pbl_jsonesc(ls_name) + '", "type": "' + Lower(ls_type) + '", "source": null, "status": "failed"}'
+		ELSE
+			ls_path = as_destbase + "\" + gf_pbl_sanitize(ls_name) + ls_ext
+			ll_written = gf_pbl_writefile(ls_path, ls_src)
+			IF ll_written <= 0 THEN
+				al_fail ++
+				gf_pbl_log(as_failfile, as_pblname + "~t" + ls_name + "~t" + ls_type + "~tfile write failed/verified-empty: " + ls_path)
+				gf_pbl_log(as_logfile, "PBL=" + as_pblname + " Object=" + ls_name + " Type=" + ls_type + " Status=FAILED (write)")
+				ls_entry = '    {"name": "' + gf_pbl_jsonesc(ls_name) + '", "type": "' + Lower(ls_type) + '", "source": null, "status": "failed"}'
+			ELSE
+				al_ok ++
+				gf_pbl_log(as_logfile, "PBL=" + as_pblname + " Object=" + ls_name + " Type=" + ls_type + " Source=" + gf_pbl_sanitize(ls_name) + ls_ext + " Status=SUCCESS")
+				ls_entry = '    {"name": "' + gf_pbl_jsonesc(ls_name) + '", "type": "' + Lower(ls_type) + '", "source": "' + gf_pbl_jsonesc(gf_pbl_sanitize(ls_name) + ls_ext) + '", "status": "success"}'
+			END IF
+		END IF
+		ls_manifest += ls_entry
+	LOOP
+NEXT
+
+// Best-effort: surface object types LibraryExport cannot handle (Proxy/Binary/
+// Service) instead of silently pretending the PBL only ever contained the 10
+// supported types. If LibraryDirectoryEx or DirAll! is unavailable in this
+// build, this whole block is a no-op and the rest of the export is unaffected.
+ls_dir = LibraryDirectoryEx(as_pbl, DirAll!)
+IF NOT IsNull(ls_dir) AND ls_dir <> "" THEN
+	ll_start = 1
+	DO WHILE ll_start <= Len(ls_dir)
+		ll_nl = Pos(ls_dir, "~n", ll_start)
+		IF ll_nl = 0 THEN
+			ls_line = Mid(ls_dir, ll_start)
+			ll_start = Len(ls_dir) + 1
+		ELSE
+			ls_line = Mid(ls_dir, ll_start, ll_nl - ll_start)
+			ll_start = ll_nl + 1
+		END IF
+		IF Trim(ls_line) = "" THEN CONTINUE
+
+		ll_t = Pos(ls_line, "~t")
+		IF ll_t > 0 THEN
+			ls_name = Trim(Left(ls_line, ll_t - 1))
+		ELSE
+			ls_name = Trim(ls_line)
+		END IF
+		IF ls_name = "" THEN CONTINUE
+
+		lb_found = FALSE
+		FOR j = 1 TO ll_n
+			IF ls_foundnames[j] = ls_name THEN
+				lb_found = TRUE
+				EXIT
+			END IF
+		NEXT
+
+		IF NOT lb_found THEN
+			al_found ++
+			al_fail ++
+			gf_pbl_log(as_failfile, as_pblname + "~t" + ls_name + "~tUnknownType~tobject type not supported by PowerScript LibraryExport (Proxy/Binary/Service) - needs external ORCA API")
+			gf_pbl_log(as_logfile, "PBL=" + as_pblname + " Object=" + ls_name + " Type=Unsupported Status=SKIPPED (unsupported type)")
+			IF NOT lb_first THEN ls_manifest += ",~r~n"
+			lb_first = FALSE
+			ls_manifest += '    {"name": "' + gf_pbl_jsonesc(ls_name) + '", "type": "unsupported", "source": null, "status": "skipped_unsupported_type"}'
+		END IF
+	LOOP
+END IF
+
+ls_manifest += "~r~n  ],~r~n"
+ls_manifest += '  "objects_found": ' + String(al_found) + ",~r~n"
+ls_manifest += '  "objects_exported": ' + String(al_ok) + ",~r~n"
+ls_manifest += '  "objects_failed": ' + String(al_fail) + "~r~n"
+ls_manifest += "}~r~n"
+
+gf_pbl_writefile(as_destbase + "\_manifest.json", ls_manifest)
+
+RETURN al_found
+end function

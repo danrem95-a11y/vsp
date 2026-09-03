@@ -1,0 +1,33 @@
+$PBExportHeader$gf_pbl_readlines.srf
+global type gf_pbl_readlines from function_object
+end type
+
+forward prototypes
+global function long gf_pbl_readlines (string as_path, ref string as_lines[])
+end prototypes
+
+global function long gf_pbl_readlines (string as_path, ref string as_lines[]);// Read a plain text file into as_lines[], one non-blank trimmed line per entry.
+// Deliberately the simplest possible FileOpen form: no FileEncoding() auto-
+// detect (it can return null on some files, and passing null into FileOpen's
+// encoding argument caused a hard access violation here), no Replace! (that
+// mode flag is for writing, not reading - meaningless on a Read! open). These
+// files are always plain ANSI text written by our own PowerShell driver, so
+// the plain default read is exactly what's needed.
+integer li_h
+string ls_line
+long ll_n
+
+ll_n = 0
+IF NOT FileExists(as_path) THEN RETURN -1
+li_h = FileOpen(as_path, LineMode!, Read!, LockRead!)
+IF li_h < 1 THEN RETURN -1
+DO WHILE FileRead(li_h, ls_line) >= 0
+	ls_line = Trim(ls_line)
+	IF ls_line <> "" THEN
+		ll_n ++
+		as_lines[ll_n] = ls_line
+	END IF
+LOOP
+FileClose(li_h)
+RETURN ll_n
+end function

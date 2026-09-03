@@ -1,0 +1,49 @@
+$PBExportHeader$gf_pbl_ensuredir.srf
+global type gf_pbl_ensuredir from function_object
+end type
+
+forward prototypes
+global function integer gf_pbl_ensuredir (string as_dir)
+end prototypes
+
+global function integer gf_pbl_ensuredir (string as_dir);// Ensure a directory exists, creating any missing parent segments along the way.
+// Returns 1 ok, -1 fail. Read-only w.r.t. PBLs; only ever touches the output tree.
+string ls_drive, ls_rest, ls_seg, ls_build
+long ll_colon, ll_pos, ll_len
+
+IF DirectoryExists(as_dir) THEN RETURN 1
+
+ll_colon = Pos(as_dir, ":")
+IF ll_colon > 0 THEN
+	ls_drive = Left(as_dir, ll_colon)
+	ls_rest = Mid(as_dir, ll_colon + 1)
+ELSE
+	ls_drive = ""
+	ls_rest = as_dir
+END IF
+
+IF Left(ls_rest, 1) = "\" THEN ls_rest = Mid(ls_rest, 2)
+
+ls_build = ls_drive
+ll_len = Len(ls_rest)
+ll_pos = 1
+DO WHILE ll_pos <= ll_len
+	ll_colon = Pos(ls_rest, "\", ll_pos)
+	IF ll_colon = 0 THEN
+		ls_seg = Mid(ls_rest, ll_pos)
+		ll_pos = ll_len + 1
+	ELSE
+		ls_seg = Mid(ls_rest, ll_pos, ll_colon - ll_pos)
+		ll_pos = ll_colon + 1
+	END IF
+	IF ls_seg <> "" THEN
+		ls_build = ls_build + "\" + ls_seg
+		IF NOT DirectoryExists(ls_build) THEN
+			IF CreateDirectory(ls_build) <> 1 THEN RETURN -1
+		END IF
+	END IF
+LOOP
+
+IF DirectoryExists(as_dir) THEN RETURN 1
+RETURN -1
+end function

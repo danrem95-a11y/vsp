@@ -1,0 +1,27 @@
+$PBExportHeader$gf_pbl_ext.srf
+global type gf_pbl_ext from function_object
+end type
+
+forward prototypes
+global function string gf_pbl_ext (string as_type)
+end prototypes
+
+global function string gf_pbl_ext (string as_type);// Map ORCA/PowerScript object type name -> official PowerBuilder source extension.
+// Table confirmed against independent PB migration references (Ispirer, AWS Blu Insights)
+// and cross-checked with existing .sr? files already in this repository.
+string ls
+CHOOSE CASE as_type
+	CASE "Application" ; ls = ".sra"
+	CASE "Window"      ; ls = ".srw"
+	CASE "DataWindow"  ; ls = ".srd"
+	CASE "Function"    ; ls = ".srf"
+	CASE "Menu"        ; ls = ".srm"
+	CASE "Structure"   ; ls = ".srs"
+	CASE "Query"       ; ls = ".srq"
+	CASE "UserObject"  ; ls = ".sru"
+	CASE "Pipeline"    ; ls = ".srp"
+	CASE "Project"     ; ls = ".srj"
+	CASE ELSE          ; ls = ".txt"
+END CHOOSE
+RETURN ls
+end function

@@ -1,0 +1,73 @@
+$ErrorActionPreference='Stop'
+$f = "C:\BTV\debug\n_cst_closing_stock.sru"
+$txt = [System.IO.File]::ReadAllText($f,[System.Text.Encoding]::Unicode)
+
+function CountAndReplace([string]$old, [string]$new, [string]$label){
+    $count = ([regex]::Matches($txt, [regex]::Escape($old))).Count
+    Write-Output "$label -- match count: $count"
+    if($count -ne 1){ throw "Expected exactly 1 match for '$label', found $count" }
+    $script:txt = $script:txt.Replace($old, $new)
+}
+
+# EDIT 1: FREEZE '88' -- hapus guard immutable (ISNULL(TSALES2.HPP,0)=0)
+$old1 = @"
+                    (TSALES1.TIPE_TRANS = '88') AND
+                    (ISNULL(TSALES2.EVAP,'') <> '') AND
+                    (TSALES1.TGL BETWEEN :ldt_tgl1 AND :ldt_tgl2) AND
+                    (ISNULL(TSALES2.HPP,0) = 0) ;
+"@
+$new1 = @"
+                    (TSALES1.TIPE_TRANS = '88') AND
+                    (ISNULL(TSALES2.EVAP,'') <> '') AND
+                    (TSALES1.TGL BETWEEN :ldt_tgl1 AND :ldt_tgl2) ;
+"@
+CountAndReplace $old1 $new1 "EDIT1 FREEZE-88 remove immutable guard"
+
+# EDIT 2: step 4a (jual reguler) -- hapus referensi closing_avg sirkular
+$old2 = @"
+                          ISNULL( NULLIF(h.closing_avg,0), (ISNULL(h.opening_nilai,0)+ISNULL(h.beli_nilai,0)) / NULLIF(ISNULL(h.opening_qty,0)+ISNULL(h.beli_qty,0),0) ) AS HRG
+                                FROM costing_helper_movavg h
+				) HPP
+WHERE (TSALES2.STOK_ID = HPP.STOK_ID) AND
+		      (TSALES2.BUKTI_ID = TSALES1.BUKTI_ID) AND
+		      (TSALES1.TGL BETWEEN :ldt_tgl1 AND :ldt_tgl2) AND
+		      (ISNULL(TSALES2.EVAP,'') = '') ;
+"@
+$new2 = @"
+                          (ISNULL(h.opening_nilai,0)+ISNULL(h.beli_nilai,0)) / NULLIF(ISNULL(h.opening_qty,0)+ISNULL(h.beli_qty,0),0) AS HRG
+                                FROM costing_helper_movavg h
+				) HPP
+WHERE (TSALES2.STOK_ID = HPP.STOK_ID) AND
+		      (TSALES2.BUKTI_ID = TSALES1.BUKTI_ID) AND
+		      (TSALES1.TGL BETWEEN :ldt_tgl1 AND :ldt_tgl2) AND
+		      (ISNULL(TSALES2.EVAP,'') = '') ;
+"@
+CountAndReplace $old2 $new2 "EDIT2 step-4a remove circular closing_avg"
+
+# EDIT 3: step 4c (Adjustment) -- hapus referensi closing_avg sirkular
+$old3 = @"
+                          ISNULL( NULLIF(h.closing_avg,0), (ISNULL(h.opening_nilai,0)+ISNULL(h.beli_nilai,0)) / NULLIF(ISNULL(h.opening_qty,0)+ISNULL(h.beli_qty,0),0) ) AS HRG
+                                FROM costing_helper_movavg h
+				) HPP
+WHERE  (TSTOK2.STOK_ID = HPP.STOK_ID) AND
+		      (TSTOK2.BUKTI_ID = TSTOK1.BUKTI_ID) AND
+		      (TSTOK1.TIPE_TRANS not in( '02','05','99','09','19')) AND
+		      (TSTOK1.TGL BETWEEN :ldt_tgl1 AND :ldt_tgl2) ;
+"@
+$new3 = @"
+                          (ISNULL(h.opening_nilai,0)+ISNULL(h.beli_nilai,0)) / NULLIF(ISNULL(h.opening_qty,0)+ISNULL(h.beli_qty,0),0) AS HRG
+                                FROM costing_helper_movavg h
+				) HPP
+WHERE  (TSTOK2.STOK_ID = HPP.STOK_ID) AND
+		      (TSTOK2.BUKTI_ID = TSTOK1.BUKTI_ID) AND
+		      (TSTOK1.TIPE_TRANS not in( '02','05','99','09','19')) AND
+		      (TSTOK1.TGL BETWEEN :ldt_tgl1 AND :ldt_tgl2) ;
+"@
+CountAndReplace $old3 $new3 "EDIT3 step-4c remove circular closing_avg"
+
+# Normalisasi line ending (CRLF konsisten, hindari mixed LF dari here-string)
+$txt = $txt -replace "`r`n", "`n"
+$txt = $txt -replace "`n", "`r`n"
+
+[System.IO.File]::WriteAllText($f, $txt, (New-Object System.Text.UnicodeEncoding($false,$true)))
+Write-Output "DONE -- file written: $f"

@@ -1,0 +1,17 @@
+$PBExportHeader$gf_pbl_log.srf
+global type gf_pbl_log from function_object
+end type
+
+forward prototypes
+global function integer gf_pbl_log (string as_file, string as_msg)
+end prototypes
+
+global function integer gf_pbl_log (string as_file, string as_msg);// Append one timestamped line to a log file (ANSI LineMode - proven reliable in this
+// environment, unlike StreamMode+EncodingUTF16LE! which is known to silently no-op here).
+integer li
+li = FileOpen(as_file, LineMode!, Write!, LockWrite!, Append!)
+IF li < 1 THEN RETURN -1
+FileWrite(li, "[" + String(Now(), "yyyy-mm-dd hh:mm:ss") + "] " + as_msg)
+FileClose(li)
+RETURN 1
+end function

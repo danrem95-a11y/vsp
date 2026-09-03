@@ -1,0 +1,13 @@
+{
+  "pbl": "dropdownapi.pbl",
+  "objects": [
+    {"name": "w_ddo_base32", "type": "window", "source": "w_ddo_base32.srw", "status": "success"},
+    {"name": "w_ddo", "type": "window", "source": "w_ddo.srw", "status": "success"},
+    {"name": "d_ddo_test", "type": "datawindow", "source": "d_ddo_test.srd", "status": "success"},
+    {"name": "f_dropdownsignal32", "type": "function", "source": "f_dropdownsignal32.srf", "status": "success"},
+    {"name": "n_ddo_winapi32", "type": "userobject", "source": "n_ddo_winapi32.sru", "status": "success"}
+  ],
+  "objects_found": 5,
+  "objects_exported": 5,
+  "objects_failed": 0
+}

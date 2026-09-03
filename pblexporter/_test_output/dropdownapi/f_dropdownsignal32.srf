@@ -1,0 +1,69 @@
+global type f_dropdownsignal32 from function_object
+end type
+
+forward prototypes
+global subroutine f_dropdownsignal32 (string as_objecttype)
+end prototypes
+
+global subroutine f_dropdownsignal32 (string as_objecttype);datawindow 		ldw_source
+window			lw_DDObject, lw_Parent
+uint				li_hwndEditControl
+environment 	lenv_Env
+n_ddo_WinAPI32	luo_WinAPI
+
+// check active object type
+if TypeOf(GetFocus()) <> DataWindow! then return  // error, not a datawindow
+
+// get reference to the active object
+ldw_source = GetFocus()
+if not isValid(ldw_source) then return
+
+// find parent window for the datawindow
+lw_Parent = f_GetParentWindow(ldw_source)
+// let's PowerBuilder draw missing drop-down, but do not 
+// show intermidiate screen changes
+lw_Parent.SetRedraw(False)
+do while Yield()
+loop
+
+// create non-visual user object for external functions
+luo_WinAPI = CREATE n_ddo_WinAPI32
+// init the user object
+luo_WinAPI.idw_source = ldw_source
+luo_WinAPI.iw_Parent = lw_Parent
+
+// get type of OS
+GetEnvironment(lenv_Env)
+luo_WinAPI.ienv_Env = lenv_Env
+// get reference and position  of the edit control that PowerBuilder
+// create to simulate editable column
+if lenv_Env.Win16 then
+	li_hwndEditControl = luo_WinAPI.GetFocus16()
+	luo_WinAPI.GetWindowRect16(li_hwndEditControl, luo_WinAPI.ist_RECT16)
+	luo_WinAPI.ii_X = PixelsToUnits(luo_WinAPI.ist_RECT16.left,   XPixelsToUnits!) - 12
+	luo_WinAPI.ii_Y = PixelsToUnits(luo_WinAPI.ist_RECT16.bottom, YPixelsToUnits!) - 140
+	luo_WinAPI.ii_Height = PixelsToUnits(luo_WinAPI.ist_RECT16.bottom - luo_WinAPI.ist_RECT16.top, YPixelsToUnits!) 
+	POST(li_hwndEditControl, 256, 115, 0) // simulate F4
+else
+	li_hwndEditControl = luo_WinAPI.GetFocus32()
+	luo_WinAPI.GetWindowRect32(li_hwndEditControl, luo_WinAPI.ist_RECT32)
+	luo_WinAPI.ii_X = PixelsToUnits(luo_WinAPI.ist_RECT32.left,   XPixelsToUnits!) - 12
+	luo_WinAPI.ii_Y = PixelsToUnits(luo_WinAPI.ist_RECT32.bottom, YPixelsToUnits!) - 140
+	luo_WinAPI.ii_Height = PixelsToUnits(luo_WinAPI.ist_RECT32.bottom - luo_WinAPI.ist_RECT32.top, YPixelsToUnits!)
+	POST(li_hwndEditControl, 256, 115, 0) // simulate F4
+end if
+
+luo_WinAPI.ii_Height += 20
+
+// open custom window that will serve as drop-down
+
+OpenWithParm(lw_DDObject, luo_WinAPI, as_ObjectType, lw_Parent)
+
+
+// let's PowerBuilder redraw screen after the window is opened
+POST SetRedraw(lw_Parent, True)
+
+// destroy user object for external function declarations
+DESTROY luo_WinAPI
+end subroutine
+

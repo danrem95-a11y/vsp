@@ -1,0 +1,53 @@
+$PBExportHeader$gf_pbl_writefile.srf
+global type gf_pbl_writefile from function_object
+end type
+
+forward prototypes
+global function long gf_pbl_writefile (string as_path, string as_content)
+end prototypes
+
+global function long gf_pbl_writefile (string as_path, string as_content);// Write as_content to as_path and VERIFY the write actually happened before
+// reporting success - do not just trust a return code.
+//
+// Why this exists: a prior export attempt in this codebase used
+//   FileOpen(path, StreamMode!, Write!, LockWrite!, Replace!, EncodingUTF16LE!)
+// and never checked FileWriteEx's result. That combination is a documented
+// PowerBuilder defect (SAP CR 803112 et al.) that can silently create a 0-byte
+// file. It produced ~3300 empty "exported" files across this codebase's prior
+// export tree while logging them all as successful.
+//
+// Live testing here went further: StreamMode!+FileWriteEx produced a 0-byte
+// file in THIS windowless build even without EncodingUTF16LE! at all, so that
+// whole approach is untrustworthy in this context - not just the Unicode
+// variant. LineMode!+FileWrite is the one path proven reliable (export.log
+// and failed_objects.log both use it correctly, verified across many runs),
+// so it is used here too: split on ~r~n and write one line per FileWrite call.
+integer li_h
+long ll_len, ll_start, ll_nl, ll_check
+string ls_line
+
+IF IsNull(as_content) THEN RETURN -1
+ll_len = Len(as_content)
+IF ll_len <= 0 THEN RETURN -1
+
+li_h = FileOpen(as_path, LineMode!, Write!, LockWrite!, Replace!)
+IF li_h < 1 THEN RETURN -1
+
+ll_start = 1
+DO WHILE ll_start <= ll_len
+	ll_nl = Pos(as_content, "~r~n", ll_start)
+	IF ll_nl = 0 THEN
+		ls_line = Mid(as_content, ll_start)
+		ll_start = ll_len + 1
+	ELSE
+		ls_line = Mid(as_content, ll_start, ll_nl - ll_start)
+		ll_start = ll_nl + 2
+	END IF
+	FileWrite(li_h, ls_line)
+LOOP
+FileClose(li_h)
+
+ll_check = FileLength(as_path)
+IF ll_check > 0 THEN RETURN ll_check
+RETURN -1
+end function

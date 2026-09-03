@@ -1,0 +1,129 @@
+$PBExportHeader$gf_pbl_main.srf
+global type gf_pbl_main from function_object
+end type
+
+forward prototypes
+global function integer gf_pbl_main (string as_jobfile)
+end prototypes
+
+global function integer gf_pbl_main (string as_jobfile);// Entry point invoked from the Application Open event. as_jobfile is a small
+// 2-line text file written by the PowerShell driver:
+//   line 1 = path to a worklist file (one full .pbl path per line)
+//   line 2 = output SOURCE root folder
+// This indirection avoids having to parse quoted, space-containing paths out
+// of CommandParm() by hand.
+string ls_lines[], ls_worklist, ls_destroot, ls_pbl, ls_pblname, ls_folder
+string ls_logfile, ls_failfile, ls_status
+string ls_pbl_names[]
+long ll_jobn, ll_wn, i, ll_pos
+long ll_found, ll_ok, ll_fail
+long ll_grand_found, ll_grand_ok, ll_grand_fail, ll_libcount
+long ll_pbl_found[], ll_pbl_ok[], ll_pbl_fail[]
+
+IF NOT FileExists(as_jobfile) THEN RETURN -1
+
+ll_jobn = gf_pbl_readlines(as_jobfile, ls_lines)
+IF ll_jobn < 2 THEN RETURN -1
+
+ls_worklist = ls_lines[1]
+ls_destroot = ls_lines[2]
+
+IF gf_pbl_ensuredir(ls_destroot) < 1 THEN RETURN -1
+
+ls_logfile  = ls_destroot + "\export.log"
+ls_failfile = ls_destroot + "\failed_objects.log"
+
+gf_pbl_log(ls_logfile, "========================================")
+gf_pbl_log(ls_logfile, "POWERBUILDER PBL EXPORT")
+gf_pbl_log(ls_logfile, "========================================")
+
+ll_wn = gf_pbl_readlines(ls_worklist, ls_lines)
+IF ll_wn < 1 THEN
+	gf_pbl_log(ls_logfile, "ERROR: worklist empty or unreadable: " + ls_worklist)
+	RETURN -1
+END IF
+
+ll_grand_found = 0
+ll_grand_ok = 0
+ll_grand_fail = 0
+ll_libcount = 0
+
+FOR i = 1 TO ll_wn
+	ls_pbl = Trim(ls_lines[i])
+	IF ls_pbl = "" THEN CONTINUE
+
+	ll_pos = LastPos(ls_pbl, "\")
+	IF ll_pos > 0 THEN
+		ls_pblname = Mid(ls_pbl, ll_pos + 1)
+	ELSE
+		ls_pblname = ls_pbl
+	END IF
+
+	ll_pos = LastPos(ls_pblname, ".")
+	IF ll_pos > 0 THEN
+		ls_folder = Left(ls_pblname, ll_pos - 1)
+	ELSE
+		ls_folder = ls_pblname
+	END IF
+	ls_folder = gf_pbl_sanitize(ls_folder)
+
+	IF NOT FileExists(ls_pbl) THEN
+		gf_pbl_log(ls_logfile, "PBL NOT FOUND: " + ls_pbl)
+		CONTINUE
+	END IF
+
+	IF gf_pbl_ensuredir(ls_destroot + "\" + ls_folder) < 1 THEN
+		gf_pbl_log(ls_logfile, "FOLDER ERROR: " + ls_destroot + "\" + ls_folder)
+		CONTINUE
+	END IF
+
+	gf_pbl_log(ls_logfile, "")
+	gf_pbl_log(ls_logfile, "PBL: " + ls_pblname)
+	gf_pbl_log(ls_logfile, "Output: " + ls_destroot + "\" + ls_folder)
+
+	gf_pbl_export_one(ls_pbl, ls_pblname, ls_destroot + "\" + ls_folder, ls_logfile, ls_failfile, ll_found, ll_ok, ll_fail)
+
+	gf_pbl_log(ls_logfile, "PBL DONE: " + ls_pblname + "  Found=" + String(ll_found) + " Exported=" + String(ll_ok) + " Failed=" + String(ll_fail))
+
+	ll_libcount ++
+	ls_pbl_names[ll_libcount] = ls_pblname
+	ll_pbl_found[ll_libcount] = ll_found
+	ll_pbl_ok[ll_libcount]    = ll_ok
+	ll_pbl_fail[ll_libcount]  = ll_fail
+
+	ll_grand_found += ll_found
+	ll_grand_ok    += ll_ok
+	ll_grand_fail  += ll_fail
+NEXT
+
+gf_pbl_log(ls_logfile, "")
+gf_pbl_log(ls_logfile, "========================================")
+gf_pbl_log(ls_logfile, "SUMMARY")
+gf_pbl_log(ls_logfile, "========================================")
+gf_pbl_log(ls_logfile, "")
+gf_pbl_log(ls_logfile, "PBL~tFOUND~tEXPORTED~tFAILED~tSTATUS")
+
+FOR i = 1 TO ll_libcount
+	IF ll_pbl_found[i] = ll_pbl_ok[i] + ll_pbl_fail[i] THEN
+		ls_status = "OK"
+	ELSE
+		ls_status = "ERROR (count mismatch)"
+	END IF
+	gf_pbl_log(ls_logfile, ls_pbl_names[i] + "~t" + String(ll_pbl_found[i]) + "~t" + String(ll_pbl_ok[i]) + "~t" + String(ll_pbl_fail[i]) + "~t" + ls_status)
+NEXT
+
+IF ll_grand_found = ll_grand_ok + ll_grand_fail THEN
+	ls_status = "OK"
+ELSE
+	ls_status = "ERROR (count mismatch)"
+END IF
+gf_pbl_log(ls_logfile, "------------------------------------------------------------------")
+gf_pbl_log(ls_logfile, "TOTAL~t" + String(ll_grand_found) + "~t" + String(ll_grand_ok) + "~t" + String(ll_grand_fail) + "~t" + ls_status)
+gf_pbl_log(ls_logfile, "")
+gf_pbl_log(ls_logfile, "PBL Found       : " + String(ll_libcount))
+gf_pbl_log(ls_logfile, "Objects Found   : " + String(ll_grand_found))
+gf_pbl_log(ls_logfile, "Objects Exported: " + String(ll_grand_ok))
+gf_pbl_log(ls_logfile, "Objects Failed  : " + String(ll_grand_fail))
+
+RETURN 1
+end function
