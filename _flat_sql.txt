@@ -1,6 +1,9 @@
-﻿select
-a.fincatcode,a.fincatdes,b.parentcode,b.parentname,c.accountcode,
-c.debetcredit as flag_dk,
+﻿select iq.*, a2.fincatdes, b2.parentname, c2.debetcredit as flag_dk,
+a2.fincatdes+' '+b2.parentname+' '+iq.accountcode as is_find
+from
+(
+select
+a.fincatcode,b.parentcode,c.accountcode,
 isnull(awal.debit,0.00) as awal_debit,
 isnull(awal.credit,0.00) as awal_credit,
 isnull(mvmt.awal2_debit,0.00) as awal2_debit,
@@ -27,8 +30,7 @@ isnull(mvmt.bln10_credit,0.00) as bln10_credit,
 isnull(mvmt.bln11_debit,0.00) as bln11_debit,
 isnull(mvmt.bln11_credit,0.00) as bln11_credit,
 isnull(mvmt.bln12_debit,0.00) as bln12_debit,
-isnull(mvmt.bln12_credit,0.00) as bln12_credit,
-a.fincatdes+' '+b.parentname+' '+c.accountcode as is_find
+isnull(mvmt.bln12_credit,0.00) as bln12_credit
 from
 gl_cate a,gl_cate_detail b,gl_acc c,
 (
@@ -78,5 +80,8 @@ b.parentcode = c.parentcode and
 ((isnull(c.show_hide,'1') = '1') or 1 = :arg_show) and
 c.accountcode *= awal.accountcode and
 c.accountcode *= mvmt.account_id
+) iq, gl_cate a2, gl_cate_detail b2, gl_acc c2
+where iq.fincatcode = a2.fincatcode and iq.parentcode = b2.parentcode and iq.accountcode = c2.accountcode and
+a2.fincatcode = b2.fincatcode and b2.parentcode = c2.parentcode
 order by
-a.fincatcode,b.parentcode,c.accountcode
+iq.fincatcode,iq.parentcode,iq.accountcode

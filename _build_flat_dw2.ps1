@@ -51,6 +51,21 @@ $ttlExpr = "saldo_awal + cbln1"
 for ($n=2; $n -le 12; $n++) { $ttlExpr += " + if(arg_jml_bulan>=${n},cbln${n},0)" }
 $det += "compute(band=detail alignment=`"1`" expression=`"$ttlExpr`"border=`"0`" color=`"33554432`" x=`"$ttlX`" y=`"4`" height=`"76`" width=`"622`" format=`"#,##0.00`" html.valueishtml=`"0`"  name=cttl visible=`"1`" $CTAIL"
 
+# --------------------------------------------------------------
+# Net-split helper columns (Other Non Operating: Pendapatan Lain-lain minus Biaya Lain-lain).
+# IMPORTANT: PowerBuilder DWE's sum(... for group N) rejects an inline if() as its argument
+# (confirmed: "sum(if(... for group 1)" -> "incorrect syntax" on import; the proven-working legacy
+# pattern is sum(if(...) for ALL) only -- for GROUP aggregates it pre-splits into two plain
+# per-row helper columns first, then sums a simple subtraction). Mirroring that exact proven
+# pattern here instead of inlining if() into the group-scoped sum().
+$netCond = "fincatcode='IS2230' and parentcode='500-010'"
+$det += "compute(band=detail alignment=`"1`" expression=`"if($netCond,0,saldo_awal)`"border=`"0`" color=`"33554432`" x=`"18`" y=`"1`" height=`"1`" width=`"1`" format=`"#,##0.00`" html.valueishtml=`"0`"  name=saldo_awal_a visible=`"1`" $CTAIL"
+$det += "compute(band=detail alignment=`"1`" expression=`"if($netCond,saldo_awal,0)`"border=`"0`" color=`"33554432`" x=`"18`" y=`"1`" height=`"1`" width=`"1`" format=`"#,##0.00`" html.valueishtml=`"0`"  name=saldo_awal_b visible=`"1`" $CTAIL"
+for ($n=1; $n -le 12; $n++) {
+    $det += "compute(band=detail alignment=`"1`" expression=`"if($netCond,0,cbln${n})`"border=`"0`" color=`"33554432`" x=`"18`" y=`"1`" height=`"1`" width=`"1`" format=`"#,##0.00`" html.valueishtml=`"0`"  name=cbln${n}_a visible=`"1`" $CTAIL"
+    $det += "compute(band=detail alignment=`"1`" expression=`"if($netCond,cbln${n},0)`"border=`"0`" color=`"33554432`" x=`"18`" y=`"1`" height=`"1`" width=`"1`" format=`"#,##0.00`" html.valueishtml=`"0`"  name=cbln${n}_b visible=`"1`" $CTAIL"
+}
+
 # 11 rollup building blocks, each across 14 "periods" (0=saldo_awal/lalu, 1..12=months, 13=total)
 # category filters (fincatcode-based, OR-chains only -- PB DWE has no IN())
 $catFilters = @{

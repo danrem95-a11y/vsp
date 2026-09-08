@@ -1,6 +1,9 @@
+select iq.*, a2.fincatdes, b2.parentname, c2.debetcredit as flag_dk,
+a2.fincatdes+' '+b2.parentname+' '+iq.accountcode as is_find
+from
+(
 select
-a.fincatcode,a.fincatdes,b.parentcode,b.parentname,c.accountcode,
-c.debetcredit as flag_dk,
+a.fincatcode,b.parentcode,c.accountcode,
 isnull(awal.debit,0.00) as awal_debit,
 isnull(awal.credit,0.00) as awal_credit,
 isnull(mvmt.awal2_debit,0.00) as awal2_debit,
@@ -28,7 +31,6 @@ isnull(mvmt.bln11_debit,0.00) as bln11_debit,
 isnull(mvmt.bln11_credit,0.00) as bln11_credit,
 isnull(mvmt.bln12_debit,0.00) as bln12_debit,
 isnull(mvmt.bln12_credit,0.00) as bln12_credit
-
 from
 gl_cate a,gl_cate_detail b,gl_acc c,
 (
@@ -69,12 +71,17 @@ sum(case when tgl between '2026-12-01' and '2026-12-31' then isnull(debet,0) els
 sum(case when tgl between '2026-12-01' and '2026-12-31' then isnull(kredit,0) else 0 end) as bln12_credit
 FROM gl_journal
 WHERE tgl between '2026-01-01' and '2026-12-31' and
-((isnull(gl_journal.show_hide,'1') = '1') or 1 = 0)
+((isnull(gl_journal.show_hide,'1') = '1') or 1 = 1)
 GROUP BY gl_journal.account_id
 ) mvmt
 where a.fincatcode = b.fincatcode and
 b.parentcode = c.parentcode and
 (a.fincatcode = 'IS1001' or a.fincatcode = 'IS1110' or a.fincatcode = 'IS2010' or a.fincatcode = 'IS2110' or a.fincatcode = 'IS2120' or a.fincatcode = 'IS2130' or a.fincatcode = 'IS2230' or a.fincatcode = 'IS2330') and
-((isnull(c.show_hide,'1') = '1') or 1 = 0) and
+((isnull(c.show_hide,'1') = '1') or 1 = 1) and
 c.accountcode *= awal.accountcode and
 c.accountcode *= mvmt.account_id
+) iq, gl_cate a2, gl_cate_detail b2, gl_acc c2
+where iq.fincatcode = a2.fincatcode and iq.parentcode = b2.parentcode and iq.accountcode = c2.accountcode and
+a2.fincatcode = b2.fincatcode and b2.parentcode = c2.parentcode
+order by
+iq.fincatcode,iq.parentcode,iq.accountcode

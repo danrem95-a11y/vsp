@@ -25,15 +25,22 @@ $fc_all       = "$fc_penjualan or $fc_hpp or $fc_biaya or $fc_other or $fc_pajak
 # ============================================================
 # 1) SQL retrieve string
 # ============================================================
-# --- inner query: account-level grain, one gl_journal scan covering awal2 + all 12 months ---
+# --- phase-1 (inner) query: account-level grain, one gl_journal scan covering awal2 + all 12 months.
+# CRITICAL PERFORMANCE FINDING (empirically isolated via ~20 timed trials against the live DB):
+# this ASA9 optimizer picks a catastrophic per-row nested-loop plan (85s+) whenever a query joining
+# gl_cate/gl_cate_detail/gl_acc to the awal/mvmt aggregates ALSO projects a dimension TEXT column
+# (fincatdes/parentname) from gl_cate/gl_cate_detail in the SAME select list -- reproduced consistently,
+# independent of row count, column count from awal/mvmt, join syntax (*= vs ANSI), GROUP BY, or ORDER BY.
+# Keeping the aggregate join "numeric-only" (proven: ~450ms) and re-joining the tiny dimension tables
+# in a cheap second phase purely for display text (proven: ~500ms combined) reliably avoids it.
 $innerCols = @"
-a.fincatcode,a.fincatdes,b.parentcode,b.parentname,c.accountcode,
-c.debetcredit as flag_dk,
+a.fincatcode,b.parentcode,c.accountcode,
 isnull(awal.debit,0.00) as awal_debit,
 isnull(awal.credit,0.00) as awal_credit,
 isnull(mvmt.awal2_debit,0.00) as awal2_debit,
 isnull(mvmt.awal2_credit,0.00) as awal2_credit,
 "@
+$innerCols = $innerCols -replace "`r?`n", $CRLF
 for ($n=1; $n -le 12; $n++) {
     $innerCols += "isnull(mvmt.bln${n}_debit,0.00) as bln${n}_debit,${CRLF}isnull(mvmt.bln${n}_credit,0.00) as bln${n}_credit,${CRLF}"
 }
@@ -64,16 +71,18 @@ WHERE tgl between :arg_tgl1 and :arg_bln12_akhir and
 GROUP BY gl_journal.account_id
 ) mvmt
 "@
+$fromSub = $fromSub -replace "`r?`n", $CRLF
 
 $joinLines = @('c.accountcode *= awal.accountcode', 'c.accountcode *= mvmt.account_id')
 $joinStr = [string]::Join(" and${CRLF}", $joinLines)
 
-# Account-level grain (proven fast: ~550ms full combination vs 85s+ for a SQL-side parentcode
-# re-aggregation wrap on this DB/optimizer). Parentcode-level display aggregation is instead
-# done natively by PowerBuilder's own group-2 trailer (sum(... for group 2)), mirroring the
-# already-proven group-1 (fincatcode) trailer mechanism.
-$innerCols += ",${CRLF}a.fincatdes+' '+b.parentname+' '+c.accountcode as is_find"
-$sql = "select${CRLF}${innerCols}${CRLF}from${CRLF}${fromSub}${CRLF}where a.fincatcode = b.fincatcode and${CRLF}b.parentcode = c.parentcode and${CRLF}(${fc_all}) and${CRLF}((isnull(c.show_hide,'1') = '1') or 1 = :arg_show) and${CRLF}${joinStr}${CRLF}order by${CRLF}a.fincatcode,b.parentcode,c.accountcode"
+$innerSql = "select${CRLF}${innerCols}${CRLF}from${CRLF}${fromSub}${CRLF}where a.fincatcode = b.fincatcode and${CRLF}b.parentcode = c.parentcode and${CRLF}(${fc_all}) and${CRLF}((isnull(c.show_hide,'1') = '1') or 1 = :arg_show) and${CRLF}${joinStr}"
+
+# --- phase-2 (outer) query: cheap small-to-small re-join of gl_cate/gl_cate_detail/gl_acc purely for
+# display text (fincatdes/parentname/flag_dk/is_find) -- account-level grain unchanged, still 1:1.
+# Parentcode-level display aggregation for REKAP is done natively by PowerBuilder's own group-2
+# trailer (sum(... for group 2)), mirroring the already-proven group-1 (fincatcode) trailer mechanism.
+$sql = "select iq.*, a2.fincatdes, b2.parentname, c2.debetcredit as flag_dk,${CRLF}a2.fincatdes+' '+b2.parentname+' '+iq.accountcode as is_find${CRLF}from${CRLF}(${CRLF}${innerSql}${CRLF}) iq, gl_cate a2, gl_cate_detail b2, gl_acc c2${CRLF}where iq.fincatcode = a2.fincatcode and iq.parentcode = b2.parentcode and iq.accountcode = c2.accountcode and${CRLF}a2.fincatcode = b2.fincatcode and b2.parentcode = c2.parentcode${CRLF}order by${CRLF}iq.fincatcode,iq.parentcode,iq.accountcode"
 
 # ============================================================
 # 2) column defs

@@ -14,10 +14,10 @@ $rowH = 76
 $y0 = 8
 # --- normal per-fincatcode subtotal row (y0) ---
 $tr += "compute(band=trailer.1 alignment=`"0`" expression=`"'TOTAL '+fincatdes`"border=`"0`" color=`"33554432`" x=`"18`" y=`"$y0`" height=`"$rowH`" width=`"1400`" format=`"[GENERAL]`" html.valueishtml=`"0`"  name=t_total_label visible=`"1`" $CTAILB"
-$tr += "compute(band=trailer.1 alignment=`"1`" expression=`"sum(if(fincatcode='IS2230' and parentcode='500-010',-saldo_awal,saldo_awal) for group 1)`"border=`"0`" color=`"33554432`" x=`"1422`" y=`"$y0`" height=`"$rowH`" width=`"622`" format=`"#,##0.00`" html.valueishtml=`"0`"  name=g_saldo_awal visible=`"1`" $CTAILB"
+$tr += "compute(band=trailer.1 alignment=`"1`" expression=`"sum(saldo_awal_a - saldo_awal_b for group 1)`"border=`"0`" color=`"33554432`" x=`"1422`" y=`"$y0`" height=`"$rowH`" width=`"622`" format=`"#,##0.00`" html.valueishtml=`"0`"  name=g_saldo_awal visible=`"1`" $CTAILB"
 for ($n=1; $n -le 12; $n++) {
     $x = $baseX + ($n-1)*$colStep
-    $expr = "sum(if(fincatcode='IS2230' and parentcode='500-010',-cbln${n},cbln${n}) for group 1)"
+    $expr = "sum(cbln${n}_a - cbln${n}_b for group 1)"
     $tr += "compute(band=trailer.1 alignment=`"1`" expression=`"$expr`"border=`"0`" color=`"33554432`" x=`"$x`" y=`"$y0`" height=`"$rowH`" width=`"$colWidth`" format=`"#,##0.00`" html.valueishtml=`"0`"  name=g_cbln${n} visible=`"1`" $CTAILB"
 }
 $gttlExpr = "g_saldo_awal + g_cbln1"
@@ -74,10 +74,10 @@ $trailer1Height | Out-File -FilePath c:\BTV\debug\_flat_trailer1_height.txt -Enc
 # ============================================================
 $tr2 = @()
 $tr2 += "column(band=trailer.2 id=1 alignment=`"0`" tabsequence=32766 border=`"0`" color=`"33554432`" x=`"69`" y=`"$y0`" height=`"$rowH`" width=`"1340`" format=`"[GENERAL]`" html.valueishtml=`"0`"  name=t2_parentname visible=`"1`" $CTAIL"
-$tr2 += "compute(band=trailer.2 alignment=`"1`" expression=`"sum(if(fincatcode='IS2230' and parentcode='500-010',-saldo_awal,saldo_awal) for group 2)`"border=`"0`" color=`"33554432`" x=`"1422`" y=`"$y0`" height=`"$rowH`" width=`"622`" format=`"#,##0.00`" html.valueishtml=`"0`"  name=g2_saldo_awal visible=`"1`" $CTAIL"
+$tr2 += "compute(band=trailer.2 alignment=`"1`" expression=`"sum(saldo_awal_a - saldo_awal_b for group 2)`"border=`"0`" color=`"33554432`" x=`"1422`" y=`"$y0`" height=`"$rowH`" width=`"622`" format=`"#,##0.00`" html.valueishtml=`"0`"  name=g2_saldo_awal visible=`"1`" $CTAIL"
 for ($n=1; $n -le 12; $n++) {
     $x = $baseX + ($n-1)*$colStep
-    $expr = "sum(if(fincatcode='IS2230' and parentcode='500-010',-cbln${n},cbln${n}) for group 2)"
+    $expr = "sum(cbln${n}_a - cbln${n}_b for group 2)"
     $tr2 += "compute(band=trailer.2 alignment=`"1`" expression=`"$expr`"border=`"0`" color=`"33554432`" x=`"$x`" y=`"$y0`" height=`"$rowH`" width=`"$colWidth`" format=`"#,##0.00`" html.valueishtml=`"0`"  name=g2_cbln${n} visible=`"1`" $CTAIL"
 }
 $g2ttlExpr = "g2_saldo_awal + g2_cbln1"
