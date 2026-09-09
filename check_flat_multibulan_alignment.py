@@ -89,7 +89,7 @@ for label in ['Periode Lalu'] + [f'Month{n}' for n in range(1, 13)]:
     print(row)
 
 print()
-print("=== RESULT ===")
+print("=== RESULT: MASTER GRID EQUALITY ===")
 if mismatches:
     print(f"FAIL -- {len(mismatches)} mismatch(es):")
     for m in mismatches:
@@ -97,3 +97,60 @@ if mismatches:
 else:
     print("PASS -- every header/detail/trailer.1/trailer.2 numeric column object matches the")
     print("        trailer.2 (subtotal) master grid EXACTLY (x and right boundary, all 13 columns).")
+
+# ---------------------------------------------------------------------------
+# STRAY BORDER CHECK
+# ---------------------------------------------------------------------------
+# A bordered object whose edges don't land on the canonical grid draws a visible
+# line/box at an unexpected screen position -- this is exactly what produced the
+# "detail column border doesn't reach TOTAL" artifacts reported against this file:
+# ~169 tiny (1x1 twip) calculation-helper compute objects in the detail band had
+# border="2" inherited from the shared template, each drawing a stray border
+# fragment stacked at x=18 inside the Description column.
+canonical_edges = set()
+for mx, mw in master.values():
+    canonical_edges.add(mx)
+    canonical_edges.add(mx + mw)
+
+stray = []
+for ln in lines:
+    band_m = re.search(r'\bband=([A-Za-z0-9_.]+)', ln)
+    if not band_m or band_m.group(1) not in ('header', 'detail', 'trailer.1', 'trailer.2'):
+        continue
+    name_m = re.search(r'\bname=(\S+)', ln)
+    x_m = re.search(r'\bx="(\d+)"', ln)
+    w_m = re.search(r'\bwidth="(\d+)"', ln)
+    border_m = re.search(r'\bborder="(\d+)"', ln)
+    if not (name_m and x_m and w_m):
+        continue
+    x = int(x_m.group(1))
+    w = int(w_m.group(1))
+    right = x + w
+    border = border_m.group(1) if border_m else '0'
+    if border == '0':
+        continue
+    # gb_2 (and any other full-row background/groupbox whose right edge matches the
+    # master grid's last column) is legitimate -- it is allowed to start left of the
+    # first data column to cover the description area. Only flag objects whose EDGES
+    # land somewhere with no correspondence to the grid at all.
+    if x in canonical_edges and right in canonical_edges:
+        continue
+    if right == max(mx + mw for mx, mw in master.values()) and w > 1000:
+        continue  # full-row background/groupbox spanning to the last column -- legitimate
+    stray.append((band_m.group(1), name_m.group(1), x, w, right, border))
+
+print()
+print("=== RESULT: STRAY BORDER CHECK ===")
+if stray:
+    print(f"FAIL -- {len(stray)} bordered object(s) not aligned to the canonical grid:")
+    for band, name, x, w, right, border in stray:
+        print(f"  band={band} name={name} x={x} width={w} right={right} border={border}")
+else:
+    print("PASS -- no bordered object exists off the canonical column grid "
+          "(no stray border artifacts).")
+
+print()
+if not mismatches and not stray:
+    print("=== FINAL: PASS -- exact vertical column alignment verified ===")
+else:
+    print("=== FINAL: FAIL -- alignment still inconsistent ===")
