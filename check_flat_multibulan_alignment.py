@@ -7,7 +7,7 @@ with open(SRC, 'r', encoding='utf-16', newline='') as fh:
 
 lines = re.split(r'\r\n', content)
 
-# Parse every object across the 4 relevant bands into (band, name, x, width, right)
+# Parse every object in the 4 bands.
 objects = []
 for ln in lines:
     band_m = re.search(r'\bband=([A-Za-z0-9_.]+)', ln)
@@ -19,75 +19,81 @@ for ln in lines:
     name_m = re.search(r'\bname=(\S+)', ln)
     x_m = re.search(r'\bx="(\d+)"', ln)
     w_m = re.search(r'\bwidth="(\d+)"', ln)
+    h_m = re.search(r'\bheight="(\d+)"', ln)
     if not (name_m and x_m and w_m):
         continue
     x = int(x_m.group(1))
     w = int(w_m.group(1))
-    objects.append({'band': band, 'name': name_m.group(1), 'x': x, 'width': w, 'right': x + w})
+    objects.append({'band': band, 'name': name_m.group(1), 'x': x, 'width': w, 'right': x + w,
+                     'height': int(h_m.group(1)) if h_m else None})
 
-# Column definitions: the canonical x-slots this report is supposed to use.
-# Periode Lalu = x1422 w622 ; month N = baseX + (N-1)*580, w=560 (N=1..12)
-baseX = 2048
-step = 580
-colW = 560
-
-expected = {'Periode Lalu': (1422, 622)}
-for n in range(1, 13):
-    expected[f'Month{n}'] = (baseX + (n - 1) * step, colW)
-
-def classify(x, w):
-    for label, (ex, ew) in expected.items():
-        if x == ex and w == ew:
-            return label
-    return None
-
-# Group objects by (x,width) slot and by band, to verify every occupant of a slot matches
-slot_occupants = {}
-unclassified = []
-for obj in objects:
-    label = classify(obj['x'], obj['width'])
-    if label is None:
-        unclassified.append(obj)
+# MASTER GRID = the subtotal (trailer.2) row's numeric-column objects, per the user's explicit
+# instruction that subtotal/total geometry is the master. trailer.2's numeric value objects are
+# t2_cbln{n} (months) and compute_6 (Periode Lalu). Build the master grid strictly FROM these.
+master = {}
+for o in objects:
+    if o['band'] != 'trailer.2':
         continue
-    slot_occupants.setdefault(label, {}).setdefault(obj['band'], []).append(obj['name'])
+    if o['name'] == 'compute_6':
+        master['Periode Lalu'] = (o['x'], o['width'])
+    else:
+        m = re.match(r'^t2_cbln(\d+)$', o['name'])
+        if m:
+            master[f"Month{m.group(1)}"] = (o['x'], o['width'])
 
-report = {}
+print("=== MASTER GRID (derived from trailer.2 / subtotal row) ===")
+for label in ['Periode Lalu'] + [f'Month{n}' for n in range(1, 13)]:
+    if label in master:
+        mx, mw = master[label]
+        print(f"{label}: x={mx} width={mw} right={mx+mw}")
+    else:
+        print(f"{label}: MISSING from trailer.2 -- cannot verify")
+
+# Now check every band's corresponding numeric objects against this master, EXACT equality.
+name_patterns = {
+    'header': {'Periode Lalu': None, **{f'Month{n}': f'chdr_bln{n}' for n in range(1, 13)}},
+    'detail': {'Periode Lalu': 'saldo_awal', **{f'Month{n}': f'cbln{n}' for n in range(1, 13)}},
+    'trailer.1': {'Periode Lalu': 'compute_9', **{f'Month{n}': f't_cbln{n}' for n in range(1, 13)}},
+    'trailer.2': {'Periode Lalu': 'compute_6', **{f'Month{n}': f't2_cbln{n}' for n in range(1, 13)}},
+}
+
+by_band_name = {}
+for o in objects:
+    by_band_name.setdefault(o['band'], {})[o['name']] = o
+
 mismatches = []
-
-for label, (ex, ew) in expected.items():
-    bands_present = slot_occupants.get(label, {})
-    report[label] = {
-        'expected_x': ex,
-        'expected_width': ew,
-        'expected_right': ex + ew,
-        'bands': {b: names for b, names in bands_present.items()},
-    }
-    # every real content band should have exactly one occupant in this slot (except header
-    # which may have both a value compute and, for months, the month object -- 1 is fine)
-    missing_bands = [b for b in ('detail', 'trailer.1', 'trailer.2') if b not in bands_present]
-    if missing_bands:
-        mismatches.append(f"{label}: missing occupant in band(s) {missing_bands}")
-
-print("=== EXPECTED COLUMN SLOTS (x, width, right) ===")
-for label, info in report.items():
-    print(f"{label}: x={info['expected_x']} width={info['expected_width']} right={info['expected_right']}  bands={list(info['bands'].keys())}")
+print()
+print("=== EXACT EQUALITY CHECK: header.x == detail.x == trailer.1.x == trailer.2.x (master) ===")
+for label in ['Periode Lalu'] + [f'Month{n}' for n in range(1, 13)]:
+    if label not in master:
+        continue
+    mx, mw = master[label]
+    mright = mx + mw
+    row = {'label': label, 'master_x': mx, 'master_right': mright}
+    for band in ('header', 'detail', 'trailer.1', 'trailer.2'):
+        if label == 'Periode Lalu' and band == 'header':
+            continue  # header has no per-column "Periode Lalu" data object (it's a static text label)
+        obj_name = name_patterns[band].get(label)
+        obj = by_band_name.get(band, {}).get(obj_name)
+        if obj is None:
+            mismatches.append(f"{label}/{band}: object '{obj_name}' not found")
+            row[band] = 'MISSING'
+            continue
+        ok_x = obj['x'] == mx
+        ok_right = obj['right'] == mright
+        row[band] = f"x={obj['x']} right={obj['right']} {'OK' if (ok_x and ok_right) else 'MISMATCH'}"
+        if not ok_x:
+            mismatches.append(f"{label}/{band} ({obj_name}): x={obj['x']} != master_x={mx}")
+        if not ok_right:
+            mismatches.append(f"{label}/{band} ({obj_name}): right={obj['right']} != master_right={mright}")
+    print(row)
 
 print()
-print("=== UNCLASSIFIED OBJECTS (x/width doesn't match any canonical slot) ===")
-# filter out the tiny 1x1 hidden helpers and header sub-labels/groupbox which are expected to differ
-real_unclassified = [o for o in unclassified if o['width'] > 1 and o['band'] != 'header']
-for o in real_unclassified:
-    print(o)
-
-print()
-print("=== MISMATCHES ===")
+print("=== RESULT ===")
 if mismatches:
+    print(f"FAIL -- {len(mismatches)} mismatch(es):")
     for m in mismatches:
         print(" -", m)
 else:
-    print("none -- every canonical column slot has a matching occupant in detail, trailer.1, and trailer.2")
-
-with open('_alignment_report.json', 'w') as fh:
-    json.dump({'report': report, 'unclassified_nontrivial': real_unclassified, 'mismatches': mismatches}, fh, indent=2)
-print()
-print("Full JSON report written to _alignment_report.json")
+    print("PASS -- every header/detail/trailer.1/trailer.2 numeric column object matches the")
+    print("        trailer.2 (subtotal) master grid EXACTLY (x and right boundary, all 13 columns).")
