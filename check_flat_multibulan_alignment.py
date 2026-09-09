@@ -7,6 +7,37 @@ with open(SRC, 'r', encoding='utf-16', newline='') as fh:
 
 lines = re.split(r'\r\n', content)
 
+# ---------------------------------------------------------------------------
+# CALLER RUNTIME-OVERRIDE CHECK (w_rpt_neraca.srw)
+# ---------------------------------------------------------------------------
+# The actual root cause of one alignment regression was not in the .srd at all:
+# a leftover dw_2.Modify("cbln{n}.Width='480'~tchdr_bln{n}.Width='480'") loop in
+# the calling window, run AFTER dw_2.retrieve(), silently forced the detail/
+# header columns back to an old width while trailer.1/trailer.2 (never targeted
+# by that Modify call) kept whatever width the .srd declares -- producing a
+# "detail column narrower than its own subtotal" mismatch invisible to any
+# check that only reads the .srd. Guard against this class of bug reappearing.
+CALLER = 'w_rpt_neraca.srw'
+caller_issues = []
+try:
+    with open(CALLER, 'r', encoding='utf-16', newline='') as fh:
+        caller_content = fh.read()
+    if '.Width=' in caller_content:
+        for m in re.finditer(r'.{0,60}\.Width=.{0,60}', caller_content):
+            caller_issues.append(m.group(0))
+except FileNotFoundError:
+    caller_issues.append(f"WARNING: {CALLER} not found, could not check for runtime width overrides")
+
+print("=== CALLER RUNTIME-OVERRIDE CHECK (w_rpt_neraca.srw) ===")
+if caller_issues:
+    print(f"FAIL -- found {len(caller_issues)} runtime .Width= reference(s) that could override .srd geometry:")
+    for c in caller_issues:
+        print("  ", c)
+else:
+    print("PASS -- no runtime .Width= Modify() calls found; column widths are controlled")
+    print("        exclusively by dw_rpt_is_flat_multibulan.srd's own declared geometry.")
+print()
+
 # Parse every object in the 4 bands.
 objects = []
 for ln in lines:
@@ -150,7 +181,7 @@ else:
           "(no stray border artifacts).")
 
 print()
-if not mismatches and not stray:
+if not mismatches and not stray and not caller_issues:
     print("=== FINAL: PASS -- exact vertical column alignment verified ===")
 else:
     print("=== FINAL: FAIL -- alignment still inconsistent ===")
