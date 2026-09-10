@@ -174,22 +174,24 @@ def generate_one(n_months):
         x = col_x[f'slot{slot}']
         objs_detail.append(f'compute(band=detail alignment="1" expression="cbln{month_num}"border="2" color="33554432" x="{x}" y="4" height="76" width="{subW}" format="#,##0.00" html.valueishtml="0"  name=cslot{slot} visible="1" {CTAIL}')
 
+    # Direct inspection of the proven reference dw_rpt_is_flat_multibulan.srd (commit 90e3fb8) --
+    # which got further through PowerBuilder's import than any version built in this session --
+    # shows it uses 1x1-twip hidden helper objects with visible="1" (NOT visible="0" + real
+    # geometry) for both the detail-band netsplit _a/_b pairs AND the tot_*/profit-line rollups,
+    # and those rollups live in the DETAIL band as named objects (NOT inlined, NOT in summary).
+    # Two earlier fixes in this session (233c298, 955ce37) changed both of these based on theories
+    # that turned out to be wrong. Reverting to the proven file's actual, demonstrated-working
+    # pattern exactly.
     hidden_y = [200 + n_months + 1]
 
-    # No genuinely working report in this codebase hides a helper compute object by giving it
-    # 1x1-twip geometry -- the PROVEN pattern (dw_rpt_is_pendapatan_rekap_multibulan.srd's
-    # lalu_500/lalu_510 netsplit pair, and dw_rpt_is.srd's summary-band category rollups) is to
-    # give the object real, normal geometry and hide it with visible="0" instead. Stacking dozens
-    # of true 1x1 objects (in detail AND in summary) is a construct this session invented and
-    # never actually validated against PowerBuilder's real parser. Match the proven convention.
     def next_hidden_pos():
         y = hidden_y[0]
         hidden_y[0] += 1
-        return f'x="18" y="{y}" height="20" width="200"'
+        return f'x="18" y="{y}" height="1" width="1"'
 
     def netsplit_pair(base_name, body):
-        a = f'compute(band=detail alignment="1" expression="if({netcond},0,{body})"border="0" color="33554432" {next_hidden_pos()} format="#,##0.00" html.valueishtml="0"  name={base_name}_a visible="0" {CTAIL}'
-        b = f'compute(band=detail alignment="1" expression="if({netcond},{body},0)"border="0" color="33554432" {next_hidden_pos()} format="#,##0.00" html.valueishtml="0"  name={base_name}_b visible="0" {CTAIL}'
+        a = f'compute(band=detail alignment="1" expression="if({netcond},0,{body})"border="0" color="33554432" {next_hidden_pos()} format="#,##0.00" html.valueishtml="0"  name={base_name}_a visible="1" {CTAIL}'
+        b = f'compute(band=detail alignment="1" expression="if({netcond},{body},0)"border="0" color="33554432" {next_hidden_pos()} format="#,##0.00" html.valueishtml="0"  name={base_name}_b visible="1" {CTAIL}'
         return [a, b]
 
     objs_detail.extend(netsplit_pair('cbln_sdlalu', "(awal2_debit - awal2_credit) * if(flag_dk = 'D',1,(-1))"))
@@ -203,26 +205,23 @@ def generate_one(n_months):
     for s in range(1, n_months + 1):
         col_field_map[f'slot{s}'] = f'cslot{s}'
 
-    # Every fix attempt so far (bare-LF normalization, adding header.2, moving rollups from
-    # detail to summary, switching 1x1 geometry to real geometry) left the reported import error
-    # on the EXACT same line/column, which turned out to be the LAST visible rollup-row object
-    # (rlp_5_slot1) -- i.e. the boundary right before the first hidden (visible="0") object in
-    # the summary band. That boundary, and the ~33 consecutive hidden objects following it, is a
-    # construct this session invented and never validated. Eliminate it entirely: no hidden
-    # intermediate compute objects for the category/profit-line rollups at all -- inline the full
-    # sum(if(filter,field,0) for all) expression directly into each visible rlp_* cell, exactly
-    # the same way dw_rpt_is.srd (a real production file) computes its category totals with a
-    # single sum(if(...)) call and no intermediate named helper.
-    def tot_expr(cat, col):
-        filt = cat_filters[cat]
-        field = col_field_map[col]
-        return f"sum(if({filt},{field},0) for all)"
+    for cat, filt in cat_filters.items():
+        for col in rollup_cols:
+            field = col_field_map[col]
+            objs_detail.append(f'compute(band=detail alignment="1" expression="sum(if({filt},{field},0) for all)"border="0" color="33554432" {next_hidden_pos()} format="#,##0.00" html.valueishtml="0"  name=tot_{cat}_{col} visible="1" {CTAIL}')
 
-    def labakotor(c): return f"({tot_expr('penjualan', c)}) - ({tot_expr('hpp', c)})"
-    def labaoperasional(c): return f"({labakotor(c)}) - ({tot_expr('biaya', c)})"
-    def othernonop(c): return f"({tot_expr('pendapatan', c)}) - ({tot_expr('biayalain', c)})"
+    def labakotor(c): return f"tot_penjualan_{c} - tot_hpp_{c}"
+    def labaoperasional(c): return f"({labakotor(c)}) - tot_biaya_{c}"
+    def othernonop(c): return f"tot_pendapatan_{c} - tot_biayalain_{c}"
     def labasblmpajak(c): return f"({labaoperasional(c)}) + ({othernonop(c)})"
-    def labaBersih(c): return f"({labasblmpajak(c)}) - ({tot_expr('pajak', c)})"
+    def labaBersih(c): return f"({labasblmpajak(c)}) - tot_pajak_{c}"
+
+    for col in rollup_cols:
+        objs_detail.append(f'compute(band=detail alignment="1" expression="{labakotor(col)}"border="0" color="33554432" {next_hidden_pos()} format="#,##0.00" html.valueishtml="0"  name=labakotor_{col} visible="1" {CTAIL}')
+        objs_detail.append(f'compute(band=detail alignment="1" expression="{labaoperasional(col)}"border="0" color="33554432" {next_hidden_pos()} format="#,##0.00" html.valueishtml="0"  name=labaoperasional_{col} visible="1" {CTAIL}')
+        objs_detail.append(f'compute(band=detail alignment="1" expression="{othernonop(col)}"border="0" color="33554432" {next_hidden_pos()} format="#,##0.00" html.valueishtml="0"  name=othernonop_{col} visible="1" {CTAIL}')
+        objs_detail.append(f'compute(band=detail alignment="1" expression="{labasblmpajak(col)}"border="0" color="33554432" {next_hidden_pos()} format="#,##0.00" html.valueishtml="0"  name=labasblmpajak_{col} visible="1" {CTAIL}')
+        objs_detail.append(f'compute(band=detail alignment="1" expression="{labaBersih(col)}"border="0" color="33554432" {next_hidden_pos()} format="#,##0.00" html.valueishtml="0"  name=labaBersih_{col} visible="1" {CTAIL}')
 
     objs_trailer2.append(f'compute(band=trailer.2 alignment="0" expression="\'TOTAL \'+parentname"border="0" color="33554432" x="18" y="8" height="76" width="{col_x["sd_lalu"]-18}" format="[GENERAL]" html.valueishtml="0"  name=compute_5 visible="1" {CTAILB}')
     objs_trailer2.append(f'compute(band=trailer.2 alignment="1" expression="sum(cbln_sdlalu_a - cbln_sdlalu_b for group 2)"border="2" color="33554432" x="{col_x["sd_lalu"]}" y="8" height="76" width="{subW}" format="#,##0.00" html.valueishtml="0"  name=compute_6 visible="1" {CTAILB}')
