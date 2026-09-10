@@ -204,6 +204,20 @@ with open('_prefix_excel.txt', 'r', encoding='utf-16', newline='') as fh:
 
 prefix = re.sub(r'(group\(level=1 header\.height=\d+ trailer\.height=)\d+', r'\g<1>100', prefix)
 
+# The detail band's own top-level height declaration must cover every object placed in it,
+# including the hidden 1x1 calculation helpers stacked via next_hidden_pos() -- otherwise the
+# band's actual content overflows its declared height, which is exactly the kind of mismatch
+# that has previously caused PB Painter's source parser to lose sync at the band boundary.
+detail_max_bottom = 0
+for ln in objs_detail:
+    m_y = re.search(r'\by="(\d+)"', ln)
+    m_h = re.search(r'\bheight="(\d+)"', ln)
+    if m_y and m_h:
+        detail_max_bottom = max(detail_max_bottom, int(m_y.group(1)) + int(m_h.group(1)))
+detail_height = detail_max_bottom + 8
+prefix = re.sub(r'^detail\(height=\d+', f'detail(height={detail_height}', prefix, count=1, flags=re.MULTILINE)
+print("detail band height set to:", detail_height, "(actual max content bottom:", detail_max_bottom, ")")
+
 footer = CRLF.join([
     'htmltable(border="1" )',
     'xhtml(controlblock="no" visibleburnin="no" )',
