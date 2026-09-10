@@ -258,6 +258,14 @@ def build_detail_band(n_months):
             line = set_y(line, next_y() + 200)
             out.append(line)
 
+    # DIAGNOSTIC: every error report so far has landed on the LAST detail-band object,
+    # immediately before the detail->trailer.2 band transition -- consistently, across multiple
+    # from-scratch rebuilds with verified-correct content. A genuinely confirmed-working file
+    # (dw_rpt_is_hpp_multibulan.srd) has a REAL (622x76, non-1x1) object as its own last detail
+    # object, unlike every object at this position in this session's files. Test whether giving
+    # just the LAST object real geometry (instead of 1x1) changes anything.
+    out[-1] = re.sub(r'height="1" width="1"', 'height="76" width="200"', out[-1], count=1)
+
     return out
 
 
