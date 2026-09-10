@@ -9,6 +9,14 @@ def check_file(n_months):
 
     issues = []
 
+    # A bare LF (not part of a \r\n pair) inside the file -- typically from embedded SQL text
+    # built with plain "\n" -- desyncs PowerBuilder Painter's own line/column counter and has
+    # caused real "incorrect syntax" errors at unrelated line numbers. Every line ending in a
+    # .srd must be CRLF.
+    bare_lf = sum(1 for i, c in enumerate(content) if c == '\n' and (i == 0 or content[i - 1] != '\r'))
+    if bare_lf:
+        issues.append(f"{bare_lf} bare LF character(s) found (not part of \\r\\n) -- will desync PB Painter's parser")
+
     # 1. every 'name=' must be unique
     names_by_band = {}
     objects = []

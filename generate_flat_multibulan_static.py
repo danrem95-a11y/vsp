@@ -285,7 +285,14 @@ def generate_one(n_months):
 
     all_lines = header_lines + [table_full] + groups + [body] + footer_lines
     final = CRLF.join(all_lines)
+    # Some embedded SQL text above was built with plain "\n" (readability in this script).
+    # PowerBuilder's Painter source parser desyncs its line/column counter on a bare LF
+    # inside a quoted string -- every line ending in the .srd file must be CRLF. Normalize
+    # by collapsing to bare LF first, then expanding uniformly to CRLF, so this can never
+    # regress regardless of which literal a future edit uses.
+    final = final.replace('\r\n', '\n').replace('\n', '\r\n')
     assert final.count('\r\r') == 0
+    assert '\r\n' in final and not re.search(r'(?<!\r)\n', final)
 
     fname = f'{name}.srd'
     with open(fname, 'w', encoding='utf-16', newline='') as fh:
