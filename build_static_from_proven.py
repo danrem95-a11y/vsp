@@ -443,11 +443,21 @@ def build_file(n_months):
 
     group_line = 'group(level=1 header.height=104 trailer.height=100 by=("fincatcode" ) header.suppress=yes header.color="536870912" header.transparency="0" header.gradient.color="8421504" header.gradient.transparency="0" header.gradient.angle="0" header.brushmode="0" header.gradient.repetition.mode="0" header.gradient.repetition.count="0" header.gradient.repetition.length="100" header.gradient.focus="0" header.gradient.scale="100" header.gradient.spread="100" trailer.color="536870912" trailer.transparency="0" trailer.gradient.color="8421504" trailer.gradient.transparency="0" trailer.gradient.angle="0" trailer.brushmode="0" trailer.gradient.repetition.mode="0" trailer.gradient.repetition.count="0" trailer.gradient.repetition.length="100" trailer.gradient.focus="0" trailer.gradient.scale="100" trailer.gradient.spread="100" )'
 
+    # Switched to match dw_rpt_is_hpp_multibulan.srd's footer exactly -- a genuinely, fully
+    # confirmed production file (not just "got furthest") -- rather than the proven-furthest
+    # 90e3fb8 file's shorter footer, as one of the few remaining untested concrete differences
+    # between the two reference files.
     footer_lines = [
         'htmltable(border="1" )',
-        'xhtml(controlblock="no" visibleburnin="no" )',
-        'export.xml(headgroup=no metadata=no linkschema=no id=no)',
-        'import.xml(encoding="iso-8859-1" )',
+        'htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )',
+        'xhtmlgen() cssgen(sessionspecific="0" )',
+        'xmlgen(inline="0" )',
+        'xsltgen()',
+        'jsgen()',
+        'export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )',
+        'import.xml()',
+        'export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )',
+        'export.xhtml()',
     ]
 
     all_lines = (header_top + [table_full] + [group_line] +
