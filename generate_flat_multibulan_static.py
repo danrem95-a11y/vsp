@@ -140,6 +140,7 @@ def generate_one(n_months):
 
     objs_header = []
     objs_header1 = []
+    objs_header2 = []
     objs_detail = []
     objs_trailer2 = []
     objs_trailer1 = []
@@ -158,6 +159,8 @@ def generate_one(n_months):
         objs_header.append(f'compute(band=header alignment="2" expression="string(arg_bln{month_num}_akhir,\'mmm yyyy\')"border="2" color="33554432" x="{x}" y="316" height="128" width="{subW}" format="[GENERAL]" html.valueishtml="0"  name=chdr_slot{slot} visible="1" {CTAILB}')
 
     objs_header1.append(f'column(band=header.1 id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="18" y="8" height="76" width="1400" format="[GENERAL]" html.valueishtml="0"  name=fincatdes visible="1" {CTAILB}')
+
+    objs_header2.append(f'column(band=header.2 id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="37" y="4" height="76" width="1335" format="[GENERAL]" html.valueishtml="0"  name=parentname visible="1" {CTAIL}')
 
     objs_detail.append(f'column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="69" y="4" height="76" width="1335" format="[GENERAL]" html.valueishtml="0"  name=accountdes visible="1" {CTAIL}')
     objs_detail.append(f'compute(band=detail alignment="1" expression="(awal2_debit - awal2_credit) * if(flag_dk = \'D\',1,(-1))"border="2" color="33554432" x="{col_x["sd_lalu"]}" y="4" height="76" width="{subW}" format="#,##0.00" html.valueishtml="0"  name=cbln_sdlalu visible="1" {CTAIL}')
@@ -245,7 +248,7 @@ def generate_one(n_months):
         rollup_y += 84
     summary_height = rollup_y + 8
 
-    all_body = objs_header + objs_header1 + objs_detail + objs_trailer2 + objs_trailer1 + objs_summary
+    all_body = objs_header + objs_header1 + objs_header2 + objs_detail + objs_trailer2 + objs_trailer1 + objs_summary
     body = CRLF.join(all_body)
 
     detail_max_bottom = 0
@@ -273,7 +276,7 @@ def generate_one(n_months):
     group2_height = 100
     groups = [
         f'group(level=1 header.height=104 trailer.height={group1_height} by=("fincatcode" ) header.suppress=yes header.color="536870912" header.transparency="0" header.gradient.color="8421504" header.gradient.transparency="0" header.gradient.angle="0" header.brushmode="0" header.gradient.repetition.mode="0" header.gradient.repetition.count="0" header.gradient.repetition.length="100" header.gradient.focus="0" header.gradient.scale="100" header.gradient.spread="100" trailer.color="536870912" trailer.transparency="0" trailer.gradient.color="8421504" trailer.gradient.transparency="0" trailer.gradient.angle="0" trailer.brushmode="0" trailer.gradient.repetition.mode="0" trailer.gradient.repetition.count="0" trailer.gradient.repetition.length="100" trailer.gradient.focus="0" trailer.gradient.scale="100" trailer.gradient.spread="100" )',
-        f'group(level=2 header.height=0 trailer.height={group2_height} by=("parentcode" ) header.suppress=yes header.color="536870912" header.transparency="0" header.gradient.color="8421504" header.gradient.transparency="0" header.gradient.angle="0" header.brushmode="0" header.gradient.repetition.mode="0" header.gradient.repetition.count="0" header.gradient.repetition.length="100" header.gradient.focus="0" header.gradient.scale="100" header.gradient.spread="100" trailer.color="536870912" trailer.transparency="0" trailer.gradient.color="8421504" trailer.gradient.transparency="0" trailer.gradient.angle="0" trailer.brushmode="0" trailer.gradient.repetition.mode="0" trailer.gradient.repetition.count="0" trailer.gradient.repetition.length="100" trailer.gradient.focus="0" trailer.gradient.scale="100" trailer.gradient.spread="100" )',
+        f'group(level=2 header.height=88 trailer.height={group2_height} by=("parentcode" ) header.suppress=yes header.color="536870912" header.transparency="0" header.gradient.color="8421504" header.gradient.transparency="0" header.gradient.angle="0" header.brushmode="0" header.gradient.repetition.mode="0" header.gradient.repetition.count="0" header.gradient.repetition.length="100" header.gradient.focus="0" header.gradient.scale="100" header.gradient.spread="100" trailer.color="536870912" trailer.transparency="0" trailer.gradient.color="8421504" trailer.gradient.transparency="0" trailer.gradient.angle="0" trailer.brushmode="0" trailer.gradient.repetition.mode="0" trailer.gradient.repetition.count="0" trailer.gradient.repetition.length="100" trailer.gradient.focus="0" trailer.gradient.scale="100" trailer.gradient.spread="100" )',
     ]
 
     footer_lines = [
@@ -298,7 +301,7 @@ def generate_one(n_months):
     with open(fname, 'w', encoding='utf-16', newline='') as fh:
         fh.write(final)
 
-    total_objs = len(objs_header) + len(objs_header1) + len(objs_detail) + len(objs_trailer2) + len(objs_trailer1) + len(objs_summary)
+    total_objs = len(objs_header) + len(objs_header1) + len(objs_header2) + len(objs_detail) + len(objs_trailer2) + len(objs_trailer1) + len(objs_summary)
     return fname, total_objs, detail_height, last_x_end
 
 
