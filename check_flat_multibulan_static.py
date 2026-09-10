@@ -17,21 +17,19 @@ def check_file(n_months):
     if bare_lf:
         issues.append(f"{bare_lf} bare LF character(s) found (not part of \\r\\n) -- will desync PB Painter's parser")
 
-    # Every declared group(level=N ...) must have a matching header.N band with at least one
-    # object, and a nonzero header.height. A file that declares group(level=2 ...) but never
-    # emits any band=header.2 object (or gives it header.height=0) desyncs PB Painter's parser
-    # further down the file -- this was the actual root cause of a real "incorrect syntax" import
-    # error that only ever surfaced at some unrelated, size-proportional line number.
+    # NOTE: an earlier version of this check required every declared group(level=N) to have a
+    # matching header.N band. That theory was disproven -- the proven reference file
+    # dw_rpt_is_flat_multibulan.srd (commit 90e3fb8) uses sum(...for group 2) and a trailer.2
+    # band extensively WITHOUT ever declaring group(level=2) at all, and it got further through
+    # PowerBuilder's import than any version that added one. This file intentionally has only
+    # group(level=1); trailer.2's "for group 2" references are expected and correct as-is.
     group_levels = [int(m.group(1)) for m in re.finditer(r'^group\(level=(\d+) header\.height=(\d+)', content, re.MULTILINE)]
-    group_heights = {int(m.group(1)): int(m.group(2)) for m in re.finditer(r'^group\(level=(\d+) header\.height=(\d+)', content, re.MULTILINE)}
     for lvl in group_levels:
         if lvl == 1:
-            continue  # level 1 uses band=header.1, always present by construction
+            continue
         band_name = f'header.{lvl}'
         if f'band={band_name} ' not in content and f'band={band_name}\t' not in content:
-            issues.append(f"group(level={lvl}) declared but no band={band_name} object found")
-        if group_heights.get(lvl, 0) == 0:
-            issues.append(f"group(level={lvl}) has header.height=0 -- must be nonzero to match its header.{lvl} band content")
+            issues.append(f"group(level={lvl}) declared but no band={band_name} object found (unexpected -- only group(level=1) should be declared)")
 
     # 1. every 'name=' must be unique
     names_by_band = {}
