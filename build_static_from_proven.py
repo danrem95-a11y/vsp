@@ -143,8 +143,19 @@ def build_detail_band(n_months):
         y_counter[0] += 1
         return y_counter[0]
 
-    # accountdes, cbln_sdlalu: byte-identical to proven (they don't depend on n_months)
-    out.append(PROVEN_LINES[find_line('accountdes')[0]])
+    # accountdes: the proven 90e3fb8 file's own column(...) declaration for this OMITS the
+    # edit.limit=/edit.case=/edit.autoselect=/edit.autohscroll= attribute block that every
+    # genuinely confirmed-working .srd using column() objects has (dw_rpt_is_hpp_multibulan.srd,
+    # dw_rpt_is.srd -- verified via forensic_audit.py: identical tail
+    # "visible="1" edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  " for
+    # every char(50) column() object, matching accountdes's own char(50) SQL type exactly). This
+    # was a real, structural grammar gap inherited from the source file, present in EVERY version
+    # built this session -- restore it.
+    accountdes_line = PROVEN_LINES[find_line('accountdes')[0]]
+    accountdes_line = accountdes_line.replace(
+        'visible="1"  font.face',
+        'visible="1" edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face', 1)
+    out.append(accountdes_line)
     out.append(PROVEN_LINES[find_line('cbln_sdlalu')[0]])
 
     # cbln_sdini: proven file has this as a giant if(arg_jml_bulan=N,...) chain. For a STATIC
@@ -345,7 +356,12 @@ def build_header_band(n_months):
 
 
 def build_header1_band():
+    # Same missing edit.* attribute block as accountdes (see comment in build_detail_band) --
+    # fincatdes is char(50) per the table() declaration, matching the oracle's own
+    # edit.limit=50 for its equivalent fincatdes column() object exactly.
     _, l = find_line('fincatdes')
+    l = l.replace('visible="1"  font.face',
+                   'visible="1" edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face', 1)
     return [l]
 
 
