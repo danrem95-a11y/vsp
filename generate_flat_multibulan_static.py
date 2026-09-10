@@ -302,14 +302,18 @@ def generate_one(n_months):
 
     all_lines = header_lines + [table_full] + groups + [body] + footer_lines
     final = CRLF.join(all_lines)
-    # Some embedded SQL text above was built with plain "\n" (readability in this script).
-    # PowerBuilder's Painter source parser desyncs its line/column counter on a bare LF
-    # inside a quoted string -- every line ending in the .srd file must be CRLF. Normalize
-    # by collapsing to bare LF first, then expanding uniformly to CRLF, so this can never
-    # regress regardless of which literal a future edit uses.
-    final = final.replace('\r\n', '\n').replace('\n', '\r\n')
+    # IMPORTANT: do NOT normalize the bare "\n" characters inside table_full's embedded SQL
+    # text to "\r\n". An earlier attempt in this session did exactly that, believing bare LF
+    # inside a quoted string was the cause of an "incorrect syntax" import error -- but the
+    # PROVEN reference file dw_rpt_is_flat_multibulan.srd (commit 90e3fb8), which got further
+    # through PowerBuilder's import than any version built in this session, has its entire
+    # retrieve="..." SQL text (166 bare LFs) on ONE physical line with genuinely bare "\n"
+    # internally, while every other line in the file is "\r\n". Forcing that SQL text onto many
+    # separate "\r\n"-terminated physical lines was itself the regression -- match the proven
+    # file's actual format instead: only the CRLF.join() *between* top-level declarations here
+    # inserts "\r\n"; the SQL clauses joined with plain "\n" inside select_clause/from_clause/
+    # awal2_sub/bln_subs/where_clause above must stay bare.
     assert final.count('\r\r') == 0
-    assert '\r\n' in final and not re.search(r'(?<!\r)\n', final)
 
     fname = f'{name}.srd'
     with open(fname, 'w', encoding='utf-16', newline='') as fh:

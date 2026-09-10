@@ -9,13 +9,22 @@ def check_file(n_months):
 
     issues = []
 
-    # A bare LF (not part of a \r\n pair) inside the file -- typically from embedded SQL text
-    # built with plain "\n" -- desyncs PowerBuilder Painter's own line/column counter and has
-    # caused real "incorrect syntax" errors at unrelated line numbers. Every line ending in a
-    # .srd must be CRLF.
-    bare_lf = sum(1 for i, c in enumerate(content) if c == '\n' and (i == 0 or content[i - 1] != '\r'))
-    if bare_lf:
-        issues.append(f"{bare_lf} bare LF character(s) found (not part of \\r\\n) -- will desync PB Painter's parser")
+    # NOTE: an earlier version of this check flagged any bare LF (not part of \r\n) as an error,
+    # on the theory that PowerBuilder Painter's parser needs every line CRLF-terminated. That
+    # theory was disproven -- the proven reference file dw_rpt_is_flat_multibulan.srd (commit
+    # 90e3fb8), which got further through PowerBuilder's import than any version without bare
+    # LFs, has its entire retrieve="..." SQL text (166 bare LFs) on ONE physical line with
+    # genuinely bare "\n" internally. Forcing that text onto separate "\r\n" physical lines was
+    # itself a regression. Bare LF is now EXPECTED inside the retrieve="..." SQL text specifically
+    # -- only flag one if it appears OUTSIDE that string (which would be a genuine anomaly).
+    m_retrieve = re.search(r'retrieve="(.*?)" arguments=', content, re.DOTALL)
+    if m_retrieve:
+        outside = content[:m_retrieve.start()] + content[m_retrieve.end():]
+    else:
+        outside = content
+    bare_lf_outside = sum(1 for i, c in enumerate(outside) if c == '\n' and (i == 0 or outside[i - 1] != '\r'))
+    if bare_lf_outside:
+        issues.append(f"{bare_lf_outside} bare LF character(s) found OUTSIDE the retrieve=\"...\" SQL text -- unexpected")
 
     # NOTE: an earlier version of this check required every declared group(level=N) to have a
     # matching header.N band. That theory was disproven -- the proven reference file
