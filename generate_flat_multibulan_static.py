@@ -43,6 +43,8 @@ def cbln_mutasi(n):
 
 def cbln_cumulative_through(n):
     parts = [cbln_mutasi(m) for m in range(1, n + 1)]
+    if len(parts) == 1:
+        return parts[0]
     return "(" + " + ".join(parts) + ")"
 
 
