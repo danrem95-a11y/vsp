@@ -213,8 +213,15 @@ def build_detail_band(n_months):
         term_tpl = "(bln{n}_debit - bln{n}_credit) * if(flag_dk='D',1,(-1))"
         terms = [term_tpl.format(n=n) for n in range(1, n_months + 1)]
         sdini_expr = "(" + " + ".join(terms) + ")"
+    # BUG FIX: this line used to also call set_y(line, next_y() + 200), moving cbln_sdini's own
+    # y coordinate into the hidden-helper vertical stacking zone (y=200+) as if it were an
+    # invisible 1x1 helper object like cbln1..N. It is NOT a hidden helper -- it is a real,
+    # visible detail-row cell (border="2", full row height/width) that must stay at the same
+    # y as its sibling cbln_sdlalu (y="4", untouched, appended verbatim two lines above). This
+    # was producing exactly the visual defect seen in a live PowerBuilder screenshot: the s.d.
+    # <this year> column rendered as an empty box at the correct row, while its real value
+    # appeared as a disconnected floating box far below (at the hidden-helper y position).
     line = re.sub(r'expression="[^"]*"', f'expression="{sdini_expr}"', cbln_sdini_line, count=1)
-    line = set_y(line, next_y() + 200)
     out.append(line)
 
     # cbln1..cbln{n_months}: byte-identical proven lines (just re-sequence y)

@@ -39,6 +39,34 @@ def check_file(n_months):
             name_m = re.search(r'\bname=(\S+)', ln)
             issues.append(f"column() object '{name_m.group(1) if name_m else '?'}' is missing edit.limit=/edit.case=/edit.autoselect=/edit.autohscroll= -- required per the confirmed-working mantap file")
 
+    # Every VISIBLE detail-row object (bordered, real width -- as opposed to a 1x1-twip hidden
+    # helper) must share the SAME y coordinate as its row siblings. Found via an actual live
+    # PowerBuilder 11.5 screenshot: cbln_sdini had its y accidentally overwritten to land in the
+    # hidden-helper vertical-stacking zone (y=200+) instead of staying at the row's real y (4) --
+    # the static structural checks in this file (paren/quote balance, column-name-alignment
+    # grid, etc.) never caught this because cbln_sdini's OWN x/width were still internally
+    # self-consistent; the defect was that it silently rendered as an empty box at the correct
+    # row while its real value appeared as a disconnected floating box far below. Catch this
+    # class of bug generally: collect the y of every detail-band object with border!="0" and
+    # width>1, and flag any that doesn't match the majority (mode) y value.
+    detail_visible_ys = []
+    for ln in lines:
+        if 'band=detail' not in ln:
+            continue
+        bm = re.search(r'border="(\d+)"', ln)
+        wm = re.search(r'width="(\d+)"', ln)
+        ym = re.search(r'\by="(\d+)"', ln)
+        nm = re.search(r'\bname=(\S+)', ln)
+        if bm and wm and ym and nm and bm.group(1) != '0' and int(wm.group(1)) > 1:
+            detail_visible_ys.append((nm.group(1), int(ym.group(1))))
+    if detail_visible_ys:
+        from collections import Counter
+        y_counts = Counter(y for _, y in detail_visible_ys)
+        common_y, _ = y_counts.most_common(1)[0]
+        for name, y in detail_visible_ys:
+            if y != common_y:
+                issues.append(f"detail-band visible object '{name}' has y={y}, but every other visible detail row object shares y={common_y} -- this object will render disconnected from its row (the exact defect seen in a live PB 11.5 screenshot)")
+
     # Every declared group(level=N) must have a matching header.N band -- confirmed by the mantap
     # file, which has group(level=2 by=("parentcode")) alongside a real header.2 band (a column()
     # bound to parentname). 90e3fb8 lacked both and is now known to be broken.
