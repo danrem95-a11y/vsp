@@ -189,10 +189,24 @@ def build_detail_band(n_months):
     # column() object, matching each column's own char(N) length exactly. Graft that attribute
     # block onto accountdes (char(50) -> edit.limit=50) while keeping its business
     # expression/geometry/name from the 90e3fb8 layout source.
+    #
+    # SECOND BUG FOUND (user report: "accountdes nya perbaiki donk agar nama desc sesuai" --
+    # live PB 11.5 screenshot showed every detail row's Description repeating one generic value
+    # ["PENJUALAN"] instead of the real distinct accountdes text). Live DB query via
+    # DSN=vsp;DBN=vspnew confirmed gl_acc.accountdes itself holds correct, distinct values --
+    # ruling out a data-layer cause. Comparing column() id= attributes against the confirmed-
+    # working mantap file found a genuine mismatch: 90e3fb8 (PROVEN_LINES, itself already known
+    # broken) has accountdes id=2 -- the id that rightfully belongs to fincatdes in mantap -- and
+    # fincatdes id=1, neither matching mantap's own accountdes id=6 / fincatdes id=2 / parentname
+    # id=4. Graft the correct id= from mantap the same way edit.* is grafted, since PB's id=
+    # appears to govern column binding/reference independent of name= string matching.
     accountdes_line = PROVEN_LINES[find_line('accountdes')[0]]
     accountdes_line = accountdes_line.replace(
         'visible="1"  font.face',
         'visible="1" edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face', 1)
+    _, mantap_accountdes = find_mantap_line('accountdes')
+    mantap_id_m = re.search(r'\bid=(\d+)', mantap_accountdes)
+    accountdes_line = re.sub(r'\bid=\d+', f'id={mantap_id_m.group(1)}', accountdes_line, count=1)
     out.append(accountdes_line)
     out.append(PROVEN_LINES[find_line('cbln_sdlalu')[0]])
 
@@ -452,9 +466,14 @@ def build_header1_band():
     # confirmed-working mantap file's own fincatdes column() object (char(50) -> edit.limit=50,
     # matching its own table() declaration exactly). Business content (expression, geometry,
     # name) stays from the 90e3fb8 layout source; only this attribute block is grafted in.
+    # id= also grafted from mantap (fincatdes id=1 in 90e3fb8 -> id=2 in mantap) -- see the
+    # matching accountdes fix in build_detail_band() for the full root-cause explanation.
     _, l = find_line('fincatdes')
     l = l.replace('visible="1"  font.face',
                    'visible="1" edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face', 1)
+    _, mantap_fincatdes = find_mantap_line('fincatdes')
+    mantap_id_m = re.search(r'\bid=(\d+)', mantap_fincatdes)
+    l = re.sub(r'\bid=\d+', f'id={mantap_id_m.group(1)}', l, count=1)
     return [l]
 
 
