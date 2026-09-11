@@ -659,8 +659,26 @@ def build_file(n_months):
     header2_max_bottom = max(y_of(l) + int(re.search(r'height="(\d+)"', l).group(1)) for l in header2_lines_content)
     header2_height = header2_max_bottom + 4
 
-    detail_max_bottom = max(y_of(l) + int(re.search(r'height="(\d+)"', l).group(1)) for l in detail_lines_content)
-    detail_height = detail_max_bottom + 8
+    # BUG FIX (user report: live PB 11.5 screenshot showed a huge dead gap under every detail
+    # row, making grid lines look like they "jump" irregularly -- "rapikan garis agar tidak
+    # terlihat lompat2"). Root cause: this used to take the max bottom across ALL detail-band
+    # objects, including the ~100+ 1x1-twip hidden helper computes (cbln*_a/_b, tot_*, labakotor_*
+    # etc.) that are deliberately stacked far below the visible row (y=201..322+) purely to give
+    # each a unique non-colliding position -- never meant to expand the row's rendered height.
+    # That inflated detail(height=...) to 331+, and PowerBuilder allocates the FULL declared
+    # band height to every single data row, so each row rendered 331 twips tall with only the
+    # top 80 twips showing content. Verified against the confirmed-working mantap oracle: its own
+    # hidden helpers go all the way down to y=360, yet its declared detail(height=84) covers only
+    # the visible row content (accountdes/cbln*/cslot* at y=4 h=76) -- proving PB does NOT require
+    # (or want) the band height to reach hidden helpers. Fix: compute detail_height from VISIBLE
+    # content only (real width, i.e. > 1 twip -- excludes the 1x1 hidden helpers).
+    detail_visible_bottoms = [
+        y_of(l) + int(re.search(r'height="(\d+)"', l).group(1))
+        for l in detail_lines_content
+        if int(re.search(r'width="(\d+)"', l).group(1)) > 1
+    ]
+    detail_max_bottom = max(detail_visible_bottoms)
+    detail_height = detail_max_bottom + 4
 
     summary_max_bottom = max(y_of(l) + int(re.search(r'height="(\d+)"', l).group(1)) for l in summary_lines_content)
     summary_height = summary_max_bottom + 8

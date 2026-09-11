@@ -105,13 +105,22 @@ def check_file(n_months):
             issues.append(f"DUP NAME in band {band}: {obj['name']}")
         names_by_band[band][obj['name']] = obj
 
-    # 2. detail band height must cover all content
+    # 2. detail band height must cover all VISIBLE content (real width, > 1 twip).
+    # BUG FIX: this used to require detail(height=) to cover the max bottom across ALL detail
+    # objects, including the ~100+ 1x1-twip hidden helper computes deliberately stacked far below
+    # the visible row purely for unique non-colliding positions. That is WRONG -- confirmed
+    # against the mantap oracle, whose own hidden helpers go down to y=360 while its declared
+    # detail(height=84) covers only the visible row content (y=4 h=76). Enforcing the old rule
+    # caused the generator to inflate detail(height=) to 331+, and PB allocates the FULL declared
+    # band height to every data row -- producing a huge dead gap under each row in live PB 11.5
+    # rendering (reported by the user: "rapikan garis agar tidak terlihat lompat2"). Only visible
+    # (real-width) objects should be considered here.
     detail_decl_m = re.search(r'^detail\(height=(\d+)', content, re.MULTILINE)
     detail_decl = int(detail_decl_m.group(1)) if detail_decl_m else None
-    detail_objs = [o for o in objects if o['band'] == 'detail']
+    detail_objs = [o for o in objects if o['band'] == 'detail' and o['width'] is not None and o['width'] > 1]
     detail_max_bottom = max((o['y'] + o['height']) for o in detail_objs if o['y'] is not None and o['height'] is not None)
     if detail_decl is None or detail_decl < detail_max_bottom:
-        issues.append(f"detail(height={detail_decl}) < actual max content bottom {detail_max_bottom}")
+        issues.append(f"detail(height={detail_decl}) < actual VISIBLE content max bottom {detail_max_bottom}")
 
     # 3. summary band height must cover all content
     summary_decl_m = re.search(r'^summary\(height=(\d+)', content, re.MULTILINE)
