@@ -393,7 +393,22 @@ def build_header_band(n_months):
 
     _, t_desc = find_line('t_desc')
     out.append(t_desc)
+    # BUG FIX: chdr_sdlalu's business-layout-source expression was
+    # "'s.d. '+string(arg_bln1_awal,'mmm')+' '+string(year(date(arg_tgl1)),'0000')" -- deriving
+    # the displayed month from arg_bln1_awal (the START of the FIRST selected month, i.e. always
+    # January) and the year from arg_tgl1 (the comparative period's own START date). That always
+    # renders "Jan <year>" regardless of which month the report actually ends on. The comparative
+    # period's correct END date is already computed correctly in w_rpt_neraca.srw as
+    # ldt_des_lalu_akhir = f_eom(date(year(bln_awal[ll_jml_bulan])-1, month(bln_awal[ll_jml_bulan]), 1))
+    # -- i.e. (report end month, report year - 1) -- and passed in as arg_tgl2. The VALUE
+    # (cbln_sdlalu's amount) was already using this correctly; only the LABEL text ignored it and
+    # rebuilt an incorrect date from unrelated arguments. Fixed by reading directly off arg_tgl2,
+    # which is exactly the correct comparative-period end date already being retrieved with.
     _, chdr_sdlalu = find_line('chdr_sdlalu')
+    chdr_sdlalu = re.sub(
+        r'expression="[^"]*"',
+        'expression="\'s.d. \'+string(arg_tgl2,\'mmm yyyy\')"',
+        chdr_sdlalu, count=1)
     out.append(chdr_sdlalu)
 
     _, chdr_sdini = find_line('chdr_sdini')
