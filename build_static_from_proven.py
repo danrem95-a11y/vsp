@@ -116,7 +116,14 @@ def _normalize_ws(s):
 assert _normalize_ws(_proven_table_trimmed) == _normalize_ws(build_table_block(12)), \
     "table() builder content does not match proven file (token-level)"
 
-print("SQL and table() builders verified byte-identical to the proven 12-month file.")
+# NOTE on terminology: the SQL check just above (build_sql(12) == the proven file's actual SQL
+# text) is a genuine byte-for-byte comparison, no normalization. The table() check directly above
+# is token-equivalent only (whitespace-run-normalized), because the proven file packs two column
+# declarations onto one physical line at one spot while this generator emits one per line -- both
+# are valid PB syntax, but the raw text differs by whitespace. Do not call the table() result
+# "byte-identical"; it is token-equivalent.
+print("SQL builder verified byte-identical to the proven 12-month file's actual SQL text.")
+print("table() builder verified token-equivalent to the proven 12-month file (whitespace-normalized; a single cosmetic line-packing difference is expected and does not affect PB grammar).")
 
 
 def y_of(line):
@@ -210,6 +217,22 @@ def build_detail_band(n_months):
     sdlalu_body = m.group(1)
     netsplit('cbln_sdlalu_a', 'cbln_sdlalu_b', (f"if({netcond},0,{sdlalu_body})", f"if({netcond},{sdlalu_body},0)"))
     netsplit('cbln_sdini_a', 'cbln_sdini_b', (f"if({netcond},0,{sdini_expr})", f"if({netcond},{sdini_expr},0)"))
+
+    # cbln{n}_a/cbln{n}_b: present in the golden master for every month 1..12 (right after
+    # cbln_sdini_a/_b, before the cslot{n}_a/_b loop), even though nothing in the golden master's
+    # own summary/trailer bands actually references them -- only cslot{n}_a/_b are referenced by
+    # trailer.2/trailer.1's sum(cslot{n}_a - cslot{n}_b for group N). Confirmed via direct search:
+    # cbln1_a appears exactly once in the whole golden master (its own declaration), so these are
+    # genuinely dead/unreferenced objects there too -- but per explicit instruction to retain
+    # golden-master objects/attributes as much as possible, keep them present for months 1..N.
+    for n in range(1, n_months + 1):
+        _, cbln_a_line = find_line(f'cbln{n}_a')
+        _, cbln_b_line = find_line(f'cbln{n}_b')
+        cbln_a_line = set_y(cbln_a_line, next_y() + 200)
+        cbln_b_line = set_y(cbln_b_line, next_y() + 200)
+        out.append(cbln_a_line)
+        out.append(cbln_b_line)
+
     for slot in range(1, n_months + 1):
         month_num = n_months - slot + 1
         body = f"cbln{month_num}"
@@ -271,17 +294,30 @@ def build_detail_band(n_months):
 
 def collapse_chain(expr, n_months):
     """
-    Collapse a proven if(arg_jml_bulan=1,BRANCH1,if(arg_jml_bulan=2,BRANCH2,...)) chain down to
-    just the branch matching n_months, by walking the SAME nesting the proven file's own chain
-    uses (verified structurally: each branch is "if(arg_jml_bulan=K,<value>,<rest>)").
+    Collapse a proven if(arg_jml_bulan=K,BRANCH_K,if(arg_jml_bulan=K+1,BRANCH_K+1,...)) chain down
+    to just the branch matching n_months.
+
+    BUG FIXED HERE: this function used to assume every chain's first branch is literally
+    "arg_jml_bulan=1" and walked K=1,2,3... by LOOP COUNTER. That is false for objects like
+    chdr_slot2/chdr_slot3/etc: the golden master's own chdr_slot{S} chain actually STARTS at
+    "arg_jml_bulan=S" (verified directly against dw_rpt_is_flat_multibulan.srd, commit 90e3fb8 --
+    e.g. chdr_slot2's first branch is "if(arg_jml_bulan=2,string(arg_bln1_akhir,...)," not
+    "arg_jml_bulan=1"). The old code's loop, starting k at 1, failed to match that first branch
+    at all and silently returned the ENTIRE uncollapsed chain unchanged -- meaning every
+    chdr_slot{S} object for S>=2 in every one of the 12 generated files still contained the full
+    12-branch dynamic arg_jml_bulan chain instead of being collapsed to a static value. Fixed by
+    reading the ACTUAL "arg_jml_bulan=<K>" value present at each step of the chain (whatever it
+    is) instead of assuming it matches the loop counter, and matching against n_months by that
+    real value.
     """
     remaining = expr
-    for k in range(1, 13):
-        m = re.match(r'^if\(arg_jml_bulan=' + str(k) + r',', remaining)
+    for _ in range(13):
+        m = re.match(r'^if\(arg_jml_bulan=(\d+),', remaining)
         if not m:
             # last branch has no wrapping if() (proven chain's final else is bare, e.g. chdr_slot
             # dead ends in '' but compute_3/chdr_sdini dead-end in the literal last value)
             return remaining
+        k = int(m.group(1))
         # find the matching comma for this branch's VALUE by tracking paren depth from the point
         # right after "if(arg_jml_bulan=K,"
         start = m.end()
@@ -301,6 +337,7 @@ def collapse_chain(expr, n_months):
         if k == n_months:
             return value
         remaining = rest
+    return remaining
     return remaining
 
 
@@ -334,11 +371,21 @@ def build_header_band(n_months):
     collapsed2 = collapse_chain(chain2, n_months)
     out.append(re.sub(r'expression="[^"]*"', f'expression="\'s.d. \'+{collapsed2}"', chdr_sdini, count=1))
 
+    # BUG FIXED HERE: this loop used to call collapse_chain(chain3, slot) -- passing the loop
+    # counter (which SLOT position we're filling in) instead of n_months (the actual selected
+    # month count, which is what every arg_jml_bulan=K branch test is against). Verified directly
+    # against the golden master: chdr_slot2's own chain is
+    # "if(arg_jml_bulan=2,string(arg_bln1_akhir,...),if(arg_jml_bulan=3,string(arg_bln2_akhir,...),...))"
+    # -- for a report showing n_months=7 total, chdr_slot2 must select the arg_jml_bulan=7 branch
+    # (value: string(arg_bln6_akhir,...)), never the arg_jml_bulan=2 branch. Passing "slot" caused
+    # every chdr_slot{S} with S>=2 to either fail to collapse at all (old collapse_chain bug) or,
+    # after that fix alone, collapse to the WRONG branch (always resolving to whatever branch
+    # equals the slot's own position, not the file's actual month count).
     for slot in range(1, n_months + 1):
         _, chdr_slotN = find_line(f'chdr_slot{slot}')
         m = re.search(r'expression="(.*)"border', chdr_slotN)
         chain3 = m.group(1)
-        collapsed3 = collapse_chain(chain3, slot)
+        collapsed3 = collapse_chain(chain3, n_months)
         out.append(re.sub(r'expression="[^"]*"', f'expression="{collapsed3}"', chdr_slotN, count=1))
 
     return out
