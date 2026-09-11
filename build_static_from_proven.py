@@ -143,19 +143,16 @@ def build_detail_band(n_months):
         y_counter[0] += 1
         return y_counter[0]
 
-    # accountdes: the proven 90e3fb8 file's own column(...) declaration for this OMITS the
-    # edit.limit=/edit.case=/edit.autoselect=/edit.autohscroll= attribute block that every
-    # genuinely confirmed-working .srd using column() objects has (dw_rpt_is_hpp_multibulan.srd,
-    # dw_rpt_is.srd -- verified via forensic_audit.py: identical tail
-    # "visible="1" edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  " for
-    # every char(50) column() object, matching accountdes's own char(50) SQL type exactly). This
-    # was a real, structural grammar gap inherited from the source file, present in EVERY version
-    # built this session -- restore it.
-    accountdes_line = PROVEN_LINES[find_line('accountdes')[0]]
-    accountdes_line = accountdes_line.replace(
-        'visible="1"  font.face',
-        'visible="1" edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face', 1)
-    out.append(accountdes_line)
+    # REVERTED: a previous fix added edit.limit=/edit.case=/edit.autoselect=/edit.autohscroll=
+    # here, based on comparison against dw_rpt_is_hpp_multibulan.srd and dw_rpt_is.srd. That was
+    # the WRONG oracle for this file family. The user has now explicitly confirmed
+    # dw_rpt_is_flat_multibulan.srd (commit 90e3fb8, the actual source this generator's content
+    # is built from) runs successfully in PowerBuilder 11.5 as-is -- and a structural diff
+    # (srd_structural_diff.py) proves its own column() objects (fincatdes, accountdes) do NOT
+    # have edit.* attributes at all: "visible="1"  font.face" (double space, nothing between).
+    # Adding edit.* made this generator's output diverge from the true confirmed-working golden
+    # master. Keep accountdes byte-identical to that golden master.
+    out.append(PROVEN_LINES[find_line('accountdes')[0]])
     out.append(PROVEN_LINES[find_line('cbln_sdlalu')[0]])
 
     # cbln_sdini: proven file has this as a giant if(arg_jml_bulan=N,...) chain. For a STATIC
@@ -356,12 +353,10 @@ def build_header_band(n_months):
 
 
 def build_header1_band():
-    # Same missing edit.* attribute block as accountdes (see comment in build_detail_band) --
-    # fincatdes is char(50) per the table() declaration, matching the oracle's own
-    # edit.limit=50 for its equivalent fincatdes column() object exactly.
+    # REVERTED -- see matching comment in build_detail_band's accountdes handling. The confirmed
+    # golden master's own fincatdes column() object has no edit.* attributes; keep it byte-
+    # identical to that proven source.
     _, l = find_line('fincatdes')
-    l = l.replace('visible="1"  font.face',
-                   'visible="1" edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face', 1)
     return [l]
 
 
@@ -463,17 +458,15 @@ def build_file(n_months):
     # confirmed production file (not just "got furthest") -- rather than the proven-furthest
     # 90e3fb8 file's shorter footer, as one of the few remaining untested concrete differences
     # between the two reference files.
+    # REVERTED to the confirmed golden master's own footer (dw_rpt_is_flat_multibulan.srd,
+    # verified by the user to run successfully in PowerBuilder 11.5, and confirmed byte-
+    # identical to this exact footer via direct read). A previous fix switched to
+    # dw_rpt_is_hpp_multibulan.srd's fuller footer -- the wrong oracle for this file family.
     footer_lines = [
         'htmltable(border="1" )',
-        'htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )',
-        'xhtmlgen() cssgen(sessionspecific="0" )',
-        'xmlgen(inline="0" )',
-        'xsltgen()',
-        'jsgen()',
-        'export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )',
-        'import.xml()',
-        'export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )',
-        'export.xhtml()',
+        'xhtml(controlblock="no" visibleburnin="no" )',
+        'export.xml(headgroup=no metadata=no linkschema=no id=no)',
+        'import.xml(encoding="iso-8859-1" )',
     ]
 
     all_lines = (header_top + [table_full] + [group_line] +

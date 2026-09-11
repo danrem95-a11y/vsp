@@ -26,19 +26,21 @@ def check_file(n_months):
     if bare_lf_outside:
         issues.append(f"{bare_lf_outside} bare LF character(s) found OUTSIDE the retrieve=\"...\" SQL text -- unexpected")
 
-    # Every column(...) object (a real, database-bound editable field, as opposed to a compute())
-    # must carry edit.limit=/edit.case=/edit.autoselect=/edit.autohscroll= -- confirmed via
-    # forensic audit against THREE independently-confirmed-working .srd files in this codebase
-    # (dw_rpt_is_hpp_multibulan.srd, dw_rpt_is.srd, and every other production report using
-    # column() objects). This attribute block was missing from every version built earlier in
-    # this session (inherited unexamined from the file this whole architecture was copied from)
-    # and is one of the few genuine, confirmed PB 11.5 grammar gaps found in this investigation.
+    # REVERTED: an earlier version of this check required column(...) objects to carry
+    # edit.limit=/edit.case=/edit.autoselect=/edit.autohscroll=, based on comparison against
+    # dw_rpt_is_hpp_multibulan.srd and dw_rpt_is.srd. Those were the WRONG oracle files for this
+    # DataWindow family. A structural diff (srd_structural_diff.py) against the actual confirmed-
+    # working golden master for THIS family, dw_rpt_is_flat_multibulan.srd (verified by the user
+    # to run successfully in PowerBuilder 11.5), proves its own column() objects (fincatdes,
+    # accountdes) do NOT have any edit.* attributes at all. Requiring them was itself a defect
+    # this check introduced. column() objects in this family must NOT carry edit.* attributes,
+    # matching the golden master exactly.
     for ln in lines:
         if not ln.startswith('column('):
             continue
-        if 'edit.limit=' not in ln:
+        if 'edit.limit=' in ln or 'edit.case=' in ln or 'edit.autoselect=' in ln or 'edit.autohscroll=' in ln:
             name_m = re.search(r'\bname=(\S+)', ln)
-            issues.append(f"column() object '{name_m.group(1) if name_m else '?'}' is missing edit.limit=/edit.case=/edit.autoselect=/edit.autohscroll=")
+            issues.append(f"column() object '{name_m.group(1) if name_m else '?'}' has an edit.* attribute -- the confirmed golden master's column() objects never do")
 
     # NOTE: an earlier version of this check required every declared group(level=N) to have a
     # matching header.N band. That theory was disproven -- the proven reference file
