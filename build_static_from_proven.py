@@ -480,19 +480,19 @@ def build_trailer2_band(n_months):
 
 
 def build_trailer1_band(n_months):
+    # NOTE: gb_2/compute_12's width used to be computed HERE from t_slot{n_months}'s position --
+    # but that ran BEFORE close_column_gaps() (called later, in build_file()) shifts every
+    # sdini/slot{n} object's x to close the gaps between them, which also moves the true right
+    # edge of the row further right. Computing the width here used the PRE-gap-closing position,
+    # leaving gb_2/compute_12 too narrow and producing a real stray-border gap at the row's right
+    # end. Their widths are now finalized in build_file(), AFTER gap-closing, from the actual
+    # final position of the last column. Emit them here with a placeholder width (overwritten
+    # later) so the rest of this function's logic (which needs their x) stays unchanged.
     out = []
     _, gb_2 = find_line('gb_2')
-    _, last_slot_line = find_line(f't_slot{n_months}')
-    last_x = int(re.search(r'\bx="(\d+)"', last_slot_line).group(1))
-    last_w = int(re.search(r'\bwidth="(\d+)"', last_slot_line).group(1))
-    right_edge = last_x + last_w
-    gb2_x = int(re.search(r'\bx="(\d+)"', gb_2).group(1))
-    gb_2 = re.sub(r'\bwidth="\d+"', f'width="{right_edge - gb2_x}"', gb_2, count=1)
     out.append(gb_2)
 
     _, compute_12 = find_line('compute_12')
-    c12_x = int(re.search(r'\bx="(\d+)"', compute_12).group(1))
-    compute_12 = re.sub(r'\bwidth="\d+"', f'width="{right_edge - c12_x}"', compute_12, count=1)
     out.append(compute_12)
 
     for nm in ['compute_9', 't_sdini']:
@@ -526,6 +526,54 @@ def resequence_y(lines, base):
     return out
 
 
+def close_column_gaps(lines, n_months, sdlalu_x, sdlalu_w):
+    """
+    Per explicit instruction: eliminate the small gaps between adjacent numeric-column boxes
+    (sdini, slot1..N) so they touch and form one continuous grid, instead of the canonical
+    mantap file's own convention (which has 4-23 unit gaps between column boxes -- confirmed
+    intentional there, but not wanted for this report). Only x is changed; width/height/border/
+    font/alignment/expression are untouched, so box SIZE and content stay exactly as built.
+    Recomputes each logical column's x as the immediately preceding column's right edge (x+width)
+    -- sdlalu itself is left as-is (it already touches the description column with zero gap; its
+    x/width are passed in as the fixed anchor since its OWN object name differs per band --
+    chdr_sdlalu/cbln_sdlalu in header/detail vs compute_6/compute_9 in trailer.2/trailer.1, so it
+    cannot be auto-detected by a name pattern the way sdini/slot{n} can). sdini's x is set to
+    sdlalu's right, slot1's x to sdini's right, slot2's x to slot1's right, and so on. Applied to
+    every object whose name ends in _sdini or _slot<N> -- the naming convention IS uniform for
+    those (chdr_/c/t2_/t_/rlp_{N}_ prefixes, always ending exactly in "sdini" or "slot<n>") --
+    across every band, so header/detail/trailer.2/trailer.1/summary share identical column edges.
+    """
+    def width_of(col_suffix):
+        for l in lines:
+            m = re.search(r'name=\S*' + col_suffix + r'\b', l)
+            if m:
+                wm = re.search(r'\bwidth="(\d+)"', l)
+                if wm and int(wm.group(1)) > 1:
+                    return int(wm.group(1))
+        return None
+
+    target_x = {}
+    cursor = sdlalu_x + sdlalu_w
+    sdini_w = width_of('sdini')
+    if sdini_w:
+        target_x['sdini'] = cursor
+        cursor += sdini_w
+    for slot in range(1, n_months + 1):
+        w = width_of(f'slot{slot}')
+        if w:
+            target_x[f'slot{slot}'] = cursor
+            cursor += w
+
+    out = []
+    for l in lines:
+        m = re.search(r'name=\S*?(sdini|slot\d+)\b', l)
+        wm = re.search(r'\bwidth="(\d+)"', l)
+        if m and wm and int(wm.group(1)) > 1 and m.group(1) in target_x:
+            l = re.sub(r'\bx="\d+"', f'x="{target_x[m.group(1)]}"', l, count=1)
+        out.append(l)
+    return out
+
+
 def build_file(n_months):
     name = f'dw_rpt_is_flat_multibulan{n_months:02d}'
 
@@ -536,6 +584,47 @@ def build_file(n_months):
     trailer2_lines_content = build_trailer2_band(n_months)
     trailer1_lines_content = build_trailer1_band(n_months)
     summary_lines_content = build_summary_band(n_months)
+
+    # Close the gaps between adjacent numeric column boxes (sdini, slot1..N) uniformly across
+    # every band, so header/detail/trailer.2/trailer.1/summary all share identical column edges.
+    # sdlalu_x/w read once from detail's cbln_sdlalu (reliably named the same across every band's
+    # generation -- unlike the sdlalu object itself, whose NAME differs per band).
+    _sdlalu_x = _sdlalu_w = None
+    for _l in detail_lines_content:
+        if re.search(r'name=cbln_sdlalu\b', _l):
+            _sdlalu_x = int(re.search(r'\bx="(\d+)"', _l).group(1))
+            _sdlalu_w = int(re.search(r'\bwidth="(\d+)"', _l).group(1))
+            break
+    assert _sdlalu_x is not None, "cbln_sdlalu not found -- cannot anchor column gap-closing"
+
+    header_lines_content = close_column_gaps(header_lines_content, n_months, _sdlalu_x, _sdlalu_w)
+    detail_lines_content = close_column_gaps(detail_lines_content, n_months, _sdlalu_x, _sdlalu_w)
+    trailer2_lines_content = close_column_gaps(trailer2_lines_content, n_months, _sdlalu_x, _sdlalu_w)
+    trailer1_lines_content = close_column_gaps(trailer1_lines_content, n_months, _sdlalu_x, _sdlalu_w)
+    summary_lines_content = close_column_gaps(summary_lines_content, n_months, _sdlalu_x, _sdlalu_w)
+
+    # Finalize gb_2/compute_12's width now that gap-closing has established the row's true final
+    # right edge (the last slot column's x+width, post gap-closing).
+    _last_x = _last_w = None
+    for _l in trailer1_lines_content:
+        if re.search(r'name=t_slot' + str(n_months) + r'\b', _l):
+            _last_x = int(re.search(r'\bx="(\d+)"', _l).group(1))
+            _last_w = int(re.search(r'\bwidth="(\d+)"', _l).group(1))
+            break
+    assert _last_x is not None, f"t_slot{n_months} not found -- cannot finalize row width"
+    _right_edge = _last_x + _last_w
+
+    def _resize_to_right_edge(lines, name):
+        result = []
+        for l in lines:
+            if re.search(r'\bname=' + re.escape(name) + r'\b', l):
+                xm = int(re.search(r'\bx="(\d+)"', l).group(1))
+                l = re.sub(r'\bwidth="\d+"', f'width="{_right_edge - xm}"', l, count=1)
+            result.append(l)
+        return result
+
+    trailer1_lines_content = _resize_to_right_edge(trailer1_lines_content, 'gb_2')
+    trailer1_lines_content = _resize_to_right_edge(trailer1_lines_content, 'compute_12')
 
     header2_max_bottom = max(y_of(l) + int(re.search(r'height="(\d+)"', l).group(1)) for l in header2_lines_content)
     header2_height = header2_max_bottom + 4
