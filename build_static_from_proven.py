@@ -552,17 +552,28 @@ def close_column_gaps(lines, n_months, sdlalu_x, sdlalu_w):
                     return int(wm.group(1))
         return None
 
+    # BORDER_OVERLAP: every column here uses border="2" (PowerBuilder's full "Box" style, all 4
+    # sides) independently. When two such boxes are placed with EXACTLY touching edges (gap=0,
+    # as computed above), PowerBuilder draws both boxes' adjoining lines side-by-side, rendering
+    # as a visibly thicker/doubled seam at every column join (confirmed from a live PB 11.5
+    # screenshot after the gap=0 fix). PB's border= attribute has no per-side control (values are
+    # whole shapes: None/Shadow/Box/Resize/Underline/3D), so the standard technique to merge two
+    # independently-drawn box edges into what reads as one line is a small deliberate NEGATIVE
+    # gap (overlap) instead of an exact zero gap, so the two border lines draw on top of each
+    # other rather than adjacent to each other.
+    BORDER_OVERLAP = 1
+
     target_x = {}
-    cursor = sdlalu_x + sdlalu_w
+    cursor = sdlalu_x + sdlalu_w - BORDER_OVERLAP
     sdini_w = width_of('sdini')
     if sdini_w:
         target_x['sdini'] = cursor
-        cursor += sdini_w
+        cursor += sdini_w - BORDER_OVERLAP
     for slot in range(1, n_months + 1):
         w = width_of(f'slot{slot}')
         if w:
             target_x[f'slot{slot}'] = cursor
-            cursor += w
+            cursor += w - BORDER_OVERLAP
 
     out = []
     for l in lines:
