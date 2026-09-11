@@ -11,9 +11,39 @@ own line-shape as a template.
 import re
 import subprocess
 
+# PRIMARY BUSINESS-LOGIC SOURCE: dw_rpt_is_flat_multibulan.srd (git 90e3fb8). This is where the
+# actual required report LAYOUT lives -- the sd-lalu/sd-ini comparison columns + descending
+# slot1..N month columns ("Excel comparison format") that was explicitly negotiated earlier in
+# this project and is the confirmed business requirement. This file is now known to itself fail
+# PB 11.5 import (at its own "line 294", the same detail-band-boundary symptom every generated
+# file in this session has hit) -- so its OBJECT CONTENT/EXPRESSIONS remain the layout source of
+# truth, but its GRAMMAR/STRUCTURE cannot be trusted blindly.
 raw = subprocess.run(['git', 'show', '90e3fb8:dw_rpt_is_flat_multibulan.srd'], capture_output=True).stdout
 PROVEN = raw.decode('utf-16')
 PROVEN_LINES = PROVEN.split('\r\n')
+
+# SECONDARY GRAMMAR/STRUCTURE ORACLE: dw_rpt_is_flat_multibulan_mantap.srd -- confirmed by the
+# user to actually import/run in PowerBuilder 11.5. Used ONLY for PB 11.5 grammar/structure
+# patterns (never for business layout/expressions), specifically three concrete differences a
+# structural diff found versus the broken 90e3fb8 file:
+#   1. a header.2 band (a column() object bound to the group-2 column) + matching
+#      group(level=2 by=(...)) -- every column() object in this codebase's genuinely working
+#      files has edit.limit=/edit.case=/edit.autoselect=/edit.autohscroll=; 90e3fb8's lacked both.
+#   2. edit.limit=/edit.case=/edit.autoselect=/edit.autohscroll= on every column() object.
+#   3. the fuller footer (htmlgen/xhtmlgen+cssgen/xmlgen/xsltgen/jsgen/export.pdf/export.xhtml).
+with open('dw_rpt_is_flat_multibulan_mantap.srd', 'r', encoding='utf-16', newline='') as _fh:
+    MANTAP = _fh.read()
+MANTAP_LINES = MANTAP.split('\r\n')
+
+
+def find_mantap_line(name_pattern):
+    matches = []
+    for i, l in enumerate(MANTAP_LINES):
+        m = re.search(r'\bname=(\S+) visible=', l)
+        if m and m.group(1) == name_pattern:
+            matches.append((i, l))
+    assert len(matches) == 1, f"expected exactly 1 mantap line for {name_pattern}, found {len(matches)}"
+    return matches[0]
 
 CRLF = '\r\n'
 
@@ -151,15 +181,19 @@ def build_detail_band(n_months):
         return y_counter[0]
 
     # REVERTED: a previous fix added edit.limit=/edit.case=/edit.autoselect=/edit.autohscroll=
-    # here, based on comparison against dw_rpt_is_hpp_multibulan.srd and dw_rpt_is.srd. That was
-    # the WRONG oracle for this file family. The user has now explicitly confirmed
-    # dw_rpt_is_flat_multibulan.srd (commit 90e3fb8, the actual source this generator's content
-    # is built from) runs successfully in PowerBuilder 11.5 as-is -- and a structural diff
-    # (srd_structural_diff.py) proves its own column() objects (fincatdes, accountdes) do NOT
-    # have edit.* attributes at all: "visible="1"  font.face" (double space, nothing between).
-    # Adding edit.* made this generator's output diverge from the true confirmed-working golden
-    # master. Keep accountdes byte-identical to that golden master.
-    out.append(PROVEN_LINES[find_line('accountdes')[0]])
+    # here, based on comparison against dw_rpt_is_hpp_multibulan.srd and dw_rpt_is.srd -- the
+    # wrong oracle files for this DataWindow family. dw_rpt_is_flat_multibulan.srd (90e3fb8) was
+    # then treated as the confirmed-working reference and its lack of edit.* was taken as ground
+    # truth -- but 90e3fb8 is now known to itself fail PB 11.5 import. The user-supplied
+    # dw_rpt_is_flat_multibulan_mantap.srd (confirmed actually working) DOES have edit.* on every
+    # column() object, matching each column's own char(N) length exactly. Graft that attribute
+    # block onto accountdes (char(50) -> edit.limit=50) while keeping its business
+    # expression/geometry/name from the 90e3fb8 layout source.
+    accountdes_line = PROVEN_LINES[find_line('accountdes')[0]]
+    accountdes_line = accountdes_line.replace(
+        'visible="1"  font.face',
+        'visible="1" edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face', 1)
+    out.append(accountdes_line)
     out.append(PROVEN_LINES[find_line('cbln_sdlalu')[0]])
 
     # cbln_sdini: proven file has this as a giant if(arg_jml_bulan=N,...) chain. For a STATIC
@@ -392,10 +426,23 @@ def build_header_band(n_months):
 
 
 def build_header1_band():
-    # REVERTED -- see matching comment in build_detail_band's accountdes handling. The confirmed
-    # golden master's own fincatdes column() object has no edit.* attributes; keep it byte-
-    # identical to that proven source.
+    # edit.limit=/edit.case=/edit.autoselect=/edit.autohscroll= added back, sourced from the
+    # confirmed-working mantap file's own fincatdes column() object (char(50) -> edit.limit=50,
+    # matching its own table() declaration exactly). Business content (expression, geometry,
+    # name) stays from the 90e3fb8 layout source; only this attribute block is grafted in.
     _, l = find_line('fincatdes')
+    l = l.replace('visible="1"  font.face',
+                   'visible="1" edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face', 1)
+    return [l]
+
+
+def build_header2_band():
+    # New band, not present in the 90e3fb8 layout source at all. Structurally required per the
+    # confirmed-working mantap file: a column() bound to the group-2 column (parentname here,
+    # matching group(level=2 by=("parentcode")) below), with edit.* attributes matching its own
+    # char(100) declaration. Built directly from the mantap file's own parentname line, with only
+    # geometry/name left as that file's own (there is no 90e3fb8 equivalent object to graft onto).
+    _, l = find_mantap_line('parentname')
     return [l]
 
 
@@ -462,10 +509,14 @@ def build_file(n_months):
 
     header_lines_content = build_header_band(n_months)
     header1_lines_content = build_header1_band()
+    header2_lines_content = build_header2_band()
     detail_lines_content = build_detail_band(n_months)
     trailer2_lines_content = build_trailer2_band(n_months)
     trailer1_lines_content = build_trailer1_band(n_months)
     summary_lines_content = build_summary_band(n_months)
+
+    header2_max_bottom = max(y_of(l) + int(re.search(r'height="(\d+)"', l).group(1)) for l in header2_lines_content)
+    header2_height = header2_max_bottom + 4
 
     detail_max_bottom = max(y_of(l) + int(re.search(r'height="(\d+)"', l).group(1)) for l in detail_lines_content)
     detail_height = detail_max_bottom + 8
@@ -491,7 +542,12 @@ def build_file(n_months):
         f'detail(height={detail_height} color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )',
     ]
 
-    group_line = 'group(level=1 header.height=104 trailer.height=100 by=("fincatcode" ) header.suppress=yes header.color="536870912" header.transparency="0" header.gradient.color="8421504" header.gradient.transparency="0" header.gradient.angle="0" header.brushmode="0" header.gradient.repetition.mode="0" header.gradient.repetition.count="0" header.gradient.repetition.length="100" header.gradient.focus="0" header.gradient.scale="100" header.gradient.spread="100" trailer.color="536870912" trailer.transparency="0" trailer.gradient.color="8421504" trailer.gradient.transparency="0" trailer.gradient.angle="0" trailer.brushmode="0" trailer.gradient.repetition.mode="0" trailer.gradient.repetition.count="0" trailer.gradient.repetition.length="100" trailer.gradient.focus="0" trailer.gradient.scale="100" trailer.gradient.spread="100" )'
+    # group(level=2 by=("parentcode")) restored to match the confirmed-working mantap file --
+    # required alongside the header.2 band above. trailer.height stays 100 (this design's own,
+    # already-verified-sufficient trailer.2 content), not mantap's 180 (a different report with
+    # different trailer.2 content); header.height is computed from header2's own actual content.
+    group_line_1 = 'group(level=1 header.height=104 trailer.height=100 by=("fincatcode" ) header.suppress=yes header.color="536870912" header.transparency="0" header.gradient.color="8421504" header.gradient.transparency="0" header.gradient.angle="0" header.brushmode="0" header.gradient.repetition.mode="0" header.gradient.repetition.count="0" header.gradient.repetition.length="100" header.gradient.focus="0" header.gradient.scale="100" header.gradient.spread="100" trailer.color="536870912" trailer.transparency="0" trailer.gradient.color="8421504" trailer.gradient.transparency="0" trailer.gradient.angle="0" trailer.brushmode="0" trailer.gradient.repetition.mode="0" trailer.gradient.repetition.count="0" trailer.gradient.repetition.length="100" trailer.gradient.focus="0" trailer.gradient.scale="100" trailer.gradient.spread="100" )'
+    group_line_2 = f'group(level=2 header.height={header2_height} trailer.height=100 by=("parentcode" ) header.suppress=yes header.color="536870912" header.transparency="0" header.gradient.color="8421504" header.gradient.transparency="0" header.gradient.angle="0" header.brushmode="0" header.gradient.repetition.mode="0" header.gradient.repetition.count="0" header.gradient.repetition.length="100" header.gradient.focus="0" header.gradient.scale="100" header.gradient.spread="100" trailer.color="536870912" trailer.transparency="0" trailer.gradient.color="8421504" trailer.gradient.transparency="0" trailer.gradient.angle="0" trailer.brushmode="0" trailer.gradient.repetition.mode="0" trailer.gradient.repetition.count="0" trailer.gradient.repetition.length="100" trailer.gradient.focus="0" trailer.gradient.scale="100" trailer.gradient.spread="100" )'
 
     # Switched to match dw_rpt_is_hpp_multibulan.srd's footer exactly -- a genuinely, fully
     # confirmed production file (not just "got furthest") -- rather than the proven-furthest
@@ -501,15 +557,24 @@ def build_file(n_months):
     # verified by the user to run successfully in PowerBuilder 11.5, and confirmed byte-
     # identical to this exact footer via direct read). A previous fix switched to
     # dw_rpt_is_hpp_multibulan.srd's fuller footer -- the wrong oracle for this file family.
+    # Footer sourced verbatim from the confirmed-working mantap file (fuller than 90e3fb8's,
+    # which lacked htmlgen/xhtmlgen+cssgen/xmlgen/xsltgen/jsgen/export.pdf/export.xhtml).
     footer_lines = [
         'htmltable(border="1" )',
-        'xhtml(controlblock="no" visibleburnin="no" )',
-        'export.xml(headgroup=no metadata=no linkschema=no id=no)',
-        'import.xml(encoding="iso-8859-1" )',
+        'htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )',
+        'xhtmlgen() cssgen(sessionspecific="0" )',
+        'xmlgen(inline="0" )',
+        'xsltgen()',
+        'jsgen()',
+        'export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )',
+        'import.xml()',
+        'export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )',
+        'export.xhtml()',
     ]
 
-    all_lines = (header_top + [table_full] + [group_line] +
-                 header_lines_content + header1_lines_content + detail_lines_content +
+    all_lines = (header_top + [table_full] + [group_line_1, group_line_2] +
+                 header_lines_content + header1_lines_content + header2_lines_content +
+                 detail_lines_content +
                  trailer2_lines_content + trailer1_lines_content + summary_lines_content +
                  footer_lines)
     final = CRLF.join(all_lines)

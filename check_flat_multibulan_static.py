@@ -26,35 +26,29 @@ def check_file(n_months):
     if bare_lf_outside:
         issues.append(f"{bare_lf_outside} bare LF character(s) found OUTSIDE the retrieve=\"...\" SQL text -- unexpected")
 
-    # REVERTED: an earlier version of this check required column(...) objects to carry
-    # edit.limit=/edit.case=/edit.autoselect=/edit.autohscroll=, based on comparison against
-    # dw_rpt_is_hpp_multibulan.srd and dw_rpt_is.srd. Those were the WRONG oracle files for this
-    # DataWindow family. A structural diff (srd_structural_diff.py) against the actual confirmed-
-    # working golden master for THIS family, dw_rpt_is_flat_multibulan.srd (verified by the user
-    # to run successfully in PowerBuilder 11.5), proves its own column() objects (fincatdes,
-    # accountdes) do NOT have any edit.* attributes at all. Requiring them was itself a defect
-    # this check introduced. column() objects in this family must NOT carry edit.* attributes,
-    # matching the golden master exactly.
+    # dw_rpt_is_flat_multibulan.srd (git 90e3fb8) was believed confirmed-working for most of this
+    # investigation, but the user has since confirmed it actually fails PB 11.5 import too (same
+    # detail-band-boundary symptom as every generated file). The user supplied a genuinely working
+    # replacement, dw_rpt_is_flat_multibulan_mantap.srd -- its column() objects DO carry
+    # edit.limit=/edit.case=/edit.autoselect=/edit.autohscroll= (matching each column's own
+    # char(N) length). Require it.
     for ln in lines:
         if not ln.startswith('column('):
             continue
-        if 'edit.limit=' in ln or 'edit.case=' in ln or 'edit.autoselect=' in ln or 'edit.autohscroll=' in ln:
+        if 'edit.limit=' not in ln:
             name_m = re.search(r'\bname=(\S+)', ln)
-            issues.append(f"column() object '{name_m.group(1) if name_m else '?'}' has an edit.* attribute -- the confirmed golden master's column() objects never do")
+            issues.append(f"column() object '{name_m.group(1) if name_m else '?'}' is missing edit.limit=/edit.case=/edit.autoselect=/edit.autohscroll= -- required per the confirmed-working mantap file")
 
-    # NOTE: an earlier version of this check required every declared group(level=N) to have a
-    # matching header.N band. That theory was disproven -- the proven reference file
-    # dw_rpt_is_flat_multibulan.srd (commit 90e3fb8) uses sum(...for group 2) and a trailer.2
-    # band extensively WITHOUT ever declaring group(level=2) at all, and it got further through
-    # PowerBuilder's import than any version that added one. This file intentionally has only
-    # group(level=1); trailer.2's "for group 2" references are expected and correct as-is.
+    # Every declared group(level=N) must have a matching header.N band -- confirmed by the mantap
+    # file, which has group(level=2 by=("parentcode")) alongside a real header.2 band (a column()
+    # bound to parentname). 90e3fb8 lacked both and is now known to be broken.
     group_levels = [int(m.group(1)) for m in re.finditer(r'^group\(level=(\d+) header\.height=(\d+)', content, re.MULTILINE)]
     for lvl in group_levels:
         if lvl == 1:
             continue
         band_name = f'header.{lvl}'
         if f'band={band_name} ' not in content and f'band={band_name}\t' not in content:
-            issues.append(f"group(level={lvl}) declared but no band={band_name} object found (unexpected -- only group(level=1) should be declared)")
+            issues.append(f"group(level={lvl}) declared but no band={band_name} object found")
 
     # 1. every 'name=' must be unique
     names_by_band = {}
