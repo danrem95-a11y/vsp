@@ -702,11 +702,22 @@ def build_file(n_months):
     ]
 
     # group(level=2 by=("parentcode")) restored to match the confirmed-working mantap file --
-    # required alongside the header.2 band above. trailer.height stays 100 (this design's own,
-    # already-verified-sufficient trailer.2 content), not mantap's 180 (a different report with
-    # different trailer.2 content); header.height is computed from header2's own actual content.
+    # required alongside the header.2 band above.
+    #
+    # BUG FIX (user report + screenshot: "rapikan garis agar rapi" -- TOTAL BIAYA BENGKEL LAINNYA
+    # sat with no gap before TOTAL BIAYA BENGKEL, and TOTAL BIAYA BENGKEL sat with no gap before
+    # the next fincatcode's header, while every OTHER subcategory total (TOTAL KEPERLUAN &
+    # PERLENGKAPAN BENGKEL, TOTAL REPARASI & PEMELIHARAAN, etc.) had a visible blank-line gap
+    # before the next subcategory header). A previous fix deliberately set group-2 trailer.height
+    # to 100 instead of mantap's own 180, on the theory that 180 was sized for "a different
+    # report's trailer.2 content" -- that theory is WRONG. Direct measurement of mantap's own
+    # trailer.2 band shows its actual visible content bottom is y=84 (identical geometry to this
+    # design's own trailer.2), yet it still declares trailer.height=180 -- the extra ~96 twips is
+    # pure deliberate spacing/padding after each subcategory total, completely independent of
+    # trailer.2's content height. Using 100 left only ~16 twips of padding, which reads as "no
+    # gap" in PB 11.5 rendering. Copy mantap's trailer.height=180 verbatim for group-2.
     group_line_1 = 'group(level=1 header.height=104 trailer.height=100 by=("fincatcode" ) header.suppress=yes header.color="536870912" header.transparency="0" header.gradient.color="8421504" header.gradient.transparency="0" header.gradient.angle="0" header.brushmode="0" header.gradient.repetition.mode="0" header.gradient.repetition.count="0" header.gradient.repetition.length="100" header.gradient.focus="0" header.gradient.scale="100" header.gradient.spread="100" trailer.color="536870912" trailer.transparency="0" trailer.gradient.color="8421504" trailer.gradient.transparency="0" trailer.gradient.angle="0" trailer.brushmode="0" trailer.gradient.repetition.mode="0" trailer.gradient.repetition.count="0" trailer.gradient.repetition.length="100" trailer.gradient.focus="0" trailer.gradient.scale="100" trailer.gradient.spread="100" )'
-    group_line_2 = f'group(level=2 header.height={header2_height} trailer.height=100 by=("parentcode" ) header.suppress=yes header.color="536870912" header.transparency="0" header.gradient.color="8421504" header.gradient.transparency="0" header.gradient.angle="0" header.brushmode="0" header.gradient.repetition.mode="0" header.gradient.repetition.count="0" header.gradient.repetition.length="100" header.gradient.focus="0" header.gradient.scale="100" header.gradient.spread="100" trailer.color="536870912" trailer.transparency="0" trailer.gradient.color="8421504" trailer.gradient.transparency="0" trailer.gradient.angle="0" trailer.brushmode="0" trailer.gradient.repetition.mode="0" trailer.gradient.repetition.count="0" trailer.gradient.repetition.length="100" trailer.gradient.focus="0" trailer.gradient.scale="100" trailer.gradient.spread="100" )'
+    group_line_2 = f'group(level=2 header.height={header2_height} trailer.height=180 by=("parentcode" ) header.suppress=yes header.color="536870912" header.transparency="0" header.gradient.color="8421504" header.gradient.transparency="0" header.gradient.angle="0" header.brushmode="0" header.gradient.repetition.mode="0" header.gradient.repetition.count="0" header.gradient.repetition.length="100" header.gradient.focus="0" header.gradient.scale="100" header.gradient.spread="100" trailer.color="536870912" trailer.transparency="0" trailer.gradient.color="8421504" trailer.gradient.transparency="0" trailer.gradient.angle="0" trailer.brushmode="0" trailer.gradient.repetition.mode="0" trailer.gradient.repetition.count="0" trailer.gradient.repetition.length="100" trailer.gradient.focus="0" trailer.gradient.scale="100" trailer.gradient.spread="100" )'
 
     # Switched to match dw_rpt_is_hpp_multibulan.srd's footer exactly -- a genuinely, fully
     # confirmed production file (not just "got furthest") -- rather than the proven-furthest
